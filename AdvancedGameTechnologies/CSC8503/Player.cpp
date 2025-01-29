@@ -53,24 +53,25 @@ void Player::Init()
 
 
 void Player::Update(float dt) {
-	HandleDash(dt);  // 冲刺逻辑优先
-	if (!isDashing||!isDead) {
-		HandleMovement(dt);  // 只有不在冲刺时才能正常移动
+	HandleDash(dt);  // Dash logic takes priority
+	if (!isDashing || !isDead) {
+		HandleMovement(dt);  // Can only move normally when not dashing
 	}
 	HandleRotation(dt);
 	HandleJump();
 	DisplayUI();
 	HealthCheck();
 
-	// colour change timer
+	// Colour change timer
 	if (isTemporaryColourActive) {
 		colourTimer -= dt;
 		if (colourTimer <= 0.0f) {
-			// 恢复默认颜色
+			// Restore default colour
 			this->GetRenderObject()->SetColour(defaultColour);
-			isTemporaryColourActive = false; // 取消激活临时颜色
+			isTemporaryColourActive = false; // Deactivate temporary colour
 		}
 	}
+
 
 	// check if arrive the top point
 	if (!isOnGround && playerPhysicObject) {
@@ -130,16 +131,17 @@ void Player::ClampSpeed(float dt) {
 	float speed = Vector::Length(velocity);
 
 	if (speed > maxSpeed) {
-		// 计算减速方向（与速度方向相反）
-		Vector3 deceleration = -Vector::Normalise(velocity)* decelerationFactor ;
+		// Calculate deceleration direction (opposite to velocity direction)
+		Vector3 deceleration = -Vector::Normalise(velocity) * decelerationFactor;
 
-		// 如果减速后速度仍然超出 maxSpeed，继续施加减速力
+		// If the speed still exceeds maxSpeed after deceleration, continue applying deceleration force
 		if (Vector::Length(playerPhysicObject->GetLinearVelocity()) > maxSpeed) {
 			playerPhysicObject->AddForce(deceleration);
 		} else {
 			Vector3 limitedVelocity = Vector::Normalise(velocity) * maxSpeed;
 			playerPhysicObject->SetLinearVelocity(limitedVelocity);
 		}
+
 	}
 }
 
@@ -147,26 +149,27 @@ void Player::ClampSpeed(float dt) {
 void Player::HandleRotation(float dt) {
 	if (!playerPhysicObject) return;
 
-	// 获取球的线性速度
+	// Get the ball's linear velocity
 	Vector3 velocity = playerPhysicObject->GetLinearVelocity();
 
-	// 如果速度接近零，不旋转
-	if (Vector::Length(velocity)<0) return;
+	// If the speed is close to zero, do not rotate
+	if (Vector::Length(velocity) < 0) return;
 
-	// 计算旋转轴：速度方向的垂直方向（右手规则）
+	// Calculate the rotation axis: perpendicular to the velocity direction (right-hand rule)
 	Vector3 rotationAxis = Vector::Normalise(Vector3(velocity.z, 0, -velocity.x));
 
-	// 计算旋转角速度：速度大小除以球体半径
-	float angularSpeed =Vector::Length(velocity) / playerObject->GetTransform().GetScale().x*rotationFactor;  // 半径为缩放比例
+	// Calculate the angular speed: linear speed divided by the ball's radius
+	float angularSpeed = Vector::Length(velocity) / playerObject->GetTransform().GetScale().x * rotationFactor;  // Radius is determined by the scale factor
 
-	// 计算旋转角度
+	// Calculate the rotation angle
 	float rotationAngle = angularSpeed * dt;
 
-	// 生成四元数表示旋转
+	// Generate a quaternion representing the rotation
 	Quaternion rotation = Quaternion::AxisAngleToQuaterion(rotationAxis, rotationAngle);
 
-	// 应用旋转到球体变换
+	// Apply the rotation to the ball's transform
 	playerObject->GetTransform().SetOrientation(rotation * playerObject->GetTransform().GetOrientation());
+
 }
 
 void Player::HandleDash(float dt) {
@@ -177,34 +180,37 @@ void Player::HandleDash(float dt) {
 		}
 		dashTimer -= dt;  // countdown timmer
 		if (dashTimer <= 0.0f) {
-			isDashing = false;  // 冲刺结束，恢复正常控制
-			
+			isDashing = false;  // Dash ends, restore normal control
+
 			renderObject->SetColour(defaultColour);
 		}
-		return;  // 冲刺期间忽略其他输入
+		return;  // Ignore other inputs during dashing
+
 	}
 
 	// if press Shift
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::SHIFT)) {
 		Vector3 velocity = playerPhysicObject->GetLinearVelocity();
-		if (Vector::Length(velocity) > 0) {  // 如果球体有速度
+		if (Vector::Length(velocity) > 0) {  // If the ball has velocity
 			Vector3 dashForce = Vector::Normalise(velocity) * acceleratForce * dashForceMultiplier;
-			playerPhysicObject->AddForce(dashForce);  // 冲刺方向与当前速度一致
+			playerPhysicObject->AddForce(dashForce);  // Dash direction follows the current velocity
 			isDashing = true;
-			dashTimer = dashCooldown;  // 开始计时
+			dashTimer = dashCooldown;  // Start cooldown timer
 		}
+
 	}
 }
 
 
 void Player::HandleJump() {
-	if (!playerPhysicObject || !isOnGround) return;  // 只能在地面时跳跃
+	if (!playerPhysicObject || !isOnGround) return;  // Can only jump when on the ground
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
-		Vector3 jump = Vector3(0, jumpForce, 0);  // 向上施加力
+		Vector3 jump = Vector3(0, jumpForce, 0);  // Apply upward force
 		playerPhysicObject->AddForce(jump);
-		isOnGround = false;  // 标记不在地面
+		isOnGround = false;  // Mark as off the ground
 	}
+
 }
 
 void Player::OnCollisionBegin(GameObject* otherObject)

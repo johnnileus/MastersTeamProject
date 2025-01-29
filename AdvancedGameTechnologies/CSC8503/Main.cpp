@@ -140,41 +140,42 @@ void TestStateMachine() {
 	StateMachine* testMachine = new StateMachine();
 	int data = 0;
 
-	// 定义状态A
+	// Define State A
 	State* A = new State([&](float dt) -> void {
 		std::cout << "I’m in state A!\n";
 		data++;
 	});
 
-	// 定义状态B
+	// Define State B
 	State* B = new State([&](float dt) -> void {
 		std::cout << "I’m in state B!\n";
 		data--;
 	});
 
-	// 定义状态A到状态B的转换
+	// Define transition from State A to State B
 	StateTransition* stateAB = new StateTransition(A, B, [&]() -> bool {
-		return data > 10; // 当data大于10时，转换到状态B
+		return data > 10; // Transition to State B when data exceeds 10
 	});
 
-	// 定义状态B到状态A的转换
+	// Define transition from State B to State A
 	StateTransition* stateBA = new StateTransition(B, A, [&]() -> bool {
-		return data < 0; // 当data小于0时，转换回状态A
+		return data < 0; // Transition back to State A when data is less than 0
 	});
 
-	// 将状态和转换添加到状态机中
+	// Add states and transitions to the state machine
 	testMachine->AddState(A);
 	testMachine->AddState(B);
 	testMachine->AddTransition(stateAB);
 	testMachine->AddTransition(stateBA);
 
-	// 测试状态机
+	// Test the state machine
 	for (int i = 0; i < 100; ++i) {
-		testMachine->Update(1.0f); // 每帧更新状态机
+		testMachine->Update(1.0f); // Update the state machine every frame
 	}
 
-	delete testMachine; // 释放内存
+	delete testMachine; // Free memory
 }
+
 
 void TestNetworking() {
 	NetworkBase::Initialise();
@@ -194,11 +195,11 @@ void TestNetworking() {
 
 	if (canConnect) {
 		for (int i = 0; i < 100; ++i) {
-			// 为服务器消息创建临时变量
+			// Create temporary variable for server message
 			StringPacket serverPacket("Server says hello! " + std::to_string(i));
 			server->SendGlobalPacket(serverPacket);
 
-			// 为客户端消息创建临时变量
+			// Create temporary variable for client message
 			StringPacket clientPacket("Client says hello! " + std::to_string(i));
 			client->SendPacket(clientPacket);
 
@@ -213,6 +214,7 @@ void TestNetworking() {
 
 	NetworkBase::Destroy();
 }
+
 
 
 

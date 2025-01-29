@@ -8,31 +8,31 @@ using namespace NCL;
 using namespace CSC8503;
 
 StateGameObject::StateGameObject() {
-	counter = 0.0f; // 初始化计数器
+	counter = 0.0f; // Initialize counter
 	stateMachine = new StateMachine();
 
-	// 定义状态A：向左移动
+	// Define State A: Move left
 	State* stateA = new State([&](float dt) -> void {
 		this->MoveLeft(dt);
 	});
 
-	// 定义状态B：向右移动
+	// Define State B: Move right
 	State* stateB = new State([&](float dt) -> void {
 		this->MoveRight(dt);
 	});
 
-	// 添加状态到状态机
+	// Add states to the state machine
 	stateMachine->AddState(stateA);
 	stateMachine->AddState(stateB);
 
-	// 定义从状态A到状态B的转换
+	// Define transition from State A to State B
 	stateMachine->AddTransition(new StateTransition(stateA, stateB, [&]() -> bool {
-		return this->counter > 3.0f; // 当计数器大于3时切换到状态B
+		return this->counter > 3.0f; // Switch to State B when the counter exceeds 3
 	}));
 
-	// 定义从状态B到状态A的转换
+	// Define transition from State B to State A
 	stateMachine->AddTransition(new StateTransition(stateB, stateA, [&]() -> bool {
-		return this->counter < 0.0f; // 当计数器小于0时切换到状态A
+		return this->counter < 0.0f; // Switch to State A when the counter is below 0
 	}));
 }
 
@@ -41,15 +41,15 @@ StateGameObject::~StateGameObject() {
 }
 
 void StateGameObject::Update(float dt) {
-	stateMachine->Update(dt); // 更新状态机
+	stateMachine->Update(dt); // Update state machine
 }
 
 void StateGameObject::MoveLeft(float dt) {
-	GetPhysicsObject()->AddForce({ -100, 0, 0 }); // 向左施加力
-	counter += dt; // 增加计数器值
+	GetPhysicsObject()->AddForce({ -100, 0, 0 }); // Apply force to move left
+	counter += dt; // Increase counter
 }
 
 void StateGameObject::MoveRight(float dt) {
-	GetPhysicsObject()->AddForce({ 100, 0, 0 }); // 向右施加力
-	counter -= dt; // 减少计数器值
+	GetPhysicsObject()->AddForce({ 100, 0, 0 }); // Apply force to move right
+	counter -= dt; // Decrease counter
 }

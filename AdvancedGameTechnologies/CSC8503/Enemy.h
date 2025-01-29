@@ -21,7 +21,7 @@ namespace NCL
 
             void Init();
 
-            void SetMovePath(const std::vector<Vector3>& path); // 设置路径
+            void SetMovePath(const std::vector<Vector3>& path); // set the path
             void Update(float dt);
 
             GameWorld* myWorld;
@@ -35,18 +35,20 @@ namespace NCL
             void IdleState(float dt);    // Idle behavior
             void ChaseState(float dt);   // Chase behavior
 
-            float decelerationForce; // 超过最大速度时的减速力
-            float rotationFactor;
-            void ClampSpeed(float dt);
-            void HandleRotation(float dt);
-            void FollowPath(float dt);
+            float decelerationForce; // Deceleration force applied when exceeding max speed
+            float rotationFactor;    // Factor influencing rotation speed
+
+            void ClampSpeed(float dt);    // Limits the speed to prevent excessive velocity
+            void HandleRotation(float dt); // Handles the enemy's rotation logic
+            void FollowPath(float dt);    // Makes the enemy follow a predefined path
 
             StateMachine* stateMachine; // State machine for enemy behavior
             Player* targetPlayer;       // Reference to the player
 
-            std::vector<Vector3> movePath;   // 外部传入的路径
-            size_t currentNodeIndex;         // 当前路径节点索引
-            float waypointThreshold = 1.0f;  // 距离阈值，用于判断是否到达节点
+            std::vector<Vector3> movePath;   // Externally provided movement path
+            size_t currentNodeIndex;         // Current index in the path
+            float waypointThreshold = 1.0f;  // Distance threshold to determine if a node is reached
+
             
             
             Vector4 defaultColour;

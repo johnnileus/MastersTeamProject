@@ -55,12 +55,13 @@ namespace NCL {
 			int damage; 
 
 			//dash
-			bool isDashing;           // 是否正在冲刺
-			float dashCooldown;       // 冲刺锁定时间
-			float dashForceMultiplier; // 冲刺的力倍数
-			float dashTimer;          // 用于计时的冲刺计时器
-			Vector4 dashColour;
-			void HandleDash(float dt);  // 冲刺逻辑
+			bool isDashing;           // Whether the player is dashing
+			float dashCooldown;       // Dash lockout duration
+			float dashForceMultiplier; // Force multiplier for dashing
+			float dashTimer;          // Timer for tracking dash cooldown
+			Vector4 dashColour;       // Colour effect during dashing
+			void HandleDash(float dt);  // Dash logic handler
+
 
 			Vector4 defaultColour;
 			Vector4 damageColour;
@@ -70,8 +71,8 @@ namespace NCL {
 			void RemoveObject(GameObject* gameObject);
 			
 			float colourTimer;              
-			bool isTemporaryColourActive;   // 是否激活临时颜色
-
+			bool isTemporaryColourActive;   // Whether the temporary colour is active
+			
 			void DisplayUI();
 
 			void HealthCheck();

@@ -121,10 +121,11 @@ namespace NCL {
 			void DisplayPathfinding(); // display navigation path
 			std::vector<Vector3> testNodes; // save nodes
 			
-			bool allCoinsCollected;   // 是否收集完所有金币
-			void CheckCoinsCollected(); // 检查金币是否全部收集
+			bool allCoinsCollected;   // Whether all coins have been collected
+			void CheckCoinsCollected(); // Check if all coins have been collected
 
-			void ShowSuccessMessage();  // 显示成功字幕
+			void ShowSuccessMessage();  // Display success message
+
 			void ReloadLevel();
 
 			Door* doorTrigger;

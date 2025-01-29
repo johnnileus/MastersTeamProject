@@ -130,7 +130,7 @@ void Enemy::HandleRotation(float dt) {
      Vector3 rotationAxis = Vector::Normalise(Vector3(velocity.z, 0, -velocity.x));
 
     // Calculate angular velocity: linear speed divided by radius.
-    float angularSpeed = Vector::Length(velocity) / this->GetTransform().GetScale().x * rotationFactor;  // 半径等于缩放比例
+    float angularSpeed = Vector::Length(velocity) / this->GetTransform().GetScale().x * rotationFactor; 
 
     //Calculate the rotation angle.
     float rotationAngle = angularSpeed * dt;
@@ -146,7 +146,7 @@ void Enemy::HandleRotation(float dt) {
 
 void Enemy::SetMovePath(const std::vector<Vector3>& path) {
     movePath = path;
-    currentNodeIndex = 0; // 从第一个节点开始移动
+    currentNodeIndex = 0; // move from the first node
 }
 
 
@@ -159,11 +159,11 @@ void Enemy::Reset() {
     
     this->GetTransform().SetPosition(movePath[0]);
 
-    // 将物理状态重置
-    this->GetPhysicsObject()->ClearForces();               // 清除所有作用力
-    this->GetPhysicsObject()->SetLinearVelocity(Vector3()); // 清除线性速度
+    // reset the physic
+    this->GetPhysicsObject()->ClearForces();               // clear force
+    this->GetPhysicsObject()->SetLinearVelocity(Vector3()); // reset the speeds
 
-    // 重置当前路径索引
+    // reset the path finding index
     currentNodeIndex = 0;
 
     std::cout << "Enemy reset to path start: " 

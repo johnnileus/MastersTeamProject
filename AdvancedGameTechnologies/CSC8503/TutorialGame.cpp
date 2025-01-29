@@ -317,23 +317,25 @@ void TutorialGame::InitWorld() {
 	AddCatCoinToPosition(Vector3(5,0,0));
 	InitDefaultFloor();
 
-	// 加载导航网格
+	// Load the navigation grid
 	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
 
-	// 生成测试路径
+	// Generate a test path
 	NavigationPath outPath;
-	Vector3 startPos(80, 0, 10); // 起点
-	Vector3 endPos(80, 0, 80); // 终点
+	Vector3 startPos(80, 0, 10); // Start position
+	Vector3 endPos(80, 0, 80);   // End position
+
 	if (navGrid->FindPath(startPos, endPos, outPath)) {
 		Vector3 pos;
 		while (outPath.PopWaypoint(pos)) {
-			testNodes.push_back(pos); // 将路径节点保存
+			testNodes.push_back(pos); // Store path waypoints
 		}
 
-		enemies[0]->SetMovePath(testNodes );
+		enemies[0]->SetMovePath(testNodes);
 	}
-	
+
 	world->PrintObjects();
+
 }
 
 void TutorialGame::InitPlayer()
@@ -721,36 +723,6 @@ void TutorialGame::TestLinearMotion() {
 	AddSphereToWorld(Vector3(-5, 20, 0), 2.0f, Constants::SPHERE_DEFAULT_MASS, Vector3(0,10,1));
 }
 
-void TutorialGame::BridgeConstraintTest() {
-	Vector3 cubeSize = Vector3(8, 8, 8);
-
-	float invCubeMass = 5; // 中间块的质量
-	int numLinks = 10; // 链接数量
-	float maxDistance = 30; // 约束的最大距离
-	float cubeDistance = 20; // 链接之间的距离
-
-	Vector3 startPos = Vector3(0, 100, 0);
-
-	GameObject* start = AddCubeToWorld(startPos + Vector3(0, 0, 0),
-									   cubeSize, 0); // 固定点起始
-	GameObject* end = AddCubeToWorld(startPos + Vector3((numLinks + 2) * cubeDistance, 0, 0),
-									 cubeSize, 0); // 固定点终点
-
-	GameObject* previous = start;
-
-	for (int i = 0; i < numLinks; ++i) {
-		GameObject* block = AddCubeToWorld(startPos + Vector3((i + 1) * cubeDistance, 0, 0),
-										   cubeSize, invCubeMass);
-
-		PositionConstraint* constraint = new PositionConstraint(previous, block, maxDistance);
-		world->AddConstraint(constraint);
-
-		previous = block;
-	}
-
-	PositionConstraint* constraint = new PositionConstraint(previous, end, maxDistance);
-	world->AddConstraint(constraint);
-}
 
 
 void TutorialGame::CreateRope(const Vector3& startPos, const Vector3& endPos, float interval) {
@@ -782,7 +754,7 @@ void TutorialGame::CreateRope(const Vector3& startPos, const Vector3& endPos, fl
 		previous = block;
 	}
 
-	// 最后一个节点与终点的约束
+	// Constraint between the last node and the endpoint
 	PositionConstraint* constraint = new PositionConstraint(previous, end, maxDistance);
 	world->AddConstraint(constraint);
 }
@@ -824,7 +796,7 @@ void TutorialGame::DisplayPathfinding() {
 		Vector3 a = testNodes[i - 1];
 		Vector3 b = testNodes[i];
 
-		// 使用绿色线条绘制路径
+		// Draw the path using green lines
 		Debug::DrawLine(a, b, Vector4(0, 1, 0, 1));
 	}
 }
@@ -855,13 +827,14 @@ void TutorialGame::SetWallColour()
 void TutorialGame::CheckCoinsCollected() {
 	for (GameObject* coin : catCoins) {
 		if (coin->IsActive()) {
-			return; // 如果有未收集的金币，直接返回
+			return; // If there are uncollected coins, return immediately
+
 		}
 	}
 
-	// 如果所有金币都被收集
+	// If all coins have been collected
 	if (!allCoinsCollected) {
-		allCoinsCollected = true; // 标记为已完成
+		allCoinsCollected = true; // mark as completed
 	}
 
 	if (allCoinsCollected)
@@ -875,11 +848,11 @@ void TutorialGame::ShowSuccessMessage() {
 }
 
 void TutorialGame::ReloadLevel() {
-	// 清除当前关卡
+	// Clear the current level
 	world->ClearAndErase();
 	physics->Clear();
 
-	// 重新初始化世界
+	// Reinitialize the world
 	InitWorld();
 
 	std::cout << "Level reloaded!" << std::endl;
