@@ -35,7 +35,7 @@ void Door::Update(float dt) {
                 currentPosition.y += moveSpeed * dt;
                 doorObject->GetTransform().SetPosition(currentPosition);
             } else {
-                isMoving = false; // 到达顶部，停止移动
+                isMoving = false; // The door reaches the top and stops moving
             }
         } else {
             // moving down
@@ -43,7 +43,7 @@ void Door::Update(float dt) {
                 currentPosition.y -= moveSpeed * dt;
                 doorObject->GetTransform().SetPosition(currentPosition);
             } else {
-                isMoving = false; // 到达底部，停止移动
+                isMoving = false; // The door reaches the bottom and stops moving
             }
         }
     }

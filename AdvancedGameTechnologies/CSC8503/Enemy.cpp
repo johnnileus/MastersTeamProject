@@ -71,19 +71,19 @@ void Enemy::FollowPath(float dt) {
     }
 
     if (currentNodeIndex >= movePath.size()) {
-        currentNodeIndex = 0; // 重置为第一个节点，形成循环
+        currentNodeIndex = 0; // Reset to the first node to form a loop.
     }
 
     Vector3 currentPos = this->GetTransform().GetPosition();
     Vector3 targetPos = movePath[currentNodeIndex];
     Vector3 direction = Vector::Normalise(targetPos - currentPos);
 
-    // 移动敌人向当前目标节点
+    // Move the enemy to the current target node.
     this->GetPhysicsObject()->AddForce(direction * acceleratForce);
 
-    // 检查是否到达当前目标节点
+    // Check if the current target node has been reached.
     if (Vector::Length(targetPos - currentPos) < waypointThreshold) {
-        currentNodeIndex++; // 移动到下一个节点
+        currentNodeIndex++; // move to next node
     }
 }
 
@@ -103,14 +103,14 @@ void Enemy::ClampSpeed(float dt) {
     Vector3 velocity = this->GetPhysicsObject()->GetLinearVelocity();
     float speed = Vector::Length(velocity);
     if (speed > maxSpeed) {
-        // 计算减速方向，与速度方向相反
+        //caculate the deceleration direction
         Vector3 deceleration = -Vector::Normalise(velocity) * decelerationForce ;
 
-        // 如果减速后速度仍超过最大速度，继续施加减速力
+        // If the speed remains above the maximum after deceleration, continue applying deceleration force
         if (speed > maxSpeed) {
             this->GetPhysicsObject()->AddForce(deceleration);
         } else {
-            // 速度接近最大值时直接设置速度为最大速度
+            //If the speed is close to the maximum, set it directly to the maximum speed.
             Vector3 limitedVelocity = Vector::Normalise(velocity)  * maxSpeed;
             this->GetPhysicsObject()->SetLinearVelocity(limitedVelocity);
         }
@@ -120,25 +120,25 @@ void Enemy::ClampSpeed(float dt) {
 void Enemy::HandleRotation(float dt) {
     if (!this->GetPhysicsObject()) return;
 
-    // 获取当前线性速度
+    // Get the current linear velocity.
     Vector3 velocity = this->GetPhysicsObject()->GetLinearVelocity();
 
-    // 如果速度非常低，不进行旋转
+    
     if (Vector::Length(velocity) < 0.01f) return;
 
-    // 计算旋转轴：速度方向的垂直方向（右手规则）
+    // If the speed is very low, do not rotate.
      Vector3 rotationAxis = Vector::Normalise(Vector3(velocity.z, 0, -velocity.x));
 
-    // 计算角速度：线速度大小除以半径
+    // Calculate angular velocity: linear speed divided by radius.
     float angularSpeed = Vector::Length(velocity) / this->GetTransform().GetScale().x * rotationFactor;  // 半径等于缩放比例
 
-    // 计算旋转角度
+    //Calculate the rotation angle.
     float rotationAngle = angularSpeed * dt;
 
-    // 创建四元数表示旋转
+    // Create a quaternion to represent the rotation.
     Quaternion rotation = Quaternion::AxisAngleToQuaterion(rotationAxis, rotationAngle);
 
-    // 应用旋转到敌人的变换
+    // Apply the rotation to the enemy's transform.
     this->GetTransform().SetOrientation(rotation * this->GetTransform().GetOrientation());
 }
 
