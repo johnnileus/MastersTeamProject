@@ -34,6 +34,9 @@
     <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\NCLCoreClasses\HeightMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.h">
@@ -71,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Release\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NCLCoreClasses\HeightMap.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
