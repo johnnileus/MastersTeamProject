@@ -437,53 +437,6 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 	return cube;
 }
 
-GameObject* TutorialGame::AddPlayerToWorld(const Vector3& position) {
-	float meshSize		= 1.0f;
-	float inverseMass	= 0.5f;
-
-	GameObject* character = new GameObject();
-	SphereVolume* volume  = new SphereVolume(1.0f);
-
-	character->SetBoundingVolume((CollisionVolume*)volume);
-
-	character->GetTransform()
-		.SetScale(Vector3(meshSize, meshSize, meshSize))
-		.SetPosition(position);
-
-	character->SetRenderObject(new RenderObject(&character->GetTransform(), AssetManager::Instance().catMesh, nullptr, AssetManager::Instance().basicShader));
-	character->SetPhysicsObject(new PhysicsObject(&character->GetTransform(), character->GetBoundingVolume()));
-
-	character->GetPhysicsObject()->SetInverseMass(inverseMass);
-	character->GetPhysicsObject()->InitSphereInertia();
-
-	world->AddGameObject(character);
-
-	return character;
-}
-
-GameObject* TutorialGame::AddEnemyToWorld(const Vector3& position) {
-	float meshSize		= 3.0f;
-	float inverseMass	= 0.5f;
-
-	GameObject* character = new GameObject();
-
-	AABBVolume* volume = new AABBVolume(Vector3(0.3f, 0.9f, 0.3f) * meshSize);
-	character->SetBoundingVolume((CollisionVolume*)volume);
-
-	character->GetTransform()
-		.SetScale(Vector3(meshSize, meshSize, meshSize))
-		.SetPosition(position);
-
-	character->SetRenderObject(new RenderObject(&character->GetTransform(), AssetManager::Instance().enemyMesh, nullptr, AssetManager::Instance().basicShader));
-	character->SetPhysicsObject(new PhysicsObject(&character->GetTransform(), character->GetBoundingVolume()));
-
-	character->GetPhysicsObject()->SetInverseMass(inverseMass);
-	character->GetPhysicsObject()->InitSphereInertia();
-
-	world->AddGameObject(character);
-
-	return character;
-}
 
 void TutorialGame::AddEnemyToPoision(const Vector3& posision)
 {
@@ -537,28 +490,6 @@ GameObject* TutorialGame::AddCatCoinToPosition(const Vector3& posision)
 	return  coin;
 }
 
-
-
-GameObject* TutorialGame::AddBonusToWorld(const Vector3& position) {
-	GameObject* apple = new GameObject();
-
-	SphereVolume* volume = new SphereVolume(0.5f);
-	apple->SetBoundingVolume((CollisionVolume*)volume);
-	apple->GetTransform()
-		.SetScale(Vector3(1.5, 1.5, 1.5))
-		.SetPosition(position);
-
-	apple->SetRenderObject(new RenderObject(&apple->GetTransform(), AssetManager::Instance().bonusMesh, nullptr, AssetManager::Instance().basicShader));
-	apple->SetPhysicsObject(new PhysicsObject(&apple->GetTransform(), apple->GetBoundingVolume()));
-	apple->GetRenderObject()->SetColour(Vector4(1,0.992,0.467,1));
-	apple->GetPhysicsObject()->SetInverseMass(1.0f);
-	apple->GetPhysicsObject()->InitSphereInertia();
-
-	world->AddGameObject(apple);
-
-	return apple;
-}
-
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
 	AddFloorToWorld(Vector3(0, -3, 0)+offset, Vector3(70,2,70));//down
@@ -566,12 +497,6 @@ void TutorialGame::InitDefaultFloor() {
 	AddFloorToWorld(Vector3(0, -3, -70)+offset, Vector3(70, 10, 1));//front
 	AddFloorToWorld(Vector3(0, -3, 70)+offset, Vector3(70, 10, 1));//back
 	AddFloorToWorld(Vector3(-70, -3, 0)+offset, Vector3(1, 10, 70));//left
-}
-
-void TutorialGame::InitGameExamples() {
-	AddPlayerToWorld(Vector3(0, 5, 0));
-	AddEnemyToWorld(Vector3(5, 5, 0));
-	AddBonusToWorld(Vector3(10, 5, 0));
 }
 
 void TutorialGame::InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius) {
@@ -599,15 +524,6 @@ void TutorialGame::InitMixedGridWorld(int numRows, int numCols, float rowSpacing
 			else {
 				AddSphereToWorld(position, sphereRadius, Constants::SPHERE_DEFAULT_MASS, Vector3(0,0,0));
 			}
-		}
-	}
-}
-
-void TutorialGame::InitCubeGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, const Vector3& cubeDims) {
-	for (int x = 1; x < numCols+1; ++x) {
-		for (int z = 1; z < numRows+1; ++z) {
-			Vector3 position = Vector3(x * colSpacing, 10.0f, z * rowSpacing);
-			AddCubeToWorld(position, cubeDims, 1.0f);
 		}
 	}
 }
@@ -705,7 +621,10 @@ void TutorialGame::TestLinearMotion() {
 }
 
 
-
+/// Creat a Rope 
+/// @param startPos The start point of one end of the rope.
+/// @param endPos The end point of another end of the rope.
+/// @param interval The distance between each unit of the rope. 
 void TutorialGame::CreateRope(const Vector3& startPos, const Vector3& endPos, float interval) {
 	Vector3 cubeSize = Vector3(0.3, 0.3, 0.3);
 
@@ -751,26 +670,6 @@ void TutorialGame::CreateRopeGroup()
 }
 
 
-StateGameObject* TutorialGame::AddStateObjectToWorld(const Vector3& position)
-{
-	StateGameObject* apple = new StateGameObject();
-
-	SphereVolume* volume = new SphereVolume(0.5f);
-	apple->SetBoundingVolume((CollisionVolume*)volume);
-	apple->GetTransform()
-		.SetScale(Vector3(2, 2, 2))
-		.SetPosition(position);
-
-	apple->SetRenderObject(new RenderObject(&apple->GetTransform(), AssetManager::Instance().bonusMesh, nullptr, AssetManager::Instance().basicShader));
-	apple->SetPhysicsObject(new PhysicsObject(&apple->GetTransform(), apple->GetBoundingVolume()));
-
-	apple->GetPhysicsObject()->SetInverseMass(1.0f);
-	apple->GetPhysicsObject()->InitSphereInertia();
-
-	world->AddGameObject(apple);
-
-	return apple;
-}
 
 void TutorialGame::DisplayPathfinding() {
 	for (size_t i = 1; i < testNodes.size(); ++i) {

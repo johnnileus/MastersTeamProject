@@ -4,6 +4,9 @@
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\cmake_pch.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,6 +39,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
