@@ -15,6 +15,7 @@
 #include "OrientationConstraint.h"
 #include "Player.h"
 #include "StateGameObject.h"
+#include "AssetManager.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -57,36 +58,16 @@ for this module, even in the coursework, but you can add it if you like!
 
 */
 void TutorialGame::InitialiseAssets() {
-	cubeMesh	= renderer->LoadMesh("cube.msh");
-	sphereMesh	= renderer->LoadMesh("sphere.msh");
-	catMesh		= renderer->LoadMesh("ORIGAMI_Chat.msh");
-	kittenMesh	= renderer->LoadMesh("Kitten.msh");
-
-	enemyMesh	= renderer->LoadMesh("Keeper.msh");
-	bonusMesh	= renderer->LoadMesh("19463_Kitten_Head_v1.msh");
-	capsuleMesh = renderer->LoadMesh("capsule.msh");
-
-	basicTex	= renderer->LoadTexture("checkerboard.png");
-	woodTex     = renderer->LoadTexture("wood.png");
-	metalTex	= renderer->LoadTexture("Metal.png");
-	tilesTex	= renderer->LoadTexture("Tiles.png");
-	floorTex	= renderer->LoadTexture("WoodFloor.png");
-	basicShader = renderer->LoadShader("scene.vert", "scene.frag");
+	
+	AssetManager::Instance().LoadAssets(renderer);
 	
 	InitCamera();
 	InitWorld();
 }
 
 TutorialGame::~TutorialGame()	{
-	delete cubeMesh;
-	delete sphereMesh;
-	delete catMesh;
-	delete kittenMesh;
-	delete enemyMesh;
-	delete bonusMesh;
 
-	delete basicTex;
-	delete basicShader;
+	AssetManager::Instance().Cleanup();
 
 	delete physics;
 	delete renderer;
@@ -353,7 +334,7 @@ void TutorialGame::InitPlayer()
 		.SetScale(Vector3(meshSize, meshSize, meshSize))
 		.SetPosition(Vector3(20,0,30));
 
-	player->SetRenderObject(new RenderObject(&player->GetTransform(), sphereMesh, metalTex, basicShader));
+	player->SetRenderObject(new RenderObject(&player->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
 	player->SetPhysicsObject(new PhysicsObject(&player->GetTransform(), player->GetBoundingVolume()));
 
 	player->GetPhysicsObject()->SetInverseMass(inverseMass);
@@ -383,7 +364,7 @@ GameObject* TutorialGame::AddFloorToWorld(const Vector3& position,const Vector3&
 		.SetScale(floorSize * 2.0f)
 		.SetPosition(position);
 
-	floor->SetRenderObject(new RenderObject(&floor->GetTransform(), cubeMesh, floorTex, basicShader));
+	floor->SetRenderObject(new RenderObject(&floor->GetTransform(), AssetManager::Instance().cubeMesh, AssetManager::Instance().floorTex, AssetManager::Instance().basicShader));
 	floor->GetRenderObject()->SetColour(Vector4(1,1,1,1));
 	floor->SetPhysicsObject(new PhysicsObject(&floor->GetTransform(), floor->GetBoundingVolume()));
 
@@ -421,7 +402,7 @@ GameObject* TutorialGame::AddSphereToWorld(const Vector3& position,float radius,
 	sphere->GetTransform().SetScale(Vector3(radius, radius, radius));
 	sphere->GetTransform().SetPosition(position);
 
-	sphere->SetRenderObject(new RenderObject(&sphere->GetTransform(),sphereMesh, basicTex, basicShader));
+	sphere->SetRenderObject(new RenderObject(&sphere->GetTransform(),AssetManager::Instance().sphereMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
 	sphere->SetPhysicsObject(new PhysicsObject(&sphere->GetTransform(),sphere->GetBoundingVolume()));
 
 	PhysicsObject* physicsObject = sphere->GetPhysicsObject();
@@ -445,7 +426,7 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 		.SetPosition(position)
 		.SetScale(dimensions * 2.0f);
 
-	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), cubeMesh, basicTex, basicShader));
+	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), AssetManager::Instance().cubeMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
 	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
 
 	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
@@ -469,7 +450,7 @@ GameObject* TutorialGame::AddPlayerToWorld(const Vector3& position) {
 		.SetScale(Vector3(meshSize, meshSize, meshSize))
 		.SetPosition(position);
 
-	character->SetRenderObject(new RenderObject(&character->GetTransform(), catMesh, nullptr, basicShader));
+	character->SetRenderObject(new RenderObject(&character->GetTransform(), AssetManager::Instance().catMesh, nullptr, AssetManager::Instance().basicShader));
 	character->SetPhysicsObject(new PhysicsObject(&character->GetTransform(), character->GetBoundingVolume()));
 
 	character->GetPhysicsObject()->SetInverseMass(inverseMass);
@@ -493,7 +474,7 @@ GameObject* TutorialGame::AddEnemyToWorld(const Vector3& position) {
 		.SetScale(Vector3(meshSize, meshSize, meshSize))
 		.SetPosition(position);
 
-	character->SetRenderObject(new RenderObject(&character->GetTransform(), enemyMesh, nullptr, basicShader));
+	character->SetRenderObject(new RenderObject(&character->GetTransform(), AssetManager::Instance().enemyMesh, nullptr, AssetManager::Instance().basicShader));
 	character->SetPhysicsObject(new PhysicsObject(&character->GetTransform(), character->GetBoundingVolume()));
 
 	character->GetPhysicsObject()->SetInverseMass(inverseMass);
@@ -517,7 +498,7 @@ void TutorialGame::AddEnemyToPoision(const Vector3& posision)
 		.SetScale(Vector3(meshSize, meshSize, meshSize))
 		.SetPosition(posision);
 
-	enemy->SetRenderObject(new RenderObject(&enemy->GetTransform(), sphereMesh, woodTex, basicShader));
+	enemy->SetRenderObject(new RenderObject(&enemy->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().woodTex, AssetManager::Instance().basicShader));
 	enemy->SetPhysicsObject(new PhysicsObject(&enemy->GetTransform(), enemy->GetBoundingVolume()));
 
 	enemy->GetPhysicsObject()->SetInverseMass(inverseMass);
@@ -542,7 +523,7 @@ GameObject* TutorialGame::AddCatCoinToPosition(const Vector3& posision)
 		.SetScale(Vector3(meshSize, meshSize, meshSize))
 		.SetPosition(posision);
 
-	coin->SetRenderObject(new RenderObject(&coin->GetTransform(), bonusMesh, nullptr, basicShader));
+	coin->SetRenderObject(new RenderObject(&coin->GetTransform(), AssetManager::Instance().bonusMesh, nullptr, AssetManager::Instance().basicShader));
 	coin->SetPhysicsObject(new PhysicsObject(&coin->GetTransform(), coin->GetBoundingVolume()));
 
 	coin->GetPhysicsObject()->SetInverseMass(inverseMass);
@@ -567,7 +548,7 @@ GameObject* TutorialGame::AddBonusToWorld(const Vector3& position) {
 		.SetScale(Vector3(1.5, 1.5, 1.5))
 		.SetPosition(position);
 
-	apple->SetRenderObject(new RenderObject(&apple->GetTransform(), bonusMesh, nullptr, basicShader));
+	apple->SetRenderObject(new RenderObject(&apple->GetTransform(), AssetManager::Instance().bonusMesh, nullptr, AssetManager::Instance().basicShader));
 	apple->SetPhysicsObject(new PhysicsObject(&apple->GetTransform(), apple->GetBoundingVolume()));
 	apple->GetRenderObject()->SetColour(Vector4(1,0.992,0.467,1));
 	apple->GetPhysicsObject()->SetInverseMass(1.0f);
@@ -746,7 +727,7 @@ void TutorialGame::CreateRope(const Vector3& startPos, const Vector3& endPos, fl
 		// Calculate the position of each intermediate node
 		Vector3 position = startPos + Vector::Normalise(endPos - startPos) * (interval * i);
 		GameObject* block = AddCubeToWorld(position, cubeSize, invCubeMass);
-		block->GetRenderObject()->SetDefaultTexture(metalTex);
+		block->GetRenderObject()->SetDefaultTexture(AssetManager::Instance().metalTex);
 		// Add constraint connection to the previous node
 		PositionConstraint* constraint = new PositionConstraint(previous, block, maxDistance);
 		world->AddConstraint(constraint);
@@ -780,7 +761,7 @@ StateGameObject* TutorialGame::AddStateObjectToWorld(const Vector3& position)
 		.SetScale(Vector3(2, 2, 2))
 		.SetPosition(position);
 
-	apple->SetRenderObject(new RenderObject(&apple->GetTransform(), bonusMesh, nullptr, basicShader));
+	apple->SetRenderObject(new RenderObject(&apple->GetTransform(), AssetManager::Instance().bonusMesh, nullptr, AssetManager::Instance().basicShader));
 	apple->SetPhysicsObject(new PhysicsObject(&apple->GetTransform(), apple->GetBoundingVolume()));
 
 	apple->GetPhysicsObject()->SetInverseMass(1.0f);
@@ -868,7 +849,7 @@ Door* TutorialGame::CreateDoor(const Vector3& position)
 		.SetScale(Vector3(3, 6, 1))
 		.SetPosition(position);
 
-	door->SetRenderObject(new RenderObject(&door->GetTransform(), cubeMesh, nullptr, basicShader));
+	door->SetRenderObject(new RenderObject(&door->GetTransform(), AssetManager::Instance().cubeMesh, nullptr, AssetManager::Instance().basicShader));
 	door->SetPhysicsObject(new PhysicsObject(&door->GetTransform(), door->GetBoundingVolume()));
 
 	door->GetPhysicsObject()->SetInverseMass(0.0f);
@@ -896,7 +877,7 @@ GameObject* TutorialGame::CreateDoorObject(const Vector3& position, const Vector
 		.SetScale(floorSize * 2.0f)
 		.SetPosition(position);
 
-	doorObject->SetRenderObject(new RenderObject(&doorObject->GetTransform(), cubeMesh, floorTex, basicShader));
+	doorObject->SetRenderObject(new RenderObject(&doorObject->GetTransform(),AssetManager::Instance().cubeMesh, AssetManager::Instance().floorTex, AssetManager::Instance().basicShader));
 	doorObject->GetRenderObject()->SetColour(Vector4(1,1,1,1));
 	doorObject->SetPhysicsObject(new PhysicsObject(&doorObject->GetTransform(), doorObject->GetBoundingVolume()));
 

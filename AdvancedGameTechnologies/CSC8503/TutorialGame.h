@@ -13,6 +13,7 @@
 #include "CatCoin.h"
 #include "Door.h"
 #include "StateGameObject.h"
+#include "AssetManager.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -86,26 +87,26 @@ namespace NCL {
 
 			GameObject* selectionObject = nullptr;
 
-			Mesh*	capsuleMesh = nullptr;
-			Mesh*	cubeMesh	= nullptr;
-			Mesh*	sphereMesh	= nullptr;
-
-			Texture*	basicTex	= nullptr;
-			Texture*	woodTex     = nullptr;
-			Texture*	metalTex	= nullptr;
-			Texture*	tilesTex	= nullptr;
-			Texture*	floorTex	= nullptr;
-			Shader*		basicShader = nullptr;
+			// Mesh*	capsuleMesh = nullptr;
+			// Mesh*	cubeMesh	= nullptr;
+			// Mesh*	sphereMesh	= nullptr;
+			//
+			// Texture*	basicTex	= nullptr;
+			// Texture*	woodTex     = nullptr;
+			// Texture*	metalTex	= nullptr;
+			// Texture*	tilesTex	= nullptr;
+			// Texture*	floorTex	= nullptr;
+			// Shader*		basicShader = nullptr;
 
 			Player* player;
 			std::vector<Enemy*> enemies;
 			std::vector<GameObject*> floors;
 
 			//Coursework Meshes
-			Mesh*	catMesh		= nullptr;
-			Mesh*	kittenMesh	= nullptr;
-			Mesh*	enemyMesh	= nullptr;
-			Mesh*	bonusMesh	= nullptr;
+			// Mesh*	catMesh		= nullptr;
+			// Mesh*	kittenMesh	= nullptr;
+			// Mesh*	enemyMesh	= nullptr;
+			// Mesh*	bonusMesh	= nullptr;
 
 			//Coursework Additional functionality	
 			GameObject* lockedObject	= nullptr;
