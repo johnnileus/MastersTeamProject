@@ -31,6 +31,12 @@
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SampleSphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,6 +67,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SampleSphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.h">
