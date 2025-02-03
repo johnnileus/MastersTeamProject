@@ -53,6 +53,8 @@ namespace NCL {
 			
 			StateGameObject* testStateObject;
 			GameObject* AddFloorToWorld(const Vector3& position, const Vector3& size);
+
+			GameObject* debugSphere;
 			
 			GameObject* AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 10.0f);
 

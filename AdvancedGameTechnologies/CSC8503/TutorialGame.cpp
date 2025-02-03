@@ -16,6 +16,8 @@
 #include "Player.h"
 #include "StateGameObject.h"
 #include "AssetManager.h"
+#include "SampleSphere.h"
+#include "SceneManager.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -77,6 +79,9 @@ TutorialGame::~TutorialGame()	{
 
 void TutorialGame::UpdateGame(float dt) {
 
+	//for debug
+	Debug::DrawLine(player->GetTransform().GetPosition(),debugSphere->GetTransform().GetPosition());
+	
 	if (testStateObject) {
 		testStateObject->Update(dt);
 	}
@@ -314,6 +319,9 @@ void TutorialGame::InitWorld() {
 
 		enemies[0]->SetMovePath(testNodes);
 	}
+	Quaternion spawnRotation(0.0f, 0.0f, 0.0f, 1.0f);
+	SampleSphere* spherePrefab = new SampleSphere(1.0f, 1.0f);
+	debugSphere = SceneManager::GetInstance().Instantiate(world, spherePrefab, player->GetTransform().GetPosition(), spawnRotation);
 
 	world->PrintObjects();
 
