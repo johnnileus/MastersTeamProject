@@ -38,7 +38,6 @@ namespace NCL {
 
 			void InitDefaultFloor();
 			void AddEnemyToPoision(const Vector3& posision);
-			GameObject* AddCatCoinToPosition(const Vector3& posision);
 			bool SelectObject();
 			void MoveSelectedObject();
 			void DebugObjectMovement();
@@ -102,8 +101,6 @@ namespace NCL {
 			void ReloadLevel();
 
 			Door* doorTrigger;
-			Door* CreateDoor(const Vector3& position);
-			GameObject* CreateDoorObject(const Vector3& position,const Vector3& size);
 
 		};
 	}

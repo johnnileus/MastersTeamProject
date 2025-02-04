@@ -295,7 +295,8 @@ void TutorialGame::InitWorld() {
 
 	InitCatCoins();
 
-	doorTrigger = CreateDoor(Vector3(15,0,25));
+	//doorTrigger = CreateDoor(Vector3(15,0,25));
+	doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 
 	AddEnemyToPoision(Vector3(50,0,0));
 	
@@ -718,55 +719,6 @@ void TutorialGame::ReloadLevel() {
 	std::cout << "Level reloaded!" << std::endl;
 }
 
-Door* TutorialGame::CreateDoor(const Vector3& position)
-{
-	Door* door = new Door();
-
-	AABBVolume* volume = new AABBVolume(Vector3(1,1,1));
-	door->SetBoundingVolume((CollisionVolume*)volume);
-	door->GetTransform()
-		.SetScale(Vector3(3, 6, 1))
-		.SetPosition(position);
-
-	door->SetRenderObject(new RenderObject(&door->GetTransform(), AssetManager::Instance().cubeMesh, nullptr, AssetManager::Instance().basicShader));
-	door->SetPhysicsObject(new PhysicsObject(&door->GetTransform(), door->GetBoundingVolume()));
-
-	door->GetPhysicsObject()->SetInverseMass(0.0f);
-	door->GetPhysicsObject()->InitSphereInertia();
-
-	GameObject* doorObj= CreateDoorObject(Vector3(20,0,0),Vector3(6,9,1));
-	door->doorObject=doorObj;
-	door->Init();
-
-	world->AddGameObject(door);
-
-	return door;
-}
-
-GameObject* TutorialGame::CreateDoorObject(const Vector3& position, const Vector3& size)
-{
-	GameObject* doorObject = new GameObject();
-	doorObject->tag = "Ground";
-	doorObject->SetName("floor");
-	//Vector3 floorSize = Vector3(70, 2, 70);
-	Vector3 floorSize = size;
-	AABBVolume* volume = new AABBVolume(floorSize);
-	doorObject->SetBoundingVolume((CollisionVolume*)volume);
-	doorObject->GetTransform()
-		.SetScale(floorSize * 2.0f)
-		.SetPosition(position);
-
-	doorObject->SetRenderObject(new RenderObject(&doorObject->GetTransform(),AssetManager::Instance().cubeMesh, AssetManager::Instance().floorTex, AssetManager::Instance().basicShader));
-	doorObject->GetRenderObject()->SetColour(Vector4(1,1,1,1));
-	doorObject->SetPhysicsObject(new PhysicsObject(&doorObject->GetTransform(), doorObject->GetBoundingVolume()));
-
-	doorObject->GetPhysicsObject()->SetInverseMass(0);
-	doorObject->GetPhysicsObject()->InitCubeInertia();
-
-	world->AddGameObject(doorObject);
-	
-	return doorObject;
-}
 
 
 
