@@ -1,4 +1,4 @@
-# Install script for directory: C:/Git/MastersTeamProject/AdvancedGameTechnologies
+# Install script for directory: D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,28 +34,28 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Git/MastersTeamProject/AdvancedGameTechnologies/NCLCoreClasses/cmake_install.cmake")
+  include("D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/NCLCoreClasses/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503CoreClasses/cmake_install.cmake")
+  include("D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503CoreClasses/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Git/MastersTeamProject/AdvancedGameTechnologies/OpenGLRendering/cmake_install.cmake")
+  include("D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/OpenGLRendering/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/cmake_install.cmake")
+  include("D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Git/MastersTeamProject/AdvancedGameTechnologies/install_local_manifest.txt"
+  file(WRITE "D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -71,6 +71,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Git/MastersTeamProject/AdvancedGameTechnologies/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

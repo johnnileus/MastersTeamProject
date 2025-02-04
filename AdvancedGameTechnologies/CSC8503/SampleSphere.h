@@ -1,18 +1,19 @@
 ﻿#pragma once
 
 #include "GameObject.h"
+#include "GameWorld.h"
 
 namespace NCL {
     namespace CSC8503 {
-
-        // A simple sphere game object that configures its own collision, rendering, and physics.
+        
         class SampleSphere : public GameObject {
         public:
             // Constructor: set up sphere properties.
-            SampleSphere(float radius = 1.0f, float inverseMass = 1.0f);
+            SampleSphere();
 
-            // Copy constructor used by SceneManager::Instantiate.
-            SampleSphere(const SampleSphere& other);
+            static SampleSphere* Instantiate(GameWorld* world,
+                                            const Vector3& position,
+                                            const Quaternion& rotation);
 
             ~SampleSphere();
         };

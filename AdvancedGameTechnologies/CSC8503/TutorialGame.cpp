@@ -78,9 +78,7 @@ TutorialGame::~TutorialGame()	{
 
 
 void TutorialGame::UpdateGame(float dt) {
-
-	//for debug
-	Debug::DrawLine(player->GetTransform().GetPosition(),debugSphere->GetTransform().GetPosition());
+	
 	
 	if (testStateObject) {
 		testStateObject->Update(dt);
@@ -161,7 +159,7 @@ void TutorialGame::UpdateGame(float dt) {
 	
 	SelectObject();
 	MoveSelectedObject();
-	
+
 	world->UpdateWorld(dt);
 	//renderer->Update(dt);
 	physics->Update(dt);
@@ -300,7 +298,7 @@ void TutorialGame::InitWorld() {
 	doorTrigger = CreateDoor(Vector3(15,0,25));
 
 	AddEnemyToPoision(Vector3(50,0,0));
-	AddCatCoinToPosition(Vector3(5,0,0));
+	
 	InitDefaultFloor();
 
 	// Load the navigation grid
@@ -319,10 +317,9 @@ void TutorialGame::InitWorld() {
 
 		enemies[0]->SetMovePath(testNodes);
 	}
-	Quaternion spawnRotation(0.0f, 0.0f, 0.0f, 1.0f);
-	SampleSphere* spherePrefab = new SampleSphere(1.0f, 1.0f);
-	debugSphere = SceneManager::GetInstance().Instantiate(world, spherePrefab, player->GetTransform().GetPosition(), spawnRotation);
 
+	SampleSphere::Instantiate(world,Vector3(0,0,0),Quaternion());
+	
 	world->PrintObjects();
 
 }
@@ -385,13 +382,14 @@ GameObject* TutorialGame::AddFloorToWorld(const Vector3& position,const Vector3&
 }
 
 void TutorialGame::InitCatCoins() {
-	// 添加 CatCoin 到列表
-	catCoins.push_back(AddCatCoinToPosition(Vector3(5, 0, 0)));
-	catCoins.push_back(AddCatCoinToPosition(Vector3(20, 0, 20)));
-	catCoins.push_back(AddCatCoinToPosition(Vector3(-10, 0, 25)));
-	catCoins.push_back(AddCatCoinToPosition(Vector3(30, 0, 45)));
-	catCoins.push_back(AddCatCoinToPosition(Vector3(25, 0, -10)));
-	catCoins.push_back(AddCatCoinToPosition(Vector3(5, 0, 50)));
+	// add CatCoin to the list
+	catCoins.push_back(CatCoin::Instantiate(world, Vector3(5, 0, 0)));
+	catCoins.push_back(CatCoin::Instantiate(world, Vector3(20, 0, 20)));
+	catCoins.push_back(CatCoin::Instantiate(world, Vector3(-10, 0, 25)));
+	catCoins.push_back(CatCoin::Instantiate(world, Vector3(30, 0, 45)));
+	catCoins.push_back(CatCoin::Instantiate(world, Vector3(25, 0, -10)));
+	catCoins.push_back(CatCoin::Instantiate(world, Vector3(5, 0, 50)));
+
 }
 
 /*
@@ -471,32 +469,6 @@ void TutorialGame::AddEnemyToPoision(const Vector3& posision)
 	
 }
 
-GameObject* TutorialGame::AddCatCoinToPosition(const Vector3& posision)
-{
-	CatCoin* coin = new CatCoin();
-	float meshSize		= 2.0f;
-	float inverseMass	= 25.0f;
-	SphereVolume* volume  = new SphereVolume(1.0f);
-
-	coin->SetBoundingVolume((CollisionVolume*)volume);
-
-	coin->GetTransform()
-		.SetScale(Vector3(meshSize, meshSize, meshSize))
-		.SetPosition(posision);
-
-	coin->SetRenderObject(new RenderObject(&coin->GetTransform(), AssetManager::Instance().bonusMesh, nullptr, AssetManager::Instance().basicShader));
-	coin->SetPhysicsObject(new PhysicsObject(&coin->GetTransform(), coin->GetBoundingVolume()));
-
-	coin->GetPhysicsObject()->SetInverseMass(inverseMass);
-	coin->GetPhysicsObject()->InitSphereInertia();
-	coin->coinGameObject=coin;
-	
-	coin->Init();
-	
-	world->AddGameObject(coin);
-
-	return  coin;
-}
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);

@@ -1,65 +1,60 @@
-﻿#include "SampleSphere.h"
+﻿// SampleSphere.cpp
+
+#include "SampleSphere.h"
 #include "SphereVolume.h"
 #include "RenderObject.h"
 #include "PhysicsObject.h"
 #include "AssetManager.h"
-#include "Quaternion.h"
 
-namespace NCL {
-    namespace CSC8503 {
+using namespace NCL;
+using namespace CSC8503;
 
-        SampleSphere::SampleSphere(float radius, float inverseMass) {
-            // Set collision volume
-            SphereVolume* volume = new SphereVolume(radius);
-            SetBoundingVolume((CollisionVolume*)volume);
+// Constructor: Automatically adds collision, rendering, and physics
+SampleSphere::SampleSphere() {
 
-            // Set uniform scale based on radius.
-            GetTransform().SetScale(Vector3(radius, radius, radius));
+    float radius = 1.0f;
+    float inverseMass = 10.0f;
+    
+    // Collider
+    SphereVolume* volume = new SphereVolume(radius);
+    SetBoundingVolume((CollisionVolume*)volume);
 
-            // Set render object using asset manager resources.
-            SetRenderObject(new RenderObject(
-                &GetTransform(),
-                AssetManager::Instance().sphereMesh,
-                AssetManager::Instance().basicTex,
-                AssetManager::Instance().basicShader
-            ));
+    // Transform
+    GetTransform().SetScale(Vector3(radius,radius,radius));
 
-            // Set physics object and initialize inertia.
-            SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
-            PhysicsObject* phys = GetPhysicsObject();
-            phys->SetInverseMass(inverseMass);
-            phys->InitSphereInertia();
-        }
+    // Render
+    SetRenderObject(new RenderObject(
+        &GetTransform(),
+        AssetManager::Instance().sphereMesh,  
+        AssetManager::Instance().basicTex,    
+        AssetManager::Instance().basicShader 
+    ));
 
-        SampleSphere::SampleSphere(const SampleSphere& other)
-            : GameObject(other)  // Copy base class members.
-        {
-            // Assume uniform scale: use x component as radius.
-            float radius = GetTransform().GetScale().x;
+    // Physics
+    SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
+    GetPhysicsObject()->SetInverseMass(inverseMass);
+    GetPhysicsObject()->InitSphereInertia();
+}
 
-            // Recreate collision volume.
-            SphereVolume* volume = new SphereVolume(radius);
-            SetBoundingVolume((CollisionVolume*)volume);
+SampleSphere::~SampleSphere() {
+    
+}
 
-            // Recreate render object.
-            SetRenderObject(new RenderObject(
-                &GetTransform(),
-                AssetManager::Instance().sphereMesh,
-                AssetManager::Instance().basicTex,
-                AssetManager::Instance().basicShader
-            ));
 
-            // Recreate physics object.
-            SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
-            PhysicsObject* phys = GetPhysicsObject();
-            phys->SetInverseMass(other.GetPhysicsObject()->GetInverseMass());
-            phys->InitSphereInertia();
-        }
+SampleSphere* SampleSphere::Instantiate(GameWorld* world,
+                                        const Vector3& position,
+                                        const Quaternion& rotation) {
+    
+    SampleSphere* sphere = new SampleSphere();
 
-        SampleSphere::~SampleSphere() {
-            
-            
-        }
+    // Set it's location and rotation
+    sphere->GetTransform().SetPosition(position);
+    sphere->GetTransform().SetOrientation(rotation);
 
+    // Add to the GameWorld
+    if (world) {
+        world->AddGameObject(sphere);
     }
+
+    return sphere;
 }
