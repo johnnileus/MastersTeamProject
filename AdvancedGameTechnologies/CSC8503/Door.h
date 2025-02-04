@@ -17,7 +17,7 @@ namespace NCL
             void Update(float dt);
 
             GameObject* doorObject;
-            GameObject* CreateDoorPanelObject(GameWorld* world, const Vector3& position, const Vector3& size);
+            GameObject* CreateDoorPanelObject(GameWorld* world, const Vector3& position, const Vector3& size, const Quaternion& rotation);
             
             static Door* Instantiate(GameWorld* world,
                                      const Vector3& trigger_pos,

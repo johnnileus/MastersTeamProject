@@ -91,7 +91,7 @@ void Door::OnCollisionBegin(GameObject* otherObject) {
 /// @param position door panel's position
 /// @param size door panel's scale
 /// @return 
-GameObject* Door::CreateDoorPanelObject(GameWorld* world, const Vector3& position, const Vector3& size)
+GameObject* Door::CreateDoorPanelObject(GameWorld* world, const Vector3& position, const Vector3& size, const Quaternion& rotation)
 {
     GameObject* doorObject = new GameObject();
     doorObject->tag = "Ground";
@@ -102,7 +102,8 @@ GameObject* Door::CreateDoorPanelObject(GameWorld* world, const Vector3& positio
     doorObject->SetBoundingVolume((CollisionVolume*)volume);
     doorObject->GetTransform()
         .SetScale(floorSize * 2.0f)
-        .SetPosition(position);
+        .SetPosition(position)
+        .SetOrientation(rotation);
 
     doorObject->SetRenderObject(new RenderObject(&doorObject->GetTransform(),AssetManager::Instance().cubeMesh, AssetManager::Instance().floorTex, AssetManager::Instance().basicShader));
     doorObject->GetRenderObject()->SetColour(Vector4(1,1,1,1));
@@ -134,7 +135,7 @@ Door* Door::Instantiate(GameWorld* world,
     door->GetTransform().SetPosition(trigger_pos);
     door->GetTransform().SetOrientation(trigger_quaternion);
 
-    GameObject* doorPanel = door->CreateDoorPanelObject(world,panel_pos, Vector3(6,9,1));
+    GameObject* doorPanel = door->CreateDoorPanelObject(world,panel_pos, Vector3(6,9,1),panel_quaternion);
 
     // Add to the GameWorld
     if (world) {

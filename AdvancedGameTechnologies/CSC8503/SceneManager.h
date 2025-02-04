@@ -12,12 +12,10 @@ namespace NCL {
         class SceneManager {
         public:
             // Singleton access
-            static SceneManager& Instance() {
-                static SceneManager instance;
-                return instance;
-            }
-        
+            static SceneManager& Instance();
 
+            GameObject* AddCubeToWorld(GameWorld* world, const Vector3& pos, const Vector3& size, float inverseMass);
+        
         private:
             SceneManager() {}
             SceneManager(const SceneManager&) = delete;

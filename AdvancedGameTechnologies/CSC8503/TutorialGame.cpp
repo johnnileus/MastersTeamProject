@@ -16,6 +16,7 @@
 #include "Player.h"
 #include "StateGameObject.h"
 #include "AssetManager.h"
+#include "Rope.h"
 #include "SampleSphere.h"
 #include "SceneManager.h"
 
@@ -294,8 +295,7 @@ void TutorialGame::InitWorld() {
 	GenerateWall();
 
 	InitCatCoins();
-
-	//doorTrigger = CreateDoor(Vector3(15,0,25));
+	
 	doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 
 	AddEnemyToPoision(Vector3(50,0,0));
@@ -320,6 +320,7 @@ void TutorialGame::InitWorld() {
 	}
 
 	SampleSphere::Instantiate(world,Vector3(0,0,0),Quaternion());
+	SceneManager::Instance().AddCubeToWorld(world,Vector3(5,0,0),Vector3(1,1,1),1);
 	
 	world->PrintObjects();
 
@@ -601,52 +602,13 @@ void TutorialGame::TestLinearMotion() {
 	AddSphereToWorld(Vector3(-5, 20, 0), 2.0f, Constants::SPHERE_DEFAULT_MASS, Vector3(0,10,1));
 }
 
-
-/// Creat a Rope 
-/// @param startPos The start point of one end of the rope.
-/// @param endPos The end point of another end of the rope.
-/// @param interval The distance between each unit of the rope. 
-void TutorialGame::CreateRope(const Vector3& startPos, const Vector3& endPos, float interval) {
-	Vector3 cubeSize = Vector3(0.3, 0.3, 0.3);
-
-	float invCubeMass = 20.0f;        
-	float maxDistance = interval*0.8 ; 
-	int numLinks = static_cast<int>(Vector::Length(endPos - startPos) / interval); // Dynamically calculate the number of links
-
-	GameObject* startStick = AddFloorToWorld(startPos,Vector3(0.5,1,0.5));
-	GameObject* endStick = AddFloorToWorld(endPos,Vector3(0.5,1,0.5));
-	GameObject* start = AddCubeToWorld(startPos, cubeSize, 0.0f); // Fixed point start
-	GameObject* end = AddCubeToWorld(endPos, cubeSize, 0.0f);     // Fixed point end
-
-	startStick->GetRenderObject()->SetColour(Vector4(0.8,0.9,0.9,1));
-	endStick->GetRenderObject()->SetColour(Vector4(0.8,0.9,0.9,1));
-	
-	GameObject* previous = start;
-
-	for (int i = 1; i <= numLinks; ++i) {
-		// Calculate the position of each intermediate node
-		Vector3 position = startPos + Vector::Normalise(endPos - startPos) * (interval * i);
-		GameObject* block = AddCubeToWorld(position, cubeSize, invCubeMass);
-		block->GetRenderObject()->SetDefaultTexture(AssetManager::Instance().metalTex);
-		// Add constraint connection to the previous node
-		PositionConstraint* constraint = new PositionConstraint(previous, block, maxDistance);
-		world->AddConstraint(constraint);
-
-		previous = block;
-	}
-
-	// Constraint between the last node and the endpoint
-	PositionConstraint* constraint = new PositionConstraint(previous, end, maxDistance);
-	world->AddConstraint(constraint);
-}
-
 void TutorialGame::CreateRopeGroup()
 {
-	CreateRope(Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
-	CreateRope(Vector3(0,0,10),Vector3(15,0,10),0.7f);
-	CreateRope(Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
-	CreateRope(Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
-	CreateRope(Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
+	Rope::AddRopeToWorld(world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
+	Rope::AddRopeToWorld(world, Vector3(0,0,10),Vector3(15,0,10),0.7f);
+	Rope::AddRopeToWorld(world, Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
+	Rope::AddRopeToWorld(world, Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
+	Rope::AddRopeToWorld(world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
 	
 }
 
