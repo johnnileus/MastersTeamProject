@@ -25,6 +25,8 @@ namespace NCL
 
             GameObject* coinGameObject;
 
+            static CatCoin* Instantiate(GameWorld* world, const Vector3& position);
+
         protected:
     
         };

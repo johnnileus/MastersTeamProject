@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{110A1286-2DFC-3ADA-AAF6-F426EB3C0EB9}</ProjectGuid>
+    <ProjectGuid>{FC851E13-53BF-3E9A-A439-0C9A5CC85F82}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
@@ -42,13 +42,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\x64\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\x64\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CSC8503.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CSC8503</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\x64\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\x64\Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CSC8503.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CSC8503</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
@@ -57,7 +57,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <ConformanceMode>true</ConformanceMode>
@@ -68,24 +68,24 @@
       <MinimalRebuild></MinimalRebuild>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CSC8503.dir/Debug/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CSC8503.dir/Debug/cmake_pch.pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <SDLCheck>true</SDLCheck>
       <SupportJustMyCode></SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION="C:/Git/MastersTeamProject/AdvancedGameTechnologies/Assets/";NOMINMAX;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION="D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/Assets/";NOMINMAX;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION=\"C:/Git/MastersTeamProject/AdvancedGameTechnologies/Assets/\";NOMINMAX;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION=\"D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/Assets/\";NOMINMAX;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -98,8 +98,8 @@
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Git/MastersTeamProject/AdvancedGameTechnologies/x64/Debug/CSC8503.lib</ImportLibrary>
-      <ProgramDataBaseFile>C:/Git/MastersTeamProject/AdvancedGameTechnologies/x64/Debug/CSC8503.pdb</ProgramDataBaseFile>
+      <ImportLibrary>D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/x64/Debug/CSC8503.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/x64/Debug/CSC8503.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -108,7 +108,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ConformanceMode>true</ConformanceMode>
@@ -121,24 +121,24 @@
       <MinimalRebuild></MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CSC8503.dir/Release/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CSC8503.dir/Release/cmake_pch.pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <SDLCheck>true</SDLCheck>
       <SupportJustMyCode></SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION="C:/Git/MastersTeamProject/AdvancedGameTechnologies/Assets/";NOMINMAX;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION="D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/Assets/";NOMINMAX;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION=\"C:/Git/MastersTeamProject/AdvancedGameTechnologies/Assets/\";NOMINMAX;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION=\"D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/Assets/\";NOMINMAX;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -152,9 +152,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Git/MastersTeamProject/AdvancedGameTechnologies/x64/Release/CSC8503.lib</ImportLibrary>
+      <ImportLibrary>D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/x64/Release/CSC8503.lib</ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
-      <ProgramDataBaseFile>C:/Git/MastersTeamProject/AdvancedGameTechnologies/x64/Release/CSC8503.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/x64/Release/CSC8503.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -162,11 +162,11 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeLists.txt">
+    <CustomBuild Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeLists.txt">
       <UseUtf8Encoding>Always</UseUtf8Encoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Git/MastersTeamProject/AdvancedGameTechnologies -BC:/Git/MastersTeamProject/AdvancedGameTechnologies --check-stamp-file C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/generate.stamp
+D:\CBase\bin\cmake.exe -SD:/SourceCode/MastersTeamProject/AdvancedGameTechnologies -BD:/SourceCode/MastersTeamProject/AdvancedGameTechnologies --check-stamp-file D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -174,12 +174,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMake\Default.cmake;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMake\DefaultCXX.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CMake\Default.cmake;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CMake\DefaultCXX.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Git/MastersTeamProject/AdvancedGameTechnologies -BC:/Git/MastersTeamProject/AdvancedGameTechnologies --check-stamp-file C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/generate.stamp
+D:\CBase\bin\cmake.exe -SD:/SourceCode/MastersTeamProject/AdvancedGameTechnologies -BD:/SourceCode/MastersTeamProject/AdvancedGameTechnologies --check-stamp-file D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -187,97 +187,107 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMake\Default.cmake;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMake\DefaultCXX.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CMake\Default.cmake;D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CMake\DefaultCXX.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\cmake_pch.cxx">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\cmake_pch.cxx">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CSC8503.dir/Debug/cmake_pch.pch</PrecompiledHeaderOutputFile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CSC8503.dir/Debug/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CSC8503.dir/Release/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CSC8503.dir/Release/cmake_pch.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.h" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.h" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.h" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enemy.h" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRenderer.h" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.h" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.h" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.h" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.h" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.h" />
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enemy.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRenderer.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SampleSphere.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SceneManager.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.h" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.h" />
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enemy.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enemy.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRenderer.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRenderer.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Main.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Main.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SampleSphere.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SceneManager.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Debug\cmake_pch.hxx" />
-    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Release\cmake_pch.hxx" />
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/SourceCode/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Debug\cmake_pch.hxx" />
+    <ClInclude Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Release\cmake_pch.hxx" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\ZERO_CHECK.vcxproj">
-      <Project>{C7D82A37-A51F-3175-825F-7B2D5D3E95C4}</Project>
+    <ProjectReference Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\ZERO_CHECK.vcxproj">
+      <Project>{D123D48A-A05E-3D61-9067-12C5F5379F97}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CSC8503CoreClasses.vcxproj">
-      <Project>{DAE581B1-F977-34C4-AACD-61AF15CB36BC}</Project>
+    <ProjectReference Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CSC8503CoreClasses.vcxproj">
+      <Project>{F65A4F55-A2A8-3CEE-A393-28E265122279}</Project>
       <Name>CSC8503CoreClasses</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\NCLCoreClasses.vcxproj">
-      <Project>{83D8099C-23E3-3019-81BB-F251F7AF1DB0}</Project>
+    <ProjectReference Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\NCLCoreClasses.vcxproj">
+      <Project>{919E39E4-B82B-3FEC-9D7E-E081AC09E8AD}</Project>
       <Name>NCLCoreClasses</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OpenGLRendering.vcxproj">
-      <Project>{7852D96B-6079-307D-A501-5A40DB43402C}</Project>
+    <ProjectReference Include="D:\SourceCode\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OpenGLRendering.vcxproj">
+      <Project>{AF0DDBE7-6422-3DDA-B14B-68285412A968}</Project>
       <Name>OpenGLRendering</Name>
     </ProjectReference>
   </ItemGroup>
