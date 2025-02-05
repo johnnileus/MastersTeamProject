@@ -16,6 +16,7 @@
 #include "Player.h"
 #include "StateGameObject.h"
 #include "AssetManager.h"
+#include "Rope.h"
 #include "SampleSphere.h"
 #include "SceneManager.h"
 
@@ -294,11 +295,11 @@ void TutorialGame::InitWorld() {
 	GenerateWall();
 
 	InitCatCoins();
-
-	doorTrigger = CreateDoor(Vector3(15,0,25));
-
-	AddEnemyToPoision(Vector3(50,0,0));
 	
+	doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
+	
+	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
+
 	InitDefaultFloor();
 
 	// Load the navigation grid
@@ -317,8 +318,8 @@ void TutorialGame::InitWorld() {
 
 		enemies[0]->SetMovePath(testNodes);
 	}
-
-	SampleSphere::Instantiate(world,Vector3(0,0,0),Quaternion());
+	
+	SceneManager::Instance().AddCubeToWorld(world,Vector3(5,0,0),Vector3(1,1,1),1);
 	
 	world->PrintObjects();
 
@@ -351,6 +352,7 @@ void TutorialGame::InitPlayer()
 	world->AddGameObject(player);
 	LockCameraToObject(player->playerObject);
 }
+
 
 
 /*
@@ -442,33 +444,6 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 
 	return cube;
 }
-
-
-void TutorialGame::AddEnemyToPoision(const Vector3& posision)
-{
-	Enemy* enemy = new Enemy(player,world);
-	float meshSize		= 1.0f;
-	float inverseMass	= 25.0f;
-	SphereVolume* volume  = new SphereVolume(1.0f);
-
-	enemy->SetBoundingVolume((CollisionVolume*)volume);
-
-	enemy->GetTransform()
-		.SetScale(Vector3(meshSize, meshSize, meshSize))
-		.SetPosition(posision);
-
-	enemy->SetRenderObject(new RenderObject(&enemy->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().woodTex, AssetManager::Instance().basicShader));
-	enemy->SetPhysicsObject(new PhysicsObject(&enemy->GetTransform(), enemy->GetBoundingVolume()));
-
-	enemy->GetPhysicsObject()->SetInverseMass(inverseMass);
-	enemy->GetPhysicsObject()->InitSphereInertia();
-	enemy->Init();
-	enemies.push_back(enemy);
-	
-	world->AddGameObject(enemy);
-	
-}
-
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
@@ -600,52 +575,13 @@ void TutorialGame::TestLinearMotion() {
 	AddSphereToWorld(Vector3(-5, 20, 0), 2.0f, Constants::SPHERE_DEFAULT_MASS, Vector3(0,10,1));
 }
 
-
-/// Creat a Rope 
-/// @param startPos The start point of one end of the rope.
-/// @param endPos The end point of another end of the rope.
-/// @param interval The distance between each unit of the rope. 
-void TutorialGame::CreateRope(const Vector3& startPos, const Vector3& endPos, float interval) {
-	Vector3 cubeSize = Vector3(0.3, 0.3, 0.3);
-
-	float invCubeMass = 20.0f;        
-	float maxDistance = interval*0.8 ; 
-	int numLinks = static_cast<int>(Vector::Length(endPos - startPos) / interval); // Dynamically calculate the number of links
-
-	GameObject* startStick = AddFloorToWorld(startPos,Vector3(0.5,1,0.5));
-	GameObject* endStick = AddFloorToWorld(endPos,Vector3(0.5,1,0.5));
-	GameObject* start = AddCubeToWorld(startPos, cubeSize, 0.0f); // Fixed point start
-	GameObject* end = AddCubeToWorld(endPos, cubeSize, 0.0f);     // Fixed point end
-
-	startStick->GetRenderObject()->SetColour(Vector4(0.8,0.9,0.9,1));
-	endStick->GetRenderObject()->SetColour(Vector4(0.8,0.9,0.9,1));
-	
-	GameObject* previous = start;
-
-	for (int i = 1; i <= numLinks; ++i) {
-		// Calculate the position of each intermediate node
-		Vector3 position = startPos + Vector::Normalise(endPos - startPos) * (interval * i);
-		GameObject* block = AddCubeToWorld(position, cubeSize, invCubeMass);
-		block->GetRenderObject()->SetDefaultTexture(AssetManager::Instance().metalTex);
-		// Add constraint connection to the previous node
-		PositionConstraint* constraint = new PositionConstraint(previous, block, maxDistance);
-		world->AddConstraint(constraint);
-
-		previous = block;
-	}
-
-	// Constraint between the last node and the endpoint
-	PositionConstraint* constraint = new PositionConstraint(previous, end, maxDistance);
-	world->AddConstraint(constraint);
-}
-
 void TutorialGame::CreateRopeGroup()
 {
-	CreateRope(Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
-	CreateRope(Vector3(0,0,10),Vector3(15,0,10),0.7f);
-	CreateRope(Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
-	CreateRope(Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
-	CreateRope(Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
+	Rope::AddRopeToWorld(world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
+	Rope::AddRopeToWorld(world, Vector3(0,0,10),Vector3(15,0,10),0.7f);
+	Rope::AddRopeToWorld(world, Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
+	Rope::AddRopeToWorld(world, Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
+	Rope::AddRopeToWorld(world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
 	
 }
 
@@ -717,60 +653,3 @@ void TutorialGame::ReloadLevel() {
 
 	std::cout << "Level reloaded!" << std::endl;
 }
-
-Door* TutorialGame::CreateDoor(const Vector3& position)
-{
-	Door* door = new Door();
-
-	AABBVolume* volume = new AABBVolume(Vector3(1,1,1));
-	door->SetBoundingVolume((CollisionVolume*)volume);
-	door->GetTransform()
-		.SetScale(Vector3(3, 6, 1))
-		.SetPosition(position);
-
-	door->SetRenderObject(new RenderObject(&door->GetTransform(), AssetManager::Instance().cubeMesh, nullptr, AssetManager::Instance().basicShader));
-	door->SetPhysicsObject(new PhysicsObject(&door->GetTransform(), door->GetBoundingVolume()));
-
-	door->GetPhysicsObject()->SetInverseMass(0.0f);
-	door->GetPhysicsObject()->InitSphereInertia();
-
-	GameObject* doorObj= CreateDoorObject(Vector3(20,0,0),Vector3(6,9,1));
-	door->doorObject=doorObj;
-	door->Init();
-
-	world->AddGameObject(door);
-
-	return door;
-}
-
-GameObject* TutorialGame::CreateDoorObject(const Vector3& position, const Vector3& size)
-{
-	GameObject* doorObject = new GameObject();
-	doorObject->tag = "Ground";
-	doorObject->SetName("floor");
-	//Vector3 floorSize = Vector3(70, 2, 70);
-	Vector3 floorSize = size;
-	AABBVolume* volume = new AABBVolume(floorSize);
-	doorObject->SetBoundingVolume((CollisionVolume*)volume);
-	doorObject->GetTransform()
-		.SetScale(floorSize * 2.0f)
-		.SetPosition(position);
-
-	doorObject->SetRenderObject(new RenderObject(&doorObject->GetTransform(),AssetManager::Instance().cubeMesh, AssetManager::Instance().floorTex, AssetManager::Instance().basicShader));
-	doorObject->GetRenderObject()->SetColour(Vector4(1,1,1,1));
-	doorObject->SetPhysicsObject(new PhysicsObject(&doorObject->GetTransform(), doorObject->GetBoundingVolume()));
-
-	doorObject->GetPhysicsObject()->SetInverseMass(0);
-	doorObject->GetPhysicsObject()->InitCubeInertia();
-
-	world->AddGameObject(doorObject);
-	
-	return doorObject;
-}
-
-
-
-
-
-
-

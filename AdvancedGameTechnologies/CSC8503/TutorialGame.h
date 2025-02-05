@@ -37,15 +37,12 @@ namespace NCL {
 			void InitMixedGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing);
 
 			void InitDefaultFloor();
-			void AddEnemyToPoision(const Vector3& posision);
-			GameObject* AddCatCoinToPosition(const Vector3& posision);
 			bool SelectObject();
 			void MoveSelectedObject();
 			void DebugObjectMovement();
 			void LockedObjectMovement();
 			void TestLinearMotion();
 			void InitPlayer();
-			void CreateRope(const Vector3& startPos, const Vector3& endPos, float interval);
 			void CreateRopeGroup();
 			
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
@@ -102,8 +99,6 @@ namespace NCL {
 			void ReloadLevel();
 
 			Door* doorTrigger;
-			Door* CreateDoor(const Vector3& position);
-			GameObject* CreateDoorObject(const Vector3& position,const Vector3& size);
 
 		};
 	}
