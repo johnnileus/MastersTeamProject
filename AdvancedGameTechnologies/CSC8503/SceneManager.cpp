@@ -36,3 +36,34 @@ GameObject* SceneManager::AddCubeToWorld(GameWorld* world,const Vector3& pos, co
 
     return cube;
 }
+
+GameObject* SceneManager::AddDefaultFloorToWorld(GameWorld* world, const Vector3& position, const Vector3& size)
+{
+    GameObject* floor = new GameObject();
+    floor->tag = "Ground";
+    floor->SetName("floor");
+    //Vector3 floorSize = Vector3(70, 2, 70);
+    Vector3 floorSize = size;
+    AABBVolume* volume = new AABBVolume(floorSize);
+    floor->SetBoundingVolume((CollisionVolume*)volume);
+    floor->GetTransform()
+        .SetScale(floorSize * 2.0f)
+        .SetPosition(position);
+
+    floor->SetRenderObject(new RenderObject(
+        &floor->GetTransform(),
+        AssetManager::Instance().cubeMesh,
+        AssetManager::Instance().floorTex,
+        AssetManager::Instance().basicShader));
+    
+    floor->GetRenderObject()->SetColour(Vector4(1,1,1,1));
+    floor->SetPhysicsObject(new PhysicsObject(&floor->GetTransform(), floor->GetBoundingVolume()));
+
+    floor->GetPhysicsObject()->SetInverseMass(0);
+    floor->GetPhysicsObject()->InitCubeInertia();
+
+    world->AddGameObject(floor);
+	
+    return floor;
+}
+

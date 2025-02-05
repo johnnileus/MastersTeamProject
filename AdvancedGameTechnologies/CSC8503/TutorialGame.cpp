@@ -133,7 +133,7 @@ void TutorialGame::UpdateGame(float dt) {
 		//Debug::Print("(G)ravity off", Vector2(5, 95), Debug::RED);
 	}
 	//This year we can draw debug textures as well!
-	//Debug::DrawTex(*basicTex, Vector2(10, 10), Vector2(5, 5), Debug::MAGENTA);
+	Debug::DrawTex(*AssetManager::Instance().woodTex, Vector2(10, 10), Vector2(5, 5), Debug::WHITE);
 
 	RayCollision closestCollision;
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::K) && selectionObject) {
@@ -353,36 +353,6 @@ void TutorialGame::InitPlayer()
 	LockCameraToObject(player->playerObject);
 }
 
-
-
-/*
-
-A single function to add a large immoveable cube to the bottom of our world
-*/
-GameObject* TutorialGame::AddFloorToWorld(const Vector3& position,const Vector3& size) {
-	GameObject* floor = new GameObject();
-	floor->tag = "Ground";
-	floor->SetName("floor");
-	//Vector3 floorSize = Vector3(70, 2, 70);
-	Vector3 floorSize = size;
-	AABBVolume* volume = new AABBVolume(floorSize);
-	floor->SetBoundingVolume((CollisionVolume*)volume);
-	floor->GetTransform()
-		.SetScale(floorSize * 2.0f)
-		.SetPosition(position);
-
-	floor->SetRenderObject(new RenderObject(&floor->GetTransform(), AssetManager::Instance().cubeMesh, AssetManager::Instance().floorTex, AssetManager::Instance().basicShader));
-	floor->GetRenderObject()->SetColour(Vector4(1,1,1,1));
-	floor->SetPhysicsObject(new PhysicsObject(&floor->GetTransform(), floor->GetBoundingVolume()));
-
-	floor->GetPhysicsObject()->SetInverseMass(0);
-	floor->GetPhysicsObject()->InitCubeInertia();
-
-	world->AddGameObject(floor);
-	
-	return floor;
-}
-
 void TutorialGame::InitCatCoins() {
 	// add CatCoin to the list
 	catCoins.push_back(CatCoin::Instantiate(world, Vector3(5, 0, 0)));
@@ -447,11 +417,11 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
-	AddFloorToWorld(Vector3(0, -3, 0)+offset, Vector3(70,2,70));//down
-	AddFloorToWorld(Vector3(70,-3,0)+offset, Vector3(1,10,70));//right
-	AddFloorToWorld(Vector3(0, -3, -70)+offset, Vector3(70, 10, 1));//front
-	AddFloorToWorld(Vector3(0, -3, 70)+offset, Vector3(70, 10, 1));//back
-	AddFloorToWorld(Vector3(-70, -3, 0)+offset, Vector3(1, 10, 70));//left
+	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
+	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
+	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
+	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
 void TutorialGame::InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius) {
@@ -600,15 +570,15 @@ void TutorialGame::DisplayPathfinding() {
 void TutorialGame::GenerateWall()
 {
 	// add all walls to the list
-	floors.push_back(AddFloorToWorld(Vector3(45, 0, 12), Vector3(6, 1, 1)));
-	floors.push_back(AddFloorToWorld(Vector3(70, 0, 12), Vector3(6, 1, 1)));
-	floors.push_back(AddFloorToWorld(Vector3(60, 0, 30), Vector3(8, 1, 3)));
-	floors.push_back(AddFloorToWorld(Vector3(45, 0, 50), Vector3(8, 1, 3)));
-	floors.push_back(AddFloorToWorld(Vector3(70, 0, 50), Vector3(3, 1, 3)));
-	floors.push_back(AddFloorToWorld(Vector3(35, 0, 70), Vector3(9, 1, 3)));
-	floors.push_back(AddFloorToWorld(Vector3(65, 0, 70), Vector3(8, 1, 3)));
-	floors.push_back(AddFloorToWorld(Vector3(10, 0, 50), Vector3(4, 1, 4)));
-	floors.push_back(AddFloorToWorld(Vector3(25, 0, 50), Vector3(2, 1, 4)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,12),Vector3(6,1,1)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,12),Vector3(6,1,1)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(60,0,30),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,50),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,50),Vector3(3,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(35,0,70),Vector3(9,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(65,0,70),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(10,0,50),Vector3(4,1,4)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(25,0,50),Vector3(2,1,4)));
 
 	SetWallColour();
 }

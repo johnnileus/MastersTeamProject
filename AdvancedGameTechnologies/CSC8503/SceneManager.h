@@ -15,7 +15,7 @@ namespace NCL {
             static SceneManager& Instance();
 
             GameObject* AddCubeToWorld(GameWorld* world, const Vector3& pos, const Vector3& size, float inverseMass);
-        
+            GameObject* AddDefaultFloorToWorld(GameWorld* world, const Vector3& position, const Vector3& size);
         private:
             SceneManager() {}
             SceneManager(const SceneManager&) = delete;

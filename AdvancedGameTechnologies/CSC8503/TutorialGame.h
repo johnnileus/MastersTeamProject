@@ -49,7 +49,6 @@ namespace NCL {
 			void InitCatCoins();
 			
 			StateGameObject* testStateObject;
-			GameObject* AddFloorToWorld(const Vector3& position, const Vector3& size);
 
 			GameObject* debugSphere;
 			
