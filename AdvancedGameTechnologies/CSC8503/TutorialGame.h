@@ -37,7 +37,6 @@ namespace NCL {
 			void InitMixedGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing);
 
 			void InitDefaultFloor();
-			void AddEnemyToPoision(const Vector3& posision);
 			bool SelectObject();
 			void MoveSelectedObject();
 			void DebugObjectMovement();

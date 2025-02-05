@@ -1,5 +1,6 @@
 ﻿#include "Enemy.h"
 
+#include "AssetManager.h"
 #include "State.h"
 #include "StateMachine.h"
 #include "StateTransition.h"
@@ -14,12 +15,16 @@ Enemy::Enemy(Player* player, GameWorld* world)
     targetPlayer = player;
     stateMachine= new StateMachine();
     acceleratForce=5;
-    maxSpeed = 10.3;
+    maxSpeed = 10.3f;
     decelerationForce =10;
     rotationFactor =50;
     defaultColour=Vector4(1,1,1,1);
     hitColour = Vector4(1,0,0,1);
     myWorld=world;
+    mass=10.0f;
+    size=1;
+
+    SetComponent(size, mass);
 }
 
 void Enemy::Init() {
@@ -52,6 +57,7 @@ void Enemy::Init() {
     }));
 }
 
+
 void Enemy:: Update(float dt)
 {
     stateMachine->Update(dt);
@@ -59,6 +65,27 @@ void Enemy:: Update(float dt)
     HandleRotation(dt);
 }
 
+void Enemy::SetComponent(float meshSize,float inverseMass)
+{
+    //Collider
+    SphereVolume* volume  = new SphereVolume(meshSize);
+    SetBoundingVolume((CollisionVolume*)volume);
+
+    //Transform
+    GetTransform().SetScale(Vector3(meshSize, meshSize, meshSize));
+
+    //Render
+    SetRenderObject(new RenderObject(
+        &GetTransform(),
+        AssetManager::Instance().sphereMesh,
+        AssetManager::Instance().woodTex,
+        AssetManager::Instance().basicShader));
+
+    //Physics
+    SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
+    GetPhysicsObject()->SetInverseMass(inverseMass);
+    GetPhysicsObject()->InitSphereInertia();
+}
 
 
 void Enemy::IdleState(float dt) {
@@ -122,7 +149,6 @@ void Enemy::HandleRotation(float dt) {
 
     // Get the current linear velocity.
     Vector3 velocity = this->GetPhysicsObject()->GetLinearVelocity();
-
     
     if (Vector::Length(velocity) < 0.01f) return;
 
@@ -142,6 +168,23 @@ void Enemy::HandleRotation(float dt) {
     this->GetTransform().SetOrientation(rotation * this->GetTransform().GetOrientation());
 }
 
+Enemy* Enemy::Instantiate(GameWorld* world, std::vector<Enemy*>& enemyList, Player* player, const Vector3& position)
+{
+    Enemy* enemy = new Enemy(player,world);
+
+    // Set it's location and rotation
+    enemy->GetTransform().SetPosition(position);
+    enemy->GetTransform().SetOrientation(Quaternion());
+    enemy->Init();
+    enemyList.push_back(enemy);
+    
+    // Add to the GameWorld
+    if (world) {
+        world->AddGameObject(enemy);
+    }
+
+    return enemy;
+}
 
 
 void Enemy::SetMovePath(const std::vector<Vector3>& path) {
@@ -171,7 +214,6 @@ void Enemy::Reset() {
               << movePath[0].y << ", " 
               << movePath[0].z << std::endl;
 }
-
 
 
 Enemy::~Enemy()

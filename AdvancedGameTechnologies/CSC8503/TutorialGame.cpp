@@ -297,9 +297,9 @@ void TutorialGame::InitWorld() {
 	InitCatCoins();
 	
 	doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
-
-	AddEnemyToPoision(Vector3(50,0,0));
 	
+	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
+
 	InitDefaultFloor();
 
 	// Load the navigation grid
@@ -318,8 +318,7 @@ void TutorialGame::InitWorld() {
 
 		enemies[0]->SetMovePath(testNodes);
 	}
-
-	SampleSphere::Instantiate(world,Vector3(0,0,0),Quaternion());
+	
 	SceneManager::Instance().AddCubeToWorld(world,Vector3(5,0,0),Vector3(1,1,1),1);
 	
 	world->PrintObjects();
@@ -353,6 +352,7 @@ void TutorialGame::InitPlayer()
 	world->AddGameObject(player);
 	LockCameraToObject(player->playerObject);
 }
+
 
 
 /*
@@ -444,33 +444,6 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 
 	return cube;
 }
-
-
-void TutorialGame::AddEnemyToPoision(const Vector3& posision)
-{
-	Enemy* enemy = new Enemy(player,world);
-	float meshSize		= 1.0f;
-	float inverseMass	= 25.0f;
-	SphereVolume* volume  = new SphereVolume(1.0f);
-
-	enemy->SetBoundingVolume((CollisionVolume*)volume);
-
-	enemy->GetTransform()
-		.SetScale(Vector3(meshSize, meshSize, meshSize))
-		.SetPosition(posision);
-
-	enemy->SetRenderObject(new RenderObject(&enemy->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().woodTex, AssetManager::Instance().basicShader));
-	enemy->SetPhysicsObject(new PhysicsObject(&enemy->GetTransform(), enemy->GetBoundingVolume()));
-
-	enemy->GetPhysicsObject()->SetInverseMass(inverseMass);
-	enemy->GetPhysicsObject()->InitSphereInertia();
-	enemy->Init();
-	enemies.push_back(enemy);
-	
-	world->AddGameObject(enemy);
-	
-}
-
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
@@ -680,11 +653,3 @@ void TutorialGame::ReloadLevel() {
 
 	std::cout << "Level reloaded!" << std::endl;
 }
-
-
-
-
-
-
-
-
