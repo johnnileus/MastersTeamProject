@@ -67,3 +67,5 @@ GameObject* SceneManager::AddDefaultFloorToWorld(GameWorld* world, const Vector3
     return floor;
 }
 
+GameObject* SceneManager::GenerateTerrain(GameWorld* world, const Vector3& position, const Vector3& size) {
+}

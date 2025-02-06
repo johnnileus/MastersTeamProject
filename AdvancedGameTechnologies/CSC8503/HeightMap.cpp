@@ -2,9 +2,7 @@
 #include "stb_perlin.h"
 #include <iostream>
 
-using namespace NCL;
 using namespace NCL::Rendering;
-using namespace NCL::Maths;
 
 HeightMap::HeightMap(const std::string& name) {
 	int iWidth = 256;
