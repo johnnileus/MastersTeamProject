@@ -148,8 +148,7 @@ void TutorialGame::UpdateGame(float dt) {
 
 	physics->Update(dt);
 	thirdPersonCam->Update(dt);
-	Debug::DrawLine(player->GetTransform().GetPosition(),Vector3(0,0,0));
-	//world->GetMainCamera().LookAt(player->GetTransform().GetPosition());
+	
 	renderer->Render();
 	Debug::UpdateRenderables(dt);
 }
@@ -267,7 +266,6 @@ void TutorialGame::InitCamera() {
 	{
 		thirdPersonCam->SetPitch(0.0f);
 		thirdPersonCam->SetYaw(0.0f);
-		thirdPersonCam->SetOffset(Vector3(0,0,0));
 	}
 	lockedObject = nullptr;
 }
@@ -335,7 +333,7 @@ void TutorialGame::InitPlayer()
 	player->GetPhysicsObject()->InitSphereInertia();
 	player->playerObject=player;
 	player->myWorld=world;
-	player->Init();
+	player->Init(thirdPersonCam);
 
 	world->AddGameObject(player);
 

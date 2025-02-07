@@ -14,12 +14,16 @@ namespace NCL {
             ~ThirdPersonCamera();
 
             void SetFollowObject(GameObject* obj);
-            void SetOffset(const Vector3& offset);
+
+            Vector3 front;
+            Vector3 right;
 
             void Update(float dt);
 
             void SetPitch(float p) { pitch = p; }
             void SetYaw(float y)   { yaw   = y; }
+
+            float orbitRadius;
 
         protected:
             Camera* camera;
