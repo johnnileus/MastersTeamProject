@@ -40,20 +40,29 @@ void Camera::UpdateCamera(float dt) {
 }
 
 void Camera::LookAt(const Vector3& target) {
-	// calculate target's direction
+	// 计算指向目标的方向
 	Vector3 direction = target - position;
-	// to avoid divide by zero
 	if (Vector::LengthSquared(direction) < 1e-6f) {
 		return;
 	}
-	Vector::Normalise( direction); 
+	Vector::Normalise(direction); 
 
-	// forward = ( -sin(yaw)*cos(pitch), sin(pitch), -cos(yaw)*cos(pitch) )
-	// 
-	// pitch = arcsin( d.y )
-	// yaw   = atan2( -d.x, -d.z )
+	// 计算 pitch，直接根据方向的 y 分量得到
 	pitch = Maths::RadiansToDegrees(asin(direction.y));
-	yaw   = Maths::RadiansToDegrees(atan2(-direction.x, -direction.z));
+
+	// 计算水平（XZ平面）分量
+	Vector3 horizontalDir = direction;
+	horizontalDir.y = 0; // 忽略竖直分量
+
+	// 当水平分量过小时（目标几乎在正上或正下方），直接设 yaw 为 0
+	if (Vector::LengthSquared(horizontalDir) < 1e-6f) {
+		yaw = 0;
+	} else {
+		Vector::Normalise(horizontalDir);
+		// 根据约定，当水平分量为 (0,0,-1) 时，yaw 应为 0，
+		// 而 horizontalDir = (-sin(yaw), 0, -cos(yaw))，因此有：
+		yaw = Maths::RadiansToDegrees(atan2(-horizontalDir.x, -horizontalDir.z));
+	}
 }
 
 
