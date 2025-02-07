@@ -286,7 +286,6 @@ void TutorialGame::InitCamera() {
 void TutorialGame::InitWorld() {
 	world->ClearAndErase();
 	physics->Clear();
-	//BridgeConstraintTest();
 
 	CreateRopeGroup();
 	
@@ -350,7 +349,7 @@ void TutorialGame::InitPlayer()
 	player->Init();
 
 	world->AddGameObject(player);
-	LockCameraToObject(player->playerObject);
+	
 }
 
 void TutorialGame::InitCatCoins() {
