@@ -39,6 +39,24 @@ void Camera::UpdateCamera(float dt) {
 	
 }
 
+void Camera::LookAt(const Vector3& target) {
+	// calculate target's direction
+	Vector3 direction = target - position;
+	// to avoid divide by zero
+	if (Vector::LengthSquared(direction) < 1e-6f) {
+		return;
+	}
+	Vector::Normalise( direction); 
+
+	// forward = ( -sin(yaw)*cos(pitch), sin(pitch), -cos(yaw)*cos(pitch) )
+	// 
+	// pitch = arcsin( d.y )
+	// yaw   = atan2( -d.x, -d.z )
+	pitch = Maths::RadiansToDegrees(asin(direction.y));
+	yaw   = Maths::RadiansToDegrees(atan2(-direction.x, -direction.z));
+}
+
+
 /*
 Generates a view matrix for the camera's viewpoint. This matrix can be sent
 straight to the shader...it's already an 'inverse camera' matrix.
