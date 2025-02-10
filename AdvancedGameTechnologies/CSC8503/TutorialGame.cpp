@@ -50,6 +50,8 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	controller.MapAxis(3, "XLook");
 	controller.MapAxis(4, "YLook");
 
+	thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(),controller);
+	
 	InitialiseAssets();
 }
 
@@ -74,6 +76,7 @@ TutorialGame::~TutorialGame()	{
 
 	delete physics;
 	delete renderer;
+	delete thirdPersonCam;
 	delete world;
 }
 
@@ -105,24 +108,9 @@ void TutorialGame::UpdateGame(float dt) {
 
 	CheckCoinsCollected();
 	
-	if (!inSelectionMode) {
-		world->GetMainCamera().UpdateCamera(dt);
-	}
-	if (lockedObject != nullptr) {
-		Vector3 objPos = lockedObject->GetTransform().GetPosition();
-		Vector3 camPos = objPos + lockedOffset;
-
-		Matrix4 temp = Matrix::View(camPos, objPos, Vector3(0,1,0));
-
-		Matrix4 modelMat = Matrix::Inverse(temp);
-
-		Quaternion q(modelMat);
-		Vector3 angles = q.ToEuler(); //nearly there now!
-
-		world->GetMainCamera().SetPosition(camPos);
-		world->GetMainCamera().SetPitch(angles.x);
-		world->GetMainCamera().SetYaw(angles.y);
-	}
+	// if (!inSelectionMode) {
+	// 	world->GetMainCamera().UpdateCamera(dt);
+	// }
 
 	UpdateKeys();
 
@@ -132,8 +120,6 @@ void TutorialGame::UpdateGame(float dt) {
 	else {
 		//Debug::Print("(G)ravity off", Vector2(5, 95), Debug::RED);
 	}
-	//This year we can draw debug textures as well!
-	Debug::DrawTex(*AssetManager::Instance().woodTex, Vector2(10, 10), Vector2(5, 5), Debug::WHITE);
 
 	RayCollision closestCollision;
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::K) && selectionObject) {
@@ -157,14 +143,12 @@ void TutorialGame::UpdateGame(float dt) {
 	}
 	
 	DisplayPathfinding();
-	
-	SelectObject();
-	MoveSelectedObject();
 
 	world->UpdateWorld(dt);
-	//renderer->Update(dt);
-	physics->Update(dt);
 
+	physics->Update(dt);
+	thirdPersonCam->Update(dt);
+	
 	renderer->Render();
 	Debug::UpdateRenderables(dt);
 }
@@ -277,16 +261,18 @@ void TutorialGame::DebugObjectMovement() {
 void TutorialGame::InitCamera() {
 	world->GetMainCamera().SetNearPlane(0.1f);
 	world->GetMainCamera().SetFarPlane(500.0f);
-	world->GetMainCamera().SetPitch(-15.0f);
-	world->GetMainCamera().SetYaw(315.0f);
-	world->GetMainCamera().SetPosition(Vector3(-60, 40, 60));
+	
+	if (thirdPersonCam)
+	{
+		thirdPersonCam->SetPitch(0.0f);
+		thirdPersonCam->SetYaw(0.0f);
+	}
 	lockedObject = nullptr;
 }
 
 void TutorialGame::InitWorld() {
 	world->ClearAndErase();
 	physics->Clear();
-	//BridgeConstraintTest();
 
 	CreateRopeGroup();
 	
@@ -347,10 +333,15 @@ void TutorialGame::InitPlayer()
 	player->GetPhysicsObject()->InitSphereInertia();
 	player->playerObject=player;
 	player->myWorld=world;
-	player->Init();
+	player->Init(thirdPersonCam);
 
 	world->AddGameObject(player);
-	LockCameraToObject(player->playerObject);
+
+	if (thirdPersonCam)
+	{
+		thirdPersonCam->SetFollowObject(player);
+	}
+	
 }
 
 void TutorialGame::InitCatCoins() {

@@ -39,6 +39,33 @@ void Camera::UpdateCamera(float dt) {
 	
 }
 
+void Camera::LookAt(const Vector3& target) {
+	// 计算指向目标的方向
+	Vector3 direction = target - position;
+	if (Vector::LengthSquared(direction) < 1e-6f) {
+		return;
+	}
+	Vector::Normalise(direction); 
+
+	// 计算 pitch，直接根据方向的 y 分量得到
+	pitch = Maths::RadiansToDegrees(asin(direction.y));
+
+	// 计算水平（XZ平面）分量
+	Vector3 horizontalDir = direction;
+	horizontalDir.y = 0; // 忽略竖直分量
+
+	// 当水平分量过小时（目标几乎在正上或正下方），直接设 yaw 为 0
+	if (Vector::LengthSquared(horizontalDir) < 1e-6f) {
+		yaw = 0;
+	} else {
+		Vector::Normalise(horizontalDir);
+		// 根据约定，当水平分量为 (0,0,-1) 时，yaw 应为 0，
+		// 而 horizontalDir = (-sin(yaw), 0, -cos(yaw))，因此有：
+		yaw = Maths::RadiansToDegrees(atan2(-horizontalDir.x, -horizontalDir.z));
+	}
+}
+
+
 /*
 Generates a view matrix for the camera's viewpoint. This matrix can be sent
 straight to the shader...it's already an 'inverse camera' matrix.

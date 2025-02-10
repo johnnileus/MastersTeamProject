@@ -81,6 +81,8 @@ namespace NCL {
 		float	GetSpeed() const	{ return speed; }
 		Camera& SetSpeed(float s)	{ speed = s; return *this; }
 
+		void LookAt(const Vector3& target);
+
 	protected:
 		float	nearPlane;
 		float	farPlane;

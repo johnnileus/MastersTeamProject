@@ -1,4 +1,4 @@
-#include "../NCLCoreClasses/KeyboardMouseController.h"
+
 
 #pragma once
 #include "GameTechRenderer.h"
@@ -14,6 +14,7 @@
 #include "Door.h"
 #include "StateGameObject.h"
 #include "AssetManager.h"
+#include "ThirdPersonCamera.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -51,7 +52,7 @@ namespace NCL {
 			StateGameObject* testStateObject;
 
 			GameObject* debugSphere;
-			
+			ThirdPersonCamera* thirdPersonCam;
 			GameObject* AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 10.0f);
 
 #ifdef USEVULKAN

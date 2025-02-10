@@ -24,7 +24,7 @@ Player::Player()
 }
 
 //init after player has get "object" in tutorialGame
-void Player::Init()
+void Player::Init(ThirdPersonCamera* cam)
 {
 	playerObject=this;
 	maxSpeed = 10;
@@ -48,14 +48,14 @@ void Player::Init()
 	collerctCoinColour = Vector4(0.949f,1,0.318f,1);
 	myWorld=new GameWorld();
 	playerPhysicObject = this->GetPhysicsObject();
-	
+	myCam=cam;
 }
 
 
 void Player::Update(float dt) {
 	HandleDash(dt);  // Dash logic takes priority
 	if (!isDashing || !isDead) {
-		HandleMovement(dt);  // Can only move normally when not dashing
+		HandleMovement(dt,inputDir);  // Can only move normally when not dashing
 	}
 	HandleRotation(dt);
 	HandleJump();
@@ -96,28 +96,40 @@ void Player::HealthCheck()
 	}
 }
 
-
-void Player::HandleMovement(float dt) {
-	if (!playerPhysicObject) return;
-	Vector3 movement(0, 0, 0);
-
+void Player::HandleInput()
+{
+	//each frame clear the input buffer
+	inputDir=Vector2(0,0);
+	
 	// detect keyboard input
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
-		movement.z += -1.0f;  // front
+		inputDir.y += -1.0f;  // front
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
-		movement.z += 1.0f;   // back
+		inputDir.y += 1.0f;   // back
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
-		movement.x += -1.0f;  // left
+		inputDir.x += -1.0f;  // left
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
-		movement.x += 1.0f;   // right
+		inputDir.x += 1.0f;   // right
 	}
+}
 
+void Player::HandleMovement(float dt, Vector2 inputDir) {
+	if (!playerPhysicObject) return;
+
+	HandleInput();
+	
+	Vector3 levelCamFront = Vector3(myCam->front.x,0,myCam->front.z);
+	Vector3 levelCamRight = Vector3(myCam->right.x,0,myCam->right.z);
+	
+	Vector3 moveDir= Vector::Normalise(-levelCamFront * inputDir.y + levelCamRight * inputDir.x);
+	Debug::DrawLine(transform.GetPosition(),transform.GetPosition()+moveDir);
+	
 	//if there has input value, add force
-	if (Vector::Length(movement)>0) {
-		Vector3 force = Vector::Normalise(movement) * acceleratForce;
+	if (Vector::Length(moveDir)>0) {
+		Vector3 force = Vector::Normalise(moveDir) * acceleratForce;
 		playerPhysicObject->AddForce(force);  //add force to object
 	}
 	ClampSpeed(dt);
