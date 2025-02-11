@@ -29,6 +29,9 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
 
     // load shader resources
     basicShader = renderer->LoadShader("scene.vert", "scene.frag");
+
+    //load animation resources 
+    idle = new MeshAnimation("Idle1.anm");
 }
 
 void AssetManager::Cleanup() {

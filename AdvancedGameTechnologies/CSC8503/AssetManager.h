@@ -3,6 +3,7 @@
 #include <string>
 
 #include "GameTechRenderer.h"
+#include "MeshAnimation.h"
 #ifdef USEVULKAN
 #include "GameTechVulkanRenderer.h"
 #endif
@@ -35,6 +36,9 @@ namespace NCL {
 
             //Shader
             Shader* basicShader = nullptr;
+
+            //Ani
+            MeshAnimation* idle;
 
         private:
             AssetManager() = default;

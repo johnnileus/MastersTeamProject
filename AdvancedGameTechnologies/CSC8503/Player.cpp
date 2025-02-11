@@ -54,23 +54,31 @@ void Player::Init(ThirdPersonCamera* cam)
 void Player::SetComponent(float meshSize,float mass)
 {
 	//Collider
-	SphereVolume* volume  = new SphereVolume(meshSize);
+	SphereVolume* volume  = new SphereVolume(1);
 	SetBoundingVolume((CollisionVolume*)volume);
 
 	//Transform
+	Transform& objectTransform = GetTransform();
 	GetTransform().SetScale(Vector3(meshSize, meshSize, meshSize));
 
-	//Render
-	SetRenderObject(new RenderObject(
-		&GetTransform(),
-		AssetManager::Instance().sphereMesh,
-		AssetManager::Instance().metalTex,
-		AssetManager::Instance().basicShader));
-
 	//Physics
-	SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
+	SetPhysicsObject(new PhysicsObject(&objectTransform, GetBoundingVolume()));
 	GetPhysicsObject()->SetInverseMass(mass);
 	GetPhysicsObject()->InitSphereInertia();
+	
+	//Render
+	SetRenderObject(new RenderObject(
+		&objectTransform,
+		AssetManager::Instance().guard,
+		AssetManager::Instance().metalTex,
+		AssetManager::Instance().basicShader));
+	
+}
+
+void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
+	for (size_t i = 0; i < boneTransforms.size(); ++i) {
+		 mesh->SetBindPose(i, boneTransforms[i]);
+	}
 }
 
 
@@ -86,7 +94,7 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	// Set it's location and rotation
 	player->GetTransform().SetPosition(position);
 	player->GetTransform().SetOrientation(Quaternion());
-	player->SetComponent(1,10);
+	player->SetComponent(1,5);
 	player->playerObject =player;
 	player->myWorld = world;
 	player->Init(camera);
@@ -106,7 +114,7 @@ void Player::Update(float dt) {
 	if (!isDashing || !isDead) {
 		HandleMovement(dt,inputDir);  // Can only move normally when not dashing
 	}
-	HandleRotation(dt);
+	//HandleRotation(dt);
 	HandleJump();
 	DisplayUI();
 	HealthCheck();
@@ -184,7 +192,7 @@ void Player::HandleMovement(float dt, Vector2 inputDir) {
 	ClampSpeed(dt);
 }
 
-//limit speed to the max speed
+//limit speed 
 void Player::ClampSpeed(float dt) {
 	if (!playerPhysicObject) return;
 
@@ -202,7 +210,11 @@ void Player::ClampSpeed(float dt) {
 			Vector3 limitedVelocity = Vector::Normalise(velocity) * maxSpeed;
 			playerPhysicObject->SetLinearVelocity(limitedVelocity);
 		}
+	}
 
+	if (Vector::Length(inputDir)<0.1)
+	{
+		playerPhysicObject->SetLinearVelocity(Vector3(0,0,0));
 	}
 }
 
