@@ -43,7 +43,6 @@ namespace NCL {
 			void DebugObjectMovement();
 			void LockedObjectMovement();
 			void TestLinearMotion();
-			void InitPlayer();
 			void CreateRopeGroup();
 			
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.

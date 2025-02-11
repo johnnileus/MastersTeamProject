@@ -51,6 +51,55 @@ void Player::Init(ThirdPersonCamera* cam)
 	myCam=cam;
 }
 
+void Player::SetComponent(float meshSize,float mass)
+{
+	//Collider
+	SphereVolume* volume  = new SphereVolume(meshSize);
+	SetBoundingVolume((CollisionVolume*)volume);
+
+	//Transform
+	GetTransform().SetScale(Vector3(meshSize, meshSize, meshSize));
+
+	//Render
+	SetRenderObject(new RenderObject(
+		&GetTransform(),
+		AssetManager::Instance().sphereMesh,
+		AssetManager::Instance().metalTex,
+		AssetManager::Instance().basicShader));
+
+	//Physics
+	SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
+	GetPhysicsObject()->SetInverseMass(mass);
+	GetPhysicsObject()->InitSphereInertia();
+}
+
+
+/// Create a player instance in world
+/// @param world the scene
+/// @param camera his camera
+/// @param position instantiate position
+/// @return 
+Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const Vector3& position)
+{
+	Player* player = new Player();
+
+	// Set it's location and rotation
+	player->GetTransform().SetPosition(position);
+	player->GetTransform().SetOrientation(Quaternion());
+	player->SetComponent(1,10);
+	player->playerObject =player;
+	player->myWorld = world;
+	player->Init(camera);
+
+	// Add to the GameWorld
+	if (world) {
+		world->AddGameObject(player);
+	}
+	camera->SetFollowObject(player);
+	
+	return player;
+}
+
 
 void Player::Update(float dt) {
 	HandleDash(dt);  // Dash logic takes priority

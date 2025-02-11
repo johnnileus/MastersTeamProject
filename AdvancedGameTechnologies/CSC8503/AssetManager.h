@@ -24,6 +24,7 @@ namespace NCL {
             Mesh* kittenMesh = nullptr;
             Mesh* enemyMesh = nullptr;
             Mesh* bonusMesh = nullptr;
+            Mesh* guard = nullptr;
 
             //Texture
             Texture* basicTex = nullptr;

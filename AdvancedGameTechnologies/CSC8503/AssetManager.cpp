@@ -18,6 +18,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
     enemyMesh = renderer->LoadMesh("Keeper.msh");
     bonusMesh = renderer->LoadMesh("19463_Kitten_Head_v1.msh");
     capsuleMesh = renderer->LoadMesh("capsule.msh");
+    guard = renderer->LoadMesh("Female_Guard.msh");
 
     // load texture resources
     basicTex = renderer->LoadTexture("checkerboard.png");
@@ -38,6 +39,7 @@ void AssetManager::Cleanup() {
     delete enemyMesh;
     delete bonusMesh;
     delete capsuleMesh;
+    //delete guard;
 
     delete basicTex;
     delete woodTex;

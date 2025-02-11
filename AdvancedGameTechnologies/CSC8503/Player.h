@@ -23,6 +23,7 @@ namespace NCL {
 			void OnCollisionBegin(GameObject* otherObject) override;
 			void OnCollisionEnd(GameObject* otherObject) override;
 			void SetTemporaryColour(const Vector4& colour, float duration);
+			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position);
 
 			GameWorld* myWorld;
 
@@ -47,6 +48,7 @@ namespace NCL {
 			void HandleRotation(float dt);
 			void ClampSpeed(float dt);
 			void HandleInput();
+			void SetComponent(float meshSize, float mass);
 
 			//jump
 			float jumpForce;         
