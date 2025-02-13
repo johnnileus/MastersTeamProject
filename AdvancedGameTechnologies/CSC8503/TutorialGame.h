@@ -76,6 +76,9 @@ namespace NCL {
 			std::vector<Enemy*> enemies;
 			std::vector<GameObject*> floors;
 
+			int currentFrame;
+			float frameTime;
+
 			//Coursework Additional functionality	
 			GameObject* lockedObject	= nullptr;
 			Vector3 lockedOffset		= Vector3(0, 15, 25);

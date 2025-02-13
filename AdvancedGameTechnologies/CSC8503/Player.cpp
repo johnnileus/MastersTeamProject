@@ -69,7 +69,7 @@ void Player::SetComponent(float meshSize,float mass)
 	//Render
 	SetRenderObject(new RenderObject(
 		&objectTransform,
-		AssetManager::Instance().guard,
+		AssetManager::Instance().guardMesh,
 		AssetManager::Instance().metalTex,
 		AssetManager::Instance().basicShader));
 	
@@ -77,7 +77,7 @@ void Player::SetComponent(float meshSize,float mass)
 
 void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
 	for (size_t i = 0; i < boneTransforms.size(); ++i) {
-		 mesh->SetBindPose(i, boneTransforms[i]);
+		 //mesh->SetBindPose(i, boneTransforms[i]);
 	}
 }
 

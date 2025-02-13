@@ -4,6 +4,7 @@
 
 #include "GameTechRenderer.h"
 #include "MeshAnimation.h"
+#include "MeshMaterial.h"
 #ifdef USEVULKAN
 #include "GameTechVulkanRenderer.h"
 #endif
@@ -25,7 +26,7 @@ namespace NCL {
             Mesh* kittenMesh = nullptr;
             Mesh* enemyMesh = nullptr;
             Mesh* bonusMesh = nullptr;
-            Mesh* guard = nullptr;
+            Mesh* guardMesh = nullptr;
 
             //Texture
             Texture* basicTex = nullptr;
@@ -39,6 +40,9 @@ namespace NCL {
 
             //Ani
             MeshAnimation* idle;
+
+            //Material
+            MeshMaterial* guardMat;
 
         private:
             AssetManager() = default;

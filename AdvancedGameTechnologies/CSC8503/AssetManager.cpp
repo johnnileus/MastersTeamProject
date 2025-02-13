@@ -1,5 +1,4 @@
 ﻿#include "AssetManager.h"
-#include "TextureLoader.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -18,7 +17,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
     enemyMesh = renderer->LoadMesh("Keeper.msh");
     bonusMesh = renderer->LoadMesh("19463_Kitten_Head_v1.msh");
     capsuleMesh = renderer->LoadMesh("capsule.msh");
-    guard = renderer->LoadMesh("Female_Guard.msh");
+    guardMesh = renderer->LoadMesh("Male_Guard.msh");
 
     // load texture resources
     basicTex = renderer->LoadTexture("checkerboard.png");
@@ -32,6 +31,24 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
 
     //load animation resources 
     idle = new MeshAnimation("Idle1.anm");
+
+    //load material
+    guardMat = new MeshMaterial("Male_Guard.mat");
+
+    guardMat->LoadTextures();
+    for (int i = 0; i<guardMesh->GetSubMeshCount(); i++)
+    {
+        const MeshMaterialEntry* matEntry = guardMat ->GetMaterialForLayer(i);
+        if (matEntry)
+        {
+            const string* filename = nullptr;
+
+            if (matEntry->GetEntry("Diffuse", &filename))
+            {
+                std::cout << "Diffuse Texture File: " << *filename << std::endl;
+            }
+        }
+    }
 }
 
 void AssetManager::Cleanup() {
