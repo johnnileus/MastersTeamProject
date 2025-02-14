@@ -70,8 +70,9 @@ void Player::SetComponent(float meshSize,float mass)
 	SetRenderObject(new RenderObject(
 		&objectTransform,
 		AssetManager::Instance().guardMesh,
-		AssetManager::Instance().metalTex,
-		AssetManager::Instance().basicShader));
+		AssetManager::Instance().playerTex[0],
+		AssetManager::Instance().basicShader)
+		);
 	
 }
 
@@ -94,7 +95,7 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	// Set it's location and rotation
 	player->GetTransform().SetPosition(position);
 	player->GetTransform().SetOrientation(Quaternion());
-	player->SetComponent(1,5);
+	player->SetComponent(2,5);
 	player->playerObject =player;
 	player->myWorld = world;
 	player->Init(camera);
@@ -114,7 +115,7 @@ void Player::Update(float dt) {
 	if (!isDashing || !isDead) {
 		HandleMovement(dt,inputDir);  // Can only move normally when not dashing
 	}
-	//HandleRotation(dt);
+	HandleRotation(dt);
 	HandleJump();
 	DisplayUI();
 	HealthCheck();
@@ -181,7 +182,7 @@ void Player::HandleMovement(float dt, Vector2 inputDir) {
 	Vector3 levelCamFront = Vector3(myCam->front.x,0,myCam->front.z);
 	Vector3 levelCamRight = Vector3(myCam->right.x,0,myCam->right.z);
 	
-	Vector3 moveDir= Vector::Normalise(-levelCamFront * inputDir.y + levelCamRight * inputDir.x);
+	moveDir= Vector::Normalise(-levelCamFront * inputDir.y + levelCamRight * inputDir.x);
 	Debug::DrawLine(transform.GetPosition(),transform.GetPosition()+moveDir);
 	
 	//if there has input value, add force
@@ -220,30 +221,46 @@ void Player::ClampSpeed(float dt) {
 
 
 void Player::HandleRotation(float dt) {
-	if (!playerPhysicObject) return;
+	
+	Vector3 horizontalDir = Vector3(moveDir.x, 0.0f, moveDir.z);
+	float length = Vector::Length(horizontalDir);
 
-	// Get the ball's linear velocity
-	Vector3 velocity = playerPhysicObject->GetLinearVelocity();
+	// if no input direction dont rotate 
+	if (length < 0.01f) {
+		return;
+	}
+	Vector::Normalise(horizontalDir);
 
-	// If the speed is close to zero, do not rotate
-	if (Vector::Length(velocity) < 0) return;
+	// calculate rotation degrees
+	float yawRadians = std::atan2(horizontalDir.x, horizontalDir.z);
+	float yawDegrees = Maths::RadiansToDegrees(yawRadians);
 
-	// Calculate the rotation axis: perpendicular to the velocity direction (right-hand rule)
-	Vector3 rotationAxis = Vector::Normalise(Vector3(velocity.z, 0, -velocity.x));
+	
+	Quaternion desiredOrientation = Quaternion::EulerAnglesToQuaternion(0.0f, yawDegrees+180.0f, 0.0f);
+	
+	Quaternion currentOrientation = playerObject->GetTransform().GetOrientation();
 
-	// Calculate the angular speed: linear speed divided by the ball's radius
-	float angularSpeed = Vector::Length(velocity) / playerObject->GetTransform().GetScale().x * rotationFactor;  // Radius is determined by the scale factor
+	
+	float dot = Quaternion::Dot(currentOrientation, desiredOrientation);
+	if (dot < 0.0f) {
+		desiredOrientation = -desiredOrientation;
+	}
 
-	// Calculate the rotation angle
-	float rotationAngle = angularSpeed * dt;
+	// rotate speed
+	float rotateSpeed = 15.0f;
+	float t = rotateSpeed * dt;
 
-	// Generate a quaternion representing the rotation
-	Quaternion rotation = Quaternion::AxisAngleToQuaterion(rotationAxis, rotationAngle);
-
-	// Apply the rotation to the ball's transform
-	playerObject->GetTransform().SetOrientation(rotation * playerObject->GetTransform().GetOrientation());
-
+	//smooth rotation
+	Quaternion finalOrientation = Quaternion::Slerp(
+		currentOrientation,
+		desiredOrientation,
+		t
+	);
+	
+	playerObject->GetTransform().SetOrientation(finalOrientation);
 }
+
+
 
 void Player::HandleDash(float dt) {
 	if (isDashing) {

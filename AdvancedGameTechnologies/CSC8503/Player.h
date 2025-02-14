@@ -37,6 +37,7 @@ namespace NCL {
 			Shader* playerShader;
 			PhysicsObject* playerPhysicObject;
 			ThirdPersonCamera* myCam;
+			Transform* renderOffsetTransform;
 
 			//move
 			float acceleratForce;
@@ -44,6 +45,7 @@ namespace NCL {
 			float maxSpeed;
 			float decelerationFactor;
 			Vector2 inputDir;
+			Vector3 moveDir;
 			void HandleMovement(float dt,Vector2 inputDir);
 			void HandleRotation(float dt);
 			void ClampSpeed(float dt);

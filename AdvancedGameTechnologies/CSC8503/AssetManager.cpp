@@ -1,5 +1,7 @@
 ﻿#include "AssetManager.h"
 
+#include "Player.h"
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -36,7 +38,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
     guardMat = new MeshMaterial("Male_Guard.mat");
 
     guardMat->LoadTextures();
-    for (int i = 0; i<guardMesh->GetSubMeshCount(); i++)
+    for (int i = 0; i< guardMesh->GetSubMeshCount(); i++)
     {
         const MeshMaterialEntry* matEntry = guardMat ->GetMaterialForLayer(i);
         if (matEntry)
@@ -45,7 +47,8 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
 
             if (matEntry->GetEntry("Diffuse", &filename))
             {
-                std::cout << "Diffuse Texture File: " << *filename << std::endl;
+                std::cout << i << " Diffuse Texture File: " << *filename << std::endl;
+                playerTex.emplace_back(renderer->LoadTexture(*filename));
             }
         }
     }
@@ -59,7 +62,7 @@ void AssetManager::Cleanup() {
     delete enemyMesh;
     delete bonusMesh;
     delete capsuleMesh;
-    //delete guard;
+    delete guardMesh;
 
     delete basicTex;
     delete woodTex;
