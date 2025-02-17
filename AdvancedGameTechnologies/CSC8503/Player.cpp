@@ -1,6 +1,7 @@
 ﻿#include "GameObject.h"
 #include "Player.h"
 
+#include "Animator.h"
 #include "Window.h"
 #include "TutorialGame.h"
 #include "PhysicsObject.h"
@@ -53,6 +54,7 @@ void Player::Init(ThirdPersonCamera* cam)
 
 void Player::SetComponent(float meshSize,float mass)
 {
+	myMesh = AssetManager::Instance().guardMesh;
 	//Collider
 	SphereVolume* volume  = new SphereVolume(1);
 	SetBoundingVolume((CollisionVolume*)volume);
@@ -69,11 +71,14 @@ void Player::SetComponent(float meshSize,float mass)
 	//Render
 	SetRenderObject(new RenderObject(
 		&objectTransform,
-		AssetManager::Instance().guardMesh,
+		myMesh,
 		AssetManager::Instance().playerTex[0],
 		AssetManager::Instance().basicShader)
 		);
 	
+	
+	animator = new Animator();
+	animator->LoadAnimation("Idle");
 }
 
 void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
@@ -105,6 +110,8 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 		world->AddGameObject(player);
 	}
 	camera->SetFollowObject(player);
+
+	player->animator->Play("Idle",true,1);
 	
 	return player;
 }
@@ -119,6 +126,8 @@ void Player::Update(float dt) {
 	HandleJump();
 	DisplayUI();
 	HealthCheck();
+	
+	animator->Update(dt);
 
 	// Colour change timer
 	if (isTemporaryColourActive) {

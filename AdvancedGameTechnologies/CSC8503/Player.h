@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Animator.h"
 #include "GameObject.h"
 #include "GameTechRenderer.h"
 #include "Window.h"
@@ -72,7 +73,9 @@ namespace NCL {
 			Vector4 dashColour;       // Colour effect during dashing
 			void HandleDash(float dt);  // Dash logic handler
 
-
+			//Graphic
+			Animator* animator;
+			Mesh* myMesh;
 			Vector4 defaultColour;
 			Vector4 damageColour;
 			Vector4 attackColour;

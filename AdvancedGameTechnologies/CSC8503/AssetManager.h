@@ -16,6 +16,8 @@ namespace NCL {
             static AssetManager& Instance(); // singleton
 
             void LoadAssets(GameTechRenderer* renderer);
+            MeshAnimation* GetAnimation(const string& name);
+            void RegisterAnimation(const std::string& name,MeshAnimation* anim);
             void Cleanup(); // 
 
             // Mesh
@@ -41,6 +43,7 @@ namespace NCL {
 
             //Ani
             MeshAnimation* idle;
+            MeshAnimation* walk;
 
             //Material
             MeshMaterial* guardMat;
@@ -48,6 +51,7 @@ namespace NCL {
         private:
             AssetManager() = default;
             ~AssetManager() = default;
+            std::map<std::string, MeshAnimation*> animationMap;
         };
     }
 }

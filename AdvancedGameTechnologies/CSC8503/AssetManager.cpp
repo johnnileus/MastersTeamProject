@@ -1,5 +1,6 @@
 ﻿#include "AssetManager.h"
 
+#include "Animator.h"
 #include "Player.h"
 
 using namespace NCL;
@@ -33,6 +34,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
 
     //load animation resources 
     idle = new MeshAnimation("Idle1.anm");
+    RegisterAnimation("Idle",idle);
 
     //load material
     guardMat = new MeshMaterial("Male_Guard.mat");
@@ -52,7 +54,25 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
             }
         }
     }
+    
 }
+
+MeshAnimation* AssetManager::GetAnimation(const string& name)
+{
+    auto it = animationMap.find(name);
+    if (it != animationMap.end()) {
+        return it->second;
+    }
+    return nullptr;
+}
+
+void AssetManager::RegisterAnimation(const std::string& name, MeshAnimation* anim)
+{
+    if (anim) {
+        animationMap[name] = anim;
+    }
+}
+
 
 void AssetManager::Cleanup() {
     delete cubeMesh;
