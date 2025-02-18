@@ -14,6 +14,7 @@
 #include "Door.h"
 #include "StateGameObject.h"
 #include "AssetManager.h"
+#include "ThirdPersonCamera.h"
 
 #include "GameNet.h"
 
@@ -70,9 +71,10 @@ namespace NCL {
 			StateGameObject* testStateObject;
 
 			GameObject* debugSphere;
-			
+
 			NetworkManager* networkManager = new NetworkManager();
 
+			ThirdPersonCamera* thirdPersonCam;
 
 			GameObject* AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 10.0f);
 

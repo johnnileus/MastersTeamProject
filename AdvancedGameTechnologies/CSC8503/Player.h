@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "GameWorld.h"
 #include "Quaternion.h"
+#include "ThirdPersonCamera.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -17,7 +18,7 @@ namespace NCL {
 			GameObject* playerObject;
 			
 			void Update(float dt);
-			void Init();
+			void Init(ThirdPersonCamera* cam);
 
 			void OnCollisionBegin(GameObject* otherObject) override;
 			void OnCollisionEnd(GameObject* otherObject) override;
@@ -28,19 +29,24 @@ namespace NCL {
 			int score;
 
 		protected:
+
+			//component
 			Mesh* playerMesh;
 			Texture* playerTex;
 			Shader* playerShader;
 			PhysicsObject* playerPhysicObject;
+			ThirdPersonCamera* myCam;
 
 			//move
 			float acceleratForce;
 			float rotationFactor;
 			float maxSpeed;
 			float decelerationFactor;
-			void HandleMovement(float dt);
+			Vector2 inputDir;
+			void HandleMovement(float dt,Vector2 inputDir);
 			void HandleRotation(float dt);
 			void ClampSpeed(float dt);
+			void HandleInput();
 
 			//jump
 			float jumpForce;         
