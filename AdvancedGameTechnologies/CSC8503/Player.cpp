@@ -2,10 +2,9 @@
 #include "Player.h"
 
 #include "Window.h"
-#include "TutorialGame.h"
+#include "Enemy.h"
 #include "PhysicsObject.h"
 #include "RenderObject.h"
-#include "TutorialGame.h"
 
 using namespace NCL;
 using namespace CSC8503;

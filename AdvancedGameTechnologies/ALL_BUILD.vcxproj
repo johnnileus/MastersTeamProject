@@ -17,9 +17,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E0F5EA70-3B67-3A3D-BB84-B65A752F0814}</ProjectGuid>
+    <ProjectGuid>{66FCEED6-4435-3C88-A21B-C22DFF3D3B09}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
     <ProjectName>ALL_BUILD</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
@@ -68,11 +68,11 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMakeLists.txt">
+    <CustomBuild Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMakeLists.txt">
       <UseUtf8Encoding>Always</UseUtf8Encoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Git/MastersTeamProject/AdvancedGameTechnologies/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Git/MastersTeamProject/AdvancedGameTechnologies -BC:/Git/MastersTeamProject/AdvancedGameTechnologies --check-stamp-file C:/Git/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies -BC:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies --check-stamp-file C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -80,12 +80,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMake\Utils.cmake;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.0\CMakeCXXCompiler.cmake;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.0\CMakeRCCompiler.cmake;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.0\CMakeSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMake\Utils.cmake;C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.1\CMakeCXXCompiler.cmake;C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.1\CMakeRCCompiler.cmake;C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Git/MastersTeamProject/AdvancedGameTechnologies/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Git/MastersTeamProject/AdvancedGameTechnologies -BC:/Git/MastersTeamProject/AdvancedGameTechnologies --check-stamp-file C:/Git/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies -BC:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies --check-stamp-file C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -93,8 +93,8 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMake\Utils.cmake;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.0\CMakeCXXCompiler.cmake;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.0\CMakeRCCompiler.cmake;C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.0\CMakeSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Git\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMake\Utils.cmake;C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.1\CMakeCXXCompiler.cmake;C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.1\CMakeRCCompiler.cmake;C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.31.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
@@ -102,26 +102,26 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\ZERO_CHECK.vcxproj">
-      <Project>{C7D82A37-A51F-3175-825F-7B2D5D3E95C4}</Project>
+    <ProjectReference Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\ZERO_CHECK.vcxproj">
+      <Project>{70F65C2F-BEB2-3428-BF8A-ECC8529122AB}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CSC8503.vcxproj">
-      <Project>{110A1286-2DFC-3ADA-AAF6-F426EB3C0EB9}</Project>
+    <ProjectReference Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CSC8503.vcxproj">
+      <Project>{F83CFA13-67FA-387C-B4AA-21CAD971AA3C}</Project>
       <Name>CSC8503</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CSC8503CoreClasses.vcxproj">
-      <Project>{DAE581B1-F977-34C4-AACD-61AF15CB36BC}</Project>
+    <ProjectReference Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CSC8503CoreClasses.vcxproj">
+      <Project>{ECDD0C12-F1D6-314C-9799-61334B4344FD}</Project>
       <Name>CSC8503CoreClasses</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\NCLCoreClasses.vcxproj">
-      <Project>{83D8099C-23E3-3019-81BB-F251F7AF1DB0}</Project>
+    <ProjectReference Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\NCLCoreClasses.vcxproj">
+      <Project>{869F152A-CB2A-38C1-8FE8-4AC3741347DB}</Project>
       <Name>NCLCoreClasses</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OpenGLRendering.vcxproj">
-      <Project>{7852D96B-6079-307D-A501-5A40DB43402C}</Project>
+    <ProjectReference Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OpenGLRendering.vcxproj">
+      <Project>{3C15F41D-75C1-387D-92E9-B5CF35E5567F}</Project>
       <Name>OpenGLRendering</Name>
     </ProjectReference>
   </ItemGroup>

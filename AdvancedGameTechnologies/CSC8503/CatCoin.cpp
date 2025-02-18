@@ -20,9 +20,9 @@ CatCoin::CatCoin()
     GetPhysicsObject()->SetInverseMass(inverseMass);
     GetPhysicsObject()->InitSphereInertia();
     
+    
     //Render
-    SetRenderObject(new RenderObject(
-        &GetTransform(),
+    SetRenderObject(new RenderObject(&GetTransform(),
         AssetManager::Instance().bonusMesh, 
         nullptr,   
         AssetManager::Instance().basicShader

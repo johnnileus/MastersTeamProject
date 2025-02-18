@@ -1,15 +1,12 @@
 ﻿#pragma once
 
-#pragma once
-
 #include "GameObject.h"
 #include "Player.h"
 
 #include "Window.h"
-#include "TutorialGame.h"
+#include "AssetManager.h"
 #include "PhysicsObject.h"
 #include "RenderObject.h"
-#include "TutorialGame.h"
 
 namespace NCL
 {
