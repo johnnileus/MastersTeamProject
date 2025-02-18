@@ -1,5 +1,6 @@
-#include "TutorialGame.h"
+#pragma once
 
+#include "TutorialGame.h"
 
 
 using namespace NCL;
