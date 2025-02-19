@@ -9,6 +9,9 @@ https://research.ncl.ac.uk/game/
 #pragma once
 #include <algorithm>
 
+//added 4 heighmap - jw
+#include <cmath>
+
 namespace NCL::Maths {
 
     template <typename T, uint32_t n>

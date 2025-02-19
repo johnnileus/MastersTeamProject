@@ -31,6 +31,8 @@
 #include "SampleSphere.h"
 #include "SceneManager.h"
 
+#include "HeightMap.h"
+
 namespace NCL {
 	namespace CSC8503 {
 		class TutorialGame		{
@@ -123,6 +125,9 @@ namespace NCL {
 			void ReloadLevel();
 
 			Door* doorTrigger;
+
+			HeightMap* heightMap;
+			OGLMesh* terrainMesh;
 
 		};
 	}

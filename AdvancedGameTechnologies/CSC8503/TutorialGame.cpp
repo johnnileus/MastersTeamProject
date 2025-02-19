@@ -16,6 +16,11 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	renderer = new GameTechRenderer(*world);
 #endif
 
+	//HeightMap Generation
+	heightMap = new HeightMap(256, 0.1f, 50.0f);
+	terrainMesh = renderer->GenerateTerrainMesh(heightMap);
+
+
 	physics		= new PhysicsSystem(*world);
 
 	forceMagnitude	= 1.0f;
@@ -62,6 +67,9 @@ TutorialGame::~TutorialGame()	{
 	delete renderer;
 	delete thirdPersonCam;
 	delete world;
+
+	delete heightMap;
+	delete terrainMesh;
 }
 
 
