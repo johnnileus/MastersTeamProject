@@ -114,7 +114,14 @@ OGLMesh* GameTechRenderer::GenerateTerrainMesh(HeightMap* heightmap) {
 	terrainMesh->SetVertexIndices(indices);
 	terrainMesh->UploadToGPU();
 
+	GenerateTerrainTex("Metal.png");
+
 	return terrainMesh;
+}
+
+void GameTechRenderer::GenerateTerrainTex(const std::string& filename) {
+	terrainTex = LoadTexture(filename);
+	terrainShader = LoadShader("scene.vert", "scene.frag");
 }
 
 GameTechRenderer::~GameTechRenderer()	{

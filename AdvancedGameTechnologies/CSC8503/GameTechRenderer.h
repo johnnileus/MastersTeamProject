@@ -82,7 +82,10 @@ namespace NCL {
 			size_t textCount;
 
 			//Terrain Generation
+			void GenerateTerrainTex(const std::string& filename);
 			OGLMesh* terrainMesh;
+			Texture* terrainTex;
+			Shader* terrainShader;
 		};
 	}
 }
