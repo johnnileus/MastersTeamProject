@@ -66,6 +66,9 @@ namespace NCL {
 			void TestLinearMotion();
 			void InitPlayer();
 			void CreateRopeGroup();
+
+			//Terrain Generation
+			void InitTerrain();
 			
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
 			void InitCatCoins();
@@ -126,8 +129,8 @@ namespace NCL {
 
 			Door* doorTrigger;
 
-			HeightMap* heightMap;
-			OGLMesh* terrainMesh;
+			//Terrain Generation
+			HeightMap* heightmap;
 
 		};
 	}

@@ -16,11 +16,6 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	renderer = new GameTechRenderer(*world);
 #endif
 
-	//HeightMap Generation
-	heightMap = new HeightMap(256, 0.1f, 50.0f);
-	terrainMesh = renderer->GenerateTerrainMesh(heightMap);
-
-
 	physics		= new PhysicsSystem(*world);
 
 	forceMagnitude	= 1.0f;
@@ -68,8 +63,7 @@ TutorialGame::~TutorialGame()	{
 	delete thirdPersonCam;
 	delete world;
 
-	delete heightMap;
-	delete terrainMesh;
+	delete heightmap;
 }
 
 
@@ -326,6 +320,12 @@ void TutorialGame::InitWorld() {
 	
 	world->PrintObjects();
 
+}
+
+void TutorialGame::InitTerrain() {
+	Vector3 offset(20, 0, 20);
+	heightmap = new HeightMap(256, 0.1f, 50.0f);
+	SceneManager::Instance().AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
 
 void TutorialGame::InitPlayer()

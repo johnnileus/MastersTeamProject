@@ -5,7 +5,6 @@
 #include "SphereVolume.h"
 #include "RenderObject.h"
 #include "PhysicsObject.h"
-#include "AssetManager.h"
 
 SceneManager& SceneManager::Instance() {
     static SceneManager instance;
@@ -65,5 +64,31 @@ GameObject* SceneManager::AddDefaultFloorToWorld(GameWorld* world, const Vector3
     world->AddGameObject(floor);
 	
     return floor;
+}
+
+GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const Vector3& size) {
+    GameObject* terrain = new GameObject();
+    terrain->tag = "Terrain";
+    terrain->SetName("terrain");
+    Vector3 floorSize = size;
+    AABBVolume* volume = new AABBVolume(floorSize);
+    terrain->SetBoundingVolume((CollisionVolume*)volume);
+    terrain->GetTransform().SetScale(floorSize * 2.0f).SetPosition(pos);
+
+    terrain->SetRenderObject(new RenderObject(
+        &terrain->GetTransform(),
+        AssetManager::Instance().terrainMesh,
+        AssetManager::Instance().floorTex,
+        AssetManager::Instance().basicShader));
+
+    terrain->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
+    terrain->SetPhysicsObject(new PhysicsObject(&terrain->GetTransform(), terrain->GetBoundingVolume()));
+
+    terrain->GetPhysicsObject()->SetInverseMass(0);
+    terrain->GetPhysicsObject()->InitCubeInertia();
+
+    world->AddGameObject(terrain);
+
+    return terrain;
 }
 
