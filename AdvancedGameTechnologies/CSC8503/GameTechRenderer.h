@@ -5,6 +5,7 @@
 #include "OGLMesh.h"
 
 #include "GameWorld.h"
+#include "GameUI.h"
 
 #include "HeightMap.h"
 #include "GameTechRendererInterface.h"
@@ -81,6 +82,9 @@ namespace NCL {
 			GLuint textColourVBO;
 			GLuint textTexVBO;
 			size_t textCount;
+
+			//UI handler
+			GameUI* gameUIHandler;
 
 			//Terrain Generation
 			OGLMesh* terrainMesh;

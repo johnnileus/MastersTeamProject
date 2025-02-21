@@ -76,6 +76,9 @@ GameTechRenderer::GameTechRenderer(GameWorld& world) : OGLRenderer(*Window::GetW
 
 	SetDebugStringBufferSizes(10000);
 	SetDebugLineBufferSizes(1000);
+
+	//Initializing ImGui
+	gameUIHandler = new GameUI();
 }
 
 //Terrain Generation
@@ -124,6 +127,9 @@ OGLMesh* GameTechRenderer::GenerateTerrainMesh(HeightMap* heightmap) {
 GameTechRenderer::~GameTechRenderer()	{
 	glDeleteTextures(1, &shadowTex);
 	glDeleteFramebuffers(1, &shadowFBO);
+
+	//clear UI
+	delete gameUIHandler;
 }
 
 void GameTechRenderer::LoadSkybox() {
@@ -184,6 +190,9 @@ void GameTechRenderer::RenderFrame() {
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	//UI Rendering
+	gameUIHandler->RenderUI();
 }
 
 void GameTechRenderer::BuildObjectList() {
