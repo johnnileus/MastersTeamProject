@@ -48,10 +48,12 @@ for this module, even in the coursework, but you can add it if you like!
 */
 void TutorialGame::InitialiseAssets() {
 	
+	heightmap = new HeightMap(256, 0.1f, 50.0f);
 	AssetManager::Instance().LoadAssets(renderer);
 	
 	InitCamera();
 	InitWorld();
+	InitTerrain();
 }
 
 TutorialGame::~TutorialGame()	{
@@ -324,7 +326,6 @@ void TutorialGame::InitWorld() {
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
-	heightmap = new HeightMap(256, 0.1f, 50.0f);
 	SceneManager::Instance().AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
 
