@@ -5,6 +5,7 @@
 #include "OGLMesh.h"
 
 #include "GameWorld.h"
+#include "GameUI.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -75,6 +76,9 @@ namespace NCL {
 			GLuint textColourVBO;
 			GLuint textTexVBO;
 			size_t textCount;
+
+			//UI handler
+			GameUI* gameUIHandler;
 		};
 	}
 }
