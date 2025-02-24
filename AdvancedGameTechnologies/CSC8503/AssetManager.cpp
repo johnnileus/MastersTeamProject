@@ -10,6 +10,9 @@ AssetManager& AssetManager::Instance() {
 }
 
 void AssetManager::LoadAssets(GameTechRenderer* renderer) {
+    //load heightmap
+    heightmap = new HeightMap(256, 0.1f, 50.0f);
+
     // load mesh resources
     cubeMesh = renderer->LoadMesh("cube.msh");
     sphereMesh = renderer->LoadMesh("sphere.msh");

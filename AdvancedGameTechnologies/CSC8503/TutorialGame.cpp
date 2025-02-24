@@ -47,8 +47,7 @@ for this module, even in the coursework, but you can add it if you like!
 
 */
 void TutorialGame::InitialiseAssets() {
-	
-	heightmap = new HeightMap(256, 0.1f, 50.0f);
+
 	AssetManager::Instance().LoadAssets(renderer);
 	
 	InitCamera();
@@ -64,8 +63,6 @@ TutorialGame::~TutorialGame()	{
 	delete renderer;
 	delete thirdPersonCam;
 	delete world;
-
-	delete heightmap;
 }
 
 

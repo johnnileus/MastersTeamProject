@@ -2,8 +2,13 @@
 #include "stb_perlin.h"
 #include "HeightMap.h"
 
-HeightMap::HeightMap(int size, float scale, float heightMultiplier) : size(size), scale(scale), heightMultiplier(heightMultiplier) {
+HeightMap::HeightMap(int size, float scale, float heightMultiplier) {
+	this->size = size;
+	this->scale = scale;
+	this->heightMultiplier = heightMultiplier;
+
 	heightmap.resize(size, std::vector<float>(size, 0.0f));
+	
 	Generate();
 }
 

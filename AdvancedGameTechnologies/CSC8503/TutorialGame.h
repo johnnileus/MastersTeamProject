@@ -129,9 +129,6 @@ namespace NCL {
 
 			Door* doorTrigger;
 
-			//Terrain Generation
-			HeightMap* heightmap;
-
 		};
 	}
 }
