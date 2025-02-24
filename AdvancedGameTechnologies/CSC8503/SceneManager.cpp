@@ -73,12 +73,12 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
     Vector3 floorSize = size;
     AABBVolume* volume = new AABBVolume(floorSize);
     terrain->SetBoundingVolume((CollisionVolume*)volume);
-    terrain->GetTransform().SetScale(floorSize * 2.0f).SetPosition(pos);
+    terrain->GetTransform().SetScale(floorSize).SetPosition(pos);
 
     terrain->SetRenderObject(new RenderObject(
         &terrain->GetTransform(),
         AssetManager::Instance().terrainMesh,
-        AssetManager::Instance().floorTex,
+        AssetManager::Instance().basicTex,
         AssetManager::Instance().basicShader));
 
     terrain->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
