@@ -10,6 +10,9 @@ AssetManager& AssetManager::Instance() {
 }
 
 void AssetManager::LoadAssets(GameTechRenderer* renderer) {
+    //load heightmap
+    heightmap = new HeightMap(256, 0.1f, 50.0f);
+
     // load mesh resources
     cubeMesh = renderer->LoadMesh("cube.msh");
     sphereMesh = renderer->LoadMesh("sphere.msh");
@@ -18,6 +21,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
     enemyMesh = renderer->LoadMesh("Keeper.msh");
     bonusMesh = renderer->LoadMesh("19463_Kitten_Head_v1.msh");
     capsuleMesh = renderer->LoadMesh("capsule.msh");
+    terrainMesh = renderer->GenerateTerrainMesh(heightmap);
 
     // load texture resources
     basicTex = renderer->LoadTexture("checkerboard.png");
@@ -38,6 +42,7 @@ void AssetManager::Cleanup() {
     delete enemyMesh;
     delete bonusMesh;
     delete capsuleMesh;
+    delete terrainMesh;
 
     delete basicTex;
     delete woodTex;

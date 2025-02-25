@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include <string>
 
+#include "HeightMap.h"
+
 #include "GameTechRenderer.h"
 #ifdef USEVULKAN
 #include "GameTechVulkanRenderer.h"
@@ -14,7 +16,7 @@ namespace NCL {
             static AssetManager& Instance(); // singleton
 
             void LoadAssets(GameTechRenderer* renderer);
-            void Cleanup(); // 
+            void Cleanup();
 
             // Mesh
             Mesh* capsuleMesh = nullptr;
@@ -24,6 +26,7 @@ namespace NCL {
             Mesh* kittenMesh = nullptr;
             Mesh* enemyMesh = nullptr;
             Mesh* bonusMesh = nullptr;
+            OGLMesh* terrainMesh = nullptr;
 
             //Texture
             Texture* basicTex = nullptr;
@@ -34,6 +37,9 @@ namespace NCL {
 
             //Shader
             Shader* basicShader = nullptr;
+
+        protected:
+            HeightMap* heightmap;
 
         private:
             AssetManager() = default;

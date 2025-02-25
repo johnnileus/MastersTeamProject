@@ -1,285 +1,285 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\CSC8503CoreClasses.dir\cmake_pch.cxx">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\CSC8503CoreClasses.dir\cmake_pch.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Debug.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Debug.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameObject.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameObject.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameWorld.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameWorld.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\RenderObject.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\RenderObject.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Transform.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Transform.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Debug.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameObject.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameWorld.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\RenderObject.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\RenderObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Transform.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourAction.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourAction.h">
       <Filter>AI\Behaviour Trees</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourNode.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourNode.h">
       <Filter>AI\Behaviour Trees</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourNodeWithChildren.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourNodeWithChildren.h">
       <Filter>AI\Behaviour Trees</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourSelector.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourSelector.h">
       <Filter>AI\Behaviour Trees</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourSelector.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourSelector.cpp">
       <Filter>AI\Behaviour Trees</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourSequence.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourSequence.h">
       <Filter>AI\Behaviour Trees</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourSequence.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\BehaviourSequence.cpp">
       <Filter>AI\Behaviour Trees</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PushdownMachine.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PushdownMachine.h">
       <Filter>AI\Pushdown Automata</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PushdownMachine.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PushdownMachine.cpp">
       <Filter>AI\Pushdown Automata</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PushdownState.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PushdownState.h">
       <Filter>AI\Pushdown Automata</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PushdownState.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PushdownState.cpp">
       <Filter>AI\Pushdown Automata</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\State.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\State.h">
       <Filter>AI\State Machine</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\StateMachine.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\StateMachine.h">
       <Filter>AI\State Machine</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\StateMachine.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\StateMachine.cpp">
       <Filter>AI\State Machine</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\StateTransition.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\StateTransition.h">
       <Filter>AI\State Machine</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationGrid.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationGrid.h">
       <Filter>AI\Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationGrid.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationGrid.cpp">
       <Filter>AI\Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationMesh.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationMesh.cpp">
       <Filter>AI\Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationMesh.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationMesh.h">
       <Filter>AI\Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationMap.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationMap.h">
       <Filter>AI\Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationPath.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NavigationPath.h">
       <Filter>AI\Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\AABBVolume.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\AABBVolume.h">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CapsuleVolume.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CapsuleVolume.h">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CapsuleVolume.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CapsuleVolume.cpp">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CollisionDetection.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CollisionDetection.h">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CollisionDetection.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CollisionDetection.cpp">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CollisionVolume.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CollisionVolume.h">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\OBBVolume.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\OBBVolume.h">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\QuadTree.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\QuadTree.h">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\QuadTree.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\QuadTree.cpp">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Ray.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Ray.h">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\SphereVolume.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\SphereVolume.h">
       <Filter>Collision Detection</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameClient.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameClient.h">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameClient.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameClient.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameServer.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameServer.h">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameServer.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\GameServer.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkBase.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkBase.h">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkBase.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkBase.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkObject.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkObject.h">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkObject.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkObject.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkState.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkState.h">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkState.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\NetworkState.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Constraint.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Constraint.h">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PositionConstraint.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PositionConstraint.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PositionConstraint.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PositionConstraint.h">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\OrientationConstraint.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\OrientationConstraint.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\OrientationConstraint.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\OrientationConstraint.h">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PhysicsObject.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PhysicsObject.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PhysicsObject.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PhysicsObject.h">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PhysicsSystem.cpp">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PhysicsSystem.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PhysicsSystem.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PhysicsSystem.h">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\callbacks.c">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\callbacks.c">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\list.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\list.h">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\list.c">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\list.c">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\protocol.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\protocol.h">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\protocol.c">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\protocol.c">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\win32.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\win32.h">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\win32.c">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\win32.c">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\enet.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\enet.h">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\time.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\time.h">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\types.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\types.h">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\utility.h">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\utility.h">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\compress.c">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\compress.c">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\host.c">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\host.c">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\packet.c">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\packet.c">
       <Filter>eNet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\peer.c">
+    <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\peer.c">
       <Filter>eNet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\CSC8503CoreClasses.dir\Debug\cmake_pch.hxx">
+    <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\CSC8503CoreClasses.dir\Debug\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\CSC8503CoreClasses.dir\Release\cmake_pch.hxx">
+    <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\CSC8503CoreClasses.dir\Release\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\Goines\Documents\GitHub\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeLists.txt" />
+    <CustomBuild Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AI">
-      <UniqueIdentifier>{D231B251-4908-3515-8BB7-E16AFF83EAB8}</UniqueIdentifier>
+      <UniqueIdentifier>{998E5AA4-FBD3-31C7-84FC-9B6AD2A2EC39}</UniqueIdentifier>
     </Filter>
     <Filter Include="AI\Behaviour Trees">
-      <UniqueIdentifier>{C6BF4287-1BEF-3B0A-80F7-60B06D952613}</UniqueIdentifier>
+      <UniqueIdentifier>{94188DC7-9BE9-37E1-9FD0-4663DBC69CAA}</UniqueIdentifier>
     </Filter>
     <Filter Include="AI\Pathfinding">
-      <UniqueIdentifier>{BBCF4C48-7BE7-36AF-9333-806974E55AD6}</UniqueIdentifier>
+      <UniqueIdentifier>{CDCE77CB-8190-3095-912E-03704BA3F261}</UniqueIdentifier>
     </Filter>
     <Filter Include="AI\Pushdown Automata">
-      <UniqueIdentifier>{A8BB6CC5-D099-36B7-97B5-D40A0358BAAE}</UniqueIdentifier>
+      <UniqueIdentifier>{0E4C4E1F-1E40-3E47-BFDC-3BE8C5C382A1}</UniqueIdentifier>
     </Filter>
     <Filter Include="AI\State Machine">
-      <UniqueIdentifier>{2488896C-127F-3F6F-9641-719061782805}</UniqueIdentifier>
+      <UniqueIdentifier>{F56D11F7-8CA7-3B97-A7A2-AA32F4D1145B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Collision Detection">
-      <UniqueIdentifier>{4DCF66DC-B45A-3BA1-9A18-8A94021FEED3}</UniqueIdentifier>
+      <UniqueIdentifier>{EE7E3A45-7765-3023-A5B6-2C8F87697463}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{3270BDBF-90BC-36E7-A1F6-BC0360E8A908}</UniqueIdentifier>
+      <UniqueIdentifier>{3DFDC234-01E4-3F4C-8EC5-C69D642A6656}</UniqueIdentifier>
     </Filter>
     <Filter Include="Networking">
-      <UniqueIdentifier>{7154E76D-B966-3D03-B8A2-9BB796E64DE8}</UniqueIdentifier>
+      <UniqueIdentifier>{A34504CF-D87E-36AF-A557-AFF373B05381}</UniqueIdentifier>
     </Filter>
     <Filter Include="Physics">
-      <UniqueIdentifier>{91112A99-19D2-3DBF-81F9-F706E95EF395}</UniqueIdentifier>
+      <UniqueIdentifier>{544B38CE-D9C6-36FF-B970-4F5E6B385995}</UniqueIdentifier>
     </Filter>
     <Filter Include="Precompile Header File">
-      <UniqueIdentifier>{A8B09581-6611-36CC-8B87-73B93D0405B9}</UniqueIdentifier>
+      <UniqueIdentifier>{5E03A60C-4C03-30D4-827F-0657436DC9D2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{E58719F7-759E-32B0-9A6A-E2D5147019F2}</UniqueIdentifier>
+      <UniqueIdentifier>{51E3DFC9-B6E1-31F3-8C92-5830465570EC}</UniqueIdentifier>
     </Filter>
     <Filter Include="eNet">
-      <UniqueIdentifier>{649BC59B-6DE2-3E92-AA74-96BEF561CAB8}</UniqueIdentifier>
+      <UniqueIdentifier>{012F8E68-0D2A-3B00-81C9-546E16712604}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

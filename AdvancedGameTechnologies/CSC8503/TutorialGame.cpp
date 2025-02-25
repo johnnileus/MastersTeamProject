@@ -47,7 +47,7 @@ for this module, even in the coursework, but you can add it if you like!
 
 */
 void TutorialGame::InitialiseAssets() {
-	
+
 	AssetManager::Instance().LoadAssets(renderer);
 	
 	InitCamera();
@@ -295,6 +295,8 @@ void TutorialGame::InitWorld() {
 	
 	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
 
+	InitTerrain();
+
 	InitDefaultFloor();
 
 	// Load the navigation grid
@@ -318,6 +320,11 @@ void TutorialGame::InitWorld() {
 	
 	world->PrintObjects();
 
+}
+
+void TutorialGame::InitTerrain() {
+	Vector3 offset(20, 0, 20);
+	SceneManager::Instance().AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
 
 void TutorialGame::InitPlayer()
@@ -417,6 +424,7 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
+
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));

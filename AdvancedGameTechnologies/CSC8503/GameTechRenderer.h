@@ -6,6 +6,8 @@
 
 #include "GameWorld.h"
 
+#include "HeightMap.h"
+
 namespace NCL {
 	namespace CSC8503 {
 		class RenderObject;
@@ -18,6 +20,9 @@ namespace NCL {
 			Mesh*		LoadMesh(const std::string& name);
 			Texture*	LoadTexture(const std::string& name);
 			Shader*		LoadShader(const std::string& vertex, const std::string& fragment);
+
+			//Terrain Generation
+			OGLMesh* GenerateTerrainMesh(HeightMap* heightmap);
 
 		protected:
 			void NewRenderLines();
@@ -75,6 +80,9 @@ namespace NCL {
 			GLuint textColourVBO;
 			GLuint textTexVBO;
 			size_t textCount;
+
+			//Terrain Generation
+			OGLMesh* terrainMesh;
 		};
 	}
 }

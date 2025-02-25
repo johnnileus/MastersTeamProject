@@ -31,6 +31,8 @@
 #include "SampleSphere.h"
 #include "SceneManager.h"
 
+#include "HeightMap.h"
+
 namespace NCL {
 	namespace CSC8503 {
 		class TutorialGame		{
@@ -64,6 +66,9 @@ namespace NCL {
 			void TestLinearMotion();
 			void InitPlayer();
 			void CreateRopeGroup();
+
+			//Terrain Generation
+			void InitTerrain();
 			
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
 			void InitCatCoins();
