@@ -67,6 +67,7 @@ namespace NCL {
 			void DebugObjectMovement();
 			void LockedObjectMovement();
 			void TestLinearMotion();
+			void InitPlayer();
 			void CreateRopeGroup();
 
 
