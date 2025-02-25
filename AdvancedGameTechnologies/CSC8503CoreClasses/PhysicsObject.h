@@ -44,7 +44,7 @@ namespace NCL {
 			void AddForceAtPosition(const Vector3& force, const Vector3& position);
 
 			void AddTorque(const Vector3& torque);
-			void ClearTorque();                         // 清除所有扭矩
+			void ClearTorque();                         // 清除所有扭矩 
 
 			Quaternion GetOrientation() const;
 			void SetOrientation(const Quaternion& q);

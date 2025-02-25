@@ -1,6 +1,6 @@
 
-
 #pragma once
+#include "../NCLCoreClasses/KeyboardMouseController.h"
 #include "GameTechRenderer.h"
 #ifdef USEVULKAN
 #include "GameTechVulkanRenderer.h"
@@ -16,6 +16,23 @@
 #include "AssetManager.h"
 #include "ThirdPersonCamera.h"
 
+#include "GameNet.h"
+
+#include "Constants.h"
+#include "GameWorld.h"
+#include "NavigationGrid.h"
+#include "PhysicsObject.h"
+#include "RenderObject.h"
+#include "TextureLoader.h"
+
+#include "PositionConstraint.h"
+#include "OrientationConstraint.h"
+#include "Rope.h"
+#include "SampleSphere.h"
+#include "SceneManager.h"
+
+#include "HeightMap.h"
+
 namespace NCL {
 	namespace CSC8503 {
 		class TutorialGame		{
@@ -25,6 +42,10 @@ namespace NCL {
 
 			virtual void UpdateGame(float dt);
 			GameObject* AddSphereToWorld(const Vector3& position,float radius,float inverseMass,const Vector3& initialVelocity);
+
+			void BroadcastPosition();
+			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
+
 
 		protected:
 			void InitialiseAssets();
@@ -44,6 +65,9 @@ namespace NCL {
 			void LockedObjectMovement();
 			void TestLinearMotion();
 			void CreateRopeGroup();
+
+			//Terrain Generation
+			void InitTerrain();
 			
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
 			void InitCatCoins();
@@ -51,7 +75,11 @@ namespace NCL {
 			StateGameObject* testStateObject;
 
 			GameObject* debugSphere;
+
+			NetworkManager* networkManager = new NetworkManager();
+
 			ThirdPersonCamera* thirdPersonCam;
+
 			GameObject* AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 10.0f);
 
 #ifdef USEVULKAN
@@ -61,6 +89,7 @@ namespace NCL {
 #endif
 			PhysicsSystem*		physics;
 			GameWorld*			world;
+
 
 			KeyboardMouseController controller;
 

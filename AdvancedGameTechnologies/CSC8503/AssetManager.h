@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include <string>
 
+#include "HeightMap.h"
+
 #include "GameTechRenderer.h"
 #include "MeshAnimation.h"
 #include "MeshMaterial.h"
@@ -16,9 +18,12 @@ namespace NCL {
             static AssetManager& Instance(); // singleton
 
             void LoadAssets(GameTechRenderer* renderer);
+
             MeshAnimation* GetAnimation(const string& name);
             void RegisterAnimation(const std::string& name,MeshAnimation* anim);
-            void Cleanup(); // 
+
+            void Cleanup();
+
 
             // Mesh
             Mesh* capsuleMesh = nullptr;
@@ -28,7 +33,11 @@ namespace NCL {
             Mesh* kittenMesh = nullptr;
             Mesh* enemyMesh = nullptr;
             Mesh* bonusMesh = nullptr;
+
             Mesh* guardMesh = nullptr;
+
+            OGLMesh* terrainMesh = nullptr;
+
 
             //Texture
             Texture* basicTex = nullptr;
@@ -41,12 +50,17 @@ namespace NCL {
             //Shader
             Shader* basicShader = nullptr;
 
+
             //Ani
             MeshAnimation* idle;
             MeshAnimation* walk;
 
             //Material
             MeshMaterial* guardMat;
+
+        protected:
+            HeightMap* heightmap;
+
 
         private:
             AssetManager() = default;

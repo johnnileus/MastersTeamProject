@@ -1,3 +1,4 @@
+#pragma once
 #include "Window.h"
 
 #include "Debug.h"
@@ -6,14 +7,11 @@
 #include "StateTransition.h"
 #include "State.h"
 
-#include "GameServer.h"
-#include "GameClient.h"
 
 #include "NavigationGrid.h"
 #include "NavigationMesh.h"
 
 #include "TutorialGame.h"
-#include "NetworkedGame.h"
 
 #include "PushdownMachine.h"
 
@@ -24,6 +22,7 @@
 #include "BehaviourSequence.h"
 #include "BehaviourAction.h"
 
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -33,26 +32,8 @@ using namespace CSC8503;
 
 std::vector<Vector3> testNodes;
 
-class TestPacketReceiver : public PacketReceiver {
-public:
-	TestPacketReceiver(std::string name) {
-		this->name = name;
-	}
 
-	void ReceivePacket(int type, GamePacket* payload, int source) {
-		if (type == String_Message) {
-			StringPacket* realPacket = (StringPacket*)payload;
-
-			std::string msg = realPacket->GetStringFromData();
-
-			std::cout << name << " received message: " << msg << std::endl;
-		}
-	}
-
-protected:
-	std::string name;
-};
-
+TutorialGame* g;
 
 void TestPathfinding() {
 	NavigationGrid grid("TestGrid1.txt");
@@ -104,12 +85,12 @@ int main() {
 		return -1;
 	}	
 
-	w->ShowOSPointer(false);
-	w->LockMouseToWindow(true);
+	w->ShowOSPointer(true);
+	w->LockMouseToWindow(false);
 	//TestPathfinding();
 
 
-	TutorialGame* g = new TutorialGame();
+	g = new TutorialGame();
 	w->GetTimer().GetTimeDeltaSeconds(); //Clear the timer so we don't get a larget first dt!
 	while (w->UpdateWindow() && !Window::GetKeyboard()->KeyDown(KeyCodes::ESCAPE)) {
 		float dt = w->GetTimer().GetTimeDeltaSeconds();
@@ -127,6 +108,12 @@ int main() {
 		if (Window::GetKeyboard()->KeyPressed(KeyCodes::T)) {
 			w->SetWindowPosition(0, 0);
 		}
+
+		if (Window::GetKeyboard()->KeyPressed(KeyCodes::O)) {
+			w->ShowOSPointer(false);
+			w->LockMouseToWindow(true);
+		}
+
 		//DisplayPathfinding();
 
 		w->SetTitle("Go Marble Ball: " + std::to_string(1000.0f * dt));
@@ -177,43 +164,7 @@ void TestStateMachine() {
 }
 
 
-void TestNetworking() {
-	NetworkBase::Initialise();
 
-	TestPacketReceiver serverReceiver("Server");
-	TestPacketReceiver clientReceiver("Client");
-
-	int port = NetworkBase::GetDefaultPort();
-
-	GameServer* server = new GameServer(port, 1);
-	GameClient* client = new GameClient();
-
-	server->RegisterPacketHandler(String_Message, &serverReceiver);
-	client->RegisterPacketHandler(String_Message, &clientReceiver);
-
-	bool canConnect = client->Connect(127, 0, 0, 1, port);
-
-	if (canConnect) {
-		for (int i = 0; i < 100; ++i) {
-			// Create temporary variable for server message
-			StringPacket serverPacket("Server says hello! " + std::to_string(i));
-			server->SendGlobalPacket(serverPacket);
-
-			// Create temporary variable for client message
-			StringPacket clientPacket("Client says hello! " + std::to_string(i));
-			client->SendPacket(clientPacket);
-
-			server->UpdateServer();
-			client->UpdateClient();
-
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		}
-	} else {
-		std::cout << "Failed to connect client to server!" << std::endl;
-	}
-
-	NetworkBase::Destroy();
-}
 
 
 

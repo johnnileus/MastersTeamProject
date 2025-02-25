@@ -209,10 +209,10 @@ void Enemy::Reset() {
     // reset the path finding index
     currentNodeIndex = 0;
 
-    std::cout << "Enemy reset to path start: " 
-              << movePath[0].x << ", " 
-              << movePath[0].y << ", " 
-              << movePath[0].z << std::endl;
+    //std::cout << "Enemy reset to path start: " 
+    //          << movePath[0].x << ", " 
+    //          << movePath[0].y << ", " 
+    //          << movePath[0].z << std::endl;
 }
 
 

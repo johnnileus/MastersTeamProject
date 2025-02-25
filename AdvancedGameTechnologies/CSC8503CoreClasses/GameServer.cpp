@@ -55,19 +55,29 @@ bool GameServer::SendGlobalPacket(GamePacket& packet) {
 void GameServer::UpdateServer() {
 	if (!netHandle) { return; }
 	ENetEvent event;
+
 	while (enet_host_service(netHandle, &event, 0) > 0) {
+
 		int type = event.type;
+
 		ENetPeer* p = event.peer;
 		int peer = p->incomingPeerID;
 
 		if (type == ENET_EVENT_TYPE_CONNECT) {
 			std::cout << "Server: New client connected" << std::endl;
+
+			//StringPacket clientPacket("Server says hello!");
+			//std::cout << "sending message... " << std::endl;
+			//SendGlobalPacket(clientPacket);
+
 		}
 		else if (type == ENET_EVENT_TYPE_DISCONNECT) {
 			std::cout << "Server: A client has disconnected" << std::endl;
 		}
 		else if (type == ENET_EVENT_TYPE_RECEIVE) {
 			GamePacket* packet = (GamePacket*)event.packet->data;
+			std::cout << "Server: Packet received..." << std::endl;
+
 			ProcessPacket(packet, peer);
 		}
 		enet_packet_destroy(event.packet);

@@ -1,24 +1,7 @@
+#pragma once
+
 #include "TutorialGame.h"
 
-#include "CatCoin.h"
-
-#include "Constants.h"
-#include "Door.h"
-#include "Enemy.h"
-#include "GameWorld.h"
-#include "NavigationGrid.h"
-#include "PhysicsObject.h"
-#include "RenderObject.h"
-#include "TextureLoader.h"
-
-#include "PositionConstraint.h"
-#include "OrientationConstraint.h"
-#include "Player.h"
-#include "StateGameObject.h"
-#include "AssetManager.h"
-#include "Rope.h"
-#include "SampleSphere.h"
-#include "SceneManager.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -50,8 +33,9 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	controller.MapAxis(3, "XLook");
 	controller.MapAxis(4, "YLook");
 
+
 	thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(),controller);
-	
+
 	InitialiseAssets();
 }
 
@@ -63,7 +47,7 @@ for this module, even in the coursework, but you can add it if you like!
 
 */
 void TutorialGame::InitialiseAssets() {
-	
+
 	AssetManager::Instance().LoadAssets(renderer);
 	
 	InitCamera();
@@ -82,8 +66,8 @@ TutorialGame::~TutorialGame()	{
 
 
 void TutorialGame::UpdateGame(float dt) {
-	
-	
+
+
 	if (testStateObject) {
 		testStateObject->Update(dt);
 	}
@@ -153,7 +137,20 @@ void TutorialGame::UpdateGame(float dt) {
 	
 	DisplayPathfinding();
 
+	
+
 	world->UpdateWorld(dt);
+	//renderer->Update(dt);
+
+	if (networkManager == nullptr) {
+		std::cout << "network manager is null" << std::endl;
+	}
+	else {
+		networkManager->Update();
+	}
+
+
+
 
 	physics->Update(dt);
 	thirdPersonCam->Update(dt);
@@ -193,6 +190,18 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F8)) {
 		world->ShuffleObjects(false);
 	}
+
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::U)) {
+		std::cout << "starting server" << std::endl;
+		networkManager->StartAsServer();
+	}
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::I)) {
+		std::cout << "starting client" << std::endl;
+		networkManager->StartAsClient();
+
+	}
+
+
 
 	if (lockedObject) {
 		LockedObjectMovement();
@@ -296,6 +305,8 @@ void TutorialGame::InitWorld() {
 	
 	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
 
+	InitTerrain();
+
 	InitDefaultFloor();
 
 	// Load the navigation grid
@@ -319,6 +330,44 @@ void TutorialGame::InitWorld() {
 	
 	world->PrintObjects();
 
+}
+
+void TutorialGame::InitTerrain() {
+	Vector3 offset(20, 0, 20);
+	SceneManager::Instance().AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
+}
+
+void TutorialGame::InitPlayer()
+{
+	player = new Player();
+
+	float meshSize		= 1.0f;
+	float inverseMass	= 10.0f;
+	
+	SphereVolume* volume  = new SphereVolume(1.0f);
+
+	player->SetBoundingVolume((CollisionVolume*)volume);
+
+	player->GetTransform()
+		.SetScale(Vector3(meshSize, meshSize, meshSize))
+		.SetPosition(Vector3(20,0,30));
+
+	player->SetRenderObject(new RenderObject(&player->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
+	player->SetPhysicsObject(new PhysicsObject(&player->GetTransform(), player->GetBoundingVolume()));
+
+	player->GetPhysicsObject()->SetInverseMass(inverseMass);
+	player->GetPhysicsObject()->InitSphereInertia();
+	player->playerObject=player;
+	player->myWorld=world;
+	player->Init(thirdPersonCam);
+
+	world->AddGameObject(player);
+
+	if (thirdPersonCam)
+	{
+		thirdPersonCam->SetFollowObject(player);
+	}
+	
 }
 
 void TutorialGame::InitCatCoins() {
@@ -385,6 +434,7 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
+
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
@@ -590,4 +640,22 @@ void TutorialGame::ReloadLevel() {
 	InitWorld();
 
 	std::cout << "Level reloaded!" << std::endl;
+}
+
+
+
+void TutorialGame::BroadcastPosition(){
+
+	Vector3 pos = player->GetTransform().GetPosition();
+	Quaternion rot = player->GetTransform().GetOrientation();
+
+
+	TransformPacket transform(pos, rot);
+
+	networkManager->BroadcastPacket(transform);
+}
+
+void TutorialGame::UpdateTransformFromServer(Vector3 pos, Quaternion rot) {
+	player->GetTransform().SetOrientation(rot);
+	player->GetTransform().SetPosition(pos);
 }
