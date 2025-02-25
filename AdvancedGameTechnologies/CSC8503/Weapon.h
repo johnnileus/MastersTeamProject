@@ -1,20 +1,23 @@
 ﻿#pragma once
 #include <iostream>
 
+#include "ThirdPersonCamera.h"
+
 namespace NCL {
     namespace CSC8503 {
 
         class Weapon {
         protected:
-            int   ammo;           // Current ammo
-            int   maxAmmo;        // Max ammo per magazine
-            int   damage;         // Damage per bullet
+            int   ammo;           // current ammo
+            int   maxAmmo;        // max ammo per magazine
+            int   damage;         // damage per bullet
 
-            float shotInterval;   // Time (in seconds) between shots for auto-fire
-            bool  canAutoFire;    // Whether auto-fire is supported
+            float shotInterval;   // time between shots for auto-fire
+            bool  canAutoFire;    // if allowed auto-fire 
 
-            float shotTimer;      // Countdown timer until the next shot is allowed
-            bool  wasFiringLastFrame; // Tracks whether the fire button was down last frame
+            float shotTimer;      // countdown timer until the next shot is allowed
+            bool  wasFiringLastFrame;
+        
 
         public:
             Weapon(int maxAmmo, int damage, float interval, bool autoFire)
@@ -25,7 +28,9 @@ namespace NCL {
                 , canAutoFire(autoFire)
                 , shotTimer(0.0f)
                 , wasFiringLastFrame(false)
-            {}
+            {
+                
+            }
 
             virtual ~Weapon() {}
 
