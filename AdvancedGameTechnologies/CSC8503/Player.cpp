@@ -2,6 +2,7 @@
 #include "Player.h"
 
 #include "Animator.h"
+#include "AssetManager.h"
 #include "Window.h"
 #include "Enemy.h"
 #include "PhysicsObject.h"
