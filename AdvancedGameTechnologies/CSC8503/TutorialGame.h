@@ -42,6 +42,9 @@ namespace NCL {
 			GameObject* AddSphereToWorld(const Vector3& position,float radius,float inverseMass,const Vector3& initialVelocity);
 
 			void BroadcastPosition();
+
+
+
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
 
 
@@ -64,7 +67,16 @@ namespace NCL {
 			void TestLinearMotion();
 			void InitPlayer();
 			void CreateRopeGroup();
-			
+
+
+			//networking
+			GameObject* InitialiseConnectedPlayer(int id);
+
+			NetworkManager* networkManager = new NetworkManager();
+			std::vector<GameObject*> connectedPlayers;
+			//
+#
+
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
 			void InitCatCoins();
 			
@@ -72,7 +84,7 @@ namespace NCL {
 
 			GameObject* debugSphere;
 
-			NetworkManager* networkManager = new NetworkManager();
+
 
 			ThirdPersonCamera* thirdPersonCam;
 
