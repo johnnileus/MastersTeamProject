@@ -269,7 +269,7 @@ void TutorialGame::DebugObjectMovement() {
 
 void TutorialGame::InitCamera() {
 	world->GetMainCamera().SetNearPlane(0.1f);
-	world->GetMainCamera().SetFarPlane(500.0f);
+	world->GetMainCamera().SetFarPlane(5000.0f);
 	
 	if (thirdPersonCam)
 	{
@@ -295,6 +295,7 @@ void TutorialGame::InitWorld() {
 	
 	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
 
+	//Terrain Generation
 	InitTerrain();
 
 	InitDefaultFloor();

@@ -84,11 +84,17 @@ OGLMesh* GameTechRenderer::GenerateTerrainMesh(HeightMap* heightmap) {
 
 	int terrainSize = heightmap->GetSize();
 
+	Vector3 vertexScale = Vector3(16.0f, 1.0f, 16.0f);
+	Vector2 texScale = Vector2(1 / 16.0f, 1 / 16.0f);
+
 	for (int x = 0; x < terrainSize; x++) {
 		for (int y = 0; y < terrainSize; y++) {
-			float height = heightmap->GetHeight(x, y);
-			vertices.push_back(Vector3(x, height, y));
-			texCoords.push_back(Vector2((float)x / terrainSize, (float)y / terrainSize));
+			int offset = (x * heightmap->GetHeight(x, y) + y);
+			vertices.push_back(Vector3(x, offset, y) * vertexScale);
+			texCoords.push_back(Vector2(y, x) * texScale);
+			//float height = heightmap->GetHeight(x, y);
+			//vertices.push_back(Vector3(x, height, y));
+			//texCoords.push_back(Vector2((float)x / terrainSize, (float)y / terrainSize));
 		}
 	}
 
