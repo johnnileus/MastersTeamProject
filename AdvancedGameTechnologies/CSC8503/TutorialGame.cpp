@@ -425,6 +425,40 @@ void TutorialGame::InitWorld() {
 
 }
 
+// if modifying the shape, please change InitialiseConnectedPlayer as well
+void TutorialGame::InitPlayer()
+{
+	player = new Player();
+
+	float meshSize		= 1.0f;
+	float inverseMass	= 10.0f;
+	
+	SphereVolume* volume  = new SphereVolume(1.0f);
+
+	player->SetBoundingVolume((CollisionVolume*)volume);
+
+	player->GetTransform()
+		.SetScale(Vector3(meshSize, meshSize, meshSize))
+		.SetPosition(Vector3(20,0,30));
+
+	player->SetRenderObject(new RenderObject(&player->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
+	player->SetPhysicsObject(new PhysicsObject(&player->GetTransform(), player->GetBoundingVolume()));
+
+	player->GetPhysicsObject()->SetInverseMass(inverseMass);
+	player->GetPhysicsObject()->InitSphereInertia();
+	player->playerObject=player;
+	player->myWorld=world;
+	player->Init(thirdPersonCam);
+
+	world->AddGameObject(player);
+
+	if (thirdPersonCam)
+	{
+		thirdPersonCam->SetFollowObject(player);
+	}
+	
+}
+
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
 	SceneManager::Instance().AddTerrain(&world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
@@ -725,4 +759,32 @@ void TutorialGame::BroadcastPosition(){
 void TutorialGame::UpdateTransformFromServer(Vector3 pos, Quaternion rot) {
 	player->GetTransform().SetOrientation(rot);
 	player->GetTransform().SetPosition(pos);
+}
+
+GameObject* TutorialGame::InitialiseConnectedPlayer(int id) {
+
+	float meshSize = 1.0f;
+	float inverseMass = 10.0f;
+
+	GameObject* newPlayer = new GameObject();
+	SphereVolume* volume = new SphereVolume(1.0f);
+	
+	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
+
+	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
+
+	newPlayer->GetTransform()
+		.SetScale(Vector3(meshSize, meshSize, meshSize))
+		.SetPosition(Vector3(20, 0, 30));
+
+	newPlayer->SetRenderObject(new RenderObject(&player->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
+	newPlayer->SetPhysicsObject(new PhysicsObject(&player->GetTransform(), player->GetBoundingVolume()));
+
+	newPlayer->GetPhysicsObject()->SetInverseMass(inverseMass);
+	newPlayer->GetPhysicsObject()->InitSphereInertia();
+
+	world->AddGameObject(newPlayer);
+
+	return newPlayer;
+
 }

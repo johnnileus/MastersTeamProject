@@ -2,9 +2,11 @@
 
 
 
+#pragma once
 #include "GameServer.h"
 #include "GameWorld.h"
 #include "./enet/enet.h"
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -70,9 +72,17 @@ void GameServer::UpdateServer() {
 		if (type == ENET_EVENT_TYPE_CONNECT) {
 			std::cout << "Server: New client connected" << std::endl;
 
-			//StringPacket clientPacket("Server says hello!");
-			//std::cout << "sending message... " << std::endl;
-			//SendGlobalPacket(clientPacket);
+			//IDPacket idPacket(peer.incomingPeerID);
+
+
+			/*for (size_t i = 0; i < netHandle->peerCount; ++i) {
+				ENetPeer& peer = netHandle->peers[i];
+				if (peer.state == ENET_PEER_STATE_CONNECTED) {
+					std::cout << "Connected peer ID: " << peer.incomingPeerID << std::endl;
+				}
+			}*/
+
+
 
 		}
 		else if (type == ENET_EVENT_TYPE_DISCONNECT) {

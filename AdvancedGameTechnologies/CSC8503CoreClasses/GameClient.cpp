@@ -40,7 +40,6 @@ void GameClient::UpdateClient() {
         }
         else if (event.type == ENET_EVENT_TYPE_RECEIVE) {
             GamePacket* packet = (GamePacket*)event.packet->data;
-            std::cout << "Client: Packet received..." << std::endl;
             ProcessPacket(packet);
         }
         enet_packet_destroy(event.packet);
@@ -55,5 +54,9 @@ void GameClient::SendPacket(GamePacket& payload) {
 
 }
 
+
+int GameClient::GetID() {
+    return netPeer->outgoingPeerID;
+}
 #endif // WIN32
 

@@ -29,9 +29,8 @@ struct TransformPacket : public GamePacket {
 		pos = p;
 		rot = r;
 	}
-
-
 };
+
 
 
 class MainPacketReceiver : public PacketReceiver {
@@ -65,6 +64,7 @@ public:
 	void Update();
 
 	void BroadcastPacket(TransformPacket p);
+
 
 protected:
 
