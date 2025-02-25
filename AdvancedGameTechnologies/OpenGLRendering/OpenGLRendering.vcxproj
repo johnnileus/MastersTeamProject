@@ -52,7 +52,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\ThirdParty\reactphysics\include;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -74,10 +74,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;ASSETROOTLOCATION=\"C:/Git/MastersTeamProject/AdvancedGameTechnologies/Assets/\";NOMINMAX;WIN32_LEAN_AND_MEAN;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\ThirdParty\reactphysics\include;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\ThirdParty\reactphysics\include;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -90,7 +90,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\ThirdParty\reactphysics\include;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -113,10 +113,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ASSETROOTLOCATION=\"C:/Git/MastersTeamProject/AdvancedGameTechnologies/Assets/\";NOMINMAX;WIN32_LEAN_AND_MEAN;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\ThirdParty\reactphysics\include;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Git\MastersTeamProject\AdvancedGameTechnologies\ThirdParty\reactphysics\include;C:\Git\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;C:\Git\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>

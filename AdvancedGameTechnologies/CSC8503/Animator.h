@@ -3,7 +3,7 @@
 #include "GameTechRenderer.h"
 #include "MeshMaterial.h"
 #include "RenderObject.h"
-
+#include  "bthdef.h"
 namespace NCL
 {
     namespace CSC8503

@@ -71,6 +71,14 @@ if(MSVC)
     add_compile_definitions("WIN32_LEAN_AND_MEAN")  
 endif()
 
+#################################################################################
+#Physics
+#################################################################################
+include_directories("${CMAKE_SOURCE_DIR}/ThirdParty/reactphysics/include")
+
+file(GLOB_RECURSE RP3D_SRC "${CMAKE_SOURCE_DIR}/ThirdParty/reactphysics/src/*.cpp")
+
+add_library(ReactPhysics3D STATIC ${RP3D_SRC})
 
 ################################################################################
 # Sub-projects
@@ -82,4 +90,15 @@ add_subdirectory(CSC8503)
 if(USE_VULKAN)
     add_subdirectory(VulkanRendering)
 endif()
+
+target_link_libraries(CSC8503 PRIVATE ReactPhysics3D)
+target_link_libraries(CSC8503CoreClasses PRIVATE ReactPhysics3D)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT CSC8503)
+
+
+
+
+
+
+
+

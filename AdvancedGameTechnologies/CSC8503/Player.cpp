@@ -22,6 +22,7 @@ Player::Player()
 		health = 100;
 		damage =30;
 	}
+	
 }
 
 //init after player has get "object" in tutorialGame

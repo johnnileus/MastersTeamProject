@@ -85,7 +85,6 @@ void Animator::Draw(RenderObject* renderObj)
     // glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
     //
     // frameMatrices.clear();
-
     
 }
 

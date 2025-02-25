@@ -4,7 +4,13 @@
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\cmake_pch.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Animator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.cpp">
@@ -28,6 +34,9 @@
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Pistol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -49,9 +58,18 @@
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Animator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.h">
@@ -70,6 +88,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Pistol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.h">
@@ -91,6 +112,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Debug\cmake_pch.hxx">

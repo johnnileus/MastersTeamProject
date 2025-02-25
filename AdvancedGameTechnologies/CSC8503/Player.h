@@ -6,6 +6,7 @@
 #include "GameWorld.h"
 #include "Quaternion.h"
 #include "ThirdPersonCamera.h"
+#include "Weapon.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -58,9 +59,11 @@ namespace NCL {
 			bool isOnGround;         
 			void HandleJump();
 			bool isAtApex;  // mark arrive high point
-			float downwardForce; 
+			float downwardForce;
 
-
+			//Attack
+			//Weapon weapon;
+			
 			//health
 			int health;
 			int damage; 
