@@ -53,6 +53,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -71,11 +72,13 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
+
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCK_DEPRECATED_NO_WARNINGS;NOMINMAX;ASSETROOTLOCATION=\"H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/Assets/\";CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -88,7 +91,9 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -106,11 +111,13 @@
       </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
+
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCK_DEPRECATED_NO_WARNINGS;NOMINMAX;ASSETROOTLOCATION=\"H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/Assets/\";CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -788,6 +795,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\ReactPhysics3D.vcxproj">
+      <Project>{DCC3370A-0532-3256-9E04-2896068BDE52}</Project>
+      <Name>ReactPhysics3D</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

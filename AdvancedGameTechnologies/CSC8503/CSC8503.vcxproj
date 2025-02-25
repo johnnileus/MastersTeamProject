@@ -56,7 +56,9 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <ConformanceMode>true</ConformanceMode>
@@ -77,11 +79,13 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
+
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION=\"H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/Assets/\";NOMINMAX;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -89,7 +93,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>Winmm.lib;..\NCLCoreClasses\Debug\NCLCoreClasses.lib;..\x64\Debug\CSC8503CoreClasses.lib;..\OpenGLRendering\Debug\OpenGLRendering.lib;ws2_32.lib;..\NCLCoreClasses\Debug\NCLCoreClasses.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Winmm.lib;..\NCLCoreClasses\Debug\NCLCoreClasses.lib;..\x64\Debug\CSC8503CoreClasses.lib;..\OpenGLRendering\Debug\OpenGLRendering.lib;..\Debug\ReactPhysics3D.lib;ws2_32.lib;..\NCLCoreClasses\Debug\NCLCoreClasses.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -104,7 +108,9 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ConformanceMode>true</ConformanceMode>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -126,11 +132,13 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
+
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;_WINSOCKAPI_;_WINSOCK2API_;_WINSOCK_DEPRECATED_NO_WARNINGS;ASSETROOTLOCATION=\"H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/Assets/\";NOMINMAX;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\OpenGLRendering;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\..\CSC8503CoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -138,7 +146,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>Winmm.lib;..\NCLCoreClasses\Release\NCLCoreClasses.lib;..\x64\Release\CSC8503CoreClasses.lib;..\OpenGLRendering\Release\OpenGLRendering.lib;ws2_32.lib;..\NCLCoreClasses\Release\NCLCoreClasses.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Winmm.lib;..\NCLCoreClasses\Release\NCLCoreClasses.lib;..\x64\Release\CSC8503CoreClasses.lib;..\OpenGLRendering\Release\OpenGLRendering.lib;..\Release\ReactPhysics3D.lib;ws2_32.lib;..\NCLCoreClasses\Release\NCLCoreClasses.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -197,6 +205,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CSC8503.dir/Release/cmake_pch.pch</PrecompiledHeaderOutputFile>
       <ScanSourceforModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ScanSourceforModuleDependencies>
     </ClCompile>
+
     <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.h" />
     <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.h" />
     <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.h" />
@@ -225,6 +234,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ScanSourceforModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ScanSourceforModuleDependencies>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ScanSourceforModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ScanSourceforModuleDependencies>
+
     </ClCompile>
     <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -262,11 +272,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ScanSourceforModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ScanSourceforModuleDependencies>
     </ClCompile>
+
     <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ScanSourceforModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ScanSourceforModuleDependencies>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ScanSourceforModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ScanSourceforModuleDependencies>
+
     </ClCompile>
     <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -292,6 +304,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ScanSourceforModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ScanSourceforModuleDependencies>
     </ClCompile>
+
     <ClCompile Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SceneManager.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ScanSourceforModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ScanSourceforModuleDependencies>
@@ -318,6 +331,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Debug\cmake_pch.hxx" />
     <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Release\cmake_pch.hxx" />
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\ZERO_CHECK.vcxproj">
@@ -337,6 +351,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ProjectReference Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OpenGLRendering.vcxproj">
       <Project>{A54385C0-4924-3ADA-9D7A-6C1092D6EE28}</Project>
       <Name>OpenGLRendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\ReactPhysics3D.vcxproj">
+      <Project>{DCC3370A-0532-3256-9E04-2896068BDE52}</Project>
+      <Name>ReactPhysics3D</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,10 +1,12 @@
 ﻿#pragma once
+#include "Animator.h"
 #include "GameObject.h"
 #include "GameTechRenderer.h"
 #include "Window.h"
 #include "GameWorld.h"
 #include "Quaternion.h"
 #include "ThirdPersonCamera.h"
+#include "Weapon.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -23,6 +25,7 @@ namespace NCL {
 			void OnCollisionBegin(GameObject* otherObject) override;
 			void OnCollisionEnd(GameObject* otherObject) override;
 			void SetTemporaryColour(const Vector4& colour, float duration);
+			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position);
 
 			GameWorld* myWorld;
 
@@ -36,6 +39,7 @@ namespace NCL {
 			Shader* playerShader;
 			PhysicsObject* playerPhysicObject;
 			ThirdPersonCamera* myCam;
+			Transform* renderOffsetTransform;
 
 			//move
 			float acceleratForce;
@@ -43,19 +47,23 @@ namespace NCL {
 			float maxSpeed;
 			float decelerationFactor;
 			Vector2 inputDir;
+			Vector3 moveDir;
 			void HandleMovement(float dt,Vector2 inputDir);
 			void HandleRotation(float dt);
 			void ClampSpeed(float dt);
 			void HandleInput();
+			void SetComponent(float meshSize, float mass);
 
 			//jump
 			float jumpForce;         
 			bool isOnGround;         
 			void HandleJump();
 			bool isAtApex;  // mark arrive high point
-			float downwardForce; 
+			float downwardForce;
 
-
+			//Attack
+			//Weapon weapon;
+			
 			//health
 			int health;
 			int damage; 
@@ -68,7 +76,9 @@ namespace NCL {
 			Vector4 dashColour;       // Colour effect during dashing
 			void HandleDash(float dt);  // Dash logic handler
 
-
+			//Graphic
+			Animator* animator;
+			Mesh* myMesh;
 			Vector4 defaultColour;
 			Vector4 damageColour;
 			Vector4 attackColour;

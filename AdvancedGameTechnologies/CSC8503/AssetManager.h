@@ -5,6 +5,8 @@
 #include "HeightMap.h"
 
 #include "GameTechRenderer.h"
+#include "MeshAnimation.h"
+#include "MeshMaterial.h"
 #ifdef USEVULKAN
 #include "GameTechVulkanRenderer.h"
 #endif
@@ -16,7 +18,12 @@ namespace NCL {
             static AssetManager& Instance(); // singleton
 
             void LoadAssets(GameTechRenderer* renderer);
+
+            MeshAnimation* GetAnimation(const string& name);
+            void RegisterAnimation(const std::string& name,MeshAnimation* anim);
+
             void Cleanup();
+
 
             // Mesh
             Mesh* capsuleMesh = nullptr;
@@ -26,7 +33,11 @@ namespace NCL {
             Mesh* kittenMesh = nullptr;
             Mesh* enemyMesh = nullptr;
             Mesh* bonusMesh = nullptr;
+
+            Mesh* guardMesh = nullptr;
+
             OGLMesh* terrainMesh = nullptr;
+
 
             //Texture
             Texture* basicTex = nullptr;
@@ -34,16 +45,27 @@ namespace NCL {
             Texture* metalTex = nullptr;
             Texture* tilesTex = nullptr;
             Texture* floorTex = nullptr;
+            vector<Texture*> playerTex;
 
             //Shader
             Shader* basicShader = nullptr;
 
+
+            //Ani
+            MeshAnimation* idle;
+            MeshAnimation* walk;
+
+            //Material
+            MeshMaterial* guardMat;
+
         protected:
             HeightMap* heightmap;
+
 
         private:
             AssetManager() = default;
             ~AssetManager() = default;
+            std::map<std::string, MeshAnimation*> animationMap;
         };
     }
 }

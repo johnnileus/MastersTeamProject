@@ -125,6 +125,15 @@ void TutorialGame::UpdateGame(float dt) {
 			objClosest->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
 		}
 	}
+
+
+	//Animation Test
+	frameTime-=dt;
+	while (frameTime<0.0f)
+	{
+		currentFrame = (currentFrame+1) % AssetManager::Instance().idle->GetFrameCount();
+		frameTime +=1.0f/AssetManager::Instance().idle->GetFrameRate();
+	}
 	
 	DisplayPathfinding();
 
@@ -285,7 +294,8 @@ void TutorialGame::InitWorld() {
 
 	CreateRopeGroup();
 	
-	InitPlayer();
+	//InitPlayer();
+	player = Player::Instantiate(world,thirdPersonCam,Vector3(20,0,30));
 
 	GenerateWall();
 

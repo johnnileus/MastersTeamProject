@@ -52,7 +52,9 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -75,6 +77,7 @@
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -87,7 +90,9 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -105,11 +110,13 @@
       </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
+
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ASSETROOTLOCATION=\"H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/Assets/\";NOMINMAX;WIN32_LEAN_AND_MEAN;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses;H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>

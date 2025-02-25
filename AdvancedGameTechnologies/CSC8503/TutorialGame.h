@@ -64,7 +64,6 @@ namespace NCL {
 			void DebugObjectMovement();
 			void LockedObjectMovement();
 			void TestLinearMotion();
-			void InitPlayer();
 			void CreateRopeGroup();
 
 			//Terrain Generation
@@ -105,6 +104,9 @@ namespace NCL {
 			Player* player;
 			std::vector<Enemy*> enemies;
 			std::vector<GameObject*> floors;
+
+			int currentFrame;
+			float frameTime;
 
 			//Coursework Additional functionality	
 			GameObject* lockedObject	= nullptr;
