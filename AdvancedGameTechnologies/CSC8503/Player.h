@@ -44,6 +44,8 @@ namespace NCL {
 			ThirdPersonCamera* myCam;
 			Transform* renderOffsetTransform;
 
+			Weapon* myWeapon;
+
 			//move
 			float acceleratForce;
 			float rotationFactor;
@@ -53,6 +55,7 @@ namespace NCL {
 			Vector3 moveDir;
 			void HandleMovement(float dt,Vector2 inputDir);
 			void HandleRotation(float dt);
+			void HandleFire(float dt);
 			void ClampSpeed(float dt);
 			void HandleInput();
 			void SetComponent(float meshSize, float mass);
