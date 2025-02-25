@@ -62,6 +62,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Weapon.cpp">
+
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -120,6 +121,7 @@
     </ClInclude>
 
     <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\stb_perlin.h">
+
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="H:\Desktop\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Debug\cmake_pch.hxx">
