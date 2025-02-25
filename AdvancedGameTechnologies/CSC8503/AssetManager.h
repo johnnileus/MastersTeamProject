@@ -16,7 +16,7 @@ namespace NCL {
             static AssetManager& Instance(); // singleton
 
             void LoadAssets(GameTechRenderer* renderer);
-            void Cleanup(); // 
+            void Cleanup();
 
             // Mesh
             Mesh* capsuleMesh = nullptr;
