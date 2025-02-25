@@ -51,8 +51,9 @@ void Player::Init(ThirdPersonCamera* cam)
 	myWorld=new GameWorld();
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam=cam;
+	
 
-	myWeapon = new Pistol();
+	myWeapon = new Pistol(cam);
 }
 
 void Player::SetComponent(float meshSize,float mass)
@@ -379,7 +380,7 @@ void Player::SetTemporaryColour(const Vector4& colour, float duration) {
 
 void Player::DisplayUI()
 {
-	
+	Debug::Print("0",Vector2(50,50));
 	float velocity = Vector::Length(playerPhysicObject->GetLinearVelocity());
 	Debug::Print("V:" + std::format("{:.1f}", velocity), Vector2(5, 10));
 	Debug::Print("HP:"+std::to_string(health), Vector2(5,15));

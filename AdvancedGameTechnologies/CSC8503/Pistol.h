@@ -6,8 +6,11 @@ using namespace CSC8503;
 class Pistol : public Weapon
 {
 public:
-    Pistol();
+    Pistol(ThirdPersonCamera* camera);
     virtual ~Pistol();
-private:
+
+    void Fire() override;
     
+private:
+    ThirdPersonCamera* myCamera;
 };

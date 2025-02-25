@@ -19,15 +19,13 @@ void Weapon::Reload() {
 }
 
 void Weapon::Update(float deltaTime, bool isFiring) {
-    // Decrease shotTimer by the elapsed time each frame
     if (shotTimer > 0.0f) {
         shotTimer -= deltaTime;
     }
 
     if (canAutoFire) {
-        // AUTO-FIRE MODE:
-        // 1) Fire immediately if shotTimer <= 0 (i.e., cooldown is over)
-        // 2) Reset shotTimer to shotInterval
+        // auto-fire mode:
+        //reset shotTimer to shotInterval
         if (isFiring) {
             if (shotTimer <= 0.0f) {
                 Fire();
@@ -36,13 +34,12 @@ void Weapon::Update(float deltaTime, bool isFiring) {
         }
     }
     else {
-        // SINGLE-FIRE MODE:
-        // Fire only on the transition from "not firing last frame" to "firing this frame"
+        // single-fire mode
+        // fire only on the transition from "not firing last frame" to "firing this frame"
         if (isFiring && !wasFiringLastFrame) {
             Fire();
         }
     }
-
-    // Update the firing state for the next frame
+    // update the firing state for the next frame
     wasFiringLastFrame = isFiring;
 }
