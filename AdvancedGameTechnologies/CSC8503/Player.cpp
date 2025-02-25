@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Enemy.h"
 #include "PhysicsObject.h"
+#include "Pistol.h"
 #include "RenderObject.h"
 
 using namespace NCL;
@@ -22,7 +23,6 @@ Player::Player()
 		health = 100;
 		damage =30;
 	}
-	
 }
 
 //init after player has get "object" in tutorialGame
@@ -51,6 +51,8 @@ void Player::Init(ThirdPersonCamera* cam)
 	myWorld=new GameWorld();
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam=cam;
+
+	myWeapon = new Pistol();
 }
 
 void Player::SetComponent(float meshSize,float mass)
@@ -129,6 +131,7 @@ void Player::Update(float dt) {
 	HealthCheck();
 	
 	animator->Update(dt);
+	myWeapon->Update(dt,Window::GetMouse()->ButtonDown(MouseButtons::Left));
 
 	// Colour change timer
 	if (isTemporaryColourActive) {
@@ -268,6 +271,14 @@ void Player::HandleRotation(float dt) {
 	);
 	
 	playerObject->GetTransform().SetOrientation(finalOrientation);
+}
+
+void Player::HandleFire(float dt)
+{
+	if (Window::GetMouse()->ButtonDown(NCL::MouseButtons::Left))
+	{
+		myWeapon->Fire();
+	}
 }
 
 
