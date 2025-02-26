@@ -460,7 +460,7 @@ ENET_API int enet_initialize (void);
 */
 ENET_API int enet_initialize_with_callbacks (ENetVersion version, const ENetCallbacks * inits);
 
-/** 
+/**
   Shuts down ENet globally.  Should be called when a program that has
   initialized ENet exits.
 */

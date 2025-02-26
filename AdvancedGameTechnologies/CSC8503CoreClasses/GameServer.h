@@ -24,9 +24,6 @@ namespace NCL {
 			int			clientMax;
 			int			clientCount;
 			GameWorld*	gameWorld;
-
-			int incomingDataRate;
-			int outgoingDataRate;
 		};
 	}
 }
