@@ -7,6 +7,7 @@
 #include "RenderObject.h"
 #include "TextureLoader.h"
 
+#include "Pistol.h"
 #include "PositionConstraint.h"
 #include "OrientationConstraint.h"
 #include "StateGameObject.h"
@@ -174,10 +175,6 @@ void TutorialGame::UpdateGame(float dt) {
 		//Debug::Print("(G)ravity off", Vector2(5, 95), Debug::RED);
 	}
 
-	RayCollision closestCollision;
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::K) && selectionObject) {
-		Vector3 rayPos;
-		Vector3 rayDir;
 
 		rayDir = selectionObject->GetTransform().GetOrientation() * Vector3(0, 0, -1);
 

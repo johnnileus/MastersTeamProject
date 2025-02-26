@@ -1,15 +1,36 @@
 ﻿#pragma once
 #include "Animator.h"
+#include "Weapon.h"
+#include "AssetManager.h"
+#include "GameObject.h"
+#include "PhysicsObject.h"
 
-using namespace NCL;
-using namespace CSC8503;
-
-class Bullet : GameObject
+namespace NCL
 {
-public:
-    Bullet();
-    ~Bullet();
-    static Bullet* Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction);
-private:
-    
-};
+    namespace CSC8503
+    {
+        class Bullet : GameObject
+        {
+        public:
+            Bullet(float damage, float speed, float distance);
+            ~Bullet();
+
+            void Update(float dt);
+
+            bool IsDead() const { return isDead; }
+            
+            static Bullet* Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon);
+
+        private:
+            Vector3 direction; //move direction
+            float speed;
+            float damage;
+            float distance;
+            float travelled;
+            bool isDead;
+
+            void SetComponent(float meshSize,float inverseMass);
+        };
+    }
+}
+

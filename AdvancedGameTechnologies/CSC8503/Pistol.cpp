@@ -1,8 +1,12 @@
 ﻿#include "Pistol.h"
 
-Pistol::Pistol(ThirdPersonCamera* camera) : Weapon(10,15,0.5f,false)
+#include "Bullet.h"
+
+Pistol::Pistol(Player* owner):Weapon(10,15,0.4,false)
 {
-    myCamera =camera;
+    myCamera=owner->myCam;
+    myWorld=owner->myWorld;
+    this->owner=owner;
 }
 
 Pistol::~Pistol()
@@ -16,9 +20,15 @@ void Pistol::Fire()
         std::cout << "No ammo left, cannot fire!" << std::endl;
         return;
     }
+
+    //reduce ammo
     ammo--;
-    std::cout << "Weapon fired! Damage: " << damage
-              << ", ammo remaining: " << ammo << std::endl;
+    std::cout << "Weapon fired! Damage: " << damage<< ", ammo remaining: " << ammo << std::endl;
+
+    //creat a bullet
+    Bullet::Instantiate(myWorld,owner->GetTransform().GetPosition(),Vector3(1,0,0),this);
+
+    //camera effect
     myCamera->Shake(0.05,0.1f);
 }
 

@@ -53,12 +53,11 @@ void Player::Init(ThirdPersonCamera* cam)
 	damageColour = Vector4(1,0.29f,0,1);
 	attackColour = Vector4(0.18f, 1,0,1);
 	collerctCoinColour = Vector4(0.949f,1,0.318f,1);
-	myWorld=new GameWorld();
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam=cam;
 	
 
-	myWeapon = new Pistol(cam);
+	myWeapon = new Pistol(this);
 }
 
 void Player::SetComponent(float meshSize,float mass)
