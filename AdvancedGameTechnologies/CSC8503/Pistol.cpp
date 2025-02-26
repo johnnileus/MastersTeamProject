@@ -1,25 +1,35 @@
-﻿// #include "Pistol.h"
-//
-// Pistol::Pistol() : Weapon(10, 15)
-// {
-//     
-// }
-//
-// Pistol::~Pistol()
-// {
-//     
-// }
-//
-// void Pistol::Fire() {
-//     if (ammoCount > 0) {
-//         cout << "Pistol shoot, damage:" << damage << endl;
-//         ammoCount--;
-//     } else {
-//         cout << "No amo" << endl;
-//     }
-// }
-//
-// void Pistol::Reload() {
-//     ammoCount = 15;  // 恢复到初始弹药数
-//     cout << "Reload Pistal " << ammoCount << endl;
-// }
+﻿#include "Pistol.h"
+
+#include "Bullet.h"
+
+Pistol::Pistol(Player* owner):Weapon(10,15,0.4,false)
+{
+    myCamera=owner->myCam;
+    myWorld=owner->myWorld;
+    this->owner=owner;
+}
+
+Pistol::~Pistol()
+{
+    
+}
+
+void Pistol::Fire()
+{
+    if (ammo <= 0) {
+        std::cout << "No ammo left, cannot fire!" << std::endl;
+        Reload();
+        return;
+    }
+
+    //reduce ammo
+    ammo--;
+    std::cout << "Weapon fired! Damage: " << damage<< ", ammo remaining: " << ammo << std::endl;
+
+    //creat a bullet
+    Bullet::Instantiate(myWorld,owner->GetTransform().GetPosition(),aimDir,this);
+
+    //camera effect
+    myCamera->Shake(0.05,0.1f);
+}
+

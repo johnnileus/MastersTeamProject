@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Enemy.h"
 #include "PhysicsObject.h"
+#include "Pistol.h"
 #include "RenderObject.h"
 
 using namespace NCL;
@@ -22,7 +23,6 @@ Player::Player()
 		health = 100;
 		damage =30;
 	}
-	
 }
 
 //init after player has get "object" in tutorialGame
@@ -48,9 +48,11 @@ void Player::Init(ThirdPersonCamera* cam)
 	damageColour = Vector4(1,0.29f,0,1);
 	attackColour = Vector4(0.18f, 1,0,1);
 	collerctCoinColour = Vector4(0.949f,1,0.318f,1);
-	myWorld=new GameWorld();
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam=cam;
+	
+
+	myWeapon = new Pistol(this);
 }
 
 void Player::SetComponent(float meshSize,float mass)
@@ -70,12 +72,12 @@ void Player::SetComponent(float meshSize,float mass)
 	GetPhysicsObject()->InitSphereInertia();
 	
 	//Render
-	SetRenderObject(new RenderObject(
-		&objectTransform,
-		myMesh,
-		AssetManager::Instance().playerTex[0],
-		AssetManager::Instance().basicShader)
-		);
+	 SetRenderObject(new RenderObject(
+	 	&objectTransform,
+	 	myMesh,
+	 	AssetManager::Instance().playerTex[0],
+	 	AssetManager::Instance().basicShader)
+	 	);
 	
 	
 	animator = new Animator();
@@ -125,10 +127,12 @@ void Player::Update(float dt) {
 	}
 	HandleRotation(dt);
 	HandleJump();
+	HandleAim();
 	DisplayUI();
 	HealthCheck();
 	
 	animator->Update(dt);
+	myWeapon->Update(dt,Window::GetMouse()->ButtonDown(MouseButtons::Left),aimDir);
 
 	// Colour change timer
 	if (isTemporaryColourActive) {
@@ -270,6 +274,14 @@ void Player::HandleRotation(float dt) {
 	playerObject->GetTransform().SetOrientation(finalOrientation);
 }
 
+void Player::HandleFire(float dt)
+{
+	if (Window::GetMouse()->ButtonDown(NCL::MouseButtons::Left))
+	{
+		myWeapon->Fire();
+	}
+}
+
 
 
 void Player::HandleDash(float dt) {
@@ -312,6 +324,44 @@ void Player::HandleJump() {
 	}
 
 }
+
+void Player::HandleAim()
+{
+	Ray ray = CollisionDetection::BuildRayFromCamera(myWorld->GetMainCamera(),100,*myCam);
+	RayCollision closestCollision;
+
+	Vector3 hitPoint = CollisionDetection::GetRayHitPoint(ray);
+	aimDir = hitPoint-transform.GetPosition();
+	Debug::DrawLine(transform.GetPosition(),hitPoint,Debug::RED);
+	
+}
+
+Vector3 CollisionDetection::GetRayHitPoint(const Ray& ray)
+{
+
+	Vector3 planeNormal(0, 1, 0);
+	float d = 0.0f;
+    
+
+	float denom = Vector::Dot(ray.GetDirection(), planeNormal);
+    
+
+	if (fabs(denom) > 1e-6)
+	{
+		
+		float t = -(Vector::Dot(ray.GetPosition(), planeNormal) + d) / denom;
+		if (t >= 0)
+		{
+			// 返回交点
+			return ray.GetPosition() + ray.GetDirection() * t;
+		}
+	}
+    
+	
+	return Vector3(-1, -1, -1);
+}
+
+
 
 void Player::OnCollisionBegin(GameObject* otherObject)
 {
@@ -368,7 +418,7 @@ void Player::SetTemporaryColour(const Vector4& colour, float duration) {
 
 void Player::DisplayUI()
 {
-	
+	Debug::Print("0",Vector2(50,50));
 	float velocity = Vector::Length(playerPhysicObject->GetLinearVelocity());
 	Debug::Print("V:" + std::format("{:.1f}", velocity), Vector2(5, 10));
 	Debug::Print("HP:"+std::to_string(health), Vector2(5,15));

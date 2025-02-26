@@ -31,6 +31,9 @@ namespace NCL {
 
 			int score;
 
+			ThirdPersonCamera* myCam;
+			Weapon* myWeapon;
+
 		protected:
 
 			//component
@@ -38,8 +41,8 @@ namespace NCL {
 			Texture* playerTex;
 			Shader* playerShader;
 			PhysicsObject* playerPhysicObject;
-			ThirdPersonCamera* myCam;
 			Transform* renderOffsetTransform;
+			
 
 			//move
 			float acceleratForce;
@@ -48,8 +51,11 @@ namespace NCL {
 			float decelerationFactor;
 			Vector2 inputDir;
 			Vector3 moveDir;
+			Vector3 aimDir;
 			void HandleMovement(float dt,Vector2 inputDir);
 			void HandleRotation(float dt);
+			void HandleFire(float dt);
+			void HandleAim();
 			void ClampSpeed(float dt);
 			void HandleInput();
 			void SetComponent(float meshSize, float mass);
@@ -60,9 +66,7 @@ namespace NCL {
 			void HandleJump();
 			bool isAtApex;  // mark arrive high point
 			float downwardForce;
-
-			//Attack
-			//Weapon weapon;
+			
 			
 			//health
 			int health;

@@ -93,3 +93,28 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
     return terrain;
 }
 
+/// update all the bullets here
+/// @param world 
+/// @param dt 
+void SceneManager::UpdateBullets(GameWorld* world,float dt) {
+    for (auto it = bullets.begin(); it != bullets.end(); ) {
+        Bullet* bullet = *it;
+        bullet->Update(dt);
+
+        if (bullet->IsDead()) {
+            world->RemoveGameObject((GameObject*)bullet);
+            it = bullets.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+void SceneManager::AddBullet(Bullet* bullet)
+{
+    bullets.push_back(bullet);
+}
+
+
+
+
