@@ -218,7 +218,7 @@ endif()
 
 ################################################################################
 #set root path
-set(FMOD_ROOT "C:/dev/CppSeries/MastersTeamProject/AdvancedGameTechnologies/SDK/FMOD Studio API Windows/api")
+set(FMOD_ROOT "${CMAKE_SOURCE_DIR}/SDK/FMOD Studio API Windows/api")
 
 #include head file
 include_directories(${FMOD_ROOT}/core/inc)
