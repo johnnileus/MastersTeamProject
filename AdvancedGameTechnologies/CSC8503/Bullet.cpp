@@ -28,11 +28,11 @@ Bullet::~Bullet()
 /// @return 
 Bullet* Bullet::Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon)
 {
-    Bullet* bullet = new Bullet(weapon->getDamage(),100,100);
+    Bullet* bullet = new Bullet(weapon->getDamage(),200,100);
     
     bullet->direction = Vector::Normalise(direction);
     bullet->GetTransform().SetPosition(position); // original position
-    
+    bullet->myWorld = world;
     world->AddGameObject(bullet);//add to physic world
     SceneManager::Instance().AddBullet(bullet);//must add to the manager for updating
     
@@ -79,4 +79,14 @@ void Bullet::SetComponent(float meshSize,float inverseMass)
     GetPhysicsObject()->SetInverseMass(inverseMass);
     GetPhysicsObject()->InitSphereInertia();
 }
+
+void Bullet::OnCollisionBegin(GameObject* otherObject)
+{
+    if (otherObject->tag=="Enemy")
+    {
+        std::cout<<"HIT"<<std::endl;
+        myWorld->RemoveGameObject(this);
+    }
+}
+
 

@@ -20,7 +20,7 @@ namespace NCL
             bool IsDead() const { return isDead; }
             
             static Bullet* Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon);
-
+            GameWorld* myWorld;
         private:
             Vector3 direction; //move direction
             float speed;
@@ -30,6 +30,8 @@ namespace NCL
             bool isDead;
 
             void SetComponent(float meshSize,float inverseMass);
+
+            void OnCollisionBegin(GameObject* otherObject) override;
         };
     }
 }
