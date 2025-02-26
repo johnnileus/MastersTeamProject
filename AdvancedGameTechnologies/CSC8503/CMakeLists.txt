@@ -215,3 +215,33 @@ if(USE_VULKAN)
 
     add_dependencies(${PROJECT_NAME} SHADER_FILES)
 endif()
+
+################################################################################
+#set root path
+set(FMOD_ROOT "C:/dev/CppSeries/MastersTeamProject/AdvancedGameTechnologies/SDK/FMOD Studio API Windows/api")
+
+#include head file
+include_directories(${FMOD_ROOT}/core/inc)
+
+#include FMOD lib path
+link_directories(${FMOD_ROOT}/core/lib)
+
+#choose Debug or Release
+if (CMAKE_BUILD_TYPE MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
+    set(FMOD_LIB "${FMOD_ROOT}/core/lib/x64/fmodL_vc.lib")
+else()
+    set(FMOD_LIB "${FMOD_ROOT}/core/lib/x64/fmod_vc.lib")
+endif()
+
+# add FMOD lib
+target_link_libraries(${PROJECT_NAME} PRIVATE ${FMOD_LIB})
+
+#ensure FMOD.dll useable
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    "${FMOD_ROOT}/core/lib/x64/fmodL.dll"
+    "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+)
+
+
+
