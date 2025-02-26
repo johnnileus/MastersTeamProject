@@ -22,6 +22,7 @@ namespace NCL {
 
             void UpdateBullets(GameWorld*world, float dt);
             void AddBullet(Bullet* bullet);
+            void RemoveBUllet(Bullet* bullet);
             
         private:
             SceneManager() {}
