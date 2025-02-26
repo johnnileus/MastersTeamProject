@@ -47,7 +47,7 @@ void ThirdPersonCamera::Update(float dt) {
     right = Vector::Normalise(orientation*Vector3(1,0,0));
     
     // Default offset (camera behind the target)
-    Vector3 offset(1.0f, 2.0f, orbitRadius);
+    Vector3 offset(2.0f, 2.0f, orbitRadius);
 
     // Apply rotation
     Vector3 rotatedOffset = orientation * offset;

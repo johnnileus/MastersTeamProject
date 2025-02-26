@@ -31,6 +31,9 @@ namespace NCL {
 
 			int score;
 
+			ThirdPersonCamera* myCam;
+			Weapon* myWeapon;
+
 		protected:
 
 			//component
@@ -38,10 +41,8 @@ namespace NCL {
 			Texture* playerTex;
 			Shader* playerShader;
 			PhysicsObject* playerPhysicObject;
-			ThirdPersonCamera* myCam;
 			Transform* renderOffsetTransform;
-
-			Weapon* myWeapon;
+			
 
 			//move
 			float acceleratForce;

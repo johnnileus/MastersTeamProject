@@ -2,6 +2,8 @@
 
 #include "TutorialGame.h"
 
+#include "Pistol.h"
+
 
 using namespace NCL;
 using namespace CSC8503;
@@ -105,39 +107,17 @@ void TutorialGame::UpdateGame(float dt) {
 		//Debug::Print("(G)ravity off", Vector2(5, 95), Debug::RED);
 	}
 
-	RayCollision closestCollision;
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::K) && selectionObject) {
-		Vector3 rayPos;
-		Vector3 rayDir;
 
-		rayDir = selectionObject->GetTransform().GetOrientation() * Vector3(0, 0, -1);
-
-		rayPos = selectionObject->GetTransform().GetPosition();
-
-		Ray r = Ray(rayPos, rayDir);
-
-		if (world->Raycast(r, closestCollision, true, selectionObject)) {
-			if (objClosest) {
-				objClosest->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
-			}
-			objClosest = (GameObject*)closestCollision.node;
-
-			objClosest->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
-		}
-	}
-
-
-	//Animation Test
+	///////Animation Test///////
 	frameTime-=dt;
 	while (frameTime<0.0f)
 	{
 		currentFrame = (currentFrame+1) % AssetManager::Instance().idle->GetFrameCount();
 		frameTime +=1.0f/AssetManager::Instance().idle->GetFrameRate();
 	}
+	///////////////////////////
 	
 	DisplayPathfinding();
-
-	
 
 	world->UpdateWorld(dt);
 	//renderer->Update(dt);
@@ -149,8 +129,7 @@ void TutorialGame::UpdateGame(float dt) {
 		networkManager->Update();
 	}
 
-
-
+	SceneManager::Instance().UpdateBullets(world, dt);
 
 	physics->Update(dt);
 	thirdPersonCam->Update(dt);
@@ -325,8 +304,6 @@ void TutorialGame::InitWorld() {
 
 		enemies[0]->SetMovePath(testNodes);
 	}
-	
-	SceneManager::Instance().AddCubeToWorld(world,Vector3(5,0,0),Vector3(1,1,1),1);
 	
 	world->PrintObjects();
 
