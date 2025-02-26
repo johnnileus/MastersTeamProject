@@ -27,6 +27,9 @@
 #include "BehaviourSequence.h"
 #include "BehaviourAction.h"
 
+#include<fmod.hpp>
+#include<fmod_errors.h>
+
 
 using namespace NCL;
 #ifdef USEAGC
@@ -148,6 +151,31 @@ int main() {
 	c->MapButton(2, "Down");
 #endif // USEAGC
 
+	// Initialize FMOD system
+	FMOD::System* system = nullptr;
+	FMOD_RESULT result = FMOD_OK;
+	// Initialize FMOD system
+	result = FMOD::System_Create(&system);
+	if (result != FMOD_OK) {
+		printf("FMOD system creation failed: %s\n", FMOD_ErrorString(result));
+		return -1;
+	}
+
+	// Initialize FMOD 
+	result = system->init(512, FMOD_INIT_NORMAL, 0);
+	if (result != FMOD_OK) {
+		printf("FMOD system initialization failed: %s\n", FMOD_ErrorString(result));
+		return -1;
+	}
+
+
+
+
+
+
+
+	
+
 	
 
 	std::cout << "Creating TutorialGame instance" << std::endl;
@@ -189,6 +217,12 @@ int main() {
 		renderer->Render();
 		Debug::UpdateRenderables(dt);
 	}
+
+	// Clean up FMOD
+	system->close();
+	system->release();
+
+
 #ifdef _WIN32
 	Window::DestroyGameWindow();
 #endif // _WIN32
