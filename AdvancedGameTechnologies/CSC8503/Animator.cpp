@@ -10,7 +10,7 @@ Animator::Animator()
     tweenTime = 0.0f;
     tweenTimeCurrent = 0.0f;
     isTweening = false;
-
+    currentFrame=0;
     pendingAnim = nullptr;
 }
 
@@ -49,42 +49,43 @@ void Animator::Update(float dt)
 
 bool Animator::LoadAnimation(const std::string& animationName)
 {
-    meshAnims[animationName] = AssetManager::Instance().GetAnimation("name");
+    meshAnims[animationName] = AssetManager::Instance().GetAnimation(animationName);
     return (meshAnims[animationName]!=nullptr);
 }
 
 void Animator::Draw(RenderObject* renderObj)
 {
     Mesh* mesh = renderObj->GetMesh();
+    
+    
     Shader* shader = renderObj->GetShader();
-
     const Matrix4* invBindPose = mesh->GetInverseBindPose().data();
+    
+    if (isTweening && (pendingAnim != nullptr))
+    {
+        const Matrix4* animCurrentFrame = currentAnim->GetJointData(currentFrame);
+        
+        const Matrix4* animPendingFrame = pendingAnim->GetJointData(0);
+    
+        std::vector<Matrix4> finalBlending;
+        for (size_t i = 0; i < mesh->GetJointCount(); i++)
+            finalBlending.emplace_back( LerpMat(animCurrentFrame[i], animPendingFrame[i], tweenBlendFactor));
+    
+        for (size_t i = 0; i < mesh->GetJointCount(); i++)
+            frameMatrices.emplace_back(finalBlending[i] * invBindPose[i]);
+    }
+    else
+    {
+        const Matrix4* frameData = currentAnim->GetJointData(currentFrame);
+    
+        for (unsigned int i = 0; i < mesh->GetJointCount(); i++)
+            frameMatrices.emplace_back(frameData[i] * invBindPose[i]);
+    }
 
-    // if (isTweening && (pendingAnim != nullptr))
-    // {
-    //     const Matrix4* animCurrentFrame = currentAnim->GetJointData(currentFrame);
-    //     
-    //     const Matrix4* animPendingFrame = pendingAnim->GetJointData(0);
-    //
-    //     std::vector<Matrix4> finalBlending;
-    //     for (size_t i = 0; i < mesh->GetJointCount(); i++)
-    //         finalBlending.emplace_back( LerpMat(animCurrentFrame[i], animPendingFrame[i], tweenBlendFactor));
-    //
-    //     for (size_t i = 0; i < mesh->GetJointCount(); i++)
-    //         frameMatrices.emplace_back(finalBlending[i] * invBindPose[i]);
-    // }
-    // else
-    // {
-    //     const Matrix4* frameData = currentAnim->GetJointData(currentFrame);
-    //
-    //     for (unsigned int i = 0; i < mesh->GetJointCount(); i++)
-    //         frameMatrices.emplace_back(frameData[i] * invBindPose[i]);
-    // }
-
-    // int j = glGetUniformLocation(GetProcessId(shader), "joints");
-    // glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
-    //
-    // frameMatrices.clear();
+    int j = glGetUniformLocation(GetProcessId(shader), "joints");
+    glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
+    
+    frameMatrices.clear();
     
 }
 
@@ -131,9 +132,12 @@ Matrix4 Animator::LerpMat(const Matrix4& a, const Matrix4& b, float t)
             res.array[i][j] = std::lerp(a.array[i][j], b.array[i][j], t);
         }
     }
-
     return res;
 }
+
+
+
+
 
 
 
