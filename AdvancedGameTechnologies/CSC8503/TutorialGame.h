@@ -34,6 +34,9 @@
 #include "HeightMap.h"
 #include "GameTechRendererInterface.h"
 
+#include "Pistol.h"
+
+
 namespace NCL {
 	namespace CSC8503 {
 		class TutorialGame		{
@@ -46,7 +49,8 @@ namespace NCL {
 
 			void BroadcastPosition();
 
-
+			//called by GameServer when player connects
+			GameObject* InitialiseConnectedPlayer(int id);
 
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
 

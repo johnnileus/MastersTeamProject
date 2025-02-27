@@ -21,11 +21,15 @@ void MainPacketReceiver::ReceivePacket(int type, GamePacket* payload, int source
 	}
 }
 
+void printstuff(int i) {
+	std::cout << "Hello" << std::endl;
+}
 
 void NetworkManager::StartAsServer() {
 	if (!IsConnected()) {
 		isServer = true;
 		server = new GameServer(port, 8);
+		server->Player_Connected.AddListener(printstuff);
 
 		server->RegisterPacketHandler(String_Message, &networkReceiver);
 		server->RegisterPacketHandler(Transform_Data, &networkReceiver);
