@@ -2,7 +2,6 @@
 
 #include "TutorialGame.h"
 
-#include "Pistol.h"
 
 
 using namespace NCL;
@@ -643,8 +642,8 @@ GameObject* TutorialGame::InitialiseConnectedPlayer(int id) {
 		.SetScale(Vector3(meshSize, meshSize, meshSize))
 		.SetPosition(Vector3(20, 0, 30));
 
-	newPlayer->SetRenderObject(new RenderObject(&player->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
-	newPlayer->SetPhysicsObject(new PhysicsObject(&player->GetTransform(), player->GetBoundingVolume()));
+	newPlayer->SetRenderObject(new RenderObject(&newPlayer->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
+	newPlayer->SetPhysicsObject(new PhysicsObject(&newPlayer->GetTransform(), newPlayer->GetBoundingVolume()));
 
 	newPlayer->GetPhysicsObject()->SetInverseMass(inverseMass);
 	newPlayer->GetPhysicsObject()->InitSphereInertia();
