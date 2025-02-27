@@ -134,9 +134,9 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 		world->AddGameObject(player);
 	}
 	camera->SetFollowObject(player);
-
-	std::cout << "Doing the player animator thingy" << std::endl;
-	player->animator->Play("Idle",true,1);
+	
+	player-> animator->Play("Idle",true,1);
+	player -> animator->Draw(player->renderObject);
 	
 	return player;
 }
