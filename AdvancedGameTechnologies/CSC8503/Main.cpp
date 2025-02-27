@@ -22,9 +22,7 @@
 #include "BehaviourSequence.h"
 #include "BehaviourAction.h"
 
-#include<fmod.hpp>
-#include<fmod_errors.h>
-
+#include "AudioManager.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -92,29 +90,9 @@ int main() {
 	w->LockMouseToWindow(false);
 	//TestPathfinding();
 
-
-
-	// Initialize FMOD system
-	FMOD::System* system = nullptr;
-	FMOD_RESULT result = FMOD_OK;
-	// Initialize FMOD system
-	result = FMOD::System_Create(&system);
-	if (result != FMOD_OK) {
-		printf("FMOD system creation failed: %s\n", FMOD_ErrorString(result));
+	if (!AudioManager::Init()) {
 		return -1;
 	}
-
-	// Initialize FMOD 
-	result = system->init(512, FMOD_INIT_NORMAL, 0);
-	if (result != FMOD_OK) {
-		printf("FMOD system initialization failed: %s\n", FMOD_ErrorString(result));
-		return -1;
-	}
-
-
-
-
-
 
 
 	//Create game
@@ -152,8 +130,8 @@ int main() {
 	}
 
 	// Clean up FMOD
-	system->close();
-	system->release();
+	AudioManager::Shutdown();
+	
 
 
 	Window::DestroyGameWindow();
