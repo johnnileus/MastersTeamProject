@@ -29,7 +29,7 @@ void NetworkManager::StartAsServer() {
 	if (!IsConnected()) {
 		isServer = true;
 		server = new GameServer(port, 8);
-		server->Player_Connected.AddListener(printstuff);
+		server->Player_Connected.AddListener(std::bind(&TutorialGame::InitialiseConnectedPlayer, g, std::placeholders::_1));
 
 		server->RegisterPacketHandler(String_Message, &networkReceiver);
 		server->RegisterPacketHandler(Transform_Data, &networkReceiver);
