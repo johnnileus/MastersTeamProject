@@ -4,6 +4,7 @@
 
 namespace NCL {
 	namespace CSC8503 {
+		class NavMeshNode;
 		class NavMeshGrid {
 		public:
 			NavMeshGrid() { levelSize = 256; nodeGrid = GenerateNavMeshGrid(levelSize); }
