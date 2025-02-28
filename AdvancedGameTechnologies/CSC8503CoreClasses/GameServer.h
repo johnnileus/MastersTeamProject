@@ -22,7 +22,7 @@ namespace NCL {
 
 			virtual void UpdateServer();
 
-			Event<int> Player_Connected;
+			Event<int> PlayerConnected;
 
 		protected:
 			int			port;

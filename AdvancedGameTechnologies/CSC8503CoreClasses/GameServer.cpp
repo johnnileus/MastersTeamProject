@@ -75,8 +75,9 @@ void GameServer::UpdateServer() {
 		if (type == ENET_EVENT_TYPE_CONNECT) {
 			std::cout << "Server: New client connected" << std::endl;
 
-			//g->InitialiseConnectedPlayer(p);
-			Player_Connected.Invoke(peer);
+
+			std::cout << peer << "<- id" << std::endl;
+			PlayerConnected.Invoke(peer);
 
 				
 
