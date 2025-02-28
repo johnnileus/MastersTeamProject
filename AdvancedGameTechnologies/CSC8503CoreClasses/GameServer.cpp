@@ -1,10 +1,13 @@
 #pragma once
+
 #include "GameServer.h"
 #include "GameWorld.h"
 #include "./enet/enet.h"
 
 using namespace NCL;
 using namespace CSC8503;
+
+//extern TutorialGame* g;
 
 GameServer::GameServer(int onPort, int maxClients)	{
 	port		= onPort;
@@ -68,15 +71,10 @@ void GameServer::UpdateServer() {
 		if (type == ENET_EVENT_TYPE_CONNECT) {
 			std::cout << "Server: New client connected" << std::endl;
 
-			//IDPacket idPacket(peer.incomingPeerID);
+			//g->InitialiseConnectedPlayer(p);
+			Player_Connected.Invoke(peer);
 
-
-			/*for (size_t i = 0; i < netHandle->peerCount; ++i) {
-				ENetPeer& peer = netHandle->peers[i];
-				if (peer.state == ENET_PEER_STATE_CONNECTED) {
-					std::cout << "Connected peer ID: " << peer.incomingPeerID << std::endl;
-				}
-			}*/
+				
 
 
 

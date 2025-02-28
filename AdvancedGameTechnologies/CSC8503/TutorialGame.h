@@ -33,6 +33,9 @@
 
 #include "HeightMap.h"
 
+#include "Pistol.h"
+
+
 namespace NCL {
 	namespace CSC8503 {
 		class TutorialGame		{
@@ -45,7 +48,8 @@ namespace NCL {
 
 			void BroadcastPosition();
 
-
+			//called by GameServer when player connects
+			GameObject* InitialiseConnectedPlayer(int id);
 
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
 
@@ -75,10 +79,10 @@ namespace NCL {
 			void InitTerrain();
 
 			//networking
-			GameObject* InitialiseConnectedPlayer(int id);
 
 			NetworkManager* networkManager = new NetworkManager();
 			std::vector<GameObject*> connectedPlayers;
+
 
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
 			void InitCatCoins();
