@@ -397,12 +397,19 @@ void Player::HandleJump() {
 
 void Player::HandleAim()
 {
-	Ray ray = CollisionDetection::BuildRayFromCamera(myWorld->GetMainCamera(),100,*myCam);
-	RayCollision closestCollision;
-
-	Vector3 hitPoint = CollisionDetection::GetRayHitPoint(ray);
-	aimDir = hitPoint-transform.GetPosition();
-	Debug::DrawLine(transform.GetPosition(),hitPoint,Debug::RED);
+	Ray ray = CollisionDetection::BuildRayFromCamera(myWorld->GetMainCamera(), 100.0f, *myCam);
+	
+	RayCollision collisionInfo;
+	bool hasHit = myWorld->Raycast(ray, collisionInfo, true);
+	
+	Vector3 hitPoint;
+	if (hasHit) {
+		hitPoint = collisionInfo.collidedAt; 
+	} else {
+		hitPoint = ray.GetPosition() + ray.GetDirection() * 100.0f;
+	}
+	aimDir = hitPoint - transform.GetPosition();
+	Debug::DrawLine(transform.GetPosition(), hitPoint, Debug::RED);
 	
 }
 
