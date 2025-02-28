@@ -128,6 +128,7 @@ OGLMesh* GameTechRenderer::GenerateTerrainMesh(HeightMap* heightmap) {
 	terrainMesh->SetVertexTextureCoords(texCoords);
 	terrainMesh->SetVertexIndices(indices);
 	terrainMesh->UploadToGPU();
+	BindMesh(*terrainMesh);
 
 	return terrainMesh;
 }

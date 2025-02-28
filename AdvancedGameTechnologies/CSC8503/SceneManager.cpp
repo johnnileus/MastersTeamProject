@@ -70,18 +70,18 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
     GameObject* terrain = new GameObject();
     terrain->tag = "Terrain";
     terrain->SetName("terrain");
-    Vector3 floorSize = size;
-    AABBVolume* volume = new AABBVolume(floorSize);
-    terrain->SetBoundingVolume((CollisionVolume*)volume);
-    terrain->GetTransform().SetScale(floorSize).SetPosition(pos);
+    Vector3 terrainSize = size;
+    AABBVolume* terrainVolume = new AABBVolume(terrainSize);
+    terrain->SetBoundingVolume((CollisionVolume*)terrainVolume);
+    terrain->GetTransform().SetScale(terrainSize).SetPosition(pos);
 
     terrain->SetRenderObject(new RenderObject(
         &terrain->GetTransform(),
         AssetManager::Instance().terrainMesh,
-        AssetManager::Instance().basicTex,
+        nullptr,
         AssetManager::Instance().basicShader));
 
-    terrain->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
+    terrain->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
     terrain->SetPhysicsObject(new PhysicsObject(&terrain->GetTransform(), terrain->GetBoundingVolume()));
 
     terrain->GetPhysicsObject()->SetInverseMass(0);
@@ -91,4 +91,3 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
 
     return terrain;
 }
-
