@@ -47,6 +47,8 @@ namespace NCL {
 			GameObject* AddSphereToWorld(const Vector3& position,float radius,float inverseMass,const Vector3& initialVelocity);
 
 			void BroadcastPosition();
+			void SendTransform();
+			void UpdateConnectedPlayer(int id, Vector3 pos, Quaternion rot);
 
 			//called by GameServer when player connects
 			GameObject* InitialiseConnectedPlayer(int id);
@@ -79,9 +81,8 @@ namespace NCL {
 			void InitTerrain();
 
 			//networking
-
 			NetworkManager* networkManager = new NetworkManager();
-			std::vector<GameObject*> connectedPlayers;
+			GameObject* connectedPlayers[8];
 
 
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.

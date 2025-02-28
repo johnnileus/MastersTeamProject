@@ -18,12 +18,14 @@ using namespace NCL::Maths;
 struct TransformPacket : public GamePacket {
 	Vector3 pos;
 	Quaternion rot;
+	bool fromServer;
 
-	TransformPacket(const Vector3 p, const Quaternion r) {
+	TransformPacket(const Vector3 p, const Quaternion r, bool b) {
 		type = BasicNetworkMessages::Transform_Data;
-		size = sizeof(Vector3) + sizeof(Quaternion);
+		size = sizeof(Vector3) + sizeof(Quaternion) + sizeof(bool);
 		pos = p;
 		rot = r;
+		fromServer = b;
 	}
 };
 
@@ -60,7 +62,7 @@ public:
 	void Update();
 
 	void BroadcastPacket(TransformPacket p);
-
+	void SendPacket(TransformPacket p);
 
 protected:
 

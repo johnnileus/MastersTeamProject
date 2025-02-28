@@ -168,7 +168,7 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F8)) {
 		world->ShuffleObjects(false);
 	}
-	 
+	
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::U)) {
 		std::cout << "starting server" << std::endl;
 		networkManager->StartAsServer();
@@ -610,46 +610,5 @@ void TutorialGame::ReloadLevel() {
 
 
 
-void TutorialGame::BroadcastPosition(){
-
-	Vector3 pos = player->GetTransform().GetPosition();
-	Quaternion rot = player->GetTransform().GetOrientation();
 
 
-	TransformPacket transform(pos, rot);
-
-	networkManager->BroadcastPacket(transform);
-}
-
-void TutorialGame::UpdateTransformFromServer(Vector3 pos, Quaternion rot) {
-	player->GetTransform().SetOrientation(rot);
-	player->GetTransform().SetPosition(pos);
-}
-
-GameObject* TutorialGame::InitialiseConnectedPlayer(int id) {
-
-	float meshSize = 1.0f;
-	float inverseMass = 10.0f;
-
-	GameObject* newPlayer = new GameObject();
-	SphereVolume* volume = new SphereVolume(1.0f);
-	
-	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
-
-	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
-
-	newPlayer->GetTransform()
-		.SetScale(Vector3(meshSize, meshSize, meshSize))
-		.SetPosition(Vector3(20, 0, 30));
-
-	newPlayer->SetRenderObject(new RenderObject(&newPlayer->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
-	newPlayer->SetPhysicsObject(new PhysicsObject(&newPlayer->GetTransform(), newPlayer->GetBoundingVolume()));
-
-	newPlayer->GetPhysicsObject()->SetInverseMass(inverseMass);
-	newPlayer->GetPhysicsObject()->InitSphereInertia();
-
-	world->AddGameObject(newPlayer);
-
-	return newPlayer;
-
-}
