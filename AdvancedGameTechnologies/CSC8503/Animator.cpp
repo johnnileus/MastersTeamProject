@@ -101,7 +101,8 @@ void Animator::Draw(RenderObject* renderObj)
     
     Shader* shader = renderObj->GetShader();
     const Matrix4* invBindPose = mesh->GetInverseBindPose().data();
-    
+
+    //if is tweening, interpolate the next and current frame 
     if (isTweening && (pendingAnim != nullptr))
     {
         const Matrix4* animCurrentFrame = currentAnim->GetJointData(currentFrame);
@@ -115,6 +116,7 @@ void Animator::Draw(RenderObject* renderObj)
         for (size_t i = 0; i < mesh->GetJointCount(); i++)
             frameMatrices.emplace_back(finalBlending[i] * invBindPose[i]);
     }
+    //if not, just use current frame data
     else
     {
         const Matrix4* frameData = currentAnim->GetJointData(currentFrame);
@@ -123,11 +125,26 @@ void Animator::Draw(RenderObject* renderObj)
             frameMatrices.emplace_back(frameData[i] * invBindPose[i]);
     }
 
-    int j = glGetUniformLocation(GetProcessId(shader), "joints");
+    int j = glGetUniformLocation(GetProcessId(shader), "name");
     glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
     
-    frameMatrices.clear();*/
+    frameMatrices.clear();
+
     
+    for (int i = 0; i < (int)mesh->GetSubMeshCount(); i++)
+    {
+        
+        // if (renderObj->GetShader() != nullptr)
+        // {
+        //     if (renderObj->GetMaterial() != nullptr && (int)renderObject->GetMaterial()->GetSubMaterials().size() > 0) {
+        //         int materialIndexLocations = glGetUniformLocation(r.GetBoundShader()->GetProgramID(), "materialIndex");
+        //         int index = renderObject->GetMaterial()->GetMaterialIndex()[i];
+        //         glUniform1i(materialIndexLocations, index);
+        //     }
+        //
+        // }
+        std::cout<<"submesh count"<<(int)mesh->GetSubMeshCount()<<std::endl;
+    }*/
 }
 
 void Animator::Play(PlayerAnimation anim, bool tween, float animSpeed)
