@@ -12,6 +12,8 @@ AssetManager& AssetManager::Instance() {
 }
 
 void AssetManager::LoadAssets(GameTechRenderer* renderer) {
+    gameTechRenderer =renderer;
+    
     //load heightmap
     heightmap = new HeightMap(256, 0.1f, 50.0f);
 
@@ -78,6 +80,12 @@ void AssetManager::RegisterAnimation(const std::string& name, MeshAnimation* ani
     if (anim) {
         animationMap[name] = anim;
     }
+}
+
+Texture* AssetManager::AddTexture(const string& name)
+{
+    Texture* tex =  gameTechRenderer->LoadTexture(name);
+    return tex;
 }
 
 
