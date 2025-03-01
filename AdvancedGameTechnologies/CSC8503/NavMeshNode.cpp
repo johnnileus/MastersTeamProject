@@ -17,9 +17,10 @@ void NavMeshNode::addEdge(NavMeshNode* neighbour, int cost) {
 }
 
 bool NavMeshNode::detectImpassableEdge(NavMeshNode* neighbour) {
-	//calculate gradient between this node and neighbour
-	//if the gradient is too steep, return true
-	return false;
+	float diffY = (neighbour->position.y - this->position.y);
+	float diffX = (neighbour->position.x - this->position.x);
+	float diffZ = (neighbour->position.z - this->position.z);
+	return (diffY > diffX || diffY > diffZ);
 }
 
 void NavMeshNode::calculateEdges() {
