@@ -69,10 +69,7 @@ std::vector<std::vector<NavMeshNode>> NavMeshGrid::GenerateNavMeshGrid(int level
 				for (int row = -1; row <= 1; ++row) {
 					for (int col = -1; col <= 1; ++col) {
 						if (row == 0 && col == 0) continue;//ignore self
-						if (nodeGrid[x + row][z + col].isObstructed()) {
-							continue;
-						}
-						else {
+						if (!nodeGrid[x + row][z + col].isObstructed()) {
 							nodeGrid[x][z].addEdge(&nodeGrid[x + row][z + col], 1);
 						}
 					}
