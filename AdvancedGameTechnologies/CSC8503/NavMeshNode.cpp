@@ -8,3 +8,20 @@ void NavMeshNode::checkObstructed() {
 
 	this->obstructed = false;
 }
+
+void NavMeshNode::addEdge(NavMeshNode* neighbour, int cost) {
+	Edge e;
+	e.neighbour = neighbour;
+	e.cost = cost;
+	edges.push_back(e);
+}
+
+bool NavMeshNode::detectImpassableEdge(NavMeshNode* neighbour) {
+	//calculate gradient between this node and neighbour
+	//if the gradient is too steep, return true
+	return false;
+}
+
+void NavMeshNode::calculateEdges() {
+	//logic to determine the cost of a node to each neighbour
+}
