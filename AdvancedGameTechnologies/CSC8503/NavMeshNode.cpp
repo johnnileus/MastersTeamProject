@@ -25,4 +25,13 @@ bool NavMeshNode::detectImpassableEdge(NavMeshNode* neighbour) {
 
 void NavMeshNode::calculateEdges() {
 	//logic to determine the cost of a node to each neighbour
+	for (int node = 0; node < std::size(edges); ++node) {
+		if (detectImpassableEdge(edges[node].neighbour)) {
+			edges[node].cost = 1000000;
+		}
+		//logic for special terrain types to go here to adjust cost, e.g lava, ice, etc.
+		else {
+			edges[node].cost = 1;
+		}
+	}
 }
