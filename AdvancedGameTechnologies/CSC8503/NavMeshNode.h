@@ -5,12 +5,10 @@ namespace NCL {
 	namespace CSC8503 {
 		class NavMeshNode;
 
-
 		struct Edge {
 			NavMeshNode* neighbour;
 			int cost;
 		};
-
 
 		class NavMeshNode {
 		public:
