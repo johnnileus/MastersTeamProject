@@ -15,8 +15,8 @@ namespace NCL {
 		class NavMeshNode {
 		public:
 			NavMeshNode(NCL::Maths::Vector3 position) {
-				position = position;
-				obstructed = false;
+				this->position = position;
+				this->obstructed = false;
 			}
 			void checkObstructed();
 			bool isObstructed() {
