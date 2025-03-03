@@ -325,7 +325,7 @@ void TutorialGame::InitWorld() {
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
-	SceneManager::Instance().AddTerrain(world, Vector3(0, -50, 0) + offset, Vector3(70, 2, 70));
+	SceneManager::Instance().AddTerrain(world, Vector3(0, -25, 0) + offset, Vector3(70, 2, 70));
 }
 
 void TutorialGame::InitPlayer()
@@ -428,7 +428,7 @@ void TutorialGame::InitDefaultFloor() {
 
 	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
 	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
 	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
 	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
