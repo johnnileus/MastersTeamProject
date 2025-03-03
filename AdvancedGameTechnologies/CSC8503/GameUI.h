@@ -7,6 +7,8 @@ public:
 	~GameUI();
 
 	void RenderUI();
+	void AmmoCounter();
+	void Crosshair();
 protected:
 	//state manager obj
 	UIStateManager uiState;
