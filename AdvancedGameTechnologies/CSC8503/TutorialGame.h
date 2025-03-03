@@ -32,12 +32,13 @@
 #include "SceneManager.h"
 
 #include "HeightMap.h"
+#include "GameTechRendererInterface.h"
 
 namespace NCL {
 	namespace CSC8503 {
 		class TutorialGame		{
 		public:
-			TutorialGame();
+			TutorialGame(GameWorld& gameWorld, GameTechRendererInterface& renderer, PhysicsSystem& physics);
 			~TutorialGame();
 
 			virtual void UpdateGame(float dt);
@@ -82,13 +83,17 @@ namespace NCL {
 
 			GameObject* AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 10.0f);
 
+			GameWorld& world;
+			GameTechRendererInterface& renderer;
+			PhysicsSystem& physics;
+
 #ifdef USEVULKAN
 			GameTechVulkanRenderer*	renderer;
 #else
-			GameTechRenderer* renderer;
+			//GameTechRenderer* renderer;
 #endif
-			PhysicsSystem*		physics;
-			GameWorld*			world;
+			//PhysicsSystem*		physics;
+			//GameWorld*			world;
 
 
 			KeyboardMouseController controller;

@@ -10,6 +10,8 @@ https://research.ncl.ac.uk/game/
 #include "Keyboard.h"
 #include "Mouse.h"
 
+#include <functional>
+#include <string>
 #include "Vector.h"
 
 namespace NCL {
@@ -28,8 +30,8 @@ namespace NCL {
 	};
 
 	struct WindowInitialisation {
-		uint32_t width;
-		uint32_t height;
+		uint32_t width = 1920;
+		uint32_t height = 1080;
 		bool	 fullScreen			= false;
 		uint32_t refreshRate		= 60;
 

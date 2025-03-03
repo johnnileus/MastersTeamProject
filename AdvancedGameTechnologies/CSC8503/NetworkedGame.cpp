@@ -16,16 +16,17 @@ struct MessagePacket : public GamePacket {
 	}
 };
 
-NetworkedGame::NetworkedGame()	{
+NetworkedGame::NetworkedGame(GameWorld& world, GameTechRendererInterface& renderer, PhysicsSystem& physics)
+	: TutorialGame(world, renderer, physics) {
 	thisServer = nullptr;
 	thisClient = nullptr;
 
-NetworkBase::Initialise();
-	timeToNextPacket  = 0.0f;
+	NetworkBase::Initialise();
+	timeToNextPacket = 0.0f;
 	packetsToSnapshot = 0;
 }
 
-NetworkedGame::~NetworkedGame()	{
+NetworkedGame::~NetworkedGame() {
 	delete thisServer;
 	delete thisClient;
 }
@@ -66,9 +67,9 @@ void NetworkedGame::UpdateGame(float dt) {
 		StartAsServer();
 	}
 	if (!thisClient && Window::GetKeyboard()->KeyPressed(KeyCodes::F10)) {
-		StartAsClient(127,0,0,1);
+		StartAsClient(127, 0, 0, 1);
 	}
-	
+
 	TutorialGame::UpdateGame(dt);
 }
 
@@ -98,7 +99,7 @@ void NetworkedGame::BroadcastSnapshot(bool deltaFrame) {
 	std::vector<GameObject*>::const_iterator first;
 	std::vector<GameObject*>::const_iterator last;
 
-	world->GetObjectIterators(first, last);
+	world.GetObjectIterators(first, last);
 
 	for (auto i = first; i != last; ++i) {
 		NetworkObject* o = (*i)->GetNetworkObject();
@@ -132,7 +133,7 @@ void NetworkedGame::UpdateMinimumState() {
 	//so we can get rid of any old states!
 	std::vector<GameObject*>::const_iterator first;
 	std::vector<GameObject*>::const_iterator last;
-	world->GetObjectIterators(first, last);
+	world.GetObjectIterators(first, last);
 
 	for (auto i = first; i != last; ++i) {
 		NetworkObject* o = (*i)->GetNetworkObject();
@@ -152,14 +153,14 @@ void NetworkedGame::StartLevel() {
 }
 
 void NetworkedGame::ReceivePacket(int type, GamePacket* payload, int source) {
-	
+
 }
 
 void NetworkedGame::OnPlayerCollision(NetworkPlayer* a, NetworkPlayer* b) {
 	if (thisServer) { //detected a collision between players!
 		MessagePacket newPacket;
 		newPacket.messageID = COLLISION_MSG;
-		newPacket.playerID  = a->GetPlayerNum();
+		newPacket.playerID = a->GetPlayerNum();
 
 		thisClient->SendPacket(newPacket);
 

@@ -29,6 +29,7 @@ using namespace CSC8503;
 #include <chrono>
 #include <thread>
 #include <sstream>
+#include "NetworkedGame.h"
 
 std::vector<Vector3> testNodes;
 
@@ -74,14 +75,28 @@ hide or show the
 
 */
 int main() {
+	//std::unique_ptr<Window>		w = std::make_unique<Window>("Hello!", 1920, 1080);
+	std::unique_ptr<GameWorld>		world = std::make_unique<GameWorld>();
+	std::unique_ptr<PhysicsSystem>	physics = std::make_unique<PhysicsSystem>(*world);
+#ifdef PS5
+	GameTechAGCRenderer* renderer = new GameTechAGCRenderer(*world); //this has yet to exist but its ok for now
+#endif // PS5
+
 	WindowInitialisation initInfo;
-	initInfo.width		= 1280;
-	initInfo.height		= 720;
+	initInfo.width = 1280;
+	initInfo.height = 720;
 	initInfo.windowTitle = "GO MARBLE BALL";
 
-	Window*w = Window::CreateGameWindow(initInfo);
+	Window* w = Window::CreateGameWindow(initInfo);
+
+	GameTechRenderer* renderer = new GameTechRenderer(*world);
+	
+
+	
+
 
 	if (!w->HasInitialised()) {
+		std::cout << "Window failed to initialise!" << std::endl;
 		return -1;
 	}	
 
@@ -89,8 +104,10 @@ int main() {
 	w->LockMouseToWindow(false);
 	//TestPathfinding();
 
+	std::unique_ptr<NetworkedGame> networkedGame = std::make_unique<NetworkedGame>(*world, *renderer, *physics);
 
-	g = new TutorialGame();
+	std::unique_ptr<TutorialGame> g = std::make_unique<TutorialGame>(*world, *renderer, *physics);
+
 	w->GetTimer().GetTimeDeltaSeconds(); //Clear the timer so we don't get a larget first dt!
 	while (w->UpdateWindow() && !Window::GetKeyboard()->KeyDown(KeyCodes::ESCAPE)) {
 		float dt = w->GetTimer().GetTimeDeltaSeconds();
@@ -119,6 +136,8 @@ int main() {
 		w->SetTitle("Go Marble Ball: " + std::to_string(1000.0f * dt));
 
 		g->UpdateGame(dt);
+		renderer->Update(dt);
+		renderer->Render();
 	}
 	Window::DestroyGameWindow();
 }

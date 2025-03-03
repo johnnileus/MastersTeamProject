@@ -18,12 +18,14 @@ OGLMesh::OGLMesh() {
 		attributeBuffers[i] = 0;
 	}
 	indexBuffer = 0;
+	std::cout << "OGLMesh created: " << this << std::endl;
 }
 
 OGLMesh::~OGLMesh()	{
 	glDeleteVertexArrays(1, &vao);			//Delete our VAO
 	glDeleteBuffers(VertexAttribute::MAX_ATTRIBUTES, attributeBuffers);	//Delete our VBOs
 	glDeleteBuffers(1, &indexBuffer);	//Delete our indices
+	std::cout << "OGLMesh destroyed: " << this << std::endl;
 }
 
 void CreateVertexBuffer(GLuint& buffer, int byteCount, char* data) {

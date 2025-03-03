@@ -1,4 +1,4 @@
-# Install script for directory: H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/CSC8503
+# Install script for directory: C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

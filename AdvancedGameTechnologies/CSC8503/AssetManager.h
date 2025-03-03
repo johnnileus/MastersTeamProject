@@ -10,6 +10,7 @@
 #ifdef USEVULKAN
 #include "GameTechVulkanRenderer.h"
 #endif
+#include "GameTechRendererInterface.h"
 
 namespace NCL {
     namespace CSC8503 {
@@ -17,7 +18,7 @@ namespace NCL {
         public:
             static AssetManager& Instance(); // singleton
 
-            void LoadAssets(GameTechRenderer* renderer);
+            void LoadAssets(GameTechRendererInterface* renderer);
 
             MeshAnimation* GetAnimation(const string& name);
             void RegisterAnimation(const std::string& name,MeshAnimation* anim);
@@ -61,10 +62,10 @@ namespace NCL {
         protected:
             HeightMap* heightmap;
 
-
         private:
             AssetManager() = default;
             ~AssetManager() = default;
+            GameTechRendererInterface* renderer = nullptr;
             std::map<std::string, MeshAnimation*> animationMap;
         };
     }

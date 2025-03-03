@@ -1,4 +1,4 @@
-# Install script for directory: H:/Desktop/MastersTeamProject/AdvancedGameTechnologies/OpenGLRendering
+# Install script for directory: C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/OpenGLRendering
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

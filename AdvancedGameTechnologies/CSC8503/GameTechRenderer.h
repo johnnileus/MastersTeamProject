@@ -7,12 +7,13 @@
 #include "GameWorld.h"
 
 #include "HeightMap.h"
+#include "GameTechRendererInterface.h"
 
 namespace NCL {
 	namespace CSC8503 {
 		class RenderObject;
 
-		class GameTechRenderer : public OGLRenderer	{
+		class GameTechRenderer : public OGLRenderer, public NCL::CSC8503::GameTechRendererInterface	{
 		public:
 			GameTechRenderer(GameWorld& world);
 			~GameTechRenderer();

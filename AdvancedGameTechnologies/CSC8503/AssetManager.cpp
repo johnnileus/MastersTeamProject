@@ -2,6 +2,7 @@
 
 #include "Animator.h"
 #include "Player.h"
+#include "GameTechRendererInterface.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -11,7 +12,7 @@ AssetManager& AssetManager::Instance() {
     return instance;
 }
 
-void AssetManager::LoadAssets(GameTechRenderer* renderer) {
+void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
     //load heightmap
     heightmap = new HeightMap(256, 0.1f, 50.0f);
 
@@ -26,7 +27,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
 
     guardMesh = renderer->LoadMesh("Male_Guard.msh");
 
-    terrainMesh = renderer->GenerateTerrainMesh(heightmap);
+    //terrainMesh = renderer->GenerateTerrainMesh(heightmap);
 
 
     // load texture resources
@@ -81,25 +82,25 @@ void AssetManager::RegisterAnimation(const std::string& name, MeshAnimation* ani
 }
 
 
-void AssetManager::Cleanup() {
-    delete cubeMesh;
-    delete sphereMesh;
-    delete catMesh;
-    delete kittenMesh;
-    delete enemyMesh;
-    delete bonusMesh;
-    delete capsuleMesh;
-
-    delete guardMesh;
-
-    delete terrainMesh;
-
-
-    delete basicTex;
-    delete woodTex;
-    delete metalTex;
-    delete tilesTex;
-    delete floorTex;
-
-    delete basicShader;
-}
+//void AssetManager::Cleanup() {
+//    delete cubeMesh;
+//    delete sphereMesh;
+//    delete catMesh;
+//    delete kittenMesh;
+//    delete enemyMesh;
+//    delete bonusMesh;
+//    delete capsuleMesh;
+//
+//    delete guardMesh;
+//
+//    delete terrainMesh;
+//
+//
+//    delete basicTex;
+//    delete woodTex;
+//    delete metalTex;
+//    delete tilesTex;
+//    delete floorTex;
+//
+//    delete basicShader;
+//}

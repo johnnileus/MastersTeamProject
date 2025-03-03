@@ -1,22 +1,33 @@
 #pragma once
 
 #include "TutorialGame.h"
+#include "GameWorld.h"
+#include "PhysicsObject.h"
+#include "RenderObject.h"
+#include "TextureLoader.h"
 
+#include "PositionConstraint.h"
+#include "OrientationConstraint.h"
+#include "StateGameObject.h"
+
+
+//hi bow here, I have commented out anything to do with the terrain mesh because as of right now it is causing errors with the modular renderer
 
 using namespace NCL;
 using namespace CSC8503;
 
-TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *Window::GetWindow()->GetMouse()) {
-	world		= new GameWorld();
+TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRenderer, PhysicsSystem& inPhysics) : world(inWorld), renderer(inRenderer), physics(inPhysics),
+	controller(*Window::GetWindow()->GetKeyboard(), *Window::GetWindow()->GetMouse())  {
+	//world		= new GameWorld();
 #ifdef USEVULKAN
 	renderer	= new GameTechVulkanRenderer(*world);
 	renderer->Init();
 	renderer->InitStructures();
 #else 
-	renderer = new GameTechRenderer(*world);
+	//renderer = new GameTechRenderer(*world);
 #endif
 
-	physics		= new PhysicsSystem(*world);
+	//physics		= new PhysicsSystem(*world);
 
 	forceMagnitude	= 1.0f;
 	useGravity		= false;
@@ -24,7 +35,7 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 
 	allCoinsCollected=false;
 
-	world->GetMainCamera().SetController(controller);
+	world.GetMainCamera().SetController(controller);
 
 	controller.MapAxis(0, "Sidestep");
 	controller.MapAxis(1, "UpDown");
@@ -34,7 +45,7 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	controller.MapAxis(4, "YLook");
 
 
-	thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(),controller);
+	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(),controller);
 
 	InitialiseAssets();
 }
@@ -48,7 +59,7 @@ for this module, even in the coursework, but you can add it if you like!
 */
 void TutorialGame::InitialiseAssets() {
 
-	AssetManager::Instance().LoadAssets(renderer);
+	AssetManager::Instance().LoadAssets(&renderer);
 	
 	InitCamera();
 	InitWorld();
@@ -56,12 +67,12 @@ void TutorialGame::InitialiseAssets() {
 
 TutorialGame::~TutorialGame()	{
 
-	AssetManager::Instance().Cleanup();
+	//AssetManager::Instance().Cleanup();
 
-	delete physics;
-	delete renderer;
+	//delete physics;
+	//delete renderer;
 	delete thirdPersonCam;
-	delete world;
+	//delete world;
 }
 
 
@@ -116,7 +127,7 @@ void TutorialGame::UpdateGame(float dt) {
 
 		Ray r = Ray(rayPos, rayDir);
 
-		if (world->Raycast(r, closestCollision, true, selectionObject)) {
+		if (world.Raycast(r, closestCollision, true, selectionObject)) {
 			if (objClosest) {
 				objClosest->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
 			}
@@ -139,8 +150,8 @@ void TutorialGame::UpdateGame(float dt) {
 
 	
 
-	world->UpdateWorld(dt);
-	//renderer->Update(dt);
+	world.UpdateWorld(dt);
+	//renderer.Update(dt);
 
 	if (networkManager == nullptr) {
 		std::cout << "network manager is null" << std::endl;
@@ -152,10 +163,10 @@ void TutorialGame::UpdateGame(float dt) {
 
 
 
-	physics->Update(dt);
+	physics.Update(dt);
 	thirdPersonCam->Update(dt);
 	
-	renderer->Render();
+	//renderer.Render();
 	Debug::UpdateRenderables(dt);
 }
 
@@ -171,24 +182,24 @@ void TutorialGame::UpdateKeys() {
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
 		useGravity = !useGravity; //Toggle gravity!
-		physics->UseGravity(useGravity);
+		physics.UseGravity(useGravity);
 	}
 	//Running certain physics updates in a consistent order might cause some
 	//bias in the calculations - the same objects might keep 'winning' the constraint
 	//allowing the other one to stretch too much etc. Shuffling the order so that it
 	//is random every frame can help reduce such bias.
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F9)) {
-		world->ShuffleConstraints(true);
+		world.ShuffleConstraints(true);
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F10)) {
-		world->ShuffleConstraints(false);
+		world.ShuffleConstraints(false);
 	}
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F7)) {
-		world->ShuffleObjects(true);
+		world.ShuffleObjects(true);
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F8)) {
-		world->ShuffleObjects(false);
+		world.ShuffleObjects(false);
 	}
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::U)) {
@@ -212,7 +223,7 @@ void TutorialGame::UpdateKeys() {
 }
 
 void TutorialGame::LockedObjectMovement() {
-	Matrix4 view		= world->GetMainCamera().BuildViewMatrix();
+	Matrix4 view		= world.GetMainCamera().BuildViewMatrix();
 	Matrix4 camWorld	= Matrix::Inverse(view);
 
 	Vector3 rightAxis = Vector3(camWorld.GetColumn(0)); //view is inverse of model!
@@ -277,8 +288,8 @@ void TutorialGame::DebugObjectMovement() {
 }
 
 void TutorialGame::InitCamera() {
-	world->GetMainCamera().SetNearPlane(0.1f);
-	world->GetMainCamera().SetFarPlane(500.0f);
+	world.GetMainCamera().SetNearPlane(0.1f);
+	world.GetMainCamera().SetFarPlane(500.0f);
 	
 	if (thirdPersonCam)
 	{
@@ -289,23 +300,23 @@ void TutorialGame::InitCamera() {
 }
 
 void TutorialGame::InitWorld() {
-	world->ClearAndErase();
-	physics->Clear();
+	//world.ClearAndErase();
+	//physics.Clear();
 
 	CreateRopeGroup();
 	
 	//InitPlayer();
-	player = Player::Instantiate(world,thirdPersonCam,Vector3(20,0,30));
+	player = Player::Instantiate(&world,thirdPersonCam,Vector3(20,0,30));
 
 	GenerateWall();
 
 	InitCatCoins();
 	
-	doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
+	doorTrigger = Door::Instantiate(&world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 	
-	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
+	Enemy::Instantiate(&world,enemies,player,Vector3(50,0,0));
 
-	InitTerrain();
+	//InitTerrain();
 
 	InitDefaultFloor();
 
@@ -326,27 +337,27 @@ void TutorialGame::InitWorld() {
 		enemies[0]->SetMovePath(testNodes);
 	}
 	
-	SceneManager::Instance().AddCubeToWorld(world,Vector3(5,0,0),Vector3(1,1,1),1);
+	SceneManager::Instance().AddCubeToWorld(&world,Vector3(5,0,0),Vector3(1,1,1),1);
 	
-	world->PrintObjects();
+	world.PrintObjects();
 
 }
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
-	SceneManager::Instance().AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
+	SceneManager::Instance().AddTerrain(&world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
 
 
 
 void TutorialGame::InitCatCoins() {
 	// add CatCoin to the list
-	catCoins.push_back(CatCoin::Instantiate(world, Vector3(5, 0, 0)));
-	catCoins.push_back(CatCoin::Instantiate(world, Vector3(20, 0, 20)));
-	catCoins.push_back(CatCoin::Instantiate(world, Vector3(-10, 0, 25)));
-	catCoins.push_back(CatCoin::Instantiate(world, Vector3(30, 0, 45)));
-	catCoins.push_back(CatCoin::Instantiate(world, Vector3(25, 0, -10)));
-	catCoins.push_back(CatCoin::Instantiate(world, Vector3(5, 0, 50)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 0)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(20, 0, 20)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(-10, 0, 25)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(30, 0, 45)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(25, 0, -10)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 50)));
 
 }
 
@@ -375,7 +386,7 @@ GameObject* TutorialGame::AddSphereToWorld(const Vector3& position,float radius,
 
 	physicsObject->InitSphereInertia();
 
-	world->AddGameObject(sphere);
+	world.AddGameObject(sphere);
 	
 	return sphere;
 }
@@ -396,7 +407,7 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
 	cube->GetPhysicsObject()->InitCubeInertia();
 	
-	world->AddGameObject(cube);
+	world.AddGameObject(cube);
 
 	return cube;
 }
@@ -404,11 +415,11 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
 
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
 void TutorialGame::InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius) {
@@ -470,10 +481,10 @@ bool TutorialGame::SelectObject() {
 				selectionObject = nullptr;
 			}
 
-			Ray ray = CollisionDetection::BuildRayFromMouse(world->GetMainCamera());
+			Ray ray = CollisionDetection::BuildRayFromMouse(world.GetMainCamera());
 
 			RayCollision closestCollision;
-			if (world->Raycast(ray, closestCollision, true)) {
+			if (world.Raycast(ray, closestCollision, true)) {
 				selectionObject = (GameObject*)closestCollision.node;
 				
 				selectionObject->GetRenderObject()->SetColour(Vector4(0, 1, 0, 1));
@@ -516,13 +527,13 @@ void TutorialGame::MoveSelectedObject() {
 	}
 	//Push the selected object!
 	if (Window::GetMouse()->ButtonPressed(NCL::MouseButtons::Right)) {
-		Ray ray = CollisionDetection::BuildRayFromMouse(world->GetMainCamera());
+		Ray ray = CollisionDetection::BuildRayFromMouse(world.GetMainCamera());
 
 		RayCollision closestCollision;
-		if (world->Raycast(ray, closestCollision, true)) {
+		if (world.Raycast(ray, closestCollision, true)) {
 			if (closestCollision.node == selectionObject) {
 				selectionObject->GetPhysicsObject()->AddForceAtPosition(ray.GetDirection() * forceMagnitude, closestCollision.collidedAt);
-				Debug::DrawLine(world->GetMainCamera().GetPosition(),selectionObject->GetTransform().GetPosition(), Vector4(0,0,1,1), 10);
+				Debug::DrawLine(world.GetMainCamera().GetPosition(),selectionObject->GetTransform().GetPosition(), Vector4(0,0,1,1), 10);
 			}
 		}
 	}
@@ -534,11 +545,11 @@ void TutorialGame::TestLinearMotion() {
 
 void TutorialGame::CreateRopeGroup()
 {
-	Rope::AddRopeToWorld(world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
-	Rope::AddRopeToWorld(world, Vector3(0,0,10),Vector3(15,0,10),0.7f);
-	Rope::AddRopeToWorld(world, Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
-	Rope::AddRopeToWorld(world, Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
-	Rope::AddRopeToWorld(world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
+	Rope::AddRopeToWorld(&world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
+	Rope::AddRopeToWorld(&world, Vector3(0,0,10),Vector3(15,0,10),0.7f);
+	Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
+	Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
+	Rope::AddRopeToWorld(&world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
 	
 }
 
@@ -557,15 +568,13 @@ void TutorialGame::DisplayPathfinding() {
 void TutorialGame::GenerateWall()
 {
 	// add all walls to the list
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,12),Vector3(6,1,1)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,12),Vector3(6,1,1)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(60,0,30),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,50),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,50),Vector3(3,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(35,0,70),Vector3(9,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(65,0,70),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(10,0,50),Vector3(4,1,4)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(25,0,50),Vector3(2,1,4)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,12),Vector3(6,1,1)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,12),Vector3(6,1,1)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(60,0,30),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,50),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,50),Vector3(3,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(65,0,70),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(25,0,50),Vector3(2,1,4)));
 
 	SetWallColour();
 }
@@ -602,8 +611,8 @@ void TutorialGame::ShowSuccessMessage() {
 
 void TutorialGame::ReloadLevel() {
 	// Clear the current level
-	world->ClearAndErase();
-	physics->Clear();
+	world.ClearAndErase();
+	physics.Clear();
 
 	// Reinitialize the world
 	InitWorld();
