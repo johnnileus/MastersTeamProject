@@ -7,6 +7,7 @@ using namespace NCL::Rendering;
 using std::ifstream;
 
 MeshMaterial::MeshMaterial(const std::string& filename) {
+	std::cout<<">>>>>>>>>>>>start load material<<<<<<<<<<<<<<"<<std::endl;
 	ifstream file(Assets::MESHDIR + filename);
 
 	string dataType;

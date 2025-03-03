@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "TextureLoader.h"
 #include "MshLoader.h"
+
 using namespace NCL;
 using namespace Rendering;
 using namespace CSC8503;
@@ -69,12 +70,54 @@ GameTechRenderer::GameTechRenderer(GameWorld& world) : OGLRenderer(*Window::GetW
 	debugTexMesh->SetVertexIndices({ 0,1,2,2,3,0 });
 	debugTexMesh->UploadToGPU();
 
-
 	SetDebugStringBufferSizes(10000);
 	SetDebugLineBufferSizes(1000);
 
 	//Initializing ImGui
 	gameUIHandler = new GameUI();
+}
+
+//Terrain Generation
+OGLMesh* GameTechRenderer::GenerateTerrainMesh(HeightMap* heightmap) {
+	terrainMesh = new OGLMesh();
+
+	std::vector<Vector3> positions;
+	std::vector<Vector2> texCoords;
+	std::vector<unsigned int> indices;
+
+	int terrainSize = heightmap->GetSize();
+
+	for (int x = 0; x < terrainSize; x++) {
+		for (int y = 0; y < terrainSize; y++) {
+			float height = heightmap->GetHeight(x, y);
+			positions.push_back(Vector3(x, height, y));
+			texCoords.push_back(Vector2((float)x / terrainSize, (float)y / terrainSize));
+		}
+	}
+
+	for (int x = 0; x < terrainSize - 1; x++) {
+		for (int y = 0; y < terrainSize - 1; y++) {
+			int topLeft = x * terrainSize + y;
+			int topRight = topLeft + 1;
+			int bottomLeft = (x + 1) * terrainSize + y;
+			int bottomRight = bottomLeft + 1;
+
+			indices.push_back(topLeft);
+			indices.push_back(bottomLeft);
+			indices.push_back(topRight);
+
+			indices.push_back(topRight);
+			indices.push_back(bottomLeft);
+			indices.push_back(bottomRight);
+		}
+	}
+
+	terrainMesh->SetVertexPositions(positions);
+	terrainMesh->SetVertexTextureCoords(texCoords);
+	terrainMesh->SetVertexIndices(indices);
+	terrainMesh->UploadToGPU();
+
+	return terrainMesh;
 }
 
 GameTechRenderer::~GameTechRenderer()	{

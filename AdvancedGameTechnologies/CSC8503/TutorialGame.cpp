@@ -3,6 +3,7 @@
 #include "TutorialGame.h"
 
 
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -47,7 +48,7 @@ for this module, even in the coursework, but you can add it if you like!
 
 */
 void TutorialGame::InitialiseAssets() {
-	
+
 	AssetManager::Instance().LoadAssets(renderer);
 	
 	InitCamera();
@@ -105,30 +106,17 @@ void TutorialGame::UpdateGame(float dt) {
 		//Debug::Print("(G)ravity off", Vector2(5, 95), Debug::RED);
 	}
 
-	RayCollision closestCollision;
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::K) && selectionObject) {
-		Vector3 rayPos;
-		Vector3 rayDir;
 
-		rayDir = selectionObject->GetTransform().GetOrientation() * Vector3(0, 0, -1);
-
-		rayPos = selectionObject->GetTransform().GetPosition();
-
-		Ray r = Ray(rayPos, rayDir);
-
-		if (world->Raycast(r, closestCollision, true, selectionObject)) {
-			if (objClosest) {
-				objClosest->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
-			}
-			objClosest = (GameObject*)closestCollision.node;
-
-			objClosest->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
-		}
+	///////Animation Test///////
+	frameTime-=dt;
+	while (frameTime<0.0f)
+	{
+		currentFrame = (currentFrame+1) % AssetManager::Instance().idle->GetFrameCount();
+		frameTime +=1.0f/AssetManager::Instance().idle->GetFrameRate();
 	}
+	///////////////////////////
 	
 	DisplayPathfinding();
-
-	
 
 	world->UpdateWorld(dt);
 	//renderer->Update(dt);
@@ -140,8 +128,7 @@ void TutorialGame::UpdateGame(float dt) {
 		networkManager->Update();
 	}
 
-
-
+	SceneManager::Instance().UpdateBullets(world, dt);
 
 	physics->Update(dt);
 	thirdPersonCam->Update(dt);
@@ -181,7 +168,7 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F8)) {
 		world->ShuffleObjects(false);
 	}
-
+	 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::U)) {
 		std::cout << "starting server" << std::endl;
 		networkManager->StartAsServer();
@@ -285,7 +272,8 @@ void TutorialGame::InitWorld() {
 
 	CreateRopeGroup();
 	
-	InitPlayer();
+	//InitPlayer();
+	player = Player::Instantiate(world,thirdPersonCam,Vector3(20,0,30));
 
 	GenerateWall();
 
@@ -294,6 +282,8 @@ void TutorialGame::InitWorld() {
 	doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 	
 	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
+
+	InitTerrain();
 
 	InitDefaultFloor();
 
@@ -314,12 +304,17 @@ void TutorialGame::InitWorld() {
 		enemies[0]->SetMovePath(testNodes);
 	}
 	
-	SceneManager::Instance().AddCubeToWorld(world,Vector3(5,0,0),Vector3(1,1,1),1);
-	
 	world->PrintObjects();
 
 }
 
+
+void TutorialGame::InitTerrain() {
+	Vector3 offset(20, 0, 20);
+	SceneManager::Instance().AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
+}
+
+// if modifying the shape, please change InitialiseConnectedPlayer as well
 void TutorialGame::InitPlayer()
 {
 	player = new Player();
@@ -337,21 +332,9 @@ void TutorialGame::InitPlayer()
 
 	player->SetRenderObject(new RenderObject(&player->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
 	player->SetPhysicsObject(new PhysicsObject(&player->GetTransform(), player->GetBoundingVolume()));
-
-	player->GetPhysicsObject()->SetInverseMass(inverseMass);
-	player->GetPhysicsObject()->InitSphereInertia();
-	player->playerObject=player;
-	player->myWorld=world;
-	player->Init(thirdPersonCam);
-
-	world->AddGameObject(player);
-
-	if (thirdPersonCam)
-	{
-		thirdPersonCam->SetFollowObject(player);
-	}
-	
 }
+
+
 
 void TutorialGame::InitCatCoins() {
 	// add CatCoin to the list
@@ -417,6 +400,7 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
+
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
@@ -640,4 +624,32 @@ void TutorialGame::BroadcastPosition(){
 void TutorialGame::UpdateTransformFromServer(Vector3 pos, Quaternion rot) {
 	player->GetTransform().SetOrientation(rot);
 	player->GetTransform().SetPosition(pos);
+}
+
+GameObject* TutorialGame::InitialiseConnectedPlayer(int id) {
+
+	float meshSize = 1.0f;
+	float inverseMass = 10.0f;
+
+	GameObject* newPlayer = new GameObject();
+	SphereVolume* volume = new SphereVolume(1.0f);
+	
+	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
+
+	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
+
+	newPlayer->GetTransform()
+		.SetScale(Vector3(meshSize, meshSize, meshSize))
+		.SetPosition(Vector3(20, 0, 30));
+
+	newPlayer->SetRenderObject(new RenderObject(&newPlayer->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
+	newPlayer->SetPhysicsObject(new PhysicsObject(&newPlayer->GetTransform(), newPlayer->GetBoundingVolume()));
+
+	newPlayer->GetPhysicsObject()->SetInverseMass(inverseMass);
+	newPlayer->GetPhysicsObject()->InitSphereInertia();
+
+	world->AddGameObject(newPlayer);
+
+	return newPlayer;
+
 }

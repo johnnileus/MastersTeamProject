@@ -1,6 +1,9 @@
 #pragma once
 #include "NetworkBase.h"
 
+
+#include "../CSC8503CoreClasses/Event.h"
+
 namespace NCL {
 	namespace CSC8503 {
 		class GameWorld;
@@ -19,14 +22,20 @@ namespace NCL {
 
 			virtual void UpdateServer();
 
+			Event<int> Player_Connected;
+
 		protected:
 			int			port;
 			int			clientMax;
 			int			clientCount;
 			GameWorld*	gameWorld;
 
-			int incomingDataRate;
-			int outgoingDataRate;
+
+
 		};
+
+
+
 	}
 }
+

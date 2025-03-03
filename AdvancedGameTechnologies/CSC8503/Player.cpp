@@ -1,9 +1,12 @@
 ﻿#include "GameObject.h"
 #include "Player.h"
 
+#include "Animator.h"
+#include "AssetManager.h"
 #include "Window.h"
 #include "Enemy.h"
 #include "PhysicsObject.h"
+#include "Pistol.h"
 #include "RenderObject.h"
 
 using namespace NCL;
@@ -45,9 +48,75 @@ void Player::Init(ThirdPersonCamera* cam)
 	damageColour = Vector4(1,0.29f,0,1);
 	attackColour = Vector4(0.18f, 1,0,1);
 	collerctCoinColour = Vector4(0.949f,1,0.318f,1);
-	myWorld=new GameWorld();
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam=cam;
+	
+
+	myWeapon = new Pistol(this);
+}
+
+void Player::SetComponent(float meshSize,float mass)
+{
+	myMesh = AssetManager::Instance().guardMesh;
+	//Collider
+	SphereVolume* volume  = new SphereVolume(1);
+	SetBoundingVolume((CollisionVolume*)volume);
+
+	//Transform
+	Transform& objectTransform = GetTransform();
+	GetTransform().SetScale(Vector3(meshSize, meshSize, meshSize));
+
+	//Physics
+	SetPhysicsObject(new PhysicsObject(&objectTransform, GetBoundingVolume()));
+	GetPhysicsObject()->SetInverseMass(mass);
+	GetPhysicsObject()->InitSphereInertia();
+	
+	//Render
+	 SetRenderObject(new RenderObject(
+	 	&objectTransform,
+	 	myMesh,
+	 	AssetManager::Instance().playerTex[0],
+	 	AssetManager::Instance().basicShader)
+	 	);
+	
+	
+	animator = new Animator();
+	animator->LoadAnimation("Idle");
+}
+
+void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
+	for (size_t i = 0; i < boneTransforms.size(); ++i) {
+		 //mesh->SetBindPose(i, boneTransforms[i]);
+	}
+}
+
+
+/// Create a player instance in world
+/// @param world the scene
+/// @param camera his camera
+/// @param position instantiate position
+/// @return 
+Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const Vector3& position)
+{
+	Player* player = new Player();
+
+	// Set it's location and rotation
+	player->GetTransform().SetPosition(position);
+	player->GetTransform().SetOrientation(Quaternion());
+	player->SetComponent(2,5);
+	player->playerObject =player;
+	player->myWorld = world;
+	player->Init(camera);
+
+	// Add to the GameWorld
+	if (world) {
+		world->AddGameObject(player);
+	}
+	camera->SetFollowObject(player);
+
+	player->animator->Play("Idle",true,1);
+	
+	return player;
 }
 
 
@@ -58,8 +127,12 @@ void Player::Update(float dt) {
 	}
 	HandleRotation(dt);
 	HandleJump();
+	HandleAim();
 	DisplayUI();
 	HealthCheck();
+	
+	animator->Update(dt);
+	myWeapon->Update(dt,Window::GetMouse()->ButtonDown(MouseButtons::Left),aimDir);
 
 	// Colour change timer
 	if (isTemporaryColourActive) {
@@ -123,7 +196,7 @@ void Player::HandleMovement(float dt, Vector2 inputDir) {
 	Vector3 levelCamFront = Vector3(myCam->front.x,0,myCam->front.z);
 	Vector3 levelCamRight = Vector3(myCam->right.x,0,myCam->right.z);
 	
-	Vector3 moveDir= Vector::Normalise(-levelCamFront * inputDir.y + levelCamRight * inputDir.x);
+	moveDir= Vector::Normalise(-levelCamFront * inputDir.y + levelCamRight * inputDir.x);
 	Debug::DrawLine(transform.GetPosition(),transform.GetPosition()+moveDir);
 	
 	//if there has input value, add force
@@ -134,7 +207,7 @@ void Player::HandleMovement(float dt, Vector2 inputDir) {
 	ClampSpeed(dt);
 }
 
-//limit speed to the max speed
+//limit speed 
 void Player::ClampSpeed(float dt) {
 	if (!playerPhysicObject) return;
 
@@ -152,36 +225,64 @@ void Player::ClampSpeed(float dt) {
 			Vector3 limitedVelocity = Vector::Normalise(velocity) * maxSpeed;
 			playerPhysicObject->SetLinearVelocity(limitedVelocity);
 		}
+	}
 
+	if (Vector::Length(inputDir)<0.1)
+	{
+		playerPhysicObject->SetLinearVelocity(Vector3(0,0,0));
 	}
 }
 
 
 void Player::HandleRotation(float dt) {
-	if (!playerPhysicObject) return;
+	
+	Vector3 horizontalDir = Vector3(moveDir.x, 0.0f, moveDir.z);
+	float length = Vector::Length(horizontalDir);
 
-	// Get the ball's linear velocity
-	Vector3 velocity = playerPhysicObject->GetLinearVelocity();
+	// if no input direction dont rotate 
+	if (length < 0.01f) {
+		return;
+	}
+	Vector::Normalise(horizontalDir);
 
-	// If the speed is close to zero, do not rotate
-	if (Vector::Length(velocity) < 0) return;
+	// calculate rotation degrees
+	float yawRadians = std::atan2(horizontalDir.x, horizontalDir.z);
+	float yawDegrees = Maths::RadiansToDegrees(yawRadians);
 
-	// Calculate the rotation axis: perpendicular to the velocity direction (right-hand rule)
-	Vector3 rotationAxis = Vector::Normalise(Vector3(velocity.z, 0, -velocity.x));
+	
+	Quaternion desiredOrientation = Quaternion::EulerAnglesToQuaternion(0.0f, yawDegrees+180.0f, 0.0f);
+	
+	Quaternion currentOrientation = playerObject->GetTransform().GetOrientation();
 
-	// Calculate the angular speed: linear speed divided by the ball's radius
-	float angularSpeed = Vector::Length(velocity) / playerObject->GetTransform().GetScale().x * rotationFactor;  // Radius is determined by the scale factor
+	
+	float dot = Quaternion::Dot(currentOrientation, desiredOrientation);
+	if (dot < 0.0f) {
+		desiredOrientation = -desiredOrientation;
+	}
 
-	// Calculate the rotation angle
-	float rotationAngle = angularSpeed * dt;
+	// rotate speed
+	float rotateSpeed = 15.0f;
+	float t = rotateSpeed * dt;
 
-	// Generate a quaternion representing the rotation
-	Quaternion rotation = Quaternion::AxisAngleToQuaterion(rotationAxis, rotationAngle);
-
-	// Apply the rotation to the ball's transform
-	playerObject->GetTransform().SetOrientation(rotation * playerObject->GetTransform().GetOrientation());
-
+	//smooth rotation
+	Quaternion finalOrientation = Quaternion::Slerp(
+		currentOrientation,
+		desiredOrientation,
+		t
+	);
+	
+	playerObject->GetTransform().SetOrientation(finalOrientation);
 }
+
+void Player::HandleFire(float dt)
+{
+	if (Window::GetMouse()->ButtonDown(NCL::MouseButtons::Left))
+	{
+		myWeapon->Fire();
+	}
+}
+
+
 
 void Player::HandleDash(float dt) {
 	if (isDashing) {
@@ -223,6 +324,44 @@ void Player::HandleJump() {
 	}
 
 }
+
+void Player::HandleAim()
+{
+	Ray ray = CollisionDetection::BuildRayFromCamera(myWorld->GetMainCamera(),100,*myCam);
+	RayCollision closestCollision;
+
+	Vector3 hitPoint = CollisionDetection::GetRayHitPoint(ray);
+	aimDir = hitPoint-transform.GetPosition();
+	Debug::DrawLine(transform.GetPosition(),hitPoint,Debug::RED);
+	
+}
+
+Vector3 CollisionDetection::GetRayHitPoint(const Ray& ray)
+{
+
+	Vector3 planeNormal(0, 1, 0);
+	float d = 0.0f;
+    
+
+	float denom = Vector::Dot(ray.GetDirection(), planeNormal);
+    
+
+	if (fabs(denom) > 1e-6)
+	{
+		
+		float t = -(Vector::Dot(ray.GetPosition(), planeNormal) + d) / denom;
+		if (t >= 0)
+		{
+			// 返回交点
+			return ray.GetPosition() + ray.GetDirection() * t;
+		}
+	}
+    
+	
+	return Vector3(-1, -1, -1);
+}
+
+
 
 void Player::OnCollisionBegin(GameObject* otherObject)
 {
@@ -279,7 +418,7 @@ void Player::SetTemporaryColour(const Vector4& colour, float duration) {
 
 void Player::DisplayUI()
 {
-	
+	Debug::Print("0",Vector2(50,50));
 	float velocity = Vector::Length(playerPhysicObject->GetLinearVelocity());
 	Debug::Print("V:" + std::format("{:.1f}", velocity), Vector2(5, 10));
 	Debug::Print("HP:"+std::to_string(health), Vector2(5,15));

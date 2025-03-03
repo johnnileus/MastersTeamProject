@@ -1,11 +1,11 @@
 ﻿#include "SceneManager.h"
-
 #include "AssetManager.h"
 #include "SampleSphere.h"
 #include "SphereVolume.h"
 #include "RenderObject.h"
 #include "PhysicsObject.h"
-#include "AssetManager.h"
+
+
 
 SceneManager& SceneManager::Instance() {
     static SceneManager instance;
@@ -66,4 +66,55 @@ GameObject* SceneManager::AddDefaultFloorToWorld(GameWorld* world, const Vector3
 	
     return floor;
 }
+
+GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const Vector3& size) {
+    GameObject* terrain = new GameObject();
+    terrain->tag = "Terrain";
+    terrain->SetName("terrain");
+    Vector3 floorSize = size;
+    AABBVolume* volume = new AABBVolume(floorSize);
+    terrain->SetBoundingVolume((CollisionVolume*)volume);
+    terrain->GetTransform().SetScale(floorSize).SetPosition(pos);
+
+    terrain->SetRenderObject(new RenderObject(
+        &terrain->GetTransform(),
+        AssetManager::Instance().terrainMesh,
+        AssetManager::Instance().basicTex,
+        AssetManager::Instance().basicShader));
+
+    terrain->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
+    terrain->SetPhysicsObject(new PhysicsObject(&terrain->GetTransform(), terrain->GetBoundingVolume()));
+
+    terrain->GetPhysicsObject()->SetInverseMass(0);
+    terrain->GetPhysicsObject()->InitCubeInertia();
+
+    world->AddGameObject(terrain);
+
+    return terrain;
+}
+
+/// update all the bullets here
+/// @param world 
+/// @param dt 
+void SceneManager::UpdateBullets(GameWorld* world,float dt) {
+    for (auto it = bullets.begin(); it != bullets.end(); ) {
+        Bullet* bullet = *it;
+        bullet->Update(dt);
+
+        if (bullet->IsDead()) {
+            world->RemoveGameObject((GameObject*)bullet);
+            it = bullets.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+void SceneManager::AddBullet(Bullet* bullet)
+{
+    bullets.push_back(bullet);
+}
+
+
+
 

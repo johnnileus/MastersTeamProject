@@ -10,40 +10,47 @@ void MainPacketReceiver::ReceivePacket(int type, GamePacket* payload, int source
 	if (type == String_Message) {
 		StringPacket* realPacket = (StringPacket*)payload;
 		std::string msg = realPacket->GetStringFromData();
-		std::cout << "Client: String_Message received: " << msg << std::endl;
 	}
 	if (type == Transform_Data) {
-		std::cout << "Client: Transform Received" << std::endl;
 		TransformPacket* realPacket = (TransformPacket*)payload;
 		g->UpdateTransformFromServer(realPacket->pos, realPacket->rot);
 	}
 }
 
+void printstuff(int i) {
+	std::cout << "Hello" << std::endl;
+}
 
 void NetworkManager::StartAsServer() {
-	isServer = true;
-	id = 0;
-	server = new GameServer(port, 1);
+	if (!IsConnected()) {
+		isServer = true;
+		server = new GameServer(port, 8);
+		server->Player_Connected.AddListener(std::bind(&TutorialGame::InitialiseConnectedPlayer, g, std::placeholders::_1));
 
-	server->RegisterPacketHandler(String_Message, &networkReceiver);
-	server->RegisterPacketHandler(Transform_Data, &networkReceiver);
+		server->RegisterPacketHandler(String_Message, &networkReceiver);
+		server->RegisterPacketHandler(Transform_Data, &networkReceiver);
+		server->RegisterPacketHandler(ID, &networkReceiver);
+	}
 
 
 	connected = true;
 }
 
 void NetworkManager::StartAsClient() {
-	client = new GameClient();
-	client->RegisterPacketHandler(String_Message, &networkReceiver);
-	client->RegisterPacketHandler(Transform_Data, &networkReceiver);
-	bool canConnect = client->Connect(127, 0, 0, 1, port);
-	if (canConnect) {
-		connected = true;
+	if (!IsConnected()) {
 
-	}
-	else {
-		std::cout << "Failed to connect client to server!" << std::endl;
+		client = new GameClient();
+		client->RegisterPacketHandler(String_Message, &networkReceiver);
+		client->RegisterPacketHandler(Transform_Data, &networkReceiver);
+		client->RegisterPacketHandler(ID, &networkReceiver);
+		bool canConnect = client->Connect(127, 0, 0, 1, port);
+		if (canConnect) {
+			connected = true;
 
+		}
+		else {
+			std::cout << "Failed to connect client to server!" << std::endl;
+		}
 	}
 }
 
@@ -62,25 +69,20 @@ bool NetworkManager::IsConnected() {
 void NetworkManager::Update() {
 	if (connected) {
 
-
-
 		if (isServer) {
 
 
 			g->BroadcastPosition();
 
 			server->UpdateServer();
-
-
-
 		}
 		else {
 
 			//StringPacket clientPacket("Client says hello!");
-			//std::cout << "sending msg" << std::endl;
 
 			//client->SendPacket(clientPacket);
 
+			client->GetID();
 			client->UpdateClient();
 		}
 	}
@@ -91,7 +93,6 @@ void NetworkManager::Update() {
 void NetworkManager::BroadcastPacket(TransformPacket p) {
 	if (IsServer()) {
 
-		std::cout << "sending msg" << std::endl;
 
 		server->SendGlobalPacket(p);
 	}

@@ -1,6 +1,0 @@
-C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/ALL_BUILD.dir
-C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/ZERO_CHECK.dir
-C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/NCLCoreClasses/CMakeFiles/NCLCoreClasses.dir
-C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/CSC8503CoreClasses/CMakeFiles/CSC8503CoreClasses.dir
-C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/OpenGLRendering/CMakeFiles/OpenGLRendering.dir
-C:/Users/Goines/Documents/GitHub/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir

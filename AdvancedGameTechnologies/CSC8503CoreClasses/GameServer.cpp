@@ -1,8 +1,13 @@
+#pragma once
+
 #include "GameServer.h"
 #include "GameWorld.h"
 #include "./enet/enet.h"
+
 using namespace NCL;
 using namespace CSC8503;
+
+//extern TutorialGame* g;
 
 GameServer::GameServer(int onPort, int maxClients)	{
 	port		= onPort;
@@ -66,9 +71,12 @@ void GameServer::UpdateServer() {
 		if (type == ENET_EVENT_TYPE_CONNECT) {
 			std::cout << "Server: New client connected" << std::endl;
 
-			//StringPacket clientPacket("Server says hello!");
-			//std::cout << "sending message... " << std::endl;
-			//SendGlobalPacket(clientPacket);
+			//g->InitialiseConnectedPlayer(p);
+			Player_Connected.Invoke(peer);
+
+				
+
+
 
 		}
 		else if (type == ENET_EVENT_TYPE_DISCONNECT) {

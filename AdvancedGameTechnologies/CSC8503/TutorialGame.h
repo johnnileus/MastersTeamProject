@@ -31,6 +31,11 @@
 #include "SampleSphere.h"
 #include "SceneManager.h"
 
+#include "HeightMap.h"
+
+#include "Pistol.h"
+
+
 namespace NCL {
 	namespace CSC8503 {
 		class TutorialGame		{
@@ -42,6 +47,10 @@ namespace NCL {
 			GameObject* AddSphereToWorld(const Vector3& position,float radius,float inverseMass,const Vector3& initialVelocity);
 
 			void BroadcastPosition();
+
+			//called by GameServer when player connects
+			GameObject* InitialiseConnectedPlayer(int id);
+
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
 
 
@@ -64,7 +73,17 @@ namespace NCL {
 			void TestLinearMotion();
 			void InitPlayer();
 			void CreateRopeGroup();
-			
+
+
+			//Terrain Generation
+			void InitTerrain();
+
+			//networking
+
+			NetworkManager* networkManager = new NetworkManager();
+			std::vector<GameObject*> connectedPlayers;
+
+
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
 			void InitCatCoins();
 			
@@ -72,7 +91,7 @@ namespace NCL {
 
 			GameObject* debugSphere;
 
-			NetworkManager* networkManager = new NetworkManager();
+
 
 			ThirdPersonCamera* thirdPersonCam;
 
@@ -100,6 +119,9 @@ namespace NCL {
 			Player* player;
 			std::vector<Enemy*> enemies;
 			std::vector<GameObject*> floors;
+
+			int currentFrame;
+			float frameTime;
 
 			//Coursework Additional functionality	
 			GameObject* lockedObject	= nullptr;

@@ -245,59 +245,59 @@ bool CollisionDetection::AABBIntersection(
 	const AABBVolume& volumeB, const Transform& worldTransformB,
 	CollisionInfo& collisionInfo) {
 
-	Vector3 boxAPos = worldTransformA.GetPosition(); // AABB A 的中心位置
-	Vector3 boxBPos = worldTransformB.GetPosition(); // AABB B 的中心位置
+	Vector3 boxAPos = worldTransformA.GetPosition(); // AABB A centerPos
+	Vector3 boxBPos = worldTransformB.GetPosition(); // AABB B centerPos
 
-	Vector3 boxASize = volumeA.GetHalfDimensions(); // AABB A 的半尺寸
-	Vector3 boxBSize = volumeB.GetHalfDimensions(); // AABB B 的半尺寸
+	Vector3 boxASize = volumeA.GetHalfDimensions(); // AABB A half size
+	Vector3 boxBSize = volumeB.GetHalfDimensions(); // AABB B half size
 
-	// 首先判断是否发生碰撞
+	
 	if (!AABBTest(boxAPos, boxBPos, boxASize, boxBSize)) {
-		return false; // 未发生碰撞
+		return false; 
 	}
 
-	// 计算 AABB 的边界
+	
 	Vector3 maxA = boxAPos + boxASize;
 	Vector3 minA = boxAPos - boxASize;
 
 	Vector3 maxB = boxBPos + boxBSize;
 	Vector3 minB = boxBPos - boxBSize;
 
-	// 计算每个方向的穿透深度
+	
 	float distances[6] = {
-		(maxB.x - minA.x), // B 相对 A 的“左边”距离
-		(maxA.x - minB.x), // B 相对 A 的“右边”距离
-		(maxB.y - minA.y), // B 相对 A 的“下边”距离
-		(maxA.y - minB.y), // B 相对 A 的“上边”距离
-		(maxB.z - minA.z), // B 相对 A 的“后边”距离
-		(maxA.z - minB.z)  // B 相对 A 的“前边”距离
+		(maxB.x - minA.x), 
+		(maxA.x - minB.x), 
+		(maxB.y - minA.y), 
+		(maxA.y - minB.y), 
+		(maxB.z - minA.z), 
+		(maxA.z - minB.z)  
 	};
 
-	// 找到最小穿透深度的轴
+	
 	static const Vector3 faces[6] = {
-		Vector3(-1, 0, 0), Vector3(1, 0, 0), // X 轴
-		Vector3(0, -1, 0), Vector3(0, 1, 0), // Y 轴
-		Vector3(0, 0, -1), Vector3(0, 0, 1)  // Z 轴
+		Vector3(-1, 0, 0), Vector3(1, 0, 0), // X 
+		Vector3(0, -1, 0), Vector3(0, 1, 0), // Y 
+		Vector3(0, 0, -1), Vector3(0, 0, 1)  // Z 
 	};
 
-	float penetration = FLT_MAX; // 穿透深度初始为最大值
+	float penetration = FLT_MAX; // 
 	Vector3 bestAxis;
 
 	for (int i = 0; i < 6; ++i) {
 		if (distances[i] < penetration) {
 			penetration = distances[i];
-			bestAxis = faces[i]; // 记录最小穿透深度对应的轴方向
+			bestAxis = faces[i]; 
 		}
 	}
 
-	// 添加碰撞信息
+	// add collision info
 	collisionInfo.AddContactPoint(
-		Vector3(),            // 假定 A 的碰撞点为其局部原点
-		Vector3(),            // 假定 B 的碰撞点为其局部原点
-		bestAxis,             // 碰撞法线
-		penetration);         // 穿透深度
+		Vector3(),            
+		Vector3(),           
+		bestAxis,             
+		penetration);         
 
-	return true; // 返回发生碰撞
+	return true; // return collision happened
 }
 
 
@@ -470,6 +470,14 @@ Ray CollisionDetection::BuildRayFromMouse(const PerspectiveCamera& cam) {
 	c = Vector::Normalise(c);
 
 	return Ray(cam.GetPosition(), c);
+}
+
+Ray CollisionDetection::BuildRayFromCamera(const PerspectiveCamera& cam, float distance,const ThirdPersonCamera& TPCam)
+{
+	Vector3 origin = cam.GetPosition();
+	Vector3 direction = Vector::Normalise(TPCam.front);
+    
+	return Ray(origin, direction);
 }
 
 //http://bookofhook.com/mousepick.pdf
