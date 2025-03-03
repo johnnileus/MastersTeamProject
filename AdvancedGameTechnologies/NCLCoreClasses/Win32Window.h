@@ -38,9 +38,6 @@ namespace NCL::Win32Code {
 
 	class Win32Window : public Window {
 	public:
-
-		static HWND			windowHandle;
-
 		friend class Window;
 		void	LockMouseToWindow(bool lock)		override;
 		void	ShowOSPointer(bool show)			override;
@@ -65,6 +62,7 @@ namespace NCL::Win32Code {
 		void					CheckMessages(MSG &msg);
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
+		HWND			windowHandle;
 		HINSTANCE		windowInstance;
 
 		bool			forceQuit;

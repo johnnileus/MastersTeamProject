@@ -90,7 +90,7 @@ int main() {
 	w->LockMouseToWindow(false);
 	//TestPathfinding();
 
-	if (!AudioManager::Init()) {
+	if (!AudioManager::GetInstance().Init()) {
 		return -1;
 	}
 
@@ -130,7 +130,7 @@ int main() {
 	}
 
 	// Clean up FMOD
-	AudioManager::Shutdown();
+	AudioManager::GetInstance().Shutdown();
 	
 
 
