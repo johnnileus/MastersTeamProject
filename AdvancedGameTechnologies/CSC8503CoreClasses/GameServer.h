@@ -1,6 +1,7 @@
 #pragma once
 #include "NetworkBase.h"
 
+#include "./enet/enet.h"
 
 #include "../CSC8503CoreClasses/Event.h"
 
@@ -22,7 +23,17 @@ namespace NCL {
 
 			virtual void UpdateServer();
 
+			ENetPeer* GetConnectedPeers();
+
 			Event<int> PlayerConnected;
+
+			_ENetHost* getNetHandle() {
+				return netHandle;
+			}
+
+			int GetClientCount() const {
+				return netHandle->peerCount;
+			}
 
 		protected:
 			int			port;

@@ -2,6 +2,8 @@
 
 
 
+#include <iostream>
+
 #include "GameNet.h"
 #include "TutorialGame.h"
 
@@ -17,21 +19,34 @@ void MainPacketReceiver::ReceivePacket(int type, GamePacket* payload, int source
 	}
 	if (type == Transform_Data) {
 		TransformPacket* realPacket = (TransformPacket*)payload;
-		if (realPacket->fromServer) {
-
-		}
-		else {
+		if (!realPacket->fromServer) {
 			g->UpdateConnectedPlayer(source, realPacket->pos, realPacket->rot);
 		}
-	}   
+	}
+}
 
+void NetworkManager::OnPlayerConnected(int id) {
+	ENetPeer* connectedClients = server->GetConnectedPeers();
+	
+	ENetPeer* currentPeer;
+	_ENetHost* host = server->getNetHandle();
+	for (currentPeer = host->peers; currentPeer < &host->peers[host->peerCount]; ++currentPeer)
+	{
+		if (currentPeer->state == ENET_PEER_STATE_CONNECTED) {
+			std::cout << currentPeer->incomingPeerID << std::endl;
+		}
+	}
+
+
+
+	g->InitialiseConnectedPlayerObject(id);
 }
 
 void NetworkManager::StartAsServer() {
 	if (!IsConnected()) {
 		isServer = true;
 		server = new GameServer(port, 8);
-		server->PlayerConnected.AddListener(std::bind(&TutorialGame::InitialiseConnectedPlayer, g, std::placeholders::_1));
+		server->PlayerConnected.AddListener(std::bind(&NetworkManager::OnPlayerConnected, this, std::placeholders::_1));
 
 		server->RegisterPacketHandler(String_Message, &networkReceiver);
 		server->RegisterPacketHandler(Transform_Data, &networkReceiver);
@@ -112,7 +127,7 @@ void NetworkManager::SendPacket(TransformPacket p) {
 
 // -- TUTORIAL GAME --
 
-GameObject* TutorialGame::InitialiseConnectedPlayer(int id) {
+GameObject* TutorialGame::InitialiseConnectedPlayerObject(int id) {
 
 	float meshSize = 1.0f;
 	float inverseMass = 10.0f;
