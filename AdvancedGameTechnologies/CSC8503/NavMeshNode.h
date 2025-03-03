@@ -27,8 +27,13 @@ namespace NCL {
 			void calculateEdges();
 			void addEdge(NavMeshNode* neighbour, int cost);
 			float calculateHeuristic(NavMeshNode* neighbour);
-			float calculateGScore(NavMeshNode* previousNeighbour);
+			float calculateGScore(float previousGScore, float edgeCost) { return previousGScore + edgeCost; }
 			float calculateFScore() { return this->heuristic + this->gScore; }
+
+			bool IsNodeInUse() { return false; }
+
+			void SetNodeInUse() { this->nodeInUse = true; }
+			void SetNodeNotInUse() { this->nodeInUse = false; }
 		protected:
 			std::vector<Edge> edges;
 			NCL::Maths::Vector3 position;
@@ -37,6 +42,7 @@ namespace NCL {
 			float heuristic;
 			float gScore;
 			float fScore;
+			bool nodeInUse;
 		};
 	}
 }
