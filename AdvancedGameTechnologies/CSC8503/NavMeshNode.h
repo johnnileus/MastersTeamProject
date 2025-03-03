@@ -18,6 +18,7 @@ namespace NCL {
 				this->heuristic = 0;
 				this->gScore = 0;
 				this->fScore = 0;
+				this->nodeInUse = false;
 			}
 			void checkObstructed();
 			bool isObstructed() {
