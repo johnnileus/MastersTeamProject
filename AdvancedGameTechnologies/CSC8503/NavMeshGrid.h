@@ -14,8 +14,6 @@ namespace NCL {
 			int levelSize;
 			std::vector<std::vector<NavMeshNode>>nodeGrid;
 			std::vector<std::vector<NavMeshNode>>GenerateNavMeshGrid(int levelSize);
-
-
 		};
 	}
 }
