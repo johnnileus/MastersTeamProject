@@ -64,7 +64,11 @@ public:
 	void BroadcastPacket(TransformPacket p);
 	void SendPacket(TransformPacket p);
 
+	void OnPlayerConnected(int id);
+
 protected:
+
+
 
 	MainPacketReceiver networkReceiver{ "receiver" };
 	bool connected = false;

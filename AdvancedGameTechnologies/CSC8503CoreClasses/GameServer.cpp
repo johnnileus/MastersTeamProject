@@ -2,12 +2,10 @@
 
 #include "GameServer.h"
 #include "GameWorld.h"
-#include "./enet/enet.h"
 
 using namespace NCL;
 using namespace CSC8503;
 
-//extern TutorialGame* g;
 
 GameServer::GameServer(int onPort, int maxClients)	{
 	port		= onPort;
@@ -85,7 +83,6 @@ void GameServer::UpdateServer() {
 		}
 		else if (type == ENET_EVENT_TYPE_RECEIVE) {
 			GamePacket* packet = (GamePacket*)event.packet->data;
-			std::cout << "Server: Packet received..." << std::endl;
 
 			ProcessPacket(packet, peer);
 		}
@@ -96,4 +93,8 @@ void GameServer::UpdateServer() {
 
 void GameServer::SetGameWorld(GameWorld &g) {
 	gameWorld = &g;
+}
+
+ENetPeer* GameServer::GetConnectedPeers() {
+	return netHandle->peers;
 }

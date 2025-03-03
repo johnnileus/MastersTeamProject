@@ -51,7 +51,7 @@ namespace NCL {
 			void UpdateConnectedPlayer(int id, Vector3 pos, Quaternion rot);
 
 			//called by GameServer when player connects
-			GameObject* InitialiseConnectedPlayer(int id);
+			GameObject* InitialiseConnectedPlayerObject(int id);
 
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
 
