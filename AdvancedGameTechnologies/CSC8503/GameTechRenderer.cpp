@@ -97,34 +97,33 @@ Mesh* GameTechRenderer::GenerateTerrainMesh(HeightMap* heightmap) {
 
 	for (int x = 0; x < terrainSize - 1; x++) {
 		for (int y = 0; y < terrainSize - 1; y++) {
-			//int topLeft = (x * terrainSize) + y;
-			//int topRight = (x * terrainSize) + (y + 1);
-			//int bottomLeft = ((x + 1) * terrainSize) + (y + 1);
-			//int bottomRight = ((x + 1) * terrainSize) + y;
+			int topLeft = (x * terrainSize) + y;
+			int topRight = (x * terrainSize) + (y + 1);
+			int bottomLeft = ((x + 1) * terrainSize) + (y + 1);
+			int bottomRight = ((x + 1) * terrainSize) + y;
 
-			int topLeft = x * terrainSize + y;
-			int topRight = topLeft + 1;
-			int bottomLeft = (x + 1) * terrainSize + y;
-			int bottomRight = bottomLeft + 1;
+			//int topLeft = x * terrainSize + y;
+			//int topRight = topLeft + 1;
+			//int bottomLeft = (x + 1) * terrainSize + y;
+			//int bottomRight = bottomLeft + 1;
 
 			indices.push_back(topLeft);//a
 			indices.push_back(bottomLeft);//c
 			indices.push_back(topRight);//b
 
-			//indices.push_back(bottomLeft);//c
-			//indices.push_back(topLeft);//a
-			//indices.push_back(bottomRight);//d
-
-			indices.push_back(topRight);//b
 			indices.push_back(bottomLeft);//c
+			indices.push_back(topLeft);//a
 			indices.push_back(bottomRight);//d
+
+			//indices.push_back(topRight);//b
+			//indices.push_back(bottomLeft);//c
+			//indices.push_back(bottomRight);//d
 		}
 	}
 
 	terrainMesh->SetVertexPositions(vertices);
 	terrainMesh->SetVertexTextureCoords(texCoords);
-	terrainMesh->SetVertexIndices(indices);
-	terrainMesh->SetVertexNormals(normals);
+	terrainMesh->SetVertexIndices(indices);	terrainMesh->SetVertexNormals(normals);
 	terrainMesh->UploadToGPU();
 	//BindMesh(*terrainMesh);
 

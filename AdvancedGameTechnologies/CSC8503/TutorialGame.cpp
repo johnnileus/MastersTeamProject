@@ -325,7 +325,7 @@ void TutorialGame::InitWorld() {
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
-	SceneManager::Instance().AddTerrain(world, Vector3(0, -25, 0) + offset, Vector3(70, 2, 70));
+	SceneManager::Instance().AddTerrain(world, Vector3(0, -25, 0) + offset, Vector3(700, 2, 700));
 }
 
 void TutorialGame::InitPlayer()
