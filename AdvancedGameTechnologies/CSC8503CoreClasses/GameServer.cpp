@@ -53,7 +53,12 @@ bool GameServer::SendGlobalPacket(GamePacket& packet) {
 	return true;
 }
 
+bool GameServer::SendPacket(GamePacket& packet, ENetPeer* peer) {
+	ENetPacket* dataPacket = enet_packet_create(&packet, packet.GetTotalSize(), 0);
+	enet_peer_send(peer, 0, dataPacket);
 
+	return true;
+}
 
 void GameServer::UpdateServer() {
 	if (!netHandle) { return; }
