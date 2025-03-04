@@ -52,7 +52,7 @@ namespace NCL {
 
             //Shader
             Shader* basicShader = nullptr;
-
+            Shader* characterShader = nullptr;
 
             //Ani
             MeshAnimation* idle;
