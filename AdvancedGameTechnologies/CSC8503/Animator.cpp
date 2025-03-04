@@ -95,56 +95,60 @@ bool Animator::LoadAnimation(PlayerAnimation animation)
 
 void Animator::Draw(RenderObject* renderObj)
 {
-	/*std::cout << "Drawing render object: " << renderObj << std::endl;
+    //get mesh and shader data
     Mesh* mesh = renderObj->GetMesh();
-    
-    
     Shader* shader = renderObj->GetShader();
-    const Matrix4* invBindPose = mesh->GetInverseBindPose().data();
 
-    //if is tweening, interpolate the next and current frame 
-    if (isTweening && (pendingAnim != nullptr))
+    if (!currentAnim)
     {
-        const Matrix4* animCurrentFrame = currentAnim->GetJointData(currentFrame);
-        
-        const Matrix4* animPendingFrame = pendingAnim->GetJointData(0);
+        return;
+    }
+
+    //get skeleton data
+    const Matrix4* invBindPose = mesh->GetInverseBindPose().data();
+    size_t jointCount = mesh->GetJointCount();
     
-        std::vector<Matrix4> finalBlending;
-        for (size_t i = 0; i < mesh->GetJointCount(); i++)
-            finalBlending.emplace_back( LerpMat(animCurrentFrame[i], animPendingFrame[i], tweenBlendFactor));
+    if (jointCount == 0) {
+        std::cout<<"!!!!!Warning: mesh"<<mesh->GetAssetID()<<" doesn't have skeleton data!!!!!"<<std::endl;
+        return; 
+    }
+
+    //clear last frame's buffer first
+    frameMatrices.clear();
+    frameMatrices.reserve(jointCount);
     
-        for (size_t i = 0; i < mesh->GetJointCount(); i++)
-            frameMatrices.emplace_back(finalBlending[i] * invBindPose[i]);
+    //if is tweening, interpolate the next and current frame 
+    if (isTweening && (pendingAnim != nullptr)) {
+        //get current animation data
+        const Matrix4* currentAnimFrameData = currentAnim->GetJointData(currentFrame);
+        //get new animation's first frame data for interpolation
+        const Matrix4* pendingAnimFrameData = pendingAnim->GetJointData(0);
+
+        //do interpolation
+        for (size_t i = 0; i < jointCount; i++) {
+            Matrix4 blended = LerpMat(currentAnimFrameData[i], pendingAnimFrameData[i], tweenBlendFactor);
+            frameMatrices.emplace_back(blended * invBindPose[i]);
+        }
     }
     //if not, just use current frame data
-    else
-    {
+    else {
         const Matrix4* frameData = currentAnim->GetJointData(currentFrame);
-    
-        for (unsigned int i = 0; i < mesh->GetJointCount(); i++)
+        //multiply invBindPose get skin matrix
+        for (size_t i = 0; i < jointCount; i++) {
             frameMatrices.emplace_back(frameData[i] * invBindPose[i]);
+        }
     }
 
-    int j = glGetUniformLocation(GetProcessId(shader), "name");
-    glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
+    GLint programID = 13;
+    GLint loc = glGetUniformLocation(programID, "joint"); 
     
-    frameMatrices.clear();
-
+    
     
     for (int i = 0; i < (int)mesh->GetSubMeshCount(); i++)
     {
-        
-        // if (renderObj->GetShader() != nullptr)
-        // {
-        //     if (renderObj->GetMaterial() != nullptr && (int)renderObject->GetMaterial()->GetSubMaterials().size() > 0) {
-        //         int materialIndexLocations = glGetUniformLocation(r.GetBoundShader()->GetProgramID(), "materialIndex");
-        //         int index = renderObject->GetMaterial()->GetMaterialIndex()[i];
-        //         glUniform1i(materialIndexLocations, index);
-        //     }
-        //
-        // }
-        std::cout<<"submesh count"<<(int)mesh->GetSubMeshCount()<<std::endl;
-    }*/
+        //TODO
+        //Draw animation and submesh texture
+    }
 }
 
 void Animator::Play(PlayerAnimation anim, bool tween, float animSpeed)
