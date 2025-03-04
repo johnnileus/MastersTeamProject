@@ -10,9 +10,11 @@ enum BasicNetworkMessages {
 	Hello,
 	Message,
 
+	//custom
 	String_Message,
 	Transform_Data,
 	ID,
+	Connected,
 
 	Delta_State,	//1 byte per channel since the last state
 	Full_State,		//Full transform etc
