@@ -46,7 +46,7 @@ void NetworkManager::OnPlayerConnected(int id) {
 
 			ConnectPacket transform(id, Vector3(), Quaternion());
 
-			SendPacket(transform);
+			ServerSendPacket(transform, currentPeer);
 		}
 	}
 
@@ -129,18 +129,26 @@ void NetworkManager::Update() {
 	}
 
 }
-
-
-
-void NetworkManager::SendPacket(GamePacket& p) {
-	if (IsServer()) {
-		server->SendGlobalPacket(p);
+void NetworkManager::ServerSendPacket(GamePacket& p, ENetPeer* peer) {
+	if (IsConnected()) {
+		server->SendPacket(p, peer);
 	}
-	else if (IsClient()) {
+}
+
+
+
+void NetworkManager::ClientSendPacket(GamePacket& p) {
+
+	if (IsConnected()) {
 		client->SendPacket(p);
 	}
 }
 
+void NetworkManager::ServerBroadcastPacket(GamePacket& p) {
+	if (IsConnected()) {
+		server->SendGlobalPacket(p);
+	}
+}
 
 // -- TUTORIAL GAME --
 
@@ -182,7 +190,7 @@ void TutorialGame::SendTransform() {
 
 		TransformPacket transform(id, pos, rot, false);
 
-		networkManager->SendPacket(transform);
+		networkManager->ClientSendPacket(transform);
 	}
 
 }
@@ -195,7 +203,7 @@ void TutorialGame::BroadcastPosition() {
 
 	TransformPacket transform(-1, pos, rot, true);
 
-	networkManager->SendPacket(transform);
+	networkManager->ServerBroadcastPacket(transform);
 }
 
 void TutorialGame::UpdateTransformFromServer(Vector3 pos, Quaternion rot) {

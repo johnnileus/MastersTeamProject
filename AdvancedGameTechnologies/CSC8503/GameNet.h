@@ -84,7 +84,9 @@ public:
 
 	void Update();
 
-	void SendPacket(GamePacket& p);
+	void ClientSendPacket(GamePacket& p);
+	void ServerSendPacket(GamePacket& p, ENetPeer* peer);
+	void ServerBroadcastPacket(GamePacket& p);
 
 	int GetID();
 
