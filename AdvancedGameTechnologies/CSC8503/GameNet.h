@@ -19,19 +19,38 @@ using namespace NCL;
 using namespace CSC8503;
 using namespace NCL::Maths;
 
+
 struct TransformPacket : public GamePacket {
+
+	int id;
 	Vector3 pos;
 	Quaternion rot;
 	bool fromServer;
 
-	TransformPacket(const Vector3 p, const Quaternion r, bool b) {
+	TransformPacket(int ID, const Vector3 p, const Quaternion r, bool b) {
 		type = BasicNetworkMessages::Transform_Data;
-		size = sizeof(Vector3) + sizeof(Quaternion) + sizeof(bool);
+		size = sizeof(Vector3) + sizeof(Quaternion) + sizeof(bool) + sizeof(int);
+		id = ID;
 		pos = p;
 		rot = r;
 		fromServer = b;
 	}
 };
+
+struct ConnectPacket : public GamePacket {
+	int id;
+	Vector3 pos;
+	Quaternion rot;
+
+	ConnectPacket(int ID, const Vector3 p, const Quaternion r) {
+		type = BasicNetworkMessages::Connected;
+		size = sizeof(Vector3) + sizeof(Quaternion) + sizeof(int);
+		id = ID;
+		pos = p;
+		rot = r;
+	}
+};
+
 
 
 
@@ -65,8 +84,9 @@ public:
 
 	void Update();
 
-	void BroadcastPacket(TransformPacket p);
-	void SendPacket(TransformPacket p);
+	void SendPacket(GamePacket& p);
+
+	int GetID();
 
 	void OnPlayerConnected(int id);
 
@@ -81,7 +101,6 @@ protected:
 	GameServer* server;
 	GameClient* client;
 
-	int id;
 
 	int port = NetworkBase::GetDefaultPort();
 

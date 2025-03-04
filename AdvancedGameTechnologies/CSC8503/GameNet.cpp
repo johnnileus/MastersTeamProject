@@ -18,13 +18,23 @@ void MainPacketReceiver::ReceivePacket(int type, GamePacket* payload, int source
 		std::string msg = realPacket->GetStringFromData();
 	}
 	if (type == Transform_Data) {
+		
 		TransformPacket* realPacket = (TransformPacket*)payload;
 		if (!realPacket->fromServer) {
 			g->UpdateConnectedPlayer(source, realPacket->pos, realPacket->rot);
 		}
+		else { // packet came from server
+		}
+	}
+	if (type == Connected) {
+		ConnectPacket* realPacket = (ConnectPacket*)payload;
+		std::cout << "New Player" << realPacket->id << std::endl;
+
+		g->InitialiseConnectedPlayerObject(realPacket->id);
 	}
 }
 
+//only called by server
 void NetworkManager::OnPlayerConnected(int id) {
 	ENetPeer* connectedClients = server->GetConnectedPeers();
 	
@@ -33,7 +43,10 @@ void NetworkManager::OnPlayerConnected(int id) {
 	for (currentPeer = host->peers; currentPeer < &host->peers[host->peerCount]; ++currentPeer)
 	{
 		if (currentPeer->state == ENET_PEER_STATE_CONNECTED) {
-			std::cout << currentPeer->incomingPeerID << std::endl;
+
+			ConnectPacket transform(id, Vector3(), Quaternion());
+
+			SendPacket(transform);
 		}
 	}
 
@@ -51,6 +64,7 @@ void NetworkManager::StartAsServer() {
 		server->RegisterPacketHandler(String_Message, &networkReceiver);
 		server->RegisterPacketHandler(Transform_Data, &networkReceiver);
 		server->RegisterPacketHandler(ID, &networkReceiver);
+		server->RegisterPacketHandler(Connected, &networkReceiver);
 	}
 
 
@@ -64,6 +78,7 @@ void NetworkManager::StartAsClient() {
 		client->RegisterPacketHandler(String_Message, &networkReceiver);
 		client->RegisterPacketHandler(Transform_Data, &networkReceiver);
 		client->RegisterPacketHandler(ID, &networkReceiver);
+		client->RegisterPacketHandler(Connected, &networkReceiver);
 		bool canConnect = client->Connect(127, 0, 0, 1, port);
 		if (canConnect) {
 			connected = true;
@@ -86,7 +101,9 @@ bool NetworkManager::IsClient() {
 bool NetworkManager::IsConnected() {
 	return connected;
 }
-
+int NetworkManager::GetID() {
+	return client->GetID();
+}
 void NetworkManager::Update() {
 	if (connected) {
 
@@ -115,7 +132,7 @@ void NetworkManager::Update() {
 
 
 
-void NetworkManager::SendPacket(TransformPacket p) {
+void NetworkManager::SendPacket(GamePacket& p) {
 	if (IsServer()) {
 		server->SendGlobalPacket(p);
 	}
@@ -161,7 +178,9 @@ void TutorialGame::SendTransform() {
 		Vector3 pos = player->GetTransform().GetPosition();
 		Quaternion rot = player->GetTransform().GetOrientation();
 
-		TransformPacket transform(pos, rot, false);
+		int id = networkManager->GetID();
+
+		TransformPacket transform(id, pos, rot, false);
 
 		networkManager->SendPacket(transform);
 	}
@@ -174,7 +193,7 @@ void TutorialGame::BroadcastPosition() {
 	Quaternion rot = player->GetTransform().GetOrientation();
 
 
-	TransformPacket transform(pos, rot, true);
+	TransformPacket transform(-1, pos, rot, true);
 
 	networkManager->SendPacket(transform);
 }
