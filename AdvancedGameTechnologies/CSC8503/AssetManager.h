@@ -15,9 +15,12 @@ namespace NCL {
     namespace CSC8503 {
         class AssetManager {
         public:
+            GameTechRenderer* gameTechRenderer;
+            
             static AssetManager& Instance(); // singleton
 
             void LoadAssets(GameTechRenderer* renderer);
+            Texture* AddTexture(const string& name);
 
             MeshAnimation* GetAnimation(const string& name);
             void RegisterAnimation(const std::string& name,MeshAnimation* anim);

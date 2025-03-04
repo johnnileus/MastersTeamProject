@@ -43,7 +43,6 @@ namespace NCL
             MeshAnimation* pendingAnim;
             std::vector<Matrix4> frameMatrices;
             
-            
             std::map<std::string, MeshAnimation*> meshAnims;
         };
     }
