@@ -90,7 +90,7 @@ public:
 
 	int GetID();
 
-	void OnPlayerConnected(int id);
+	void OnPlayerConnected(ENetPeer* p);
 
 protected:
 

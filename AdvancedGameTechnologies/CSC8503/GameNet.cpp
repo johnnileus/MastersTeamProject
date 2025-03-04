@@ -24,35 +24,43 @@ void MainPacketReceiver::ReceivePacket(int type, GamePacket* payload, int source
 			g->UpdateConnectedPlayer(source, realPacket->pos, realPacket->rot);
 		}
 		else { // packet came from server
+
 		}
 	}
 	if (type == Connected) {
 		ConnectPacket* realPacket = (ConnectPacket*)payload;
 		std::cout << "New Player" << realPacket->id << std::endl;
-
-		g->InitialiseConnectedPlayerObject(realPacket->id);
+		int id = realPacket->id;
+		if (id != g->GetID()) {
+			g->InitialiseConnectedPlayerObject(realPacket->id);
+		}
 	}
 }
 
 //only called by server
-void NetworkManager::OnPlayerConnected(int id) {
+void NetworkManager::OnPlayerConnected(ENetPeer* p) {
 	ENetPeer* connectedClients = server->GetConnectedPeers();
 	
 	ENetPeer* currentPeer;
 	_ENetHost* host = server->getNetHandle();
+
+	//send new player to all connected clients
 	for (currentPeer = host->peers; currentPeer < &host->peers[host->peerCount]; ++currentPeer)
 	{
 		if (currentPeer->state == ENET_PEER_STATE_CONNECTED) {
 
-			ConnectPacket transform(id, Vector3(), Quaternion());
+			ConnectPacket transform(currentPeer->outgoingPeerID, Vector3(), Quaternion());
 
 			ServerSendPacket(transform, currentPeer);
 		}
 	}
 
+	//send connected clients to new player
+	GameObject* clientObjects = g->GetConnectedPlayerObjects();
+	// create packet and send to new client TODO
 
 
-	g->InitialiseConnectedPlayerObject(id);
+	g->InitialiseConnectedPlayerObject(p->outgoingPeerID);
 }
 
 void NetworkManager::StartAsServer() {
@@ -181,6 +189,11 @@ GameObject* TutorialGame::InitialiseConnectedPlayerObject(int id) {
 
 }
 
+GameObject** TutorialGame::GetConnectedPlayerObjects() {
+	return connectedPlayers;
+}
+
+
 void TutorialGame::SendTransform() {
 	if (networkManager->IsClient()) {
 		Vector3 pos = player->GetTransform().GetPosition();
@@ -195,11 +208,11 @@ void TutorialGame::SendTransform() {
 
 }
 
+//called by server
 void TutorialGame::BroadcastPosition() {
 
 	Vector3 pos = player->GetTransform().GetPosition();
 	Quaternion rot = player->GetTransform().GetOrientation();
-
 
 	TransformPacket transform(-1, pos, rot, true);
 
