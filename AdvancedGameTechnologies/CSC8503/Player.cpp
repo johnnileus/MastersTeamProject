@@ -76,7 +76,7 @@ void Player::SetComponent(float meshSize,float mass)
 	 	&objectTransform,
 	 	myMesh,
 	 	AssetManager::Instance().playerTex[0],
-	 	AssetManager::Instance().characterShader)
+	 	AssetManager::Instance().basicShader)
 	 	);
 	
 	
