@@ -312,7 +312,7 @@ void TutorialGame::InitWorld() {
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
-	SceneManager::Instance().AddTerrain(world, Vector3(0, -25, 0) + offset, Vector3(700, 2, 700));
+	SceneManager::Instance().AddTerrain(world, Vector3(0, -25, 0) + offset, Vector3(700, 24, 700));
 }
 
 // if modifying the shape, please change InitialiseConnectedPlayer as well
@@ -556,7 +556,6 @@ void TutorialGame::GenerateWall()
 {
 	// add all walls to the list
 	
-	/*
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,12),Vector3(6,1,1)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,12),Vector3(6,1,1)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(60,0,30),Vector3(8,1,3)));
@@ -566,7 +565,6 @@ void TutorialGame::GenerateWall()
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(65,0,70),Vector3(8,1,3)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(10,0,50),Vector3(4,1,4)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(25,0,50),Vector3(2,1,4)));
-	*/
 	SetWallColour();
 }
 
