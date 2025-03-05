@@ -9,8 +9,11 @@ enum BasicNetworkMessages {
 	None,
 	Hello,
 	Message,
+
 	String_Message,
 	Transform_Data,
+	ID,
+
 	Delta_State,	//1 byte per channel since the last state
 	Full_State,		//Full transform etc
 	Received_State, //received from a client, informs that its received packet n
@@ -72,6 +75,7 @@ public:
 	void RegisterPacketHandler(int msgID, PacketReceiver* receiver) {
 		packetHandlers.insert(std::make_pair(msgID, receiver));
 	}
+
 protected:
 	NetworkBase();
 	~NetworkBase();
