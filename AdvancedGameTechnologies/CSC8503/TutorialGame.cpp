@@ -339,8 +339,8 @@ void TutorialGame::DebugObjectMovement() {
 }
 
 void TutorialGame::InitCamera() {
-	world.GetMainCamera().SetNearPlane(0.1f);
-	world.GetMainCamera().SetFarPlane(500.0f);
+	world->GetMainCamera().SetNearPlane(0.1f);
+	world->GetMainCamera().SetFarPlane(5000.0f);
 	
 	if (thirdPersonCam)
 	{
@@ -376,7 +376,8 @@ void TutorialGame::InitWorld() {
 	
 	Enemy::Instantiate(&world,enemies,player,Vector3(50,0,0));
 
-	//InitTerrain();
+	//Terrain Generation
+	InitTerrain();
 
 	InitDefaultFloor();
 
@@ -439,7 +440,28 @@ void TutorialGame::InitWorld() {
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
-	SceneManager::Instance().AddTerrain(&world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
+	SceneManager::Instance().AddTerrain(world, Vector3(0, -25, 0) + offset, Vector3(700, 2, 700));
+	//SceneManager::Instance().AddTerrain(&world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
+}
+
+// if modifying the shape, please change InitialiseConnectedPlayer as well
+void TutorialGame::InitPlayer()
+{
+	player = new Player();
+
+	float meshSize		= 1.0f;
+	float inverseMass	= 10.0f;
+	
+	SphereVolume* volume  = new SphereVolume(1.0f);
+
+	player->SetBoundingVolume((CollisionVolume*)volume);
+
+	player->GetTransform()
+		.SetScale(Vector3(meshSize, meshSize, meshSize))
+		.SetPosition(Vector3(20,0,30));
+
+	player->SetRenderObject(new RenderObject(&player->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
+	player->SetPhysicsObject(new PhysicsObject(&player->GetTransform(), player->GetBoundingVolume()));
 }
 
 
@@ -511,11 +533,11 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
 
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
+	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
+	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
+	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
+	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
 void TutorialGame::InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius) {
@@ -665,14 +687,18 @@ void TutorialGame::DisplayPathfinding() {
 void TutorialGame::GenerateWall()
 {
 	// add all walls to the list
+	
+	/*
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,12),Vector3(6,1,1)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,12),Vector3(6,1,1)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(60,0,30),Vector3(8,1,3)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,50),Vector3(8,1,3)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,50),Vector3(3,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(35,0,70),Vector3(9,1,3)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(65,0,70),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(10,0,50),Vector3(4,1,4)));
 	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(25,0,50),Vector3(2,1,4)));
-
+	*/
 	SetWallColour();
 }
 
