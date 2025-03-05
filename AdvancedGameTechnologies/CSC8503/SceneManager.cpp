@@ -78,9 +78,9 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
 
     terrain->SetRenderObject(new RenderObject(
         &terrain->GetTransform(),
-        AssetManager::Instance().sphereMesh,
+        AssetManager::Instance().terrainMesh,
         nullptr,
-        AssetManager::Instance().basicShader));
+        AssetManager::Instance().terrainShader));
 
     terrain->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
     terrain->SetPhysicsObject(new PhysicsObject(&terrain->GetTransform(), terrain->GetBoundingVolume()));

@@ -40,6 +40,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
 
     // load shader resources
     basicShader = renderer->LoadShader("scene.vert", "scene.frag");
+    terrainShader = renderer->LoadShader("terrain.vert", "terrain.frag");
 
     //load animation resources 
     idle = new MeshAnimation("Idle1.anm");
@@ -63,7 +64,6 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
             }
         }
     }
-    
 }
 
 MeshAnimation* AssetManager::GetAnimation(const string& name)
@@ -101,7 +101,6 @@ void AssetManager::Cleanup() {
     delete guardMesh;
 
     delete terrainMesh;
-
 
     delete basicTex;
     delete woodTex;

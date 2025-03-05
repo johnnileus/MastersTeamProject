@@ -50,6 +50,7 @@ namespace NCL {
 
             //Shader
             Shader* basicShader = nullptr;
+            Shader* terrainShader = nullptr;
 
 
             //Ani
