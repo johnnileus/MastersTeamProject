@@ -123,7 +123,8 @@ Mesh* GameTechRenderer::GenerateTerrainMesh(HeightMap* heightmap) {
 
 	terrainMesh->SetVertexPositions(vertices);
 	terrainMesh->SetVertexTextureCoords(texCoords);
-	terrainMesh->SetVertexIndices(indices);	terrainMesh->SetVertexNormals(normals);
+	terrainMesh->SetVertexIndices(indices);	
+	terrainMesh->SetVertexNormals(normals);
 	terrainMesh->UploadToGPU();
 	//BindMesh(*terrainMesh);
 
