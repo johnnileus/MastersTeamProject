@@ -45,7 +45,7 @@ namespace NCL {
 		MeshMaterial(const std::string& filename);
 		~MeshMaterial() {}
 		const MeshMaterialEntry* GetMaterialForLayer(int i) const;
-
+		int GetLayersCount(){return materialLayers.size();}
 		void LoadTextures();
 
 	protected:

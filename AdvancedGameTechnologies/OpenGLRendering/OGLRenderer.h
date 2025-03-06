@@ -38,7 +38,9 @@ namespace NCL::Rendering {
 		bool HasInitialised()				const override {
 			return initState;
 		}
-
+		const OGLShader* GetBoundShader() { return activeShader; }
+		const OGLMesh* GetBoundMesh() { return boundMesh; }
+		
 		virtual bool SetVerticalSync(VerticalSyncState s);
 
 	protected:			

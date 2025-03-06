@@ -1,7 +1,10 @@
 #pragma once
+#include <reactphysics3d/engine/Material.h>
+
 #include "Texture.h"
 #include "Shader.h"
 #include "Mesh.h"
+#include "MeshMaterial.h"
 
 namespace NCL {
 	using namespace NCL::Rendering;
@@ -43,6 +46,14 @@ namespace NCL {
 			Vector4 GetColour() const {
 				return colour;
 			}
+			MeshMaterial* GetMaterial()const
+			{
+				return material;
+			}
+			void SetMaterial(MeshMaterial* material)
+			{
+				this->material = material;
+			}
 
 		protected:
 			Mesh*		mesh;
@@ -50,6 +61,7 @@ namespace NCL {
 			Shader*		shader;
 			Transform*	transform;
 			Vector4		colour;
+			MeshMaterial* material;
 		};
 	}
 }

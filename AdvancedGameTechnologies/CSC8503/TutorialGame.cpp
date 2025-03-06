@@ -132,7 +132,6 @@ void TutorialGame::UpdateGame(float dt) {
 
 	physics->Update(dt);
 	thirdPersonCam->Update(dt);
-	
 	renderer->Render();
 	Debug::UpdateRenderables(dt);
 }

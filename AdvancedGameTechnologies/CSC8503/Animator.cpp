@@ -112,26 +112,44 @@ void Animator::Draw(RenderObject* renderObj)
     // }
 #pragma endregion
 
-    //target frame
-    size_t nFrame = 1;
-    Mesh* animMesh;
-    animMesh = renderObj->GetMesh();
-    size_t jointCount = animMesh->GetJointCount();// jointCount same with MeshAnimation's jointCount 
-    
+    //get mesh and joints count
+    OGLMesh* animMesh = (OGLMesh*)renderObj->GetMesh();
+    size_t jointCount = animMesh->GetJointCount();
+
+    //target frame data
+    size_t nFrame = 10;
     const Matrix4* frameData = meshAnims["Idle"]->GetJointData(nFrame);
     
     // Mesh can use GetInverseBindPose() get each joint's inverse bind pose matrix
     const auto& invBindPose = animMesh->GetInverseBindPose();
-
+    
     std::vector<Matrix4> finalMatrices(jointCount);
     for (size_t i = 0; i < jointCount; ++i) {
         finalMatrices[i] = frameData[i] * invBindPose[i];
     }
-    Shader* shader = renderObj->GetShader();
 
+    //get shader and activate gl program
+    OGLShader* shader = (OGLShader*)renderObj->GetShader();
+    GLuint programID = shader->GetProgramID();
+    glUseProgram(programID);
+    
     //upload these matrices data to GPU
-    GLint loc = glGetUniformLocation(10, "joints");
-    glUniformMatrix4fv(loc, (GLsizei)jointCount, GL_FALSE, reinterpret_cast<const float*>(finalMatrices.data()));
+    GLint jointsLoc = glGetUniformLocation(programID, "joints");
+    if (jointsLoc==-1)
+    {
+        std::cout<<"!!!!!!!ERROE:Uniform 'joints' not found in shader !!!!!!!!!!";
+    }
+    else
+    {
+        glUniformMatrix4fv(jointsLoc, (GLsizei)jointCount, GL_FALSE, reinterpret_cast<const float*>(finalMatrices.data()));
+    }
+
+    glBindVertexArray(animMesh->GetVAO());
+    
+    glDrawElements(GL_TRIANGLES, animMesh->GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+
+    glBindVertexArray(0);
+
 }
 
 void Animator::Play(const std::string& anim, bool tween, float animSpeed)
