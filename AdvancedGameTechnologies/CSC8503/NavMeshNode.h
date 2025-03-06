@@ -15,7 +15,6 @@ namespace NCL {
 			NavMeshNode(NCL::Maths::Vector3 position) {
 				this->position = position;
 				this->obstructed = false;
-				this->heuristic = 0;
 				this->gScore = 0;
 				this->fScore = 0;
 				this->nodeInUse = false;
@@ -27,9 +26,10 @@ namespace NCL {
 			bool detectImpassableEdge(NavMeshNode* neighbour);
 			void calculateEdges();
 			void addEdge(NavMeshNode* neighbour, int cost);
-			float calculateHeuristic(NavMeshNode* neighbour);
-			float calculateGScore(float previousGScore, float edgeCost) { return previousGScore + edgeCost; }
-			float calculateFScore() { return this->heuristic + this->gScore; }
+			float getGScore(){ return this->gScore; }
+			float getFScore(){ return this->fScore; }
+			void setGScore(float gScore) { this->gScore = gScore; }
+			void setFScore(float fScore) { this->gScore = fScore; }
 
 			bool IsNodeInUse() { return false; }
 
@@ -40,7 +40,6 @@ namespace NCL {
 			NCL::Maths::Vector3 position;
 			bool obstructed;
 
-			float heuristic;
 			float gScore;
 			float fScore;
 			bool nodeInUse;
