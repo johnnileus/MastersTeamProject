@@ -2,8 +2,6 @@
 
 #include "TutorialGame.h"
 
-
-
 using namespace NCL;
 using namespace CSC8503;
 
@@ -137,16 +135,12 @@ void TutorialGame::UpdateGame(float dt) {
 	Debug::UpdateRenderables(dt);
 
 	//Timer
-	while (timer >= 0.0f) {
-		timer -= dt;
-	}
+	timer += dt;
 	Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
-	if (timer <= 0) {
-		Transition();
-	}
 }
 
 void TutorialGame::UpdateKeys() {
+	//Enemy and DoorPanel breaks any re-initialisations
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F1)) {
 		InitWorld(); //We can reset the simulation at any time with F1
 		selectionObject = nullptr;
@@ -154,6 +148,10 @@ void TutorialGame::UpdateKeys() {
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F2)) {
 		InitCamera(); //F2 will reset the camera to a specific default place
+	}
+
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F3)) {
+		ReloadLevel(); //F3 to reload level
 	}
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
@@ -294,6 +292,8 @@ void TutorialGame::InitWorld() {
 
 	//Terrain Generation
 	InitTerrain();
+
+	gateInit = SceneManager::Instance().AddGate(world, Vector3(0, 0, 0), Vector3(1, 1, 1));
 
 	InitDefaultFloor();
 
@@ -610,6 +610,7 @@ void TutorialGame::ReloadLevel() {
 	// Clear the current level
 	world->ClearAndErase();
 	physics->Clear();
+	timer = 0;
 
 	// Reinitialize the world
 	InitWorld();

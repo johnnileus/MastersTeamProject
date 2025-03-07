@@ -35,6 +35,8 @@
 
 #include "Pistol.h"
 
+#include "GameObject.h"
+
 
 namespace NCL {
 	namespace CSC8503 {
@@ -79,7 +81,7 @@ namespace NCL {
 			void InitTerrain();
 
 			//Timer
-			float timer = 180;
+			float timer = 0;
 
 			//Transitions
 			void Transition();
@@ -149,6 +151,8 @@ namespace NCL {
 			void ReloadLevel();
 
 			Door* doorTrigger;
+
+			LevelGate* gateInit;
 
 		};
 	}

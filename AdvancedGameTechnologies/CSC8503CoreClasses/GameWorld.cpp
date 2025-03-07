@@ -28,6 +28,7 @@ void GameWorld::Clear() {
 void GameWorld::ClearAndErase() {
 	for (auto& i : gameObjects) {
 		delete i;
+		//std::cout << "Deleted Object No. " << i << std::endl;
 	}
 	for (auto& i : constraints) {
 		delete i;
