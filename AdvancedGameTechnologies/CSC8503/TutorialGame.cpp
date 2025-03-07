@@ -92,7 +92,7 @@ void TutorialGame::UpdateGame(float dt) {
 	}
 
 	CheckCoinsCollected();
-	
+
 	// if (!inSelectionMode) {
 	// 	world->GetMainCamera().UpdateCamera(dt);
 	// }
@@ -108,14 +108,14 @@ void TutorialGame::UpdateGame(float dt) {
 
 
 	///////Animation Test///////
-	frameTime-=dt;
-	while (frameTime<0.0f)
+	frameTime -= dt;
+	while (frameTime < 0.0f)
 	{
-		currentFrame = (currentFrame+1) % AssetManager::Instance().idle->GetFrameCount();
-		frameTime +=1.0f/AssetManager::Instance().idle->GetFrameRate();
+		currentFrame = (currentFrame + 1) % AssetManager::Instance().idle->GetFrameCount();
+		frameTime += 1.0f / AssetManager::Instance().idle->GetFrameRate();
 	}
 	///////////////////////////
-	
+
 	DisplayPathfinding();
 
 	world->UpdateWorld(dt);
@@ -132,13 +132,18 @@ void TutorialGame::UpdateGame(float dt) {
 
 	physics->Update(dt);
 	thirdPersonCam->Update(dt);
-	
+
 	renderer->Render();
 	Debug::UpdateRenderables(dt);
 
 	//Timer
-	timer -= dt;
+	while (timer >= 0.0f) {
+		timer -= dt;
+	}
 	Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
+	if (timer <= 0) {
+		Transition();
+	}
 }
 
 void TutorialGame::UpdateKeys() {
@@ -612,7 +617,9 @@ void TutorialGame::ReloadLevel() {
 	std::cout << "Level reloaded!" << std::endl;
 }
 
-
+void TutorialGame::Transition() {
+	return;
+}
 
 void TutorialGame::BroadcastPosition(){
 
