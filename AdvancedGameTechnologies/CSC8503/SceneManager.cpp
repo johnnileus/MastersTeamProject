@@ -79,7 +79,7 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
     terrain->SetRenderObject(new RenderObject(
         &terrain->GetTransform(),
         AssetManager::Instance().sphereMesh,
-        nullptr,
+        AssetManager::Instance().basicTex,
         AssetManager::Instance().basicShader));
 
     terrain->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));

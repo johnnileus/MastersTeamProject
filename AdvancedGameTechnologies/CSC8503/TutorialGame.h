@@ -78,6 +78,12 @@ namespace NCL {
 			//Terrain Generation
 			void InitTerrain();
 
+			//Timer
+			float timer = 180;
+
+			//Transitions
+			void Transition();
+
 			//networking
 
 			NetworkManager* networkManager = new NetworkManager();
@@ -90,8 +96,6 @@ namespace NCL {
 			StateGameObject* testStateObject;
 
 			GameObject* debugSphere;
-
-
 
 			ThirdPersonCamera* thirdPersonCam;
 
