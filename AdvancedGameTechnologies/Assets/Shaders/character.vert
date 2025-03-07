@@ -42,23 +42,17 @@ void main(void)
 	vec4 finalPos = modelMatrix * skinnedPos;
 
 	//calculate normal matrix and convert skinned normal
-	mat3 normalMatrix = transpose ( inverse ( mat3 ( modelMatrix )));
+	mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
 	vec3 finalNormal = normalize(normalMatrix * skinnedNormal.xyz);
 	
 	//calculate the MVP matrix
 	mat4 mvp = projMatrix * viewMatrix * modelMatrix;
-	gl_Position = mvp * skinnedPos;
 
-	OUT.shadowProj 	= shadowMatrix * vec4 ( position,1) * finalPos;
-	OUT.worldPos 	= finalPos.xyz;
-	OUT.normal 		= finalNormal;
-	OUT.texCoord	= texCoord;
-	OUT.colour		= objectColour;
+	OUT.shadowProj = shadowMatrix * finalPos;
+	OUT.worldPos   = finalPos.xyz;
+	OUT.normal     = finalNormal;
+	OUT.texCoord   = texCoord;
+	OUT.colour     = objectColour;
 
-//	vec4 baseColour = objectColour;
-//	if(hasVertexColours) {
-//		baseColour = objectColour * colour;
-//	}
-//	OUT.colour = baseColour;
-	//gl_Position		= mvp * vec4(position, 1.0);
+	gl_Position = projMatrix * viewMatrix * finalPos;
 }

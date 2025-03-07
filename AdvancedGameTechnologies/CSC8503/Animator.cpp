@@ -2,7 +2,7 @@
 
 #include "AssetManager.h"
 
-Animator::Animator()
+Animator::Animator(RenderObject* renderObject)
 {
     currentAnimSpeed = 1.0f;
 
@@ -12,6 +12,8 @@ Animator::Animator()
     isTweening = false;
     currentFrame=0;
     pendingAnim = nullptr;
+
+    this->renderObject = renderObject;
 }
 
 Animator::~Animator()
@@ -45,6 +47,7 @@ void Animator::Update(float dt)
             frameTime += 1.0f / currentAnim->GetFrameRate();
         }
     }
+    Draw(currentFrame);
 }
 
 bool Animator::LoadAnimation(const std::string& animationName)
@@ -53,7 +56,7 @@ bool Animator::LoadAnimation(const std::string& animationName)
     return (meshAnims[animationName]!=nullptr);
 }
 
-void Animator::Draw(RenderObject* renderObj)
+void Animator::Draw(int nFrame)
 {
 #pragma region Old function
     // //get mesh and shader data
@@ -113,12 +116,11 @@ void Animator::Draw(RenderObject* renderObj)
 #pragma endregion
 
     //get mesh and joints count
-    OGLMesh* animMesh = (OGLMesh*)renderObj->GetMesh();
+    OGLMesh* animMesh = (OGLMesh*)renderObject->GetMesh();
     size_t jointCount = animMesh->GetJointCount();
 
     //target frame data
-    size_t nFrame = 10;
-    const Matrix4* frameData = meshAnims["Idle"]->GetJointData(nFrame);
+    const Matrix4* frameData = meshAnims["Role_Walk"]->GetJointData(nFrame);
     
     // Mesh can use GetInverseBindPose() get each joint's inverse bind pose matrix
     const auto& invBindPose = animMesh->GetInverseBindPose();
@@ -129,7 +131,7 @@ void Animator::Draw(RenderObject* renderObj)
     }
 
     //get shader and activate gl program
-    OGLShader* shader = (OGLShader*)renderObj->GetShader();
+    OGLShader* shader = (OGLShader*)renderObject->GetShader();
     GLuint programID = shader->GetProgramID();
     glUseProgram(programID);
     
