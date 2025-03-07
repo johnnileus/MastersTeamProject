@@ -53,6 +53,11 @@ namespace NCL {
 
 			//called by GameServer when player connects
 			GameObject* InitialiseConnectedPlayerObject(int id);
+			GameObject** GetConnectedPlayerObjects();
+
+			int GetID() {
+				return networkManager->GetID();
+			}
 
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
 

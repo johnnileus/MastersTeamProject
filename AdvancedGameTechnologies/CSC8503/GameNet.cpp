@@ -28,31 +28,47 @@ void MainPacketReceiver::ReceivePacket(int type, GamePacket* payload, int source
 	}
 	if (type == Connected) {
 		ConnectPacket* realPacket = (ConnectPacket*)payload;
-		std::cout << "New Player" << realPacket->id << std::endl;
-
-		g->InitialiseConnectedPlayerObject(realPacket->id);
+		std::cout << "New Player Connected with ID: " << realPacket->id << ", Current ID = "<<g->GetID() << std::endl;
+		if (realPacket->id != g->GetID()) {
+			
+			g->InitialiseConnectedPlayerObject(realPacket->id);
+		}
 	}
 }
 
 //only called by server
-void NetworkManager::OnPlayerConnected(int id) {
+void NetworkManager::OnPlayerConnected(ENetPeer* peer) {
 	ENetPeer* connectedClients = server->GetConnectedPeers();
-	
+	int newID = peer->incomingPeerID;
 	ENetPeer* currentPeer;
 	_ENetHost* host = server->getNetHandle();
+
+	// send new player to all connected clients
 	for (currentPeer = host->peers; currentPeer < &host->peers[host->peerCount]; ++currentPeer)
 	{
 		if (currentPeer->state == ENET_PEER_STATE_CONNECTED) {
-
-			ConnectPacket transform(id, Vector3(), Quaternion());
+			std::cout << "Server: Sending ID: " << newID << " to " << currentPeer->incomingPeerID << std::endl;
+			ConnectPacket transform(newID, Vector3(), Quaternion());
 
 			ServerSendPacket(transform, currentPeer);
 		}
 	}
 
+	//send all connected players to new player
+	GameObject** clientObjects = g->GetConnectedPlayerObjects();
+	int clientCount = server->GetClientCount();
 
+	for (int i = 0; i < clientCount; ++i) {
+		if (clientObjects[i] != nullptr) {
+			Vector3 pos = clientObjects[i]->GetTransform().GetPosition();
+			Quaternion rot = clientObjects[i]->GetTransform().GetOrientation();
+			ConnectPacket transform(i, pos, rot);
+			ServerSendPacket(transform, peer);
+		}
+	}
 
-	g->InitialiseConnectedPlayerObject(id);
+	g->InitialiseConnectedPlayerObject(newID);
+
 }
 
 void NetworkManager::StartAsServer() {
@@ -179,6 +195,10 @@ GameObject* TutorialGame::InitialiseConnectedPlayerObject(int id) {
 
 	return newPlayer;
 
+}
+
+GameObject** TutorialGame::GetConnectedPlayerObjects() {
+	return connectedPlayers;
 }
 
 void TutorialGame::SendTransform() {
