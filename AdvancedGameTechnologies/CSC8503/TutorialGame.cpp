@@ -160,7 +160,7 @@ void TutorialGame::UpdateGame(float dt) {
 	}
 
 	CheckCoinsCollected();
-	
+
 	// if (!inSelectionMode) {
 	// 	world->GetMainCamera().UpdateCamera(dt);
 	// }
@@ -209,8 +209,13 @@ void TutorialGame::UpdateGame(float dt) {
 	//Debug::UpdateRenderables(dt);
 
 	//Timer
-	timer -= dt;
+	while (timer >= 0.0f) {
+		timer -= dt;
+	}
 	Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
+	if (timer <= 0) {
+		Transition();
+	}
 }
 
 void TutorialGame::UpdateKeys() {
@@ -721,7 +726,9 @@ void TutorialGame::ReloadLevel() {
 	std::cout << "Level reloaded!" << std::endl;
 }
 
-
+void TutorialGame::Transition() {
+	return;
+}
 
 void TutorialGame::BroadcastPosition(){
 

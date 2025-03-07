@@ -81,6 +81,9 @@ namespace NCL {
 			//Timer
 			float timer = 180;
 
+			//Transitions
+			void Transition();
+
 			//networking
 
 #ifdef _WIN32
