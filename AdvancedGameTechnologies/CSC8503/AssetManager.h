@@ -39,7 +39,8 @@ namespace NCL {
             Mesh* enemyMesh = nullptr;
             Mesh* bonusMesh = nullptr;
 
-            OGLMesh* guardMesh = nullptr;
+            Mesh* guardMesh = nullptr;
+            Mesh* roleMesh = nullptr;
 
             OGLMesh* terrainMesh = nullptr;
 
