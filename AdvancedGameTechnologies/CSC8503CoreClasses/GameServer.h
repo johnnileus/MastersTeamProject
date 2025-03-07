@@ -26,7 +26,7 @@ namespace NCL {
 
 			ENetPeer* GetConnectedPeers();
 
-			Event<ENetPeer*> PlayerConnected;
+			Event<int> PlayerConnected;
 
 			_ENetHost* getNetHandle() {
 				return netHandle;

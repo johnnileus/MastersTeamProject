@@ -69,14 +69,14 @@ void GameServer::UpdateServer() {
 		int type = event.type;
 
 		ENetPeer* p = event.peer;
-		int peerID = p->incomingPeerID;
+		int peer = p->incomingPeerID;
 
 		if (type == ENET_EVENT_TYPE_CONNECT) {
 			std::cout << "Server: New client connected" << std::endl;
 
 
-			std::cout << peerID << "<- id" << std::endl;
-			PlayerConnected.Invoke(p);
+			std::cout << peer << "<- id" << std::endl;
+			PlayerConnected.Invoke(peer);
 
 				
 
@@ -89,7 +89,7 @@ void GameServer::UpdateServer() {
 		else if (type == ENET_EVENT_TYPE_RECEIVE) {
 			GamePacket* packet = (GamePacket*)event.packet->data;
 
-			ProcessPacket(packet, peerID);
+			ProcessPacket(packet, peer);
 		}
 		enet_packet_destroy(event.packet);
 	}
