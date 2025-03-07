@@ -207,6 +207,10 @@ void TutorialGame::UpdateGame(float dt) {
 	
 	//renderer.Render();
 	//Debug::UpdateRenderables(dt);
+
+	//Timer
+	timer -= dt;
+	Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
 }
 
 void TutorialGame::UpdateKeys() {

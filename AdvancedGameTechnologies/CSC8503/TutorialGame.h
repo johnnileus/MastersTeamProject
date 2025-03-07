@@ -74,6 +74,15 @@ namespace NCL {
 			void TestLinearMotion();
 			void CreateRopeGroup();
 
+
+			//Terrain Generation
+			void InitTerrain();
+
+			//Timer
+			float timer = 180;
+
+			//networking
+
 #ifdef _WIN32
 			NetworkManager* networkManager = new NetworkManager();
 #endif // _WIN32
@@ -94,8 +103,6 @@ namespace NCL {
 #ifdef _WIN32
 			NetworkManager* networkManager = new NetworkManager();
 #endif // WIN32
-
-			
 
 			ThirdPersonCamera* thirdPersonCam;
 
