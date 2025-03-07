@@ -54,6 +54,7 @@ namespace NCL {
 			//called by GameServer when player connects
 			GameObject* InitialiseConnectedPlayerObject(int id);
 			GameObject** GetConnectedPlayerObjects();
+			void BroadcastPositions();
 
 			int GetID() {
 				return networkManager->GetID();

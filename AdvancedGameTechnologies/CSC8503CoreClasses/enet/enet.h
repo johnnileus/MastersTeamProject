@@ -355,6 +355,7 @@ typedef int (ENET_CALLBACK * ENetInterceptCallback) (struct _ENetHost * host, st
     @sa enet_host_bandwidth_limit()
     @sa enet_host_bandwidth_throttle()
   */
+
 typedef struct _ENetHost
 {
    ENetSocket           socket;
