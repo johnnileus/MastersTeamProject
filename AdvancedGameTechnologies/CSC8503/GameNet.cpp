@@ -20,6 +20,7 @@ void MainPacketReceiver::ReceivePacket(int type, GamePacket* payload, int source
 			g->UpdateConnectedPlayer(source, realPacket->pos, realPacket->rot);
 		}
 		else { // packet came from server
+			g->UpdateConnectedPlayer(realPacket->id, realPacket->pos, realPacket->rot);
 		}
 	}
 	if (type == Connected) {
@@ -121,8 +122,7 @@ void NetworkManager::Update() {
 
 		if (isServer) {
 
-
-			//g->BroadcastPosition();
+			g->BroadcastPositions();
 
 			server->UpdateServer();
 		}
@@ -222,14 +222,22 @@ void TutorialGame::BroadcastPosition() {
 	networkManager->ServerBroadcastPacket(transform);
 }
 
-void TutorialGame::UpdateTransformFromServer(Vector3 pos, Quaternion rot) {
-	player->GetTransform().SetOrientation(rot);
-	player->GetTransform().SetPosition(pos);
-}
 
 void TutorialGame::UpdateConnectedPlayer(int id, Vector3 pos, Quaternion rot) {
 	GameObject* plr = connectedPlayers[id];
-	plr->GetTransform().SetOrientation(rot);
-	plr->GetTransform().SetPosition(pos);
+	if (plr != nullptr) {
+		plr->GetTransform().SetOrientation(rot);
+		plr->GetTransform().SetPosition(pos);
+	}
 }
 
+void TutorialGame::BroadcastPositions() {
+	for (int i = 0; i < 8; ++i) {
+		if (connectedPlayers[i] != nullptr) {
+			Vector3 pos = connectedPlayers[i]->GetTransform().GetPosition();
+			Quaternion rot = connectedPlayers[i]->GetTransform().GetOrientation();
+			TransformPacket transform(i, pos, rot, true);
+			networkManager->ServerBroadcastPacket(transform);
+		}
+	}
+}
