@@ -25,3 +25,15 @@ public:
 private:
     std::vector<EventHandler> handlers;
 };
+
+void outputInt(int a) {
+	std::cout << a << std::endl;
+}
+
+void example() {
+    Event<int> intEvent;
+
+    intEvent.AddListener(outputInt);
+
+    intEvent.Invoke(69);
+}
