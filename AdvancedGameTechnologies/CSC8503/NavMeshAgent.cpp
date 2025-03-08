@@ -49,3 +49,8 @@ void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) 
 	closedList.emplace_back(node);
 }
 
+void NavMeshAgent::clearPath() {
+	openList.clear();
+	closedList.clear();
+	path.clear();
+}
