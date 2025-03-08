@@ -1,6 +1,7 @@
 #pragma once
 #include "NetworkBase.h"
 
+#include "./enet/enet.h"
 
 #include "../CSC8503CoreClasses/Event.h"
 
@@ -19,10 +20,22 @@ namespace NCL {
 
 			bool SendGlobalPacket(int msgID);
 			bool SendGlobalPacket(GamePacket& packet);
+			bool SendPacket(GamePacket& packet, ENetPeer* peer);
 
 			virtual void UpdateServer();
 
-			Event<int> Player_Connected;
+			int GetClientCount();
+			ENetPeer* GetConnectedPeers();
+
+			Event<ENetPeer*> PlayerConnected;
+
+			_ENetHost* getNetHandle() {
+				return netHandle;
+			}
+
+			int GetClientCount() const {
+				return netHandle->peerCount;
+			}
 
 		protected:
 			int			port;

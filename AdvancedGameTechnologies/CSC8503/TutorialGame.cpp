@@ -92,7 +92,7 @@ void TutorialGame::UpdateGame(float dt) {
 	}
 
 	CheckCoinsCollected();
-	
+
 	// if (!inSelectionMode) {
 	// 	world->GetMainCamera().UpdateCamera(dt);
 	// }
@@ -134,6 +134,15 @@ void TutorialGame::UpdateGame(float dt) {
 	thirdPersonCam->Update(dt);
 	renderer->Render();
 	Debug::UpdateRenderables(dt);
+
+	//Timer
+	while (timer >= 0.0f) {
+		timer -= dt;
+	}
+	Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
+	if (timer <= 0) {
+		Transition();
+	}
 }
 
 void TutorialGame::UpdateKeys() {
@@ -607,48 +616,9 @@ void TutorialGame::ReloadLevel() {
 	std::cout << "Level reloaded!" << std::endl;
 }
 
-
-
-void TutorialGame::BroadcastPosition(){
-
-	Vector3 pos = player->GetTransform().GetPosition();
-	Quaternion rot = player->GetTransform().GetOrientation();
-
-
-	TransformPacket transform(pos, rot);
-
-	networkManager->BroadcastPacket(transform);
+void TutorialGame::Transition() {
+	return;
 }
 
-void TutorialGame::UpdateTransformFromServer(Vector3 pos, Quaternion rot) {
-	player->GetTransform().SetOrientation(rot);
-	player->GetTransform().SetPosition(pos);
-}
 
-GameObject* TutorialGame::InitialiseConnectedPlayer(int id) {
 
-	float meshSize = 1.0f;
-	float inverseMass = 10.0f;
-
-	GameObject* newPlayer = new GameObject();
-	SphereVolume* volume = new SphereVolume(1.0f);
-	
-	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
-
-	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
-
-	newPlayer->GetTransform()
-		.SetScale(Vector3(meshSize, meshSize, meshSize))
-		.SetPosition(Vector3(20, 0, 30));
-
-	newPlayer->SetRenderObject(new RenderObject(&newPlayer->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
-	newPlayer->SetPhysicsObject(new PhysicsObject(&newPlayer->GetTransform(), newPlayer->GetBoundingVolume()));
-
-	newPlayer->GetPhysicsObject()->SetInverseMass(inverseMass);
-	newPlayer->GetPhysicsObject()->InitSphereInertia();
-
-	world->AddGameObject(newPlayer);
-
-	return newPlayer;
-
-}

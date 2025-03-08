@@ -41,6 +41,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
 
     // load shader resources
     basicShader = renderer->LoadShader("scene.vert", "scene.frag");
+    terrainShader = renderer->LoadShader("terrain.vert", "terrain.frag");
     characterShader = renderer->LoadShader("character.vert", "character.frag");
 
     //load animation resources 
@@ -67,7 +68,6 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
             }
         }
     }
-    
 }
 
 MeshAnimation* AssetManager::GetAnimation(const string& name)

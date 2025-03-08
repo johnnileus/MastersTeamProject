@@ -22,7 +22,8 @@ namespace NCL {
 			Shader*		LoadShader(const std::string& vertex, const std::string& fragment);
 
 			//Terrain Generation
-			OGLMesh* GenerateTerrainMesh(HeightMap* heightmap);
+			Mesh* GenerateTerrainMesh(HeightMap* heightmap);
+			Vector3 CalculateNormal(int x, int y, HeightMap* heightmap);
 
 		protected:
 			void NewRenderLines();

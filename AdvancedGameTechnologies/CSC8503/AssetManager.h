@@ -54,6 +54,8 @@ namespace NCL {
             //Shader
             Shader* basicShader = nullptr;
             Shader* characterShader = nullptr;
+            Shader* terrainShader = nullptr;
+
 
             //Ani
             MeshAnimation* idle;

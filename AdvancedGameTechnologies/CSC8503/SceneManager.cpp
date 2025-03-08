@@ -71,14 +71,14 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
     GameObject* terrain = new GameObject();
     terrain->tag = "Terrain";
     terrain->SetName("terrain");
-    Vector3 floorSize = size;
-    AABBVolume* volume = new AABBVolume(floorSize);
-    terrain->SetBoundingVolume((CollisionVolume*)volume);
-    terrain->GetTransform().SetScale(floorSize).SetPosition(pos);
+    Vector3 terrainSize = size;
+    AABBVolume* terrainVolume = new AABBVolume(terrainSize);
+    terrain->SetBoundingVolume((CollisionVolume*)terrainVolume);
+    terrain->GetTransform().SetScale(terrainSize).SetPosition(pos);
 
     terrain->SetRenderObject(new RenderObject(
         &terrain->GetTransform(),
-        AssetManager::Instance().terrainMesh,
+        AssetManager::Instance().sphereMesh,
         AssetManager::Instance().basicTex,
         AssetManager::Instance().basicShader));
 
@@ -114,7 +114,3 @@ void SceneManager::AddBullet(Bullet* bullet)
 {
     bullets.push_back(bullet);
 }
-
-
-
-
