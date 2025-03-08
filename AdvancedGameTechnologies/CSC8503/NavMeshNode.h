@@ -25,10 +25,14 @@ namespace NCL {
 			bool detectImpassableEdge(NavMeshNode* neighbour);
 			void calculateEdges();
 			void addEdge(NavMeshNode* neighbour, int cost);
+			std::vector<Edge> GetEdges() { return this->edges; }
+			NCL::Maths::Vector3 GetPosition() {	return this->position; }
 			float getGScore(){ return this->gScore; }
 			float getFScore(){ return this->fScore; }
+			float getHeuristic(){ return this->heuristic; }
 			void setGScore(float gScore) { this->gScore = gScore; }
 			void setFScore(float fScore) { this->gScore = fScore; }
+			void setHeuristic(float heuristic) { this->heuristic = heuristic; }
 
 			bool IsNodeInUse() { return false; }
 		protected:
@@ -37,6 +41,7 @@ namespace NCL {
 			bool obstructed;
 			float gScore;
 			float fScore;
+			float heuristic;
 		};
 	}
 }
