@@ -60,3 +60,8 @@ float NavMeshAgent::calculateHeuristic(NavMeshNode* node, NavMeshNode* destinati
 	NCL::Maths::Vector3 difference = node->GetPosition() - destination->GetPosition();
 	return std::sqrt(abs((difference.x * difference.x) + (difference.y * difference.y) + (difference.z * difference.z)));
 }
+
+float NavMeshAgent::calculateGScore(NavMeshNode* node) {
+	//return node->GetParent()->GetGScore + edgeCost;
+	return 0;
+}
