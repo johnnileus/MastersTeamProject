@@ -70,3 +70,8 @@ float NavMeshAgent::calculateGScore(NavMeshNode* node) {
 float NavMeshAgent::calculateFScore(NavMeshNode* node) {
 	return node->getGScore() + node->getHeuristic();
 }
+
+void NavMeshAgent::setCurrentNode() {
+	//determine the nearest node to the agent
+	//currentNode = nearestNode;
+}
