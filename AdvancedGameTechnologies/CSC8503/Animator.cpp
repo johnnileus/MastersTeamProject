@@ -47,7 +47,8 @@ void Animator::Update(float dt)
             frameTime += 1.0f / currentAnim->GetFrameRate();
         }
     }
-    Draw(currentFrame);
+    
+    Draw(currentFrame,currentAnim);
 }
 
 bool Animator::LoadAnimation(const std::string& animationName)
@@ -56,71 +57,17 @@ bool Animator::LoadAnimation(const std::string& animationName)
     return (meshAnims[animationName]!=nullptr);
 }
 
-void Animator::Draw(int nFrame)
+/// The actual skinning rendering method
+/// @param nFrame target frame
+/// @param meshAni target animation
+void Animator::Draw(int nFrame,MeshAnimation* meshAni)
 {
-#pragma region Old function
-    // //get mesh and shader data
-    // Mesh* mesh = renderObj->GetMesh();
-    // Shader* shader = renderObj->GetShader();
-    //
-    // if (!currentAnim)
-    // {
-    //     return;
-    // }
-    //
-    // //get skeleton data
-    // const Matrix4* invBindPose = mesh->GetInverseBindPose().data();
-    // size_t jointCount = mesh->GetJointCount();
-    //
-    // if (jointCount == 0) {
-    //     std::cout<<"!!!!!Warning: mesh"<<mesh->GetAssetID()<<" doesn't have skeleton data!!!!!"<<std::endl;
-    //     return; 
-    // }
-    //
-    // //clear last frame's buffer first
-    // frameMatrices.clear();
-    // frameMatrices.reserve(jointCount);
-    //
-    // //if is tweening, interpolate the next and current frame 
-    // if (isTweening && (pendingAnim != nullptr)) {
-    //     //get current animation data
-    //     const Matrix4* currentAnimFrameData = currentAnim->GetJointData(currentFrame);
-    //     //get new animation's first frame data for interpolation
-    //     const Matrix4* pendingAnimFrameData = pendingAnim->GetJointData(0);
-    //
-    //     //do interpolation
-    //     for (size_t i = 0; i < jointCount; i++) {
-    //         Matrix4 blended = LerpMat(currentAnimFrameData[i], pendingAnimFrameData[i], tweenBlendFactor);
-    //         frameMatrices.emplace_back(blended * invBindPose[i]);
-    //     }
-    // }
-    // //if not, just use current frame data
-    // else {
-    //     const Matrix4* frameData = currentAnim->GetJointData(currentFrame);
-    //     //multiply invBindPose get skin matrix
-    //     for (size_t i = 0; i < jointCount; i++) {
-    //         frameMatrices.emplace_back(frameData[i] * invBindPose[i]);
-    //     }
-    // }
-    //
-    // GLint programID = 13;
-    // GLint loc = glGetUniformLocation(programID, "joints"); 
-    // glUniformMatrix4fv(loc, (GLsizei)frameMatrices.size(), GL_FALSE, (float*)frameMatrices.data());
-    //
-    //
-    // for (int i = 0; i < (int)mesh->GetSubMeshCount(); i++)
-    // {
-    //     //TODO
-    //     //Draw animation and submesh texture
-    // }
-#pragma endregion
-
     //get mesh and joints count
     OGLMesh* animMesh = (OGLMesh*)renderObject->GetMesh();
     size_t jointCount = animMesh->GetJointCount();
 
     //target frame data
-    const Matrix4* frameData = meshAnims["Role_Walk"]->GetJointData(nFrame);
+    const Matrix4* frameData = currentAnim->GetJointData(nFrame);
     
     // Mesh can use GetInverseBindPose() get each joint's inverse bind pose matrix
     const auto& invBindPose = animMesh->GetInverseBindPose();
@@ -139,18 +86,12 @@ void Animator::Draw(int nFrame)
     GLint jointsLoc = glGetUniformLocation(programID, "joints");
     if (jointsLoc==-1)
     {
-        std::cout<<"!!!!!!!ERROE:Uniform 'joints' not found in shader !!!!!!!!!!";
+        std::cout<<"!!!!!!!ERROR: Uniform 'joints' not found in shader !!!!!!!!!!";
     }
     else
     {
         glUniformMatrix4fv(jointsLoc, (GLsizei)jointCount, GL_FALSE, reinterpret_cast<const float*>(finalMatrices.data()));
     }
-
-    glBindVertexArray(animMesh->GetVAO());
-    
-    glDrawElements(GL_TRIANGLES, animMesh->GetIndexCount(), GL_UNSIGNED_INT, nullptr);
-
-    glBindVertexArray(0);
 
 }
 

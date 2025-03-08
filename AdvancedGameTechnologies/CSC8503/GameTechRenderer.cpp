@@ -590,3 +590,17 @@ void GameTechRenderer::SetDebugLineBufferSizes(size_t newVertCount) {
 		glBindVertexArray(0);
 	}
 }
+void GameTechRenderer::Draw(Mesh* mesh, bool multilayer) {
+	if (multilayer) {
+		BindMesh((OGLMesh&)*mesh);
+		size_t layerCount = mesh->GetSubMeshCount();
+		for (size_t i = 0; i < layerCount; ++i) {
+			DrawBoundMesh((uint32_t)i);
+		}
+	}
+	else {
+		BindMesh((OGLMesh&)*mesh);
+		DrawBoundMesh();
+	}
+}
+

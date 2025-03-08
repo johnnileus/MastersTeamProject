@@ -29,7 +29,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
     guardMesh = renderer->LoadMesh("Male_Guard.msh");
     roleMesh = renderer->LoadMesh("Role_T.msh");
 
-    terrainMesh = renderer->GenerateTerrainMesh(heightmap);
+    terrainMesh = (OGLMesh*)renderer->GenerateTerrainMesh(heightmap);
 
 
     // load texture resources
@@ -70,6 +70,9 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
     }
 }
 
+/// get the animation based on the registered animation name.
+/// @param name the name you registered in the AssetManager
+/// @return 
 MeshAnimation* AssetManager::GetAnimation(const string& name)
 {
     auto it = animationMap.find(name);

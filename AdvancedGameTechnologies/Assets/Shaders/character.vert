@@ -9,14 +9,16 @@ layout(location = 0) in vec3 position;
 layout(location = 1) in vec4 colour;
 layout(location = 2) in vec2 texCoord;
 layout(location = 3) in vec3 normal;
-layout(location = 4) in ivec4 jointIndices;
+
+//I dont know why, but these two location index must be 5,6 instead of 4,5
+//otherwise, it will cause the model to break.
 layout(location = 5) in vec4 jointWeights;
+layout(location = 6) in ivec4 jointIndices;
 
 uniform vec4 objectColour = vec4(1,1,1,1);
 
-uniform mat4 joints[128];//joint matrices
-
 uniform bool hasVertexColours = false;
+uniform mat4 joints[128];
 
 out Vertex
 {
@@ -29,30 +31,31 @@ out Vertex
 
 void main(void)
 {
-	//calculate skin: weighted vertex positions and normals.
-	vec4 skinnedPos = vec4(0.0);
-	vec4 skinnedNormal = vec4(0.0);
-	for (int i = 0; i < 4; i++) {
-		int idx = jointIndices[i];
-		float weight = jointWeights[i];
-		skinnedPos += joints[idx] * vec4(position, 1.0) * weight;
-		skinnedNormal += joints[idx] * vec4(normal, 0.0) * weight;
+	vec4 localPos = vec4(position, 1.0f);
+	vec4 skelPos = vec4(0,0,0,0);
+
+	for(int i = 0; i < 4; ++i){
+		int jointIndex = jointIndices[i];
+		float jointWeight = jointWeights[i];
+
+		skelPos += joints[jointIndex] * localPos * jointWeight;
 	}
-	//convert to World Space
-	vec4 finalPos = modelMatrix * skinnedPos;
 
-	//calculate normal matrix and convert skinned normal
-	mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
-	vec3 finalNormal = normalize(normalMatrix * skinnedNormal.xyz);
-	
-	//calculate the MVP matrix
-	mat4 mvp = projMatrix * viewMatrix * modelMatrix;
+	vec4 worldPos = (modelMatrix * vec4(skelPos.xyz, 1.0));
+	OUT.worldPos = worldPos.xyz;
+	gl_Position = (projMatrix * viewMatrix) * worldPos;
 
-	OUT.shadowProj = shadowMatrix * finalPos;
-	OUT.worldPos   = finalPos.xyz;
-	OUT.normal     = finalNormal;
-	OUT.texCoord   = texCoord;
-	OUT.colour     = objectColour;
+	mat3 normalMatrix = transpose ( inverse ( mat3 ( modelMatrix )));
 
-	gl_Position = projMatrix * viewMatrix * finalPos;
+	OUT.texCoord	= texCoord;
+	OUT.colour.xyz	= objectColour.xyz;
+	OUT.colour.a = 1;
+
+	OUT.normal = normalize(normalMatrix * normalize(normal));
+
+	OUT.shadowProj 	=  shadowMatrix * vec4 ( worldPos.xyz,1);
+
+	if(hasVertexColours) {
+		OUT.colour	= objectColour * colour;
+	}
 }

@@ -18,7 +18,7 @@ namespace NCL
 
             bool LoadAnimation(const std::string& animationName);
 
-            void Draw(int nFrame);
+            void Draw(int nFrame,MeshAnimation* meshAni);
 
             void Play(const std::string& anim, bool tween, float animSpeed);
 

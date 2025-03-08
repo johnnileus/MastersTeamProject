@@ -57,7 +57,7 @@ void Player::Init(ThirdPersonCamera* cam)
 
 void Player::SetComponent(float meshSize,float mass)
 {
-	myMesh = AssetManager::Instance().roleMesh;
+	myMesh = AssetManager::Instance().guardMesh;
 	//Collider
 	SphereVolume* volume  = new SphereVolume(1);
 	SetBoundingVolume((CollisionVolume*)volume);
@@ -75,7 +75,7 @@ void Player::SetComponent(float meshSize,float mass)
 	 SetRenderObject(new RenderObject(
 	 	&objectTransform,
 	 	myMesh,
-	 	AssetManager::Instance().playerTex[1],
+	 	AssetManager::Instance().playerTex[0],
 	 	AssetManager::Instance().characterShader)
 	 	);
 	renderObject->SetMaterial(AssetManager::Instance().guardMat);
@@ -83,6 +83,8 @@ void Player::SetComponent(float meshSize,float mass)
 	
 	animator = new Animator(renderObject);
 	animator->LoadAnimation("Role_Walk");
+	animator->LoadAnimation("Idle");
+	animator->Play("Idle",true,1);
 }
 
 void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
@@ -115,7 +117,7 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	}
 	camera->SetFollowObject(player);
 	
-	player-> animator->Play("Role_Walk",true,1);
+	//player-> animator->Play("Role_Walk",true,1);
 	
 	return player;
 }
@@ -131,7 +133,6 @@ void Player::Update(float dt) {
 	HandleAim();
 	DisplayUI();
 	HealthCheck();
-	
 	animator->Update(dt);
 	myWeapon->Update(dt,Window::GetMouse()->ButtonDown(MouseButtons::Left),aimDir);
 
@@ -157,7 +158,7 @@ void Player::Update(float dt) {
 	if (isOnGround) {
 		isAtApex = false;  
 	}
-	animator->Update(dt);
+	//animator->Update(dt);
 }
 
 void Player::HealthCheck()
