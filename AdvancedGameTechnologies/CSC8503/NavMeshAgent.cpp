@@ -53,7 +53,6 @@ void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) 
 			node->GetEdges()[e].neighbour->SetParent(node);
 		}
 	}
-	//remove node from open list
 	path.erase(find(path.begin(), path.end(), node));
 	closedList.emplace_back(node);
 }
@@ -77,7 +76,7 @@ float NavMeshAgent::calculateGScore(NavMeshNode* node) {
 
 //check that the correct values are being pulled here
 float NavMeshAgent::calculateFScore(NavMeshNode* node) {
-	return node->getGScore() + node->getHeuristic();
+	return node->GetGScore() + node->GetHeuristic();
 }
 
 void NavMeshAgent::setCurrentNode() {
