@@ -8,8 +8,9 @@ using namespace CSC8503;
 
 void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) {
 	this->clearPath();
-	currentNode->setGScore(0);
-	currentNode->setHeuristic(calculateHeuristic(currentNode, destination));
+	currentNode->SetParent(nullptr);
+	currentNode->SetGScore(0);
+	currentNode->SetHeuristic(calculateHeuristic(currentNode, destination));
 	openList.emplace_back(currentNode);
 
 	while (openList.size() > 0) {
@@ -22,27 +23,34 @@ void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) 
 		if (node == destination) {
 			while (node) {
 				path.emplace_back(node);
-				//node = node->getParent();
+				node = node->GetParent();
 			}
-			//reverse path vector
+			std::reverse(path.begin(), path.end());
 			return;
 		}
 	}
 
 	for (int e = 0; e < node->GetEdges().size(); ++e) {
-		//if node.GetEdges()[e] is in closed list{
-			//continue;}
+		bool inList = false;
+		for (int i = 0; i < closedList.size(); ++i) {
+			if (node->GetEdges()[e].neighbour == closedList[i]) {
+				inList = true;
+				break;
+			}
+		}
+		if (inList) {
+			continue;
+		}
 
-
-		//potentially need to rewrite these functions to take the edge struct from NavMeshNode instead of the node
+		//need to rewrite these functions to take the edge struct from NavMeshNode instead of the node
 		newHeuristic = calculateHeuristic(node->GetEdges()[e].neighbour, destination);
 		newGScore = calculateGScore(node->GetEdges()[e].neighbour);
 		newFScore = calculateFScore(node->GetEdges()[e].neighbour);
 
 		if (newFScore < calculateFScore(node)) {
-			node->GetEdges()[e].neighbour->setGScore(newGScore);
-			node->GetEdges()[e].neighbour->setFScore(newFScore);
-			//node->GetEdges()[e].neighbour->SetParent(node);
+			node->GetEdges()[e].neighbour->SetGScore(newGScore);
+			node->GetEdges()[e].neighbour->SetFScore(newFScore);
+			node->GetEdges()[e].neighbour->SetParent(node);
 		}
 	}
 	//remove node from open list
