@@ -18,59 +18,59 @@ std::vector<std::vector<NavMeshNode>> NavMeshGrid::GenerateNavMeshGrid(int level
 	for (int x = 0; x < std::size(nodeGrid); ++x) {
 		for (int z = 0; z < std::size(nodeGrid); ++z) {
 			if (x - 1 < 0 && z - 1 < 0) {//top left corner
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z + 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z + 1], 1);
 			}
 			else if (x - 1 < 0 && z + 1 >= std::size(nodeGrid)) {//top right corner
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z - 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z - 1], 1);
 			}
 			else if (x + 1 >= std::size(nodeGrid) && z - 1 < 0) {//bottom left corner
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z + 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z + 1], 1);
 			}
 			else if (x + 1 >= std::size(nodeGrid) && z + 1 >= std::size(nodeGrid)) {//bottom right corner
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z - 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z - 1], 1);
 			}
 			else if (x - 1 < 0) {//left edge
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z + 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z + 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z + 1], 1);
 			}
 			else if (x + 1 >= std::size(nodeGrid)) {//right edge
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z - 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z - 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z - 1], 1);
 			}
 			else if (z - 1 < 0) {//top edge
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z - 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z + 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z - 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x + 1][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z + 1], 1);
 			}
 			else if (z + 1 >= std::size(nodeGrid)) {//bottom edge
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z - 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x][z + 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z - 1], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z], 1);
-				nodeGrid[x][z].addEdge(&nodeGrid[x - 1][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z - 1], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
+				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z + 1], 1);
 			}
 			else {//somewhere in the middle
 				for (int row = -1; row <= 1; ++row) {
 					for (int col = -1; col <= 1; ++col) {
 						if (row == 0 && col == 0) continue;//ignore self
 						if (!nodeGrid[x + row][z + col].isObstructed()) {
-							nodeGrid[x][z].addEdge(&nodeGrid[x + row][z + col], 1);
+							nodeGrid[x][z].AddEdge(&nodeGrid[x + row][z + col], 1);
 						}
 					}
 				}
