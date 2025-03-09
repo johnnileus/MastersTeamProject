@@ -12,6 +12,7 @@ void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) 
 	currentNode->SetGScore(0);
 	currentNode->SetHeuristic(calculateHeuristic(currentNode, destination));
 	openList.emplace_back(currentNode);
+	NavMeshNode* node = nullptr;
 
 	while (openList.size() > 0) {
 		node = openList[0];

@@ -30,7 +30,6 @@ namespace NCL {
 			std::vector<NavMeshNode*> path;
 			NavMeshNode* destination;
 			NavMeshNode* currentNode;
-			NavMeshNode* node; //maybe should be local variable
 		};
 	}
 }
