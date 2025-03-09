@@ -47,7 +47,9 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
 
     //load animation resources 
     idle = new MeshAnimation("Idle1.anm");
-    RegisterAnimation("Idle",idle);
+    walk = new MeshAnimation("Role_T.anm");
+    RegisterAnimation(PlayerAnimation::Idle,idle);
+    RegisterAnimation(PlayerAnimation::Walk,walk);
 
     //load material
     guardMat = new MeshMaterial("Male_Guard.mat");
@@ -67,27 +69,12 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
             }
         }
     }
-   /* cubeMat = new MeshMaterial("Cube.mat");
-
-    cubeMat->LoadTextures();
-    for (int i = 0; i < cubeMesh->GetSubMeshCount(); i++)
-    {
-        const MeshMaterialEntry* matEntry = cubeMat->GetMaterialForLayer(i);
-        if (matEntry)
-        {
-            const string* filename = nullptr;
-
-            if (matEntry->GetEntry("Diffuse", &filename))
-            {
-                std::cout << i << " Diffuse Texture File: " << *filename << std::endl;
-                playerTex.emplace_back(renderer->LoadTexture(*filename));
-            }
-        }
-    }*/
-    
 }
 
-MeshAnimation* AssetManager::GetAnimation(const string& name)
+/// get the animation based on the registered animation name.
+/// @param name the name you registered in the AssetManager
+/// @return 
+MeshAnimation* AssetManager::GetAnimation(PlayerAnimation animation)
 {
     std::cout << "Retrieving animation: " << name << std::endl;
     auto it = animationMap.find(name);
@@ -101,11 +88,11 @@ MeshAnimation* AssetManager::GetAnimation(const string& name)
     return nullptr;
 }
 
-void AssetManager::RegisterAnimation(const std::string& name, MeshAnimation* anim)
+void AssetManager::RegisterAnimation(PlayerAnimation animationType, MeshAnimation* anim)
 {
 	std::cout << "Registering animation: " << name << std::endl;
     if (anim) {
-        animationMap[name] = anim;
+        animationMap[animationType] = anim;
     }
 }
 
