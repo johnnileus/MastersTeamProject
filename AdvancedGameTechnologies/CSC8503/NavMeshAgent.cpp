@@ -54,6 +54,7 @@ void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) 
 		}
 	}
 	//remove node from open list
+	path.erase(find(path.begin(), path.end(), node));
 	closedList.emplace_back(node);
 }
 
