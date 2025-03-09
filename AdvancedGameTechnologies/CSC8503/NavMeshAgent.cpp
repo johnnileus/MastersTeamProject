@@ -16,7 +16,7 @@ void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) 
 	while (openList.size() > 0) {
 		node = openList[0];
 		for (int n = 1; n < openList.size(); ++n) {
-			if (calculateFScore(openList[n]) < calculateFScore(node)) {
+			if (openList[n]->GetFScore() < node->GetFScore()) {
 				node = openList[n];
 			}
 		}
@@ -42,12 +42,11 @@ void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) 
 			continue;
 		}
 
-		//need to rewrite these functions to take the edge struct from NavMeshNode instead of the node
 		newHeuristic = calculateHeuristic(node->GetEdges()[e].neighbour, destination);
-		newGScore = calculateGScore(node->GetEdges()[e].neighbour);
-		newFScore = calculateFScore(node->GetEdges()[e].neighbour);
+		newGScore = calculateGScore(node->GetEdges()[e].neighbour, node->GetEdges()[e].cost);
+		newFScore = calculateFScore(newHeuristic, newGScore);
 
-		if (newFScore < calculateFScore(node)) {
+		if (newFScore < node->GetFScore()) {
 			node->GetEdges()[e].neighbour->SetGScore(newGScore);
 			node->GetEdges()[e].neighbour->SetFScore(newFScore);
 			node->GetEdges()[e].neighbour->SetParent(node);
@@ -69,14 +68,14 @@ float NavMeshAgent::calculateHeuristic(NavMeshNode* node, NavMeshNode* destinati
 	return abs(std::sqrt((difference.x * difference.x) + (difference.y * difference.y) + (difference.z * difference.z)));
 }
 
-float NavMeshAgent::calculateGScore(NavMeshNode* node) {
-	//return node->GetParent()->GetGScore + edgeCost;
+float NavMeshAgent::calculateGScore(NavMeshNode* node, float edgeCost) {
+	return node->GetParent()->GetGScore() + edgeCost;
 	return 0;
 }
 
 //check that the correct values are being pulled here
-float NavMeshAgent::calculateFScore(NavMeshNode* node) {
-	return node->GetGScore() + node->GetHeuristic();
+float NavMeshAgent::calculateFScore(float heuristic, float gScore) {
+	return heuristic + gScore;
 }
 
 void NavMeshAgent::setCurrentNode() {
