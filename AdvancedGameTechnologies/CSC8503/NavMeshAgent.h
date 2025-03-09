@@ -18,8 +18,8 @@ namespace NCL {
 			void FindPath(NavMeshNode* currentNode, NavMeshNode* destination);
 			void clearPath();//clear path, open list and closed list
 			float calculateHeuristic(NavMeshNode* node, NavMeshNode* destination);
-			float calculateGScore(NavMeshNode* node);
-			float calculateFScore(NavMeshNode* node);
+			float calculateGScore(NavMeshNode* node, float edgeCost);
+			float calculateFScore(float heuristic, float gScore);
 			void setCurrentNode();
 		protected:
 			float newFScore;
