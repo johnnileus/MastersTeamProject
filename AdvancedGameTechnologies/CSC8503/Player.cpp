@@ -82,9 +82,9 @@ void Player::SetComponent(float meshSize,float mass)
 	
 	
 	animator = new Animator(renderObject);
-	animator->LoadAnimation("Role_Walk");
-	animator->LoadAnimation("Idle");
-	animator->Play("Idle",true,1);
+	animator->LoadAnimation(PlayerAnimation::Walk);
+	animator->LoadAnimation(PlayerAnimation::Idle);
+	animator->Play(PlayerAnimation::Idle,true,1);
 }
 
 void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {

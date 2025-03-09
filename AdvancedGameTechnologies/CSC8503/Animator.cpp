@@ -51,10 +51,10 @@ void Animator::Update(float dt)
     Draw(currentFrame,currentAnim);
 }
 
-bool Animator::LoadAnimation(const std::string& animationName)
+bool Animator::LoadAnimation(PlayerAnimation animation)
 {
-    meshAnims[animationName] = AssetManager::Instance().GetAnimation(animationName);
-    return (meshAnims[animationName]!=nullptr);
+    meshAnims[animation] = AssetManager::Instance().GetAnimation(animation);
+    return (meshAnims[animation]!=nullptr);
 }
 
 /// The actual skinning rendering method
@@ -95,9 +95,9 @@ void Animator::Draw(int nFrame,MeshAnimation* meshAni)
 
 }
 
-void Animator::Play(const std::string& anim, bool tween, float animSpeed)
+void Animator::Play(PlayerAnimation anim, bool tween, float animSpeed)
 {
-    if (anim.empty() || currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
+    if (currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
         return;
 
     if(currentAnim == nullptr)

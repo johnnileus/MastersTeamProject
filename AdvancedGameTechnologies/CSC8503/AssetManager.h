@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 
+#include "Enums.h"
 #include "HeightMap.h"
 
 #include "GameTechRenderer.h"
@@ -22,8 +23,8 @@ namespace NCL {
             void LoadAssets(GameTechRenderer* renderer);
             Texture* AddTexture(const string& name);
 
-            MeshAnimation* GetAnimation(const string& name);
-            void RegisterAnimation(const std::string& name,MeshAnimation* anim);
+            MeshAnimation* GetAnimation(Enums::PlayerAnimation);
+            void RegisterAnimation(Enums::PlayerAnimation,MeshAnimation* anim);
 
             void Cleanup();
 
@@ -71,7 +72,7 @@ namespace NCL {
         private:
             AssetManager() = default;
             ~AssetManager() = default;
-            std::map<std::string, MeshAnimation*> animationMap;
+            std::map<Enums::PlayerAnimation, MeshAnimation*> animationMap;
         };
     }
 }
