@@ -76,7 +76,8 @@ void Player::SetComponent(float meshSize,float mass)
 	 	&objectTransform,
 	 	myMesh,
 	 	AssetManager::Instance().playerTex[0],
-	 	AssetManager::Instance().characterShader)
+	 	AssetManager::Instance().characterShader,
+	 	RenderObjectType::Skinned)
 	 	);
 	renderObject->SetMaterial(AssetManager::Instance().guardMat);
 	

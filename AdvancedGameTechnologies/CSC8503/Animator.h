@@ -3,7 +3,6 @@
 #include "GameTechRenderer.h"
 #include "MeshMaterial.h"
 #include "RenderObject.h"
-#include  "bthdef.h"
 #include "Enums.h"
 
 using namespace Enums;

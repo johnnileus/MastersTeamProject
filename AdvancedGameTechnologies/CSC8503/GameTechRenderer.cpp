@@ -234,24 +234,45 @@ void GameTechRenderer::RenderShadowMap() {
 
 	glCullFace(GL_FRONT);
 
-	UseShader(*shadowShader);
-	int mvpLocation = glGetUniformLocation(shadowShader->GetProgramID(), "mvpMatrix");
-
 	Matrix4 shadowViewMatrix = Matrix::View(lightPosition, Vector3(0, 0, 0), Vector3(0,1,0));
 	Matrix4 shadowProjMatrix = Matrix::Perspective(100.0f, 500.0f, 1.0f, 45.0f);
-
 	Matrix4 mvMatrix = shadowProjMatrix * shadowViewMatrix;
+	shadowMatrix = biasMatrix * mvMatrix;
 
-	shadowMatrix = biasMatrix * mvMatrix; //we'll use this one later on
+	for (const auto &obj : activeObjects) {
+		//dynamic shadow
+		if (obj->renderType == Enums::RenderObjectType::Skinned) {
+			// UseShader(*skinningShadowShader);
+			// 
+			// auto animatedObject = static_cast<AnimatedRenderObject*>(obj);
+			// const std::vector<Matrix4>& boneMatrices = animatedObject->GetBoneMatrices();
+			// int boneMatLoc = glGetUniformLocation(skinningShadowShader->GetProgramID(), "boneMatrices");
+			// glUniformMatrix4fv(boneMatLoc, boneMatrices.size(), false, (float*)boneMatrices.data());
+			//
+			// Matrix4 modelMatrix = animatedObject->GetTransform()->GetMatrix();
+			// Matrix4 mvpMatrix = mvMatrix * modelMatrix;
+			// int mvpLocation = glGetUniformLocation(skinningShadowShader->GetProgramID(), "mvpMatrix");
+			// glUniformMatrix4fv(mvpLocation, 1, false, (float*)&mvpMatrix);
+			//
+			// BindMesh((OGLMesh&)*animatedObject->GetMesh());
+			// size_t layerCount = animatedObject->GetMesh()->GetSubMeshCount();
+			// for (size_t i = 0; i < layerCount; ++i) {
+			// 	DrawBoundMesh((uint32_t)i);
+			// }
+		}
+		// static shadow
+		else {
+			UseShader(*shadowShader);
+			Matrix4 modelMatrix = obj->GetTransform()->GetMatrix();
+			Matrix4 mvpMatrix = mvMatrix * modelMatrix;
+			int mvpLocation = glGetUniformLocation(shadowShader->GetProgramID(), "mvpMatrix");
+			glUniformMatrix4fv(mvpLocation, 1, false, (float*)&mvpMatrix);
 
-	for (const auto&i : activeObjects) {
-		Matrix4 modelMatrix = (*i).GetTransform()->GetMatrix();
-		Matrix4 mvpMatrix	= mvMatrix * modelMatrix;
-		glUniformMatrix4fv(mvpLocation, 1, false, (float*)&mvpMatrix);
-		BindMesh((OGLMesh&)*(*i).GetMesh());
-		size_t layerCount = (*i).GetMesh()->GetSubMeshCount();
-		for (size_t i = 0; i < layerCount; ++i) {
-			DrawBoundMesh((uint32_t)i);
+			BindMesh((OGLMesh&)*obj->GetMesh());
+			size_t layerCount = obj->GetMesh()->GetSubMeshCount();
+			for (size_t i = 0; i < layerCount; ++i) {
+				DrawBoundMesh((uint32_t)i);
+			}
 		}
 	}
 

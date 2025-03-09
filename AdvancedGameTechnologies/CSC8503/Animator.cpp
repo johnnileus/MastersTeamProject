@@ -14,6 +14,7 @@ Animator::Animator(RenderObject* renderObject)
     pendingAnim = nullptr;
 
     this->renderObject = renderObject;
+    //renderObject->BindAnimator(this);
 }
 
 Animator::~Animator()
@@ -47,7 +48,8 @@ void Animator::Update(float dt)
             frameTime += 1.0f / currentAnim->GetFrameRate();
         }
     }
-    
+    renderObject->currentFame =currentFrame;
+    renderObject->currentAnimation =currentAnim;
     Draw(currentFrame,currentAnim);
 }
 

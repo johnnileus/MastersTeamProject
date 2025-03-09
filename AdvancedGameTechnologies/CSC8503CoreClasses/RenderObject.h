@@ -4,19 +4,25 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Mesh.h"
+#include "MeshAnimation.h"
 #include "MeshMaterial.h"
+#include "../CSC8503/Enums.h"
 
 namespace NCL {
 	using namespace NCL::Rendering;
 
 	namespace CSC8503 {
 		class Transform;
+
+		class Animation;
+
 		using namespace Maths;
 
 		class RenderObject
 		{
 		public:
 			RenderObject(Transform* parentTransform, Mesh* mesh, Texture* tex, Shader* shader);
+			RenderObject(Transform* parentTransform, Mesh* mesh, Texture* tex, Shader* shader,Enums::RenderObjectType type);
 			~RenderObject();
 
 			void SetDefaultTexture(Texture* t) {
@@ -55,6 +61,10 @@ namespace NCL {
 				this->material = material;
 			}
 
+			MeshAnimation* currentAnimation;
+			int currentFame;
+
+			Enums::RenderObjectType renderType;
 		protected:
 			Mesh*		mesh;
 			Texture*	texture;
