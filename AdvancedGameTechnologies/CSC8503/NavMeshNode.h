@@ -22,18 +22,17 @@ namespace NCL {
 			bool isObstructed() {
 				return obstructed;
 			}
-			bool detectImpassableEdge(NavMeshNode* neighbour);
-			void calculateEdges();
-			void addEdge(NavMeshNode* neighbour, int cost);
+			bool DetectImpassableEdge(NavMeshNode* neighbour);
+			void CalculateEdges();
+			void AddEdge(NavMeshNode* neighbour, int cost);
 			std::vector<Edge> GetEdges() { return this->edges; }
 			NCL::Maths::Vector3 GetPosition() {	return this->position; }
-			float getGScore(){ return this->gScore; }
-			float getFScore(){ return this->fScore; }
-			float getHeuristic(){ return this->heuristic; }
-			void setGScore(float gScore) { this->gScore = gScore; }
-			void setFScore(float fScore) { this->gScore = fScore; }
-			void setHeuristic(float heuristic) { this->heuristic = heuristic; }
-
+			float GetGScore(){ return this->gScore; }
+			float GetFScore(){ return this->fScore; }
+			float GetHeuristic(){ return this->heuristic; }
+			void SetGScore(float gScore) { this->gScore = gScore; }
+			void SetFScore(float fScore) { this->gScore = fScore; }
+			void SetHeuristic(float heuristic) { this->heuristic = heuristic; }
 			bool IsNodeInUse() { return false; }
 		protected:
 			std::vector<Edge> edges;
