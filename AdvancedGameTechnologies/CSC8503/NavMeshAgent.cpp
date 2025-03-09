@@ -67,7 +67,6 @@ void NavMeshAgent::clearPath() {
 //Euclidean Distance
 float NavMeshAgent::calculateHeuristic(NavMeshNode* node, NavMeshNode* destination) {
 	NCL::Maths::Vector3 difference = node->GetPosition() - destination->GetPosition();
-	return std::sqrt(abs((difference.x * difference.x) + (difference.y * difference.y) + (difference.z * difference.z)));
 	return abs(std::sqrt((difference.x * difference.x) + (difference.y * difference.y) + (difference.z * difference.z)));
 }
 
