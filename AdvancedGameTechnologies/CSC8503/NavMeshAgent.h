@@ -15,7 +15,6 @@ namespace NCL {
 				this->newGScore = 0;
 				this->newHeuristic = 0;
 			}
-			void SetLevelGrid(NavMeshGrid* levelGrid) { this->currentLevelGrid = levelGrid; }
 			void FindPath(NavMeshNode* currentNode, NavMeshNode* destination);
 			void clearPath();//clear path, open list and closed list
 			float calculateHeuristic(NavMeshNode* node, NavMeshNode* destination);
@@ -29,7 +28,6 @@ namespace NCL {
 			std::vector<NavMeshNode*> openList;
 			std::vector<NavMeshNode*> closedList;
 			std::vector<NavMeshNode*> path;
-			NavMeshGrid* currentLevelGrid;
 			NavMeshNode* destination;
 			NavMeshNode* currentNode;
 			NavMeshNode* node; //maybe should be local variable
