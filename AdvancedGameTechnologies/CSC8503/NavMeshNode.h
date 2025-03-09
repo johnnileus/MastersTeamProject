@@ -17,6 +17,7 @@ namespace NCL {
 				this->obstructed = false;
 				this->gScore = 0;
 				this->fScore = 0;
+				this->parent == nullptr;
 			}
 			void checkObstructed();
 			bool isObstructed() {
@@ -33,10 +34,13 @@ namespace NCL {
 			void SetGScore(float gScore) { this->gScore = gScore; }
 			void SetFScore(float fScore) { this->gScore = fScore; }
 			void SetHeuristic(float heuristic) { this->heuristic = heuristic; }
+			void SetParent(NavMeshNode* parent) { this->parent = parent; }
+			NavMeshNode* GetParent() { return this->parent; }
 			bool IsNodeInUse() { return false; }
 		protected:
 			std::vector<Edge> edges;
 			NCL::Maths::Vector3 position;
+			NavMeshNode* parent;
 			bool obstructed;
 			float gScore;
 			float fScore;
