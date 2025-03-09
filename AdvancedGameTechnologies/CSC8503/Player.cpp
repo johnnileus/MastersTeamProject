@@ -75,7 +75,7 @@ void Player::SetComponent(float meshSize,float mass)
 	 SetRenderObject(new RenderObject(
 	 	&objectTransform,
 	 	myMesh,
-	 	AssetManager::Instance().playerTex[0],
+	 	AssetManager::Instance().playerTex,
 	 	AssetManager::Instance().characterShader,
 	 	RenderObjectType::Skinned)
 	 	);
@@ -83,9 +83,9 @@ void Player::SetComponent(float meshSize,float mass)
 	
 	
 	animator = new Animator(renderObject);
-	animator->LoadAnimation(PlayerAnimation::Walk);
-	animator->LoadAnimation(PlayerAnimation::Idle);
-	animator->Play(PlayerAnimation::Idle,true,1);
+	animator->LoadAnimation(AnimationType::Player_Walk);
+	animator->LoadAnimation(AnimationType::Player_Idle);
+	animator->Play(AnimationType::Player_Idle,true);
 }
 
 void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
@@ -193,7 +193,6 @@ void Player::HandleInput()
 
 void Player::HandleMovement(float dt, Vector2 inputDir) {
 	if (!playerPhysicObject) return;
-
 	HandleInput();
 	
 	Vector3 levelCamFront = Vector3(myCam->front.x,0,myCam->front.z);
@@ -206,6 +205,11 @@ void Player::HandleMovement(float dt, Vector2 inputDir) {
 	if (Vector::Length(moveDir)>0) {
 		Vector3 force = Vector::Normalise(moveDir) * acceleratForce;
 		playerPhysicObject->AddForce(force);  //add force to object
+		animator->Play(AnimationType::Player_Walk,true);
+	}
+	else
+	{
+		animator->Play(AnimationType::Player_Idle,true);
 	}
 	ClampSpeed(dt);
 }

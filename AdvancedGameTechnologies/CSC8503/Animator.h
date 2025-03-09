@@ -18,11 +18,11 @@ namespace NCL
 
             void Update(float dt);
 
-            bool LoadAnimation(PlayerAnimation);
+            bool LoadAnimation(AnimationType);
 
             void Draw(int nFrame,MeshAnimation* meshAni);
 
-            void Play(PlayerAnimation animation, bool tween, float animSpeed);
+            void Play(AnimationType animation, bool tween, float animSpeed = 1 );
 
             void TweenAnim(const float& time);
 
@@ -46,7 +46,7 @@ namespace NCL
             RenderObject* renderObject;
             std::vector<Matrix4> frameMatrices;
             
-            std::map<PlayerAnimation, MeshAnimation*> meshAnims;
+            std::map<AnimationType, MeshAnimation*> meshAnims;
         };
     }
 }

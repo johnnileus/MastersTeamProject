@@ -401,10 +401,22 @@ void GameTechRenderer::RenderCamera() {
 
 		glUniform1i(hasTexLocation, (OGLTexture*)(*i).GetDefaultTexture() ? 1:0);
 
-		BindMesh((OGLMesh&)*(*i).GetMesh());
-		size_t layerCount = (*i).GetMesh()->GetSubMeshCount();
-		for (size_t i = 0; i < layerCount; ++i) {
-			DrawBoundMesh((uint32_t)i);
+		BindMesh((OGLMesh&)*i->GetMesh());
+		size_t layerCount = i->GetMesh()->GetSubMeshCount();
+
+		for (size_t subIndex = 0; subIndex < layerCount; ++subIndex) {
+			//get current subMesh's texture, if subTextures[subIndex] exist，use it，or use single texture
+			Texture* currentTex = i->GetSubTextureOrDefault(subIndex);
+
+			bool hasTex = (currentTex != nullptr); 
+			glUniform1i(hasTexLocation, hasTex ? 1 : 0);
+
+			if (hasTex) {
+				//bind texture to shader
+				BindTextureToShader(*(OGLTexture*)currentTex, "mainTex", 0);
+			}
+			// draw this submesh
+			DrawBoundMesh((uint32_t)subIndex);
 		}
 	}
 }

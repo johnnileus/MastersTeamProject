@@ -23,6 +23,7 @@ namespace NCL {
 		public:
 			RenderObject(Transform* parentTransform, Mesh* mesh, Texture* tex, Shader* shader);
 			RenderObject(Transform* parentTransform, Mesh* mesh, Texture* tex, Shader* shader,Enums::RenderObjectType type);
+			RenderObject(Transform* parentTransform, Mesh* mesh, std::vector<Texture*> subTextures, Shader* shader,Enums::RenderObjectType type);
 			~RenderObject();
 
 			void SetDefaultTexture(Texture* t) {
@@ -60,10 +61,10 @@ namespace NCL {
 			{
 				this->material = material;
 			}
-
+			Texture* GetSubTextureOrDefault(size_t subIndex) const;
 			MeshAnimation* currentAnimation;
 			int currentFame;
-
+			std::vector<Texture*> subTextures;
 			Enums::RenderObjectType renderType;
 		protected:
 			Mesh*		mesh;
@@ -72,6 +73,7 @@ namespace NCL {
 			Transform*	transform;
 			Vector4		colour;
 			MeshMaterial* material;
+			Texture* defaultTexture;
 		};
 	}
 }

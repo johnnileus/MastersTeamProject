@@ -23,12 +23,13 @@ namespace NCL {
             void LoadAssets(GameTechRenderer* renderer);
             Texture* AddTexture(const string& name);
 
-            MeshAnimation* GetAnimation(Enums::PlayerAnimation);
-            void RegisterAnimation(Enums::PlayerAnimation,MeshAnimation* anim);
-
+            MeshAnimation* GetAnimation(Enums::AnimationType);
+            void RegisterAnimation(Enums::AnimationType,MeshAnimation* anim);
+            
             void Cleanup();
 
-
+            std::vector<Texture*> FindAndLoadSubTextures(MeshMaterial* mat, const Mesh* mesh, GameTechRenderer* renderer);
+            
             // Mesh
             Mesh* capsuleMesh = nullptr;
             Mesh* cubeMesh = nullptr;
@@ -72,7 +73,7 @@ namespace NCL {
         private:
             AssetManager() = default;
             ~AssetManager() = default;
-            std::map<Enums::PlayerAnimation, MeshAnimation*> animationMap;
+            std::map<Enums::AnimationType, MeshAnimation*> animationMap;
         };
     }
 }

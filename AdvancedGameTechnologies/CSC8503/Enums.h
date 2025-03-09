@@ -3,12 +3,9 @@
 
 namespace Enums
 {
-    enum class PlayerAnimation {
-        Idle,    
-        Walk,    
-        Run,  
-        Jump,  
-        Attack  
+    enum class AnimationType {
+        Player_Idle,    
+        Player_Walk,    
     };
 
     enum class RenderObjectType

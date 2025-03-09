@@ -53,7 +53,7 @@ void Animator::Update(float dt)
     Draw(currentFrame,currentAnim);
 }
 
-bool Animator::LoadAnimation(PlayerAnimation animation)
+bool Animator::LoadAnimation(AnimationType animation)
 {
     meshAnims[animation] = AssetManager::Instance().GetAnimation(animation);
     return (meshAnims[animation]!=nullptr);
@@ -97,7 +97,7 @@ void Animator::Draw(int nFrame,MeshAnimation* meshAni)
 
 }
 
-void Animator::Play(PlayerAnimation anim, bool tween, float animSpeed)
+void Animator::Play(AnimationType anim, bool tween, float animSpeed)
 {
     if (currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
         return;
@@ -108,7 +108,7 @@ void Animator::Play(PlayerAnimation anim, bool tween, float animSpeed)
     if (tween)
     {
         pendingAnim = meshAnims[anim];
-        TweenAnim(0.15f);
+        TweenAnim(0.1f);
     }
     else
     {
