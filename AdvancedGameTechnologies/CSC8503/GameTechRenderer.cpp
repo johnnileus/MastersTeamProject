@@ -18,7 +18,7 @@ GameTechRenderer::GameTechRenderer(GameWorld& world) : OGLRenderer(*Window::GetW
 
 	debugShader  = new OGLShader("debug.vert", "debug.frag");
 	shadowShader = new OGLShader("shadow.vert", "shadow.frag");
-
+	skinnedShadowShader = new OGLShader("skinnedShadow.vert","shadow.frag");
 	glGenTextures(1, &shadowTex);
 	glBindTexture(GL_TEXTURE_2D, shadowTex);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -242,23 +242,37 @@ void GameTechRenderer::RenderShadowMap() {
 	for (const auto &obj : activeObjects) {
 		//dynamic shadow
 		if (obj->renderType == Enums::RenderObjectType::Skinned) {
-			// UseShader(*skinningShadowShader);
-			// 
-			// auto animatedObject = static_cast<AnimatedRenderObject*>(obj);
-			// const std::vector<Matrix4>& boneMatrices = animatedObject->GetBoneMatrices();
-			// int boneMatLoc = glGetUniformLocation(skinningShadowShader->GetProgramID(), "boneMatrices");
-			// glUniformMatrix4fv(boneMatLoc, boneMatrices.size(), false, (float*)boneMatrices.data());
-			//
-			// Matrix4 modelMatrix = animatedObject->GetTransform()->GetMatrix();
-			// Matrix4 mvpMatrix = mvMatrix * modelMatrix;
-			// int mvpLocation = glGetUniformLocation(skinningShadowShader->GetProgramID(), "mvpMatrix");
-			// glUniformMatrix4fv(mvpLocation, 1, false, (float*)&mvpMatrix);
-			//
-			// BindMesh((OGLMesh&)*animatedObject->GetMesh());
-			// size_t layerCount = animatedObject->GetMesh()->GetSubMeshCount();
-			// for (size_t i = 0; i < layerCount; ++i) {
-			// 	DrawBoundMesh((uint32_t)i);
-			// }
+			 UseShader(*skinnedShadowShader);
+			
+			int projLocation = glGetUniformLocation(skinnedShadowShader->GetProgramID(), "projMatrix");
+			int viewLocation = glGetUniformLocation(skinnedShadowShader->GetProgramID(), "viewMatrix");
+			int modelLocation = glGetUniformLocation(skinnedShadowShader->GetProgramID(), "modelMatrix");
+			
+			shadowMatrix = biasMatrix * mvMatrix;
+			
+			Matrix4 modelMatrix = obj->GetTransform()->GetMatrix();
+			
+			glUniformMatrix4fv(modelLocation, 1, false, (float*)&modelMatrix);
+			glUniformMatrix4fv(viewLocation, 1, false, (float*)&shadowViewMatrix);
+			glUniformMatrix4fv(projLocation, 1, false, (float*)&shadowProjMatrix);
+			
+			vector<Matrix4> frameMatrices;
+			
+			const vector<Matrix4> invBindPose = obj-> GetMesh()->GetInverseBindPose();
+			const Matrix4* frameData = obj->currentAnimation->GetJointData(obj->currentFame);
+			
+			for (unsigned int j = 0; j < obj-> GetMesh()->GetJointCount(); ++j) {
+				frameMatrices.emplace_back(frameData[j] * invBindPose[j]);
+			}
+			
+			int j = glGetUniformLocation(skinnedShadowShader->GetProgramID(), "joints");
+			glUniformMatrix4fv(j, frameMatrices.size(), false,
+				(float*)frameMatrices.data());
+			
+			BindMesh((OGLMesh&)*obj-> GetMesh());
+			for (int j = 0; j < obj->GetMesh()->GetSubMeshCount(); ++j) {
+				DrawBoundMesh((uint32_t)j);
+			}
 		}
 		// static shadow
 		else {

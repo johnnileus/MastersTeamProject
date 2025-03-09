@@ -13,15 +13,15 @@ layout(location = 6) in ivec4 jointIndices;
 uniform mat4 joints[128];
 
 void main(void){
-  vec4 localPos = vec4(position, 1.0f);
+vec4 localPos = vec4(position, 1.0f);
   vec4 skelPos = vec4(0,0,0,0);
-
+ 
   for(int i = 0; i < 4; ++i){
-    int jointIndex = jointIndices[i];
-    float jointWeight = jointWeights[i];
-
-    skelPos += joints[jointIndex] * localPos * jointWeight;
-  }
+  int jointIndex = jointIndices[i];
+  float jointWeight = jointWeights[i];
+ 
+  skelPos += joints[jointIndex] * localPos * jointWeight;
+}
 
   vec4 worldPos = (modelMatrix * vec4(skelPos.xyz, 1.0));
   gl_Position = (projMatrix * viewMatrix) * worldPos;
