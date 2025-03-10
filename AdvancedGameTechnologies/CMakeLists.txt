@@ -80,6 +80,13 @@ file(GLOB_RECURSE RP3D_SRC "${CMAKE_SOURCE_DIR}/ThirdParty/reactphysics/src/*.cp
 
 add_library(ReactPhysics3D STATIC ${RP3D_SRC})
 
+#IMGUI 
+include_directories("${CMAKE_SOURCE_DIR}/ThirdParty/ImGui/include")
+
+file(GLOB_RECURSE IMGUI_SRC "${CMAKE_SOURCE_DIR}/ThirdParty/ImGui/src/*.cpp")
+
+add_library(ImGui STATIC ${IMGUI_SRC})
+
 ################################################################################
 # Sub-projects
 ################################################################################
@@ -92,6 +99,7 @@ if(USE_VULKAN)
 endif()
 
 target_link_libraries(CSC8503 PRIVATE ReactPhysics3D)
+target_link_libraries(CSC8503 PRIVATE ImGui)
 target_link_libraries(CSC8503CoreClasses PRIVATE ReactPhysics3D)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT CSC8503)
 

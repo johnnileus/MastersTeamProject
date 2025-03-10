@@ -3,7 +3,9 @@
 #include "GameTechRenderer.h"
 #include "MeshMaterial.h"
 #include "RenderObject.h"
-#include  "bthdef.h"
+#include "Enums.h"
+
+using namespace Enums;
 namespace NCL
 {
     namespace CSC8503
@@ -11,16 +13,16 @@ namespace NCL
         class Animator
         {
         public:
-            Animator();
+            Animator(RenderObject* renderObject);
             ~Animator();
 
             void Update(float dt);
 
-            bool LoadAnimation(const std::string& animationName);
+            bool LoadAnimation(AnimationType);
 
-            void Draw(RenderObject* renderObj);
+            void Draw(int nFrame,MeshAnimation* meshAni);
 
-            void Play(const std::string& anim, bool tween, float animSpeed);
+            void Play(AnimationType animation, bool tween, float animSpeed = 1 );
 
             void TweenAnim(const float& time);
 
@@ -41,9 +43,10 @@ namespace NCL
             float	currentAnimSpeed;
             MeshAnimation* currentAnim;
             MeshAnimation* pendingAnim;
+            RenderObject* renderObject;
             std::vector<Matrix4> frameMatrices;
             
-            std::map<std::string, MeshAnimation*> meshAnims;
+            std::map<AnimationType, MeshAnimation*> meshAnims;
         };
     }
 }

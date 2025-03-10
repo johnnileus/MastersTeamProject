@@ -15,6 +15,7 @@
 #endif
 
 #include <stdlib.h>
+#undef _WINSOCK2API_ // doesn't import without this
 #include <winsock2.h>
 
 typedef SOCKET ENetSocket;
