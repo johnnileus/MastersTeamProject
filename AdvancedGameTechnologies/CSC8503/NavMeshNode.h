@@ -17,7 +17,8 @@ namespace NCL {
 				this->obstructed = false;
 				this->gScore = 0;
 				this->fScore = 0;
-				this->parent == nullptr;
+				this->heuristic = 0;
+				this->parent = nullptr;
 			}
 			void checkObstructed();
 			bool isObstructed() {
