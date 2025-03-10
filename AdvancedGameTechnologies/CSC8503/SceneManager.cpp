@@ -78,7 +78,7 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
 
     terrain->SetRenderObject(new RenderObject(
         &terrain->GetTransform(),
-        AssetManager::Instance().sphereMesh,
+        AssetManager::Instance().cubeMesh,
         AssetManager::Instance().basicTex,
         AssetManager::Instance().basicShader));
 

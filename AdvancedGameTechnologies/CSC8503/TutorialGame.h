@@ -158,7 +158,7 @@ namespace NCL {
 
 			Door* doorTrigger;
 
-			LevelGate* gateInit;
+			//LevelGate* gateInit;
 
 		};
 	}

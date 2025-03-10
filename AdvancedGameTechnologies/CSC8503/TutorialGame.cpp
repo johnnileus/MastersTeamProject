@@ -291,7 +291,7 @@ void TutorialGame::InitWorld() {
 
 	InitTerrain();
 
-	gateInit = SceneManager::Instance().AddGate(world, Vector3(0, 0, 0), Vector3(1, 1, 1));
+	//gateInit = SceneManager::Instance().AddGate(world, Vector3(0, 0, 0), Vector3(1, 1, 1));
 
 	InitDefaultFloor();
 
@@ -388,11 +388,11 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
 
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
+	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
+	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
+	//SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
 void TutorialGame::InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius) {
