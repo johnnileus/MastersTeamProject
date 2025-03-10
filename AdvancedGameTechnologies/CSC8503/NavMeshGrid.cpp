@@ -4,35 +4,38 @@
 
 using namespace NCL;
 using namespace CSC8503;
-
+using namespace std;
 //generate navmeshgrid centred at 0,0,0
 std::vector<std::vector<NavMeshNode>> NavMeshGrid::GenerateNavMeshGrid(int levelSize) {
-	std::vector<std::vector<NavMeshNode>> nodeGrid;
+	vector<vector<NavMeshNode>> nodeGrid;
+	std::vector<NavMeshNode> nodeRow;
 	for (int x = 0; x < levelSize; ++x) {
+		nodeRow.clear();
 		for (int z = 0; z < levelSize; ++z) {
 			NCL::Maths::Vector3 nodePosition = NCL::Maths::Vector3(x - levelSize/2, 500, z - levelSize/2);//replace 500 with the height of the vertex for the node
-			nodeGrid[x][z] = NavMeshNode(nodePosition);
-			nodeGrid[x][z].checkObstructed();
+			nodeRow.emplace_back(NavMeshNode(nodePosition));
 		}
+		nodeGrid.emplace_back(nodeRow);
 	}
-	for (int x = 0; x < std::size(nodeGrid); ++x) {
-		for (int z = 0; z < std::size(nodeGrid); ++z) {
+	for (int x = 0; x < nodeGrid.size(); ++x) {
+		for (int z = 0; z < nodeGrid.size(); ++z) {
+			nodeGrid[x][z].checkObstructed();
 			if (x - 1 < 0 && z - 1 < 0) {//top left corner
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z + 1], 1);
 			}
-			else if (x - 1 < 0 && z + 1 >= std::size(nodeGrid)) {//top right corner
+			else if (x - 1 < 0 && z + 1 >= nodeGrid.size()) {//top right corner
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z - 1], 1);
 			}
-			else if (x + 1 >= std::size(nodeGrid) && z - 1 < 0) {//bottom left corner
+			else if (x + 1 >= nodeGrid.size() && z - 1 < 0) {//bottom left corner
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z + 1], 1);
 			}
-			else if (x + 1 >= std::size(nodeGrid) && z + 1 >= std::size(nodeGrid)) {//bottom right corner
+			else if (x + 1 >= nodeGrid.size() && z + 1 >= nodeGrid.size()) {//bottom right corner
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z - 1], 1);
@@ -44,7 +47,7 @@ std::vector<std::vector<NavMeshNode>> NavMeshGrid::GenerateNavMeshGrid(int level
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z + 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z + 1], 1);
 			}
-			else if (x + 1 >= std::size(nodeGrid)) {//right edge
+			else if (x + 1 >= nodeGrid.size()) {//right edge
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
@@ -58,7 +61,7 @@ std::vector<std::vector<NavMeshNode>> NavMeshGrid::GenerateNavMeshGrid(int level
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z + 1], 1);
 			}
-			else if (z + 1 >= std::size(nodeGrid)) {//bottom edge
+			else if (z + 1 >= nodeGrid.size()) {//bottom edge
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z - 1], 1);
