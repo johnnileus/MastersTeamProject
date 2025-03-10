@@ -81,6 +81,7 @@ namespace NCL {
 			void TestLinearMotion();
 			void CreateRopeGroup();
 
+			void InitNavigationTestLevel();
 
 			//Terrain Generation
 			void InitTerrain();

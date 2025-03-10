@@ -155,6 +155,10 @@ void TutorialGame::UpdateKeys() {
 		InitCamera(); //F2 will reset the camera to a specific default place
 	}
 
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F3)) {
+		InitNavigationTestLevel(); //Loads a blank floor with navigation nodes displayed
+	}
+
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
 		useGravity = !useGravity; //Toggle gravity!
 		physics->UseGravity(useGravity);
