@@ -35,6 +35,9 @@
 
 #include "Pistol.h"
 
+#include "NavMeshGrid.h"
+#include "NavMeshAgent.h"
+
 
 namespace NCL {
 	namespace CSC8503 {
@@ -157,6 +160,8 @@ namespace NCL {
 
 			Door* doorTrigger;
 
+			NavMeshGrid* navGrid;
+			NavMeshAgent* navMeshAgent;
 		};
 	}
 }
