@@ -24,6 +24,7 @@ namespace NCL {
 			//Terrain Generation
 			Mesh* GenerateTerrainMesh(HeightMap* heightmap);
 			Vector3 CalculateNormal(int x, int y, HeightMap* heightmap);
+			void Draw(Mesh* mesh, bool multilayer);
 
 		protected:
 			void NewRenderLines();
@@ -57,6 +58,7 @@ namespace NCL {
 
 			//shadow mapping things
 			OGLShader*	shadowShader;
+			OGLShader*	skinnedShadowShader;
 			GLuint		shadowTex;
 			GLuint		shadowFBO;
 			Matrix4     shadowMatrix;
