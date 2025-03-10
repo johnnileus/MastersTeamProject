@@ -62,8 +62,9 @@ namespace NCL {
 			void BroadcastPositions();
 
 			void ToggleCursor();
-
+			void TogglePaused() { gamePaused = !gamePaused; }
 			int GetID() { return networkManager->GetID(); }
+			bool IsGamePaused() { return gamePaused; }
 
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
 #endif // _WIN32
@@ -133,7 +134,7 @@ namespace NCL {
 			KeyboardMouseController controller;
 #endif // _WIN32
 			bool cursorLocked;
-			bool gamePaused;
+			bool gamePaused = true;
 			bool useGravity;
 
 			float		forceMagnitude;

@@ -3,7 +3,10 @@
 
 
 #include "UIStateManager.h"
-#include "iostream"
+#include "TutorialGame.h"
+
+extern TutorialGame* g;
+
 
 UIStateManager::UIStateManager() {
 
@@ -193,9 +196,7 @@ void UIStateManager::States() {
 
 void UIStateManager::HandleInput() {
     if (ImGui::IsKeyPressed(ImGuiKey_P)) {
-
         if (GetCurrentState() == UIState::InGame) {
-
             SetCurrentState(UIState::Paused);
         }
         else {
