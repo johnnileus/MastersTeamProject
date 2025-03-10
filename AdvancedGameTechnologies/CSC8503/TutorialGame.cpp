@@ -757,3 +757,8 @@ void TutorialGame::InitNavigationTestLevel() {
 }
 
 
+void TutorialGame::ToggleCursor() {
+	cursorLocked = !cursorLocked;
+	Window::GetWindow()->ShowOSPointer(!cursorLocked);
+	Window::GetWindow()->LockMouseToWindow(cursorLocked);
+}

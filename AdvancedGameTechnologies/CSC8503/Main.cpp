@@ -54,35 +54,9 @@ size_t sceLibcHeapSize = 256 * 1024 * 1024;
 #endif // USEAGC
 #include <AudioManager.h>
 
-std::vector<Vector3> testNodes;
-
 
 TutorialGame* g;
 
-void TestPathfinding() {
-	NavigationGrid grid("TestGrid1.txt");
-
-	NavigationPath outPath;
-
-	Vector3 startPos(80, 0, 10);
-	Vector3 endPos(80, 0, 80);
-
-	bool found = grid.FindPath(startPos, endPos, outPath);
-
-	Vector3 pos;
-	while (outPath.PopWaypoint(pos)) {
-		testNodes.push_back(pos);
-	}
-}
-
-void DisplayPathfinding() {
-	for (int i = 1; i < testNodes.size(); ++i) {
-		Vector3 a = testNodes[i - 1];
-		Vector3 b = testNodes[i];
-
-		Debug::DrawLine(a, b, Vector4(0, 1, 0, 1));
-	}
-}
 
 
 /*
@@ -120,9 +94,6 @@ int main() {
 		return -1;
 	}*/	
 
-	//w->ShowOSPointer(true);
-	//w->LockMouseToWindow(false);
-	//TestPathfinding();
 #ifdef _WIN32
 	std::unique_ptr<NetworkedGame> networkedGame = std::make_unique<NetworkedGame>(*world, *renderer, *physics);
 #endif // WIN32
@@ -175,6 +146,8 @@ int main() {
 #ifdef USEAGC
 	while (w->UpdateWindow() && !c->GetNamedButton("Triangle")) {
 #else
+	w->ShowOSPointer(!g->GetCursorLocked());
+	w->LockMouseToWindow(g->GetCursorLocked());
 	while (w->UpdateWindow() && !Window::GetKeyboard()->KeyDown(KeyCodes::ESCAPE)) {
 #endif // USEAGC
 		float dt = w->GetTimer().GetTimeDeltaSeconds();
@@ -193,10 +166,9 @@ int main() {
 		//	w->SetWindowPosition(0, 0);
 		//}
 
-		//if (Window::GetKeyboard()->KeyPressed(KeyCodes::O)) {
-		//	w->ShowOSPointer(false);
-		//	w->LockMouseToWindow(true);
-		//}
+		if (Window::GetKeyboard()->KeyPressed(KeyCodes::O)) {
+			g->ToggleCursor();
+		}
 
 		////DisplayPathfinding();
 
