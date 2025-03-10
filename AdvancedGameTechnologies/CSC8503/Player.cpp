@@ -57,7 +57,6 @@ void Player::Init(ThirdPersonCamera* cam)
 	collerctCoinColour = Vector4(0.949f,1,0.318f,1);
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam=cam;
-	
 	myWeapon = new Pistol(this);
 }
 
@@ -331,7 +330,8 @@ void Player::HandleRotation(float dt) {
 		t
 	);
 	
-	playerObject->GetTransform().SetOrientation(finalOrientation);
+	playerObject->GetTransform().SetOrientation(finalOrientation);//old
+	this->GetTransform().SetOrientation(finalOrientation);//now
 }
 
 void Player::HandleFire(float dt)
@@ -407,16 +407,16 @@ void Player::HandleAim()
 	
 	RayCollision collisionInfo;
 	bool hasHit = myWorld->Raycast(ray, collisionInfo, true);
-	
 	Vector3 hitPoint;
 	if (hasHit) {
-		hitPoint = collisionInfo.collidedAt; 
+		hitPoint = collisionInfo.collidedAt;
+		Debug::DrawLine(shootPoint,hitPoint,Debug::RED);
 	} else {
 		hitPoint = ray.GetPosition() + ray.GetDirection() * 100.0f;
+		Debug::DrawLine(shootPoint,hitPoint,Debug::YELLOW);
 	}
-	aimDir = hitPoint - transform.GetPosition();
-	Debug::DrawLine(transform.GetPosition(), hitPoint, Debug::RED);
-	
+	shootPoint = this->GetTransform().GetPosition()+Vector3(0,1.5,0);//where the bullet in instantiate, add a small offset
+	aimDir = hitPoint - shootPoint;
 }
 
 Vector3 CollisionDetection::GetRayHitPoint(const Ray& ray)
@@ -510,7 +510,6 @@ void Player::SetTemporaryColour(const Vector4& colour, float duration) {
 
 void Player::DisplayUI()
 {
-	Debug::Print("0",Vector2(50,50));
 	float velocity = Vector::Length(playerPhysicObject->GetLinearVelocity());
 	Debug::Print("V:" + fmt::format("{:.1f}", velocity), Vector2(5, 10));
 	Debug::Print("HP:"+std::to_string(health), Vector2(5,15));

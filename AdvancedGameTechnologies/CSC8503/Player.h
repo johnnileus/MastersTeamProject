@@ -37,6 +37,7 @@ namespace NCL {
 
 			ThirdPersonCamera* myCam;
 			Weapon* myWeapon;
+			Vector3 shootPoint;
 
 		protected:
 
