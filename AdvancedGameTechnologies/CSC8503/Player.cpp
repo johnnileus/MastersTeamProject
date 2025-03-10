@@ -80,6 +80,10 @@ void Player::SetComponent(float meshSize,float mass)
 	 	RenderObjectType::Skinned)
 	 	);
 	
+	//Manually set the rendering offset for the model,
+	//which will be used in constructing the modelMatrix in GameTecRender
+	//during camera and shadow rendering.
+	renderObject->renderOffset=Vector3(0,-0.5,0);
 	
 	animator = new Animator(renderObject);
 	animator->LoadAnimation(AnimationType::Player_Walk);

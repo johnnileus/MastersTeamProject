@@ -61,11 +61,14 @@ namespace NCL {
 			{
 				this->material = material;
 			}
+			
 			Texture* GetSubTextureOrDefault(size_t subIndex) const;
 			MeshAnimation* currentAnimation;
-			int currentFame;
 			std::vector<Texture*> subTextures;
 			Enums::RenderObjectType renderType;
+			Vector3 renderOffset;
+			int currentFame;
+			
 		protected:
 			Mesh*		mesh;
 			Texture*	texture;

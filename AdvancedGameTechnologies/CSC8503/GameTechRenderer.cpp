@@ -250,7 +250,7 @@ void GameTechRenderer::RenderShadowMap() {
 			
 			shadowMatrix = biasMatrix * mvMatrix;
 			
-			Matrix4 modelMatrix = obj->GetTransform()->GetMatrix();
+			Matrix4 modelMatrix = obj->GetTransform()->GetMatrix()*Matrix::Translation(obj->renderOffset);
 			
 			glUniformMatrix4fv(modelLocation, 1, false, (float*)&modelMatrix);
 			glUniformMatrix4fv(viewLocation, 1, false, (float*)&shadowViewMatrix);
@@ -277,7 +277,7 @@ void GameTechRenderer::RenderShadowMap() {
 		// static shadow
 		else {
 			UseShader(*shadowShader);
-			Matrix4 modelMatrix = obj->GetTransform()->GetMatrix();
+			Matrix4 modelMatrix = obj->GetTransform()->GetMatrix()*Matrix::Translation(obj->renderOffset);
 			Matrix4 mvpMatrix = mvMatrix * modelMatrix;
 			int mvpLocation = glGetUniformLocation(shadowShader->GetProgramID(), "mvpMatrix");
 			glUniformMatrix4fv(mvpLocation, 1, false, (float*)&mvpMatrix);
@@ -388,7 +388,7 @@ void GameTechRenderer::RenderCamera() {
 			activeShader = shader;
 		}
 
-		Matrix4 modelMatrix = (*i).GetTransform()->GetMatrix();
+		Matrix4 modelMatrix = (*i).GetTransform()->GetMatrix()*Matrix::Translation((*i).renderOffset);
 		glUniformMatrix4fv(modelLocation, 1, false, (float*)&modelMatrix);			
 		
 		Matrix4 fullShadowMat = shadowMatrix * modelMatrix;
