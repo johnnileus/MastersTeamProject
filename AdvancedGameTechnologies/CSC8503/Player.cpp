@@ -418,6 +418,11 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		RemoveObject(otherObject);
 		SetTemporaryColour(collerctCoinColour,0.25f);
 	}
+
+	//collides Gate
+	if (otherObject->tag == "Gate") {
+		std::cout << "End level, next level here" << std::endl;
+	}
 }
 
 void Player::OnCollisionEnd(GameObject* otherObject)

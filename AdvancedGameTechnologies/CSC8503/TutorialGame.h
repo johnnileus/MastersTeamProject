@@ -15,6 +15,7 @@
 #include "StateGameObject.h"
 #include "AssetManager.h"
 #include "ThirdPersonCamera.h"
+#include "LevelGate.h"
 
 #include "GameNet.h"
 
@@ -158,7 +159,7 @@ namespace NCL {
 
 			Door* doorTrigger;
 
-			//LevelGate* gateInit;
+			GameObject* gateInit;
 
 		};
 	}

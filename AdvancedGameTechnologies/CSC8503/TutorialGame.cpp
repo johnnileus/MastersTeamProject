@@ -291,7 +291,7 @@ void TutorialGame::InitWorld() {
 
 	InitTerrain();
 
-	//gateInit = SceneManager::Instance().AddGate(world, Vector3(0, 0, 0), Vector3(1, 1, 1));
+	gateInit = SceneManager::Instance().AddGate(world, Vector3(10, 0, 25), Vector3(1, 1, 1));
 
 	InitDefaultFloor();
 

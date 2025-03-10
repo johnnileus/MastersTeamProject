@@ -78,7 +78,7 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
 
     terrain->SetRenderObject(new RenderObject(
         &terrain->GetTransform(),
-        AssetManager::Instance().cubeMesh,
+        AssetManager::Instance().terrainMesh,
         AssetManager::Instance().basicTex,
         AssetManager::Instance().basicShader));
 
@@ -91,6 +91,31 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
     world->AddGameObject(terrain);
 
     return terrain;
+}
+
+GameObject* SceneManager::AddGate(GameWorld* world, const Vector3& pos, const Vector3& size) {
+    GameObject* gate = new GameObject();
+    gate->tag = "Gate";
+    gate->SetName("gate");
+    Vector3 gateSize = size;
+    AABBVolume* gateVolume = new AABBVolume(gateSize);
+    gate->SetBoundingVolume((CollisionVolume*)gateVolume);
+    gate->GetTransform().SetScale(gateSize).SetPosition(pos);
+
+    gate->SetRenderObject(new RenderObject(&gate->GetTransform(),
+        AssetManager::Instance().sphereMesh,
+        AssetManager::Instance().basicTex,
+        AssetManager::Instance().basicShader));
+
+    gate->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
+    gate->SetPhysicsObject(new PhysicsObject(&gate->GetTransform(), gate->GetBoundingVolume()));
+
+    gate->GetPhysicsObject()->SetInverseMass(0);
+    gate->GetPhysicsObject()->InitCubeInertia();
+
+    world->AddGameObject(gate);
+
+    return gate;
 }
 
 /// update all the bullets here

@@ -19,6 +19,7 @@ namespace NCL {
             GameObject* AddCubeToWorld(GameWorld* world, const Vector3& pos, const Vector3& size, float inverseMass);
             GameObject* AddDefaultFloorToWorld(GameWorld* world, const Vector3& position, const Vector3& size);
             GameObject* AddTerrain(GameWorld* world, const Vector3& pos, const Vector3& size);
+            GameObject* AddGate(GameWorld* world, const Vector3& pos, const Vector3& size);
 
             void UpdateBullets(GameWorld*world, float dt);
             void AddBullet(Bullet* bullet);

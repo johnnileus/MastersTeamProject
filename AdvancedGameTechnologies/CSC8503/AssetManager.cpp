@@ -12,10 +12,10 @@ AssetManager& AssetManager::Instance() {
 }
 
 void AssetManager::LoadAssets(GameTechRenderer* renderer) {
-    gameTechRenderer =renderer;
+    gameTechRenderer = renderer;
     
     //load heightmap
-    heightmap = new HeightMap(256, 0.1f, 50.0f);
+    heightmap = new HeightMap(256, 0.1f, 10.0f);
 
     // load mesh resources
     cubeMesh = renderer->LoadMesh("cube.msh");
@@ -119,7 +119,6 @@ void AssetManager::Cleanup() {
     delete guardMesh;
 
     delete terrainMesh;
-
 
     delete basicTex;
     delete woodTex;
