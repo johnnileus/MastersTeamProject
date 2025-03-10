@@ -64,6 +64,7 @@ namespace NCL {
 			void ClampSpeed(float dt);
 			void HandleInput();
 			void SetComponent(float meshSize, float mass);
+			void FaceAimDirection(float dt);
 
 			//jump
 			float jumpForce;         
