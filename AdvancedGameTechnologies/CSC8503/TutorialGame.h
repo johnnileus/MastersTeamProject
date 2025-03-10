@@ -57,9 +57,7 @@ namespace NCL {
 
 			void ToggleCursor();
 
-			int GetID() {
-				return networkManager->GetID();
-			}
+			int GetID() { return networkManager->GetID(); }
 
 			bool GetCursorLocked() { return cursorLocked; }
 
@@ -75,9 +73,6 @@ namespace NCL {
 			void InitMixedGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing);
 
 			void InitDefaultFloor();
-			bool SelectObject();
-			void MoveSelectedObject();
-			void DebugObjectMovement();
 			void LockedObjectMovement();
 			void TestLinearMotion();
 			void CreateRopeGroup();
@@ -120,7 +115,6 @@ namespace NCL {
 			KeyboardMouseController controller;
 
 			bool useGravity;
-			bool inSelectionMode;
 
 			float		forceMagnitude;
 
@@ -149,11 +143,6 @@ namespace NCL {
 
 			void DisplayPathfinding(); // display navigation path
 			std::vector<Vector3> testNodes; // save nodes
-			
-			bool allCoinsCollected;   // Whether all coins have been collected
-			void CheckCoinsCollected(); // Check if all coins have been collected
-
-			void ShowSuccessMessage();  // Display success message
 
 			void ReloadLevel();
 

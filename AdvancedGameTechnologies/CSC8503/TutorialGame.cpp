@@ -22,9 +22,6 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 
 	forceMagnitude	= 1.0f;
 	useGravity		= false;
-	inSelectionMode = false;
-
-	allCoinsCollected=false;
 
 	world->GetMainCamera().SetController(controller);
 
@@ -91,9 +88,6 @@ void TutorialGame::UpdateGame(float dt) {
 	{
 		doorTrigger->Update(dt);
 	}
-
-	CheckCoinsCollected();
-
 	// if (!inSelectionMode) {
 	// 	world->GetMainCamera().UpdateCamera(dt);
 	// }
@@ -188,14 +182,6 @@ void TutorialGame::UpdateKeys() {
 
 	}
 
-
-
-	if (lockedObject) {
-		LockedObjectMovement();
-	}
-	else {
-		DebugObjectMovement();
-	}
 }
 
 void TutorialGame::LockedObjectMovement() {
@@ -225,43 +211,6 @@ void TutorialGame::LockedObjectMovement() {
 	}
 }
 
-void TutorialGame::DebugObjectMovement() {
-//If we've selected an object, we can manipulate it with some key presses
-	if (inSelectionMode && selectionObject) {
-		//Twist the selected object!
-		if (Window::GetKeyboard()->KeyDown(KeyCodes::LEFT)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(-10, 0, 0));
-		}
-
-		if (Window::GetKeyboard()->KeyDown(KeyCodes::RIGHT)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(10, 0, 0));
-		}
-
-		if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM7)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, 10, 0));
-		}
-
-		if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM8)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, -10, 0));
-		}
-
-		if (Window::GetKeyboard()->KeyDown(KeyCodes::RIGHT)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(10, 0, 0));
-		}
-
-		if (Window::GetKeyboard()->KeyDown(KeyCodes::UP)) {
-			selectionObject->GetPhysicsObject()->AddForce(Vector3(0, 0, -10));
-		}
-
-		if (Window::GetKeyboard()->KeyDown(KeyCodes::DOWN)) {
-			selectionObject->GetPhysicsObject()->AddForce(Vector3(0, 0, 10));
-		}
-
-		if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM5)) {
-			selectionObject->GetPhysicsObject()->AddForce(Vector3(0, -10, 0));
-		}
-	}
-}
 
 void TutorialGame::InitCamera() {
 	world->GetMainCamera().SetNearPlane(0.1f);
@@ -425,93 +374,7 @@ void TutorialGame::InitMixedGridWorld(int numRows, int numCols, float rowSpacing
 	}
 }
 
-/*
-Every frame, this code will let you perform a raycast, to see if there's an object
-underneath the cursor, and if so 'select it' into a pointer, so that it can be 
-manipulated later. Pressing Q will let you toggle between this behaviour and instead
-letting you move the camera around. 
 
-*/
-bool TutorialGame::SelectObject() {
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::Q)) {
-		inSelectionMode = !inSelectionMode;
-		if (inSelectionMode) {
-			Window::GetWindow()->ShowOSPointer(true);
-			Window::GetWindow()->LockMouseToWindow(false);
-		}
-		else {
-			Window::GetWindow()->ShowOSPointer(false);
-			Window::GetWindow()->LockMouseToWindow(true);
-		}
-	}
-	if (inSelectionMode) {
-		Debug::Print("Press Q to change to camera mode!", Vector2(5, 85));
-
-		if (Window::GetMouse()->ButtonDown(NCL::MouseButtons::Left)) {
-			
-			
-			if (selectionObject) {	//set colour to deselected;
-				selectionObject->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
-				selectionObject = nullptr;
-			}
-
-			Ray ray = CollisionDetection::BuildRayFromMouse(world->GetMainCamera());
-
-			RayCollision closestCollision;
-			if (world->Raycast(ray, closestCollision, true)) {
-				selectionObject = (GameObject*)closestCollision.node;
-				
-				selectionObject->GetRenderObject()->SetColour(Vector4(0, 1, 0, 1));
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		if (Window::GetKeyboard()->KeyPressed(NCL::KeyCodes::L)) {
-			if (selectionObject) {
-				if (lockedObject == selectionObject) {
-					lockedObject = nullptr;
-				}
-				else {
-					lockedObject = selectionObject;
-				}
-			}
-		}
-	}
-	else {
-		//Debug::Print("Press Q to change to select mode!", Vector2(5, 85));
-	}
-	return false;
-}
-
-/*
-If an object has been clicked, it can be pushed with the right mouse button, by an amount
-determined by the scroll wheel. In the first tutorial this won't do anything, as we haven't
-added linear motion into our physics system. After the second tutorial, objects will move in a straight
-line - after the third, they'll be able to twist under torque aswell.
-*/
-
-void TutorialGame::MoveSelectedObject() {
-	//Debug::Print("Click Force:" + std::to_string(forceMagnitude), Vector2(5, 90));
-	forceMagnitude += Window::GetMouse()->GetWheelMovement() * 100.0f;
-
-	if (!selectionObject) {
-		return;//we haven't selected anything!
-	}
-	//Push the selected object!
-	if (Window::GetMouse()->ButtonPressed(NCL::MouseButtons::Right)) {
-		Ray ray = CollisionDetection::BuildRayFromMouse(world->GetMainCamera());
-
-		RayCollision closestCollision;
-		if (world->Raycast(ray, closestCollision, true)) {
-			if (closestCollision.node == selectionObject) {
-				selectionObject->GetPhysicsObject()->AddForceAtPosition(ray.GetDirection() * forceMagnitude, closestCollision.collidedAt);
-				Debug::DrawLine(world->GetMainCamera().GetPosition(),selectionObject->GetTransform().GetPosition(), Vector4(0,0,1,1), 10);
-			}
-		}
-	}
-}
 
 void TutorialGame::TestLinearMotion() {
 	AddSphereToWorld(Vector3(-5, 20, 0), 2.0f, Constants::SPHERE_DEFAULT_MASS, Vector3(0,10,1));
@@ -562,28 +425,6 @@ void TutorialGame::SetWallColour()
 	}
 }
 
-void TutorialGame::CheckCoinsCollected() {
-	for (GameObject* coin : catCoins) {
-		if (coin->IsActive()) {
-			return; // If there are uncollected coins, return immediately
-
-		}
-	}
-
-	// If all coins have been collected
-	if (!allCoinsCollected) {
-		allCoinsCollected = true; // mark as completed
-	}
-
-	if (allCoinsCollected)
-	{
-		ShowSuccessMessage();
-	}
-}
-
-void TutorialGame::ShowSuccessMessage() {
-	Debug::Print("You collected all the cats! Score:" + std::to_string( player->score), Vector2(20,50),Vector4(1,1,0,1));
-}
 
 void TutorialGame::ReloadLevel() {
 	// Clear the current level
