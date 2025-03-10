@@ -75,13 +75,20 @@ void Player::SetComponent(float meshSize,float mass)
 	 SetRenderObject(new RenderObject(
 	 	&objectTransform,
 	 	myMesh,
-	 	AssetManager::Instance().playerTex[0],
-	 	AssetManager::Instance().basicShader)
+	 	AssetManager::Instance().playerTex,
+	 	AssetManager::Instance().characterShader,
+	 	RenderObjectType::Skinned)
 	 	);
 	
+	//Manually set the rendering offset for the model,
+	//which will be used in constructing the modelMatrix in GameTecRender
+	//during camera and shadow rendering.
+	renderObject->renderOffset=Vector3(0,-0.5,0);
 	
-	animator = new Animator();
-	animator->LoadAnimation("Idle");
+	animator = new Animator(renderObject);
+	animator->LoadAnimation(AnimationType::Player_Walk);
+	animator->LoadAnimation(AnimationType::Player_Idle);
+	animator->Play(AnimationType::Player_Idle,true);
 }
 
 void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
@@ -113,8 +120,8 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 		world->AddGameObject(player);
 	}
 	camera->SetFollowObject(player);
-
-	player->animator->Play("Idle",true,1);
+	
+	//player-> animator->Play("Role_Walk",true,1);
 	
 	return player;
 }
@@ -130,7 +137,6 @@ void Player::Update(float dt) {
 	HandleAim();
 	DisplayUI();
 	HealthCheck();
-	
 	animator->Update(dt);
 	myWeapon->Update(dt,Window::GetMouse()->ButtonDown(MouseButtons::Left),aimDir);
 
@@ -156,7 +162,7 @@ void Player::Update(float dt) {
 	if (isOnGround) {
 		isAtApex = false;  
 	}
-	
+	//animator->Update(dt);
 }
 
 void Player::HealthCheck()
@@ -190,7 +196,6 @@ void Player::HandleInput()
 
 void Player::HandleMovement(float dt, Vector2 inputDir) {
 	if (!playerPhysicObject) return;
-
 	HandleInput();
 	
 	Vector3 levelCamFront = Vector3(myCam->front.x,0,myCam->front.z);
@@ -203,6 +208,11 @@ void Player::HandleMovement(float dt, Vector2 inputDir) {
 	if (Vector::Length(moveDir)>0) {
 		Vector3 force = Vector::Normalise(moveDir) * acceleratForce;
 		playerPhysicObject->AddForce(force);  //add force to object
+		animator->Play(AnimationType::Player_Walk,true);
+	}
+	else
+	{
+		animator->Play(AnimationType::Player_Idle,true);
 	}
 	ClampSpeed(dt);
 }
@@ -327,12 +337,19 @@ void Player::HandleJump() {
 
 void Player::HandleAim()
 {
-	Ray ray = CollisionDetection::BuildRayFromCamera(myWorld->GetMainCamera(),100,*myCam);
-	RayCollision closestCollision;
-
-	Vector3 hitPoint = CollisionDetection::GetRayHitPoint(ray);
-	aimDir = hitPoint-transform.GetPosition();
-	Debug::DrawLine(transform.GetPosition(),hitPoint,Debug::RED);
+	Ray ray = CollisionDetection::BuildRayFromCamera(myWorld->GetMainCamera(), 100.0f, *myCam);
+	
+	RayCollision collisionInfo;
+	bool hasHit = myWorld->Raycast(ray, collisionInfo, true);
+	
+	Vector3 hitPoint;
+	if (hasHit) {
+		hitPoint = collisionInfo.collidedAt; 
+	} else {
+		hitPoint = ray.GetPosition() + ray.GetDirection() * 100.0f;
+	}
+	aimDir = hitPoint - transform.GetPosition();
+	Debug::DrawLine(transform.GetPosition(), hitPoint, Debug::RED);
 	
 }
 

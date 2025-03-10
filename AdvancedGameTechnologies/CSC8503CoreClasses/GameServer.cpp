@@ -2,12 +2,10 @@
 
 #include "GameServer.h"
 #include "GameWorld.h"
-#include "./enet/enet.h"
 
 using namespace NCL;
 using namespace CSC8503;
 
-//extern TutorialGame* g;
 
 GameServer::GameServer(int onPort, int maxClients)	{
 	port		= onPort;
@@ -55,7 +53,12 @@ bool GameServer::SendGlobalPacket(GamePacket& packet) {
 	return true;
 }
 
+bool GameServer::SendPacket(GamePacket& packet, ENetPeer* peer) {
+	ENetPacket* dataPacket = enet_packet_create(&packet, packet.GetTotalSize(), 0);
+	enet_peer_send(peer, 0, dataPacket);
 
+	return true;
+}
 
 void GameServer::UpdateServer() {
 	if (!netHandle) { return; }
@@ -66,13 +69,14 @@ void GameServer::UpdateServer() {
 		int type = event.type;
 
 		ENetPeer* p = event.peer;
-		int peer = p->incomingPeerID;
+		int peerID = p->incomingPeerID;
 
 		if (type == ENET_EVENT_TYPE_CONNECT) {
 			std::cout << "Server: New client connected" << std::endl;
 
-			//g->InitialiseConnectedPlayer(p);
-			Player_Connected.Invoke(peer);
+
+			std::cout << peerID << "<- id" << std::endl;
+			PlayerConnected.Invoke(p);
 
 				
 
@@ -84,9 +88,8 @@ void GameServer::UpdateServer() {
 		}
 		else if (type == ENET_EVENT_TYPE_RECEIVE) {
 			GamePacket* packet = (GamePacket*)event.packet->data;
-			std::cout << "Server: Packet received..." << std::endl;
 
-			ProcessPacket(packet, peer);
+			ProcessPacket(packet, peerID);
 		}
 		enet_packet_destroy(event.packet);
 	}
@@ -95,4 +98,11 @@ void GameServer::UpdateServer() {
 
 void GameServer::SetGameWorld(GameWorld &g) {
 	gameWorld = &g;
+}
+
+ENetPeer* GameServer::GetConnectedPeers() {
+	return netHandle->peers;
+}
+int GameServer::GetClientCount() {
+	return netHandle->peerCount;
 }

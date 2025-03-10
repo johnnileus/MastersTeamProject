@@ -23,7 +23,9 @@ namespace NCL {
 			Shader*		LoadShader(const std::string& vertex, const std::string& fragment);
 
 			//Terrain Generation
-			OGLMesh* GenerateTerrainMesh(HeightMap* heightmap);
+			Mesh* GenerateTerrainMesh(HeightMap* heightmap);
+			Vector3 CalculateNormal(int x, int y, HeightMap* heightmap);
+			void Draw(Mesh* mesh, bool multilayer);
 
 		protected:
 			void NewRenderLines();
@@ -57,6 +59,7 @@ namespace NCL {
 
 			//shadow mapping things
 			OGLShader*	shadowShader;
+			OGLShader*	skinnedShadowShader;
 			GLuint		shadowTex;
 			GLuint		shadowFBO;
 			Matrix4     shadowMatrix;

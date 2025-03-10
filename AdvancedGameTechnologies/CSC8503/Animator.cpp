@@ -2,7 +2,7 @@
 
 #include "AssetManager.h"
 
-Animator::Animator()
+Animator::Animator(RenderObject* renderObject)
 {
     currentAnimSpeed = 1.0f;
 
@@ -10,8 +10,11 @@ Animator::Animator()
     tweenTime = 0.0f;
     tweenTimeCurrent = 0.0f;
     isTweening = false;
-
+    currentFrame=0;
     pendingAnim = nullptr;
+
+    this->renderObject = renderObject;
+    //renderObject->BindAnimator(this);
 }
 
 Animator::~Animator()
@@ -45,52 +48,72 @@ void Animator::Update(float dt)
             frameTime += 1.0f / currentAnim->GetFrameRate();
         }
     }
+    renderObject->currentFame =currentFrame;
+    renderObject->currentAnimation =currentAnim;
+    Draw(currentFrame,currentAnim);
 }
 
-bool Animator::LoadAnimation(const std::string& animationName)
+bool Animator::LoadAnimation(AnimationType animation)
 {
-    meshAnims[animationName] = AssetManager::Instance().GetAnimation("name");
-    return (meshAnims[animationName]!=nullptr);
+    meshAnims[animation] = AssetManager::Instance().GetAnimation(animation);
+    return (meshAnims[animation]!=nullptr);
 }
 
-void Animator::Draw(RenderObject* renderObj)
+/// The actual skinning rendering method
+/// @param nFrame target frame
+/// @param meshAni target animation
+void Animator::Draw(int nFrame, MeshAnimation* meshAni)
 {
-    Mesh* mesh = renderObj->GetMesh();
-    Shader* shader = renderObj->GetShader();
+    //get mesh and joints count
+    OGLMesh* animMesh = (OGLMesh*)renderObject->GetMesh();
+    size_t jointCount = animMesh->GetJointCount();
 
-    const Matrix4* invBindPose = mesh->GetInverseBindPose().data();
-
-    // if (isTweening && (pendingAnim != nullptr))
-    // {
-    //     const Matrix4* animCurrentFrame = currentAnim->GetJointData(currentFrame);
-    //     
-    //     const Matrix4* animPendingFrame = pendingAnim->GetJointData(0);
-    //
-    //     std::vector<Matrix4> finalBlending;
-    //     for (size_t i = 0; i < mesh->GetJointCount(); i++)
-    //         finalBlending.emplace_back( LerpMat(animCurrentFrame[i], animPendingFrame[i], tweenBlendFactor));
-    //
-    //     for (size_t i = 0; i < mesh->GetJointCount(); i++)
-    //         frameMatrices.emplace_back(finalBlending[i] * invBindPose[i]);
-    // }
-    // else
-    // {
-    //     const Matrix4* frameData = currentAnim->GetJointData(currentFrame);
-    //
-    //     for (unsigned int i = 0; i < mesh->GetJointCount(); i++)
-    //         frameMatrices.emplace_back(frameData[i] * invBindPose[i]);
-    // }
-
-    // int j = glGetUniformLocation(GetProcessId(shader), "joints");
-    // glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
-    //
-    // frameMatrices.clear();
+    //target frame data
+    const Matrix4* frameData = currentAnim->GetJointData(nFrame);
     
+    // Mesh can use GetInverseBindPose() get each joint's inverse bind pose matrix
+    const auto& invBindPose = animMesh->GetInverseBindPose();
+    
+    std::vector<Matrix4> finalMatrices(jointCount);
+    
+    if (isTweening && pendingAnim != nullptr) {
+        const Matrix4* pendingFrameData = pendingAnim->GetJointData(0);
+
+        for (size_t i = 0; i < jointCount; ++i) {
+            Matrix4 oldMat = frameData[i];
+            Matrix4 newMat = pendingFrameData[i];
+            // lerp old and new matrices then multiply inverse bind pose get the interpolated matrix
+            Matrix4 blended = LerpMat(oldMat, newMat, tweenBlendFactor);
+            finalMatrices[i] = blended * invBindPose[i];
+        }
+    }
+    else {
+        for (size_t i = 0; i < jointCount; ++i) {
+            finalMatrices[i] = frameData[i] * invBindPose[i];
+        }
+    }
+
+    //get shader and activate gl program
+    OGLShader* shader = (OGLShader*)renderObject->GetShader();
+    GLuint programID = shader->GetProgramID();
+    glUseProgram(programID);
+    
+    //upload these matrices data to GPU
+    GLint jointsLoc = glGetUniformLocation(programID, "joints");
+    if (jointsLoc == -1)
+    {
+        std::cout << "!!!!!!!ERROR: Uniform 'joints' not found in shader !!!!!!!!!!";
+    }
+    else
+    {
+        glUniformMatrix4fv(jointsLoc, (GLsizei)jointCount, GL_FALSE,
+                           reinterpret_cast<const float*>(finalMatrices.data()));
+    }
 }
 
-void Animator::Play(const std::string& anim, bool tween, float animSpeed)
+void Animator::Play(AnimationType anim, bool tween, float animSpeed)
 {
-    if (anim.empty() || currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
+    if (currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
         return;
 
     if(currentAnim == nullptr)
@@ -99,7 +122,7 @@ void Animator::Play(const std::string& anim, bool tween, float animSpeed)
     if (tween)
     {
         pendingAnim = meshAnims[anim];
-        TweenAnim(0.15f);
+        TweenAnim(0.1f);
     }
     else
     {
@@ -131,9 +154,12 @@ Matrix4 Animator::LerpMat(const Matrix4& a, const Matrix4& b, float t)
             res.array[i][j] = std::lerp(a.array[i][j], b.array[i][j], t);
         }
     }
-
     return res;
 }
+
+
+
+
 
 
 
