@@ -79,12 +79,7 @@ namespace NCL {
 
 			void InitWorld();
 
-			void InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius);
-			void InitMixedGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing);
-
 			void InitDefaultFloor();
-			void LockedObjectMovement();
-			void TestLinearMotion();
 			void CreateRopeGroup();
 
 			void InitNavigationTestLevel();
@@ -137,6 +132,8 @@ namespace NCL {
 #else
 			KeyboardMouseController controller;
 #endif // _WIN32
+			bool cursorLocked;
+			bool gamePaused;
 			bool useGravity;
 
 			float		forceMagnitude;
@@ -158,7 +155,6 @@ namespace NCL {
 				lockedObject = o;
 			}
 
-			bool cursorLocked;
 
 			GameObject* objClosest = nullptr;
 			void GenerateWall();
