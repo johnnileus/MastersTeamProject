@@ -66,41 +66,14 @@ TutorialGame::~TutorialGame()	{
 
 void TutorialGame::UpdateGame(float dt) {
 
-
-	if (testStateObject) {
-		testStateObject->Update(dt);
+	//update objects
+	if (player){player->Update(dt);}
+	for (Enemy* enemy : enemies){
+		if (enemy){enemy->Update(dt);}
 	}
-
-	if (player)
-	{
-		player->Update(dt);
-	}
-
-	for (Enemy* enemy : enemies)
-	{
-		if (enemy)
-		{
-			enemy->Update(dt);
-		}
-	}
-
-	if (doorTrigger)
-	{
-		doorTrigger->Update(dt);
-	}
-	// if (!inSelectionMode) {
-	// 	world->GetMainCamera().UpdateCamera(dt);
-	// }
+	if (doorTrigger) {doorTrigger->Update(dt);}
 
 	UpdateKeys();
-
-	if (useGravity) {
-		//Debug::Print("(G)ravity on", Vector2(5, 95), Debug::RED);
-	}
-	else {
-		//Debug::Print("(G)ravity off", Vector2(5, 95), Debug::RED);
-	}
-
 
 	///////Animation Test///////
 	frameTime-=dt;
@@ -114,11 +87,9 @@ void TutorialGame::UpdateGame(float dt) {
 	DisplayPathfinding();
 
 	world->UpdateWorld(dt);
-	//renderer->Update(dt);
 
 	if (networkManager == nullptr) {
-		std::cout << "network manager is null" << std::endl;
-	}
+		std::cout << "network manager is null" << std::endl;}
 	else {
 		networkManager->Update();
 	}
@@ -154,23 +125,7 @@ void TutorialGame::UpdateKeys() {
 		useGravity = !useGravity; //Toggle gravity!
 		physics->UseGravity(useGravity);
 	}
-	//Running certain physics updates in a consistent order might cause some
-	//bias in the calculations - the same objects might keep 'winning' the constraint
-	//allowing the other one to stretch too much etc. Shuffling the order so that it
-	//is random every frame can help reduce such bias.
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F9)) {
-		world->ShuffleConstraints(true);
-	}
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F10)) {
-		world->ShuffleConstraints(false);
-	}
 
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F7)) {
-		world->ShuffleObjects(true);
-	}
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F8)) {
-		world->ShuffleObjects(false);
-	}
 	 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::U)) {
 		std::cout << "starting server" << std::endl;
@@ -184,32 +139,7 @@ void TutorialGame::UpdateKeys() {
 
 }
 
-void TutorialGame::LockedObjectMovement() {
-	Matrix4 view		= world->GetMainCamera().BuildViewMatrix();
-	Matrix4 camWorld	= Matrix::Inverse(view);
 
-	Vector3 rightAxis = Vector3(camWorld.GetColumn(0)); //view is inverse of model!
-
-	//forward is more tricky -  camera forward is 'into' the screen...
-	//so we can take a guess, and use the cross of straight up, and
-	//the right axis, to hopefully get a vector that's good enough!
-
-	Vector3 fwdAxis = Vector::Cross(Vector3(0, 1, 0), rightAxis);
-	fwdAxis.y = 0.0f;
-	fwdAxis = Vector::Normalise(fwdAxis);
-
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::UP)) {
-		selectionObject->GetPhysicsObject()->AddForce(fwdAxis);
-	}
-
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::DOWN)) {
-		selectionObject->GetPhysicsObject()->AddForce(-fwdAxis);
-	}
-
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::NEXT)) {
-		selectionObject->GetPhysicsObject()->AddForce(Vector3(0,-10,0));
-	}
-}
 
 
 void TutorialGame::InitCamera() {
@@ -345,40 +275,8 @@ void TutorialGame::InitDefaultFloor() {
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
-void TutorialGame::InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius) {
-	for (int x = 0; x < numCols; ++x) {
-		for (int z = 0; z < numRows; ++z) {
-			Vector3 position = Vector3(x * colSpacing, 10.0f, z * rowSpacing);
-			AddSphereToWorld(position, radius, 10, Vector3(0,0,0));
-		}
-	}
-	
-	//AddFloorToWorld(Vector3(0, -2, 0));
-}
-
-void TutorialGame::InitMixedGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing) {
-	float sphereRadius = 1.0f;
-	Vector3 cubeDims = Vector3(1, 1, 1);
-
-	for (int x = 0; x < numCols; ++x) {
-		for (int z = 0; z < numRows; ++z) {
-			Vector3 position = Vector3(x * colSpacing, 10.0f, z * rowSpacing);
-
-			if (rand() % 2) {
-				AddCubeToWorld(position, cubeDims);
-			}
-			else {
-				AddSphereToWorld(position, sphereRadius, Constants::SPHERE_DEFAULT_MASS, Vector3(0,0,0));
-			}
-		}
-	}
-}
 
 
-
-void TutorialGame::TestLinearMotion() {
-	AddSphereToWorld(Vector3(-5, 20, 0), 2.0f, Constants::SPHERE_DEFAULT_MASS, Vector3(0,10,1));
-}
 
 void TutorialGame::CreateRopeGroup()
 {
