@@ -48,24 +48,26 @@ void AudioManager::Shutdown() {
 }
 
 std::string AudioManager::GetMediaPath(const std::string& filename) {
-
+	
 	std::string fullPath = NCL::Assets::SOUNDSDIR + filename;
+
 	if (fs::exists(fullPath)) {
-		return fullPath;
+		return fullPath; 
 	}
 	else {
 		std::cout << "Error: Sound file not found at " << fullPath << std::endl;
-		return "";
+		return "";  
 	}
 }
 
 void AudioManager::PlaySound(const std::string& filename) {
+	
 	auto it = sounds.find(filename);
 	FMOD::Channel* channel = nullptr;
 
 	if (it != sounds.end()) {
 		FMOD::Sound* sound = it->second;
-		//FMOD::Channel* channel = nullptr;
+		FMOD::Channel* channel = nullptr;
 		FMOD_RESULT result = system->playSound(sound, nullptr, false, &channel);
 		if (result != FMOD_OK) {
 			std::cout << "FMOD playSound failed: " << FMOD_ErrorString(result) << std::endl;
@@ -74,7 +76,8 @@ void AudioManager::PlaySound(const std::string& filename) {
 	}
 	else {
 		std::string fullPath = GetMediaPath(filename);
-
+		
+		std::string fullPath = GetMediaPath(filename);
 		if (!fullPath.empty()) {
 			FMOD::Sound* sound = nullptr;
 			FMOD_RESULT result = system->createSound(fullPath.c_str(), FMOD_DEFAULT, 0, &sound);
@@ -84,14 +87,14 @@ void AudioManager::PlaySound(const std::string& filename) {
 			}
 
 			sounds[filename] = sound;
-			//FMOD::Channel* channel = nullptr;
+			FMOD::Channel* channel = nullptr;
 			result = system->playSound(sound, nullptr, false, &channel);
 			if (result != FMOD_OK) {
 				std::cout << "FMOD playSound failed: " << FMOD_ErrorString(result) << std::endl;
 				return;
 			}
+			}
 		}
-	}
 	//only control named "BGM.wav" channel
 	if (filename == "BGM.wav") {
 		bgmChannel = channel;

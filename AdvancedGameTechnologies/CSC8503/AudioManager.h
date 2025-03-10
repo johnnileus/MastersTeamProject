@@ -27,6 +27,7 @@ namespace NCL {
 			void PlayLoopingSound(const std::string& filename, FMOD::Channel** channel);
 			void Update();
 
+
 		private:
 			AudioManager() = default;
 			~AudioManager() = default;
@@ -42,4 +43,5 @@ namespace NCL {
 		};
 	}
 }
+
 

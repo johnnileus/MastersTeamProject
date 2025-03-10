@@ -26,9 +26,8 @@
 #include "BehaviourSelector.h"
 #include "BehaviourSequence.h"
 #include "BehaviourAction.h"
+#include "AudioManager.h"
 
-#include<fmod.hpp>
-#include<fmod_errors.h>
 
 
 using namespace NCL;
@@ -135,7 +134,8 @@ int main() {
 	}
 
 
-	audio.PlaySound("BGM.wav");
+	audio.PlaySound("drumloop.wav");
+	
 
 
 	std::cout << "Creating TutorialGame instance" << std::endl;
@@ -179,7 +179,7 @@ int main() {
 		Debug::UpdateRenderables(dt);
 	}
 
-	
+	audio.Shutdown();
 
 
 #ifdef _WIN32

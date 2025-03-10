@@ -454,5 +454,36 @@ if(USE_AGC)
     #)
 endif()
 
+################################################################################
+#include studio head file
+include_directories(${FMOD_ROOT}/studio/inc)
+
+#include FMOD lib path
+link_directories(${FMOD_ROOT}/studio/lib)
+
+#choose Debug or Release
+if (CMAKE_BUILD_TYPE MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
+
+    set(FMOD_STUDIO_LIB "${FMOD_ROOT}/studio/lib/wx64/fmodstudioL_vc.lib")
+else()
+    set(FMOD_STUDIO_LIB "${FMOD_ROOT}/studio/lib/wx64/fmodstudio_vc.lib")
+
+endif()
+
+# add FMOD lib
+target_link_libraries(${PROJECT_NAME} PRIVATE ${FMOD_STUDIO_LIB})
+
+#ensure FMOD.dll useable
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+
+    "${FMOD_ROOT}/studio/lib/wx64/fmodstudioL.dll"
+
+    "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+)
+
+
+
+
 
 
