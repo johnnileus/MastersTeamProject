@@ -91,7 +91,9 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	std::cout << "ThirdPersonCamera instance created" << std::endl;
 #endif // _WIN32
 
-	
+
+	navGrid = nullptr;
+	navMeshAgent = nullptr;
 	
 //#ifdef _WIN32
 //	world.GetMainCamera().SetController(*w->GetController());
@@ -733,5 +735,31 @@ void TutorialGame::Transition() {
 	return;
 }
 
+
+void TutorialGame::InitNavigationTestLevel() {
+	//set camera to a debug camera
+
+	//Clear all Assets
+	//world->ClearAndErase();
+	//physics->Clear();
+
+	//Add a Floor
+	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0, 0, 0), Vector3(257, 1, 257));
+
+	//draw debug graph of all nodes and edges
+	navGrid = new NavMeshGrid();
+	navMeshAgent = new NavMeshAgent();
+	std::vector<NavMeshNode> nodes = navGrid->GetAllNodes();
+	for (int n = 0; n < nodes.size(); ++n) {
+		SceneManager::Instance().AddDebugSphereToWorld(world, nodes[n].GetPosition(), 0.2, 0);
+		for (int e = 0; e < nodes[n].GetEdges().size(); ++e) {
+			Debug::DrawLine(nodes[n].GetPosition(), nodes[n].GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7));
+		}
+	}
+	
+	//run function to pick a start and end node, then highlight them in differnet colour
+	//change the colour of each edge/node in the path to test it is working correctly
+	//add a test function to randomly select some nodes as impassable then test again
+}
 
 
