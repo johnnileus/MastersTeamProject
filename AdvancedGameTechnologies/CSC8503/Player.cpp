@@ -421,6 +421,7 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 
 	//collides Gate
 	if (otherObject->tag == "Gate") {
+		myWorld->ClearAndErase();//currently broken (door and enemy delete error)
 		std::cout << "End level, next level here" << std::endl;
 	}
 }
