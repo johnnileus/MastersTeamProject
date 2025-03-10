@@ -232,12 +232,15 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F2)) {
 		InitCamera(); //F2 will reset the camera to a specific default place
 	}
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F3)) {
+		InitNavigationTestLevel(); //Loads a blank floor with navigation nodes displayed
+	}
 #ifdef USEAGC
 	if (c->GetNamedButton("Square")) {
 #else
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
 #endif // USEAGC
-	
+
 		useGravity = !useGravity; //Toggle gravity!
 		physics.UseGravity(useGravity);
 	}
