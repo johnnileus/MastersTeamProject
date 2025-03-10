@@ -56,8 +56,9 @@ namespace NCL {
 			void BroadcastPositions();
 
 			void ToggleCursor();
-
+			void TogglePaused() { gamePaused = !gamePaused; }
 			int GetID() { return networkManager->GetID(); }
+			bool IsGamePaused() { return gamePaused; }
 
 			bool GetCursorLocked() { return cursorLocked; }
 
@@ -110,7 +111,7 @@ namespace NCL {
 			KeyboardMouseController controller;
 
 			bool cursorLocked;
-			bool gamePaused;
+			bool gamePaused = true;
 			bool useGravity;
 
 			float		forceMagnitude;

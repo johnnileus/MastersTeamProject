@@ -68,10 +68,11 @@ void TutorialGame::UpdateGame(float dt) {
 
 	//update objects
 	if (player){player->Update(dt);}
+	if (doorTrigger) { doorTrigger->Update(dt); }
+
 	for (Enemy* enemy : enemies){
 		if (enemy){enemy->Update(dt);}
 	}
-	if (doorTrigger) {doorTrigger->Update(dt);}
 
 	UpdateKeys();
 
@@ -344,3 +345,4 @@ void TutorialGame::ToggleCursor() {
 	Window::GetWindow()->ShowOSPointer(!cursorLocked);
 	Window::GetWindow()->LockMouseToWindow(cursorLocked);
 }
+
