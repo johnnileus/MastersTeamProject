@@ -62,7 +62,7 @@ bool Animator::LoadAnimation(AnimationType animation)
 /// The actual skinning rendering method
 /// @param nFrame target frame
 /// @param meshAni target animation
-void Animator::Draw(int nFrame,MeshAnimation* meshAni)
+void Animator::Draw(int nFrame, MeshAnimation* meshAni)
 {
     //get mesh and joints count
     OGLMesh* animMesh = (OGLMesh*)renderObject->GetMesh();
@@ -75,8 +75,22 @@ void Animator::Draw(int nFrame,MeshAnimation* meshAni)
     const auto& invBindPose = animMesh->GetInverseBindPose();
     
     std::vector<Matrix4> finalMatrices(jointCount);
-    for (size_t i = 0; i < jointCount; ++i) {
-        finalMatrices[i] = frameData[i] * invBindPose[i];
+    
+    if (isTweening && pendingAnim != nullptr) {
+        const Matrix4* pendingFrameData = pendingAnim->GetJointData(0);
+
+        for (size_t i = 0; i < jointCount; ++i) {
+            Matrix4 oldMat = frameData[i];
+            Matrix4 newMat = pendingFrameData[i];
+            // lerp old and new matrices then multiply inverse bind pose get the interpolated matrix
+            Matrix4 blended = LerpMat(oldMat, newMat, tweenBlendFactor);
+            finalMatrices[i] = blended * invBindPose[i];
+        }
+    }
+    else {
+        for (size_t i = 0; i < jointCount; ++i) {
+            finalMatrices[i] = frameData[i] * invBindPose[i];
+        }
     }
 
     //get shader and activate gl program
@@ -86,15 +100,15 @@ void Animator::Draw(int nFrame,MeshAnimation* meshAni)
     
     //upload these matrices data to GPU
     GLint jointsLoc = glGetUniformLocation(programID, "joints");
-    if (jointsLoc==-1)
+    if (jointsLoc == -1)
     {
-        std::cout<<"!!!!!!!ERROR: Uniform 'joints' not found in shader !!!!!!!!!!";
+        std::cout << "!!!!!!!ERROR: Uniform 'joints' not found in shader !!!!!!!!!!";
     }
     else
     {
-        glUniformMatrix4fv(jointsLoc, (GLsizei)jointCount, GL_FALSE, reinterpret_cast<const float*>(finalMatrices.data()));
+        glUniformMatrix4fv(jointsLoc, (GLsizei)jointCount, GL_FALSE,
+                           reinterpret_cast<const float*>(finalMatrices.data()));
     }
-
 }
 
 void Animator::Play(AnimationType anim, bool tween, float animSpeed)
