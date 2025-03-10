@@ -55,12 +55,13 @@ namespace NCL {
 			GameObject** GetConnectedPlayerObjects();
 			void BroadcastPositions();
 
+			void ToggleCursor();
+
 			int GetID() {
 				return networkManager->GetID();
 			}
 
-			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
-
+			bool GetCursorLocked() { return cursorLocked; }
 
 		protected:
 			void InitialiseAssets();
@@ -139,6 +140,8 @@ namespace NCL {
 			void LockCameraToObject(GameObject* o) {
 				lockedObject = o;
 			}
+
+			bool cursorLocked;
 
 			GameObject* objClosest = nullptr;
 			void GenerateWall();

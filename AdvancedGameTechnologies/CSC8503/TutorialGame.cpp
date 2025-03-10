@@ -9,6 +9,7 @@ using namespace CSC8503;
 
 TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *Window::GetWindow()->GetMouse()) {
 	world		= new GameWorld();
+
 #ifdef USEVULKAN
 	renderer	= new GameTechVulkanRenderer(*world);
 	renderer->Init();
@@ -599,5 +600,8 @@ void TutorialGame::Transition() {
 	return;
 }
 
-
-
+void TutorialGame::ToggleCursor() {
+	cursorLocked = !cursorLocked;
+	Window::GetWindow()->ShowOSPointer(!cursorLocked);
+	Window::GetWindow()->LockMouseToWindow(cursorLocked);
+}
