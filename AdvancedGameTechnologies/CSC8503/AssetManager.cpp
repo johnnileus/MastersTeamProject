@@ -26,7 +26,7 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
     bonusMesh = renderer->LoadMesh("19463_Kitten_Head_v1.msh");
     capsuleMesh = renderer->LoadMesh("capsule.msh");
 
-    guardMesh = renderer->LoadMesh("Male_Guard.msh");
+    guardMesh = renderer->LoadMesh("Character_Boss.msh");
     roleMesh = renderer->LoadMesh("Role_T.msh");
 
     terrainMesh = (OGLMesh*)renderer->GenerateTerrainMesh(heightmap);
@@ -46,15 +46,15 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
     characterShader = renderer->LoadShader("character.vert", "character.frag");
 
     //load animation resources 
-    idle = new MeshAnimation("Idle1.anm");
-    walk = new MeshAnimation("Role_T.anm");
+    idle = new MeshAnimation("Boss_Gun_Idle.anm");
+    walk = new MeshAnimation("Boss_Gun_Run.anm");
     RegisterAnimation(AnimationType::Player_Idle,idle);
     RegisterAnimation(AnimationType::Player_Walk,walk);
 
     //load material
-    guardMat = new MeshMaterial("Male_Guard.mat");
-
+    guardMat = new MeshMaterial("Character_Boss.mat");
     playerTex=FindAndLoadSubTextures(guardMat,guardMesh,renderer);
+    
 }
 
 /// get the animation based on the registered animation name.

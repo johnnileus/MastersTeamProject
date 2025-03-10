@@ -79,7 +79,6 @@ void Player::SetComponent(float meshSize,float mass)
 	 	AssetManager::Instance().characterShader,
 	 	RenderObjectType::Skinned)
 	 	);
-	renderObject->SetMaterial(AssetManager::Instance().guardMat);
 	
 	
 	animator = new Animator(renderObject);

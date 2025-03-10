@@ -9,9 +9,7 @@ layout(location = 0) in vec3 position;
 layout(location = 1) in vec4 colour;
 layout(location = 2) in vec2 texCoord;
 layout(location = 3) in vec3 normal;
-
-//I dont know why, but these two location index must be 5,6 instead of 4,5
-//otherwise, it will cause the model to break.
+layout(location = 4) in vec3 tangent;
 layout(location = 5) in vec4 jointWeights;
 layout(location = 6) in ivec4 jointIndices;
 

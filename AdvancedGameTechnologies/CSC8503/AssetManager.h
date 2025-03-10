@@ -52,6 +52,7 @@ namespace NCL {
             Texture* tilesTex = nullptr;
             Texture* floorTex = nullptr;
             vector<Texture*> playerTex;
+            Texture* bossTex;
 
             //Shader
             Shader* basicShader = nullptr;
