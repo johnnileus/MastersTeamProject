@@ -40,28 +40,28 @@ std::vector<std::vector<NavMeshNode>> NavMeshGrid::GenerateNavMeshGrid(int level
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z - 1], 1);
 			}
-			else if (x - 1 < 0) {//left edge
+			else if (z - 1 < 0) {//left edge
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z + 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z + 1], 1);
 			}
-			else if (x + 1 >= nodeGrid.size()) {//right edge
+			else if (z + 1 >= nodeGrid.size()) {//right edge
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z - 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z - 1], 1);
 			}
-			else if (z - 1 < 0) {//top edge
+			else if (x - 1 < 0) {//top edge
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z - 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x + 1][z + 1], 1);
 			}
-			else if (z + 1 >= nodeGrid.size()) {//bottom edge
+			else if (x + 1 >= nodeGrid.size()) {//bottom edge
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z - 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x][z + 1], 1);
 				nodeGrid[x][z].AddEdge(&nodeGrid[x - 1][z - 1], 1);
