@@ -31,9 +31,7 @@ void Player::Init(ThirdPersonCamera* cam)
 	score = 0;
 	acceleratForce = 10;
 	rotationFactor = 40;
-	jumpForce = 25;
-	isAtApex = false;
-	downwardForce = 20.0f; // gravity
+	jumpForce = 600;
 	isOnGround = true;
 	isDashing = false;
 	isDead = false;
@@ -124,9 +122,9 @@ void Player::PausedUpdate(float dt) {
 }
 
 void Player::Update(float dt) {
-	HandleDash(dt);  // 冲刺逻辑优先
+	HandleDash(dt);
 
-	HandleAim();     // 更新瞄准方向
+	HandleAim();
 
 	//check if is firing
 	bool firing = Window::GetMouse()->ButtonDown(MouseButtons::Left);
@@ -153,7 +151,8 @@ void Player::Update(float dt) {
 		HandleRotation(dt);
 	}
 
-	HandleJump();
+	HandleJump(dt);
+	UpdateGroundStatus();
 	DisplayUI();
 	HealthCheck();
 	animator->Update(dt);
@@ -167,18 +166,6 @@ void Player::Update(float dt) {
 			this->GetRenderObject()->SetColour(defaultColour);
 			isTemporaryColourActive = false;
 		}
-	}
-
-	// check if arrive the top point
-	if (!isOnGround && playerPhysicObject) {
-		Vector3 velocity = playerPhysicObject->GetLinearVelocity();
-		if (!isAtApex && velocity.y <= 0) {  
-			isAtApex = true;  // mark
-			playerPhysicObject->AddForce(Vector3(0, -downwardForce, 0)); 
-		}
-	}
-	if (isOnGround) {
-		isAtApex = false;  
 	}
 }
 
@@ -266,25 +253,23 @@ void Player::ClampSpeed(float dt) {
 	if (!playerPhysicObject) return;
 
 	Vector3 velocity = playerPhysicObject->GetLinearVelocity();
-	float speed = Vector::Length(velocity);
+	float speed = Vector::Length(Vector3(velocity.x, 0, velocity.z));
 
 	if (speed > maxSpeed) {
-		// Calculate deceleration direction (opposite to velocity direction)
-		Vector3 deceleration = -Vector::Normalise(velocity) * decelerationFactor;
+		Vector3 horizontalVelocity = Vector3(velocity.x, 0, velocity.z);
+		Vector3 deceleration = -Vector::Normalise(horizontalVelocity) * decelerationFactor;
 
-		// If the speed still exceeds maxSpeed after deceleration, continue applying deceleration force
-		if (Vector::Length(playerPhysicObject->GetLinearVelocity()) > maxSpeed) {
+		if (Vector::Length(Vector3(playerPhysicObject->GetLinearVelocity().x, 0, playerPhysicObject->GetLinearVelocity().z)) > maxSpeed) {
 			playerPhysicObject->AddForce(deceleration);
 		}
 		else {
-			Vector3 limitedVelocity = Vector::Normalise(velocity) * maxSpeed;
-			playerPhysicObject->SetLinearVelocity(limitedVelocity);
+			Vector3 limitedVelocity = Vector::Normalise(horizontalVelocity) * maxSpeed;
+			playerPhysicObject->SetLinearVelocity(Vector3(limitedVelocity.x, velocity.y, limitedVelocity.z));
 		}
 	}
-
-	if (Vector::Length(inputDir) < 0.1)
-	{
-		playerPhysicObject->SetLinearVelocity(Vector3(0, 0, 0));
+    
+	if (Vector::Length(inputDir) < 0.1f) {
+		playerPhysicObject->SetLinearVelocity(Vector3(0, velocity.y, 0));
 	}
 }
 
@@ -361,13 +346,18 @@ void Player::HandleDash(float dt) {
 	}
 }
 
-void Player::HandleJump() {
-	if (!playerPhysicObject || !isOnGround) return;  // Can only jump when on the ground
-
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
-		Vector3 jump = Vector3(0, jumpForce, 0);  // Apply upward force
-		playerPhysicObject->AddForce(jump);
-		isOnGround = false;  // Mark as off the ground
+void Player::HandleJump(float dt) {
+	if (!playerPhysicObject)
+		return;
+	
+	if (isOnGround && Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
+		jumpTimeCounter = 0.1f;
+		isOnGround = false;
+	}
+	
+	if (jumpTimeCounter > 0) {
+		playerPhysicObject->AddForce(Vector3(0, jumpForce * dt, 0));
+		jumpTimeCounter -= dt;
 	}
 }
 
@@ -389,34 +379,8 @@ void Player::HandleAim()
 	aimDir = hitPoint - shootPoint;
 }
 
-Vector3 CollisionDetection::GetRayHitPoint(const Ray& ray)
-{
-	Vector3 planeNormal(0, 1, 0);
-	float d = 0.0f;
-    
-	float denom = Vector::Dot(ray.GetDirection(), planeNormal);
-    
-	if (fabs(denom) > 1e-6)
-	{
-		float t = -(Vector::Dot(ray.GetPosition(), planeNormal) + d) / denom;
-		if (t >= 0)
-		{
-			// 返回交点
-			return ray.GetPosition() + ray.GetDirection() * t;
-		}
-	}
-	
-	return Vector3(-1, -1, -1);
-}
-
 void Player::OnCollisionBegin(GameObject* otherObject)
 {
-	// collides ground
-	if (otherObject->tag == "Ground")
-	{
-		isOnGround = true;
-	}
-
 	// collides Enemy
 	if (otherObject->tag == "Enemy")
 	{
@@ -471,4 +435,20 @@ void Player::DisplayUI()
 void Player::RemoveObject(GameObject* gameObject)
 {
 	gameObject->GetTransform().SetPosition(Vector3(-1000, -1000, -1000));
+}
+
+void Player::UpdateGroundStatus() {
+	Vector3 origin = GetTransform().GetPosition() + Vector3(0, -0.5f, 0);
+	Vector3 direction(0, -1, 0);
+	float rayLength = 0.51f;
+	Ray groundRay(origin, direction);
+	RayCollision collisionInfo;
+	bool hit = myWorld->Raycast(groundRay, collisionInfo, true);
+	if (hit && collisionInfo.rayDistance <= rayLength) {
+		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::GREEN);
+		isOnGround = true;
+	} else {
+		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::YELLOW);
+		isOnGround = false;
+	}
 }
