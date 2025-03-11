@@ -30,4 +30,8 @@
 *.exe
 *.out
 *.app
+
 /sce_module
+
+# Visual Studio Files
+.vs/
