@@ -136,7 +136,7 @@ namespace NCL {
 			KeyboardMouseController controller;
 #endif // _WIN32
 			bool cursorLocked;
-			bool gamePaused = true;
+			bool gamePaused = false;
 			bool useGravity;
 
 			float		forceMagnitude;

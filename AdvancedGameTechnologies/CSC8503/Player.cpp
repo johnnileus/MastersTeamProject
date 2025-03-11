@@ -138,7 +138,14 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	
 	return player;
 }
+void Player::PausedUpdate(float dt) {
 
+	DisplayUI();
+	HealthCheck();
+	animator->Update(dt);
+
+
+}
 
 void Player::Update(float dt) {
 	HandleDash(dt);  // Dash logic takes priority

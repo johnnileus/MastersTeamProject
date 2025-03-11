@@ -20,6 +20,7 @@ namespace NCL {
 			GameObject* playerObject;
 			
 			void Update(float dt);
+			void PausedUpdate(float dt);
 			void Init(ThirdPersonCamera* cam);
 
 			void OnCollisionBegin(GameObject* otherObject) override;
