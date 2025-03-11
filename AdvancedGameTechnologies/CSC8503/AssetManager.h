@@ -56,6 +56,7 @@ namespace NCL {
             //Ani
             MeshAnimation* idle;
             MeshAnimation* walk;
+            MeshAnimation* jump;
 
             //Material
             MeshMaterial* guardMat;

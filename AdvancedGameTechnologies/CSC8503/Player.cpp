@@ -503,6 +503,7 @@ void Player::RemoveObject(GameObject * gameObject)
 }
 
 void Player::UpdateGroundStatus() {
+	
 	Vector3 origin = GetTransform().GetPosition() + Vector3(0, -0.5f, 0);
 	Vector3 direction(0, -1, 0);
 	float rayLength = 0.51f;
