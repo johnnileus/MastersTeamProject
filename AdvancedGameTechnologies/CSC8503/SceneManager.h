@@ -7,6 +7,7 @@
 #include "GameWorld.h"
 #include "Vector.h"
 #include "Quaternion.h"
+#include "Scene.h"
 #include "DemoShootableEnemy.h"
 
 namespace NCL {
