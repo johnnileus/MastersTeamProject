@@ -35,6 +35,9 @@
 
 #include "Pistol.h"
 
+#include "NavMeshGrid.h"
+#include "NavMeshAgent.h"
+
 
 namespace NCL {
 	namespace CSC8503 {
@@ -73,6 +76,7 @@ namespace NCL {
 			void InitDefaultFloor();
 			void CreateRopeGroup();
 
+			void InitNavigationTestLevel();
 
 			//Terrain Generation
 			void InitTerrain();
@@ -145,6 +149,8 @@ namespace NCL {
 
 			Door* doorTrigger;
 
+			NavMeshGrid* navGrid;
+			NavMeshAgent* navMeshAgent;
 		};
 	}
 }

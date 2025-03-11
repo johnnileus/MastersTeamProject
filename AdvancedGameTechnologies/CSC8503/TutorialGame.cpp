@@ -35,6 +35,9 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 
 	thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(),controller);
 
+	navGrid = nullptr;
+	navMeshAgent = nullptr;
+
 	InitialiseAssets();
 }
 
@@ -120,6 +123,10 @@ void TutorialGame::UpdateKeys() {
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F2)) {
 		InitCamera(); //F2 will reset the camera to a specific default place
+	}
+
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F3)) {
+		InitNavigationTestLevel(); //Loads a blank floor with navigation nodes displayed
 	}
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
@@ -276,9 +283,6 @@ void TutorialGame::InitDefaultFloor() {
 	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
-
-
-
 void TutorialGame::CreateRopeGroup()
 {
 	Rope::AddRopeToWorld(world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
@@ -288,8 +292,6 @@ void TutorialGame::CreateRopeGroup()
 	Rope::AddRopeToWorld(world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
 	
 }
-
-
 
 void TutorialGame::DisplayPathfinding() {
 	for (size_t i = 1; i < testNodes.size(); ++i) {
@@ -324,7 +326,6 @@ void TutorialGame::SetWallColour()
 	}
 }
 
-
 void TutorialGame::ReloadLevel() {
 	// Clear the current level
 	world->ClearAndErase();
@@ -338,6 +339,26 @@ void TutorialGame::ReloadLevel() {
 
 void TutorialGame::Transition() {
 	return;
+}
+
+void TutorialGame::InitNavigationTestLevel() {
+	//set camera to a debug camera
+
+	//draw debug graph of all nodes and edges
+	navGrid = new NavMeshGrid();
+	navMeshAgent = new NavMeshAgent();
+	std::vector<NavMeshNode> nodes = navGrid->GetAllNodes();
+	for (int n = 0; n < nodes.size(); ++n) {
+		Vector3 nodePos = nodes[n].GetPosition();
+		Debug::DrawLine(Vector3(nodePos.x, nodePos.y - 2, nodePos.z), Vector3(nodePos.x, nodePos.y + 2, nodePos.z), Vector4(1,1,1,1), 60.0F);
+		for (int e = 0; e < nodes[n].GetEdges().size(); ++e) {
+			Debug::DrawLine(nodes[n].GetPosition(), nodes[n].GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7), 60.0F);
+		}
+	}
+	
+	//run function to pick a start and end node, then highlight them in differnet colour
+	//change the colour of each edge/node in the path to test it is working correctly
+	//add a test function to randomly select some nodes as impassable then test again
 }
 
 void TutorialGame::ToggleCursor() {
