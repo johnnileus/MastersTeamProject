@@ -622,9 +622,9 @@ void TutorialGame::InitNavigationTestLevel() {
 	navMeshAgent = new NavMeshAgent();
 	std::vector<NavMeshNode> nodes = navGrid->GetAllNodes();
 	for (int n = 0; n < nodes.size(); ++n) {
-		SceneManager::Instance().AddDebugSphereToWorld(world, nodes[n].GetPosition(), 0.2, 0);
+		//SceneManager::Instance().AddDebugSphereToWorld(world, nodes[n].GetPosition(), 0.2, 0);
 		for (int e = 0; e < nodes[n].GetEdges().size(); ++e) {
-			Debug::DrawLine(nodes[n].GetPosition(), nodes[n].GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7));
+			Debug::DrawLine(nodes[n].GetPosition(), nodes[n].GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7)); //all nodes are initiated correctly, cannot see the debug lines for some reason
 		}
 	}
 	
