@@ -23,6 +23,8 @@ namespace NCL {
             void UpdateBullets(GameWorld*world, float dt);
             void AddBullet(Bullet* bullet);
             void RemoveBUllet(Bullet* bullet);
+
+            GameObject* AddDebugSphereToWorld(GameWorld* world, const Vector3& pos, float radius, float inverseMass);
             
         private:
             SceneManager() {}
