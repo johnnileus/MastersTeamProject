@@ -50,7 +50,6 @@ void AudioManager::Shutdown() {
 std::string AudioManager::GetMediaPath(const std::string& filename) {
 	
 	std::string fullPath = NCL::Assets::SOUNDSDIR + filename;
-
 	if (fs::exists(fullPath)) {
 		return fullPath; 
 	}

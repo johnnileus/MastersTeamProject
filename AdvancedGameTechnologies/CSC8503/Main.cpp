@@ -132,10 +132,12 @@ int main() {
 	if (!audio.Init()) {
 		return -1;
 	}
-
-
-	audio.PlaySound("drumloop.wav");
 	
+
+	//audio.PlaySound("BGM.wav");
+
+	
+
 
 
 	std::cout << "Creating TutorialGame instance" << std::endl;
@@ -174,6 +176,8 @@ int main() {
 		//w->SetTitle("Go Marble Ball: " + std::to_string(1000.0f * dt));
 
 		g->UpdateGame(dt);
+
+		audio.Update();
 		renderer->Update(dt);
 		renderer->Render();
 		Debug::UpdateRenderables(dt);

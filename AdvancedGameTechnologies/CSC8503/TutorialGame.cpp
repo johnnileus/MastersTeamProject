@@ -5,6 +5,7 @@
 #include "PhysicsObject.h"
 #include "RenderObject.h"
 #include "TextureLoader.h"
+#include "AudioManager.h"
 
 #include "Pistol.h"
 #include "PositionConstraint.h"

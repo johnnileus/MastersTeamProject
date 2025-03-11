@@ -12,6 +12,7 @@
 #define FMT_STATIC_THOUSANDS_SEPARATOR
 #define FMT_HEADER_ONLY 1
 #include <fmt/core.h>
+#include "AudioManager.h"
 
 
 #include "Weapon.h"
@@ -237,7 +238,7 @@ void Player::HandleInput()
 
 		// map controller stick input to inputDir
 		inputDir.x += leftStickX;
-		inputDir.y += leftStickY;  // assuming up on the stick is negative Y // and thus I've reinvented tank controls
+		inputDir.y += leftStickY;
 	}
 	/*if (inputController->GetNamedButton("L2")) {
 		Debug::Print("L2 pressed", Vector2(40, 40), Vector4(1, 0, 0, 1));
@@ -255,15 +256,19 @@ void Player::HandleInput()
     // detect keyboard input
     if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
         inputDir.y += -1.0f;  // front
+		AudioManager::GetInstance().PlaySound("Running2.wav");
     }
     if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
         inputDir.y += 1.0f;   // back
+		AudioManager::GetInstance().PlaySound("Running2.wav");
     }
     if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
         inputDir.x += -1.0f;  // left
+		AudioManager::GetInstance().PlaySound("Running2.wav");
     }
     if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
         inputDir.x += 1.0f;   // right
+		AudioManager::GetInstance().PlaySound("Running2.wav");
     }
 
 #endif // USEAGC

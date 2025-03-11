@@ -7,6 +7,7 @@
 #include "Quaternion.h"
 #include "ThirdPersonCamera.h"
 #include "Weapon.h"
+#include <fmod.hpp>
 
 namespace NCL {
 	namespace CSC8503 {
@@ -105,6 +106,7 @@ namespace NCL {
 
 			void HealthCheck();
 			bool isDead;
+			FMOD::Channel* footstepChannel = nullptr;
 #ifdef USEAGC
 			NCL::PS5::PS5Controller* inputController;
 #endif // USEAGC
