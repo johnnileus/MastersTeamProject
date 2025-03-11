@@ -48,8 +48,10 @@ void AssetManager::LoadAssets(GameTechRenderer* renderer) {
     //load animation resources 
     idle = new MeshAnimation("Boss_Gun_Idle.anm");
     walk = new MeshAnimation("Boss_Gun_Run.anm");
+    jump = new MeshAnimation("Boss_Gun_Jump.anm");
     RegisterAnimation(AnimationType::Player_Idle,idle);
     RegisterAnimation(AnimationType::Player_Walk,walk);
+    RegisterAnimation(AnimationType::Player_Jump,walk);
 
     //load material
     guardMat = new MeshMaterial("Character_Boss.mat");

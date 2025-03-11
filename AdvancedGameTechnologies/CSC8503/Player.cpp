@@ -82,6 +82,7 @@ void Player::SetComponent(float meshSize, float mass)
 	animator = new Animator(renderObject);
 	animator->LoadAnimation(AnimationType::Player_Walk);
 	animator->LoadAnimation(AnimationType::Player_Idle);
+	animator->LoadAnimation(AnimationType::Player_Jump);
 	animator->Play(AnimationType::Player_Idle, true);
 }
 
@@ -434,6 +435,7 @@ void Player::RemoveObject(GameObject* gameObject)
 }
 
 void Player::UpdateGroundStatus() {
+	
 	Vector3 origin = GetTransform().GetPosition() + Vector3(0, -0.5f, 0);
 	Vector3 direction(0, -1, 0);
 	float rayLength = 0.51f;
@@ -444,6 +446,7 @@ void Player::UpdateGroundStatus() {
 		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::GREEN);
 		isOnGround = true;
 	} else {
+		animator->Play(AnimationType::Player_Jump,true);
 		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::YELLOW);
 		isOnGround = false;
 	}
