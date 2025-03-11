@@ -115,7 +115,7 @@ namespace NCL {
 			KeyboardMouseController controller;
 
 			bool cursorLocked;
-			bool gamePaused = true;
+			bool gamePaused = false;
 			bool useGravity;
 
 			float		forceMagnitude;

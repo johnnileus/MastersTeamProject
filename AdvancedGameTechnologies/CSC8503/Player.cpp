@@ -110,9 +110,17 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	}
 	camera->SetFollowObject(player);
 	
-	// player->animator->Play("Role_Walk", true, 1);
+	//player-> animator->Play("Role_Walk",true,1);
 	
 	return player;
+}
+void Player::PausedUpdate(float dt) {
+
+	DisplayUI();
+	HealthCheck();
+	animator->Update(dt);
+
+
 }
 
 void Player::Update(float dt) {
@@ -280,6 +288,7 @@ void Player::ClampSpeed(float dt) {
 	}
 }
 
+
 void Player::HandleRotation(float dt) {
 	
 	Vector3 horizontalDir = Vector3(moveDir.x, 0.0f, moveDir.z);
@@ -426,6 +435,7 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
 			SetTemporaryColour(damageColour, 0.25f);
 			enemy->Reset();
+
 		}
 	}
 

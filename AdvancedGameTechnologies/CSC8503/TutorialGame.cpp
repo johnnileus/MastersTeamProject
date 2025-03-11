@@ -68,51 +68,60 @@ TutorialGame::~TutorialGame()	{
 
 
 void TutorialGame::UpdateGame(float dt) {
+	if (!gamePaused) { // if game is not paused :)
+		if (player) { player->Update(dt); }
+		if (doorTrigger) { doorTrigger->Update(dt); }
 
-	//update objects
-	if (player){player->Update(dt);}
-	if (doorTrigger) { doorTrigger->Update(dt); }
+		for (Enemy* enemy : enemies) {
+			if (enemy) { enemy->Update(dt); }
+		}
+		UpdateKeys();
+		world->UpdateWorld(dt);
 
-	for (Enemy* enemy : enemies){
-		if (enemy){enemy->Update(dt);}
+		if (networkManager == nullptr) {
+			std::cout << "network manager is null" << std::endl;
+		}
+		else {
+			networkManager->Update();
+		}
+		SceneManager::Instance().UpdateBullets(world, dt);
+
+
+
+		physics->Update(dt);
+		thirdPersonCam->Update(dt);
+
+		renderer->Render();
+		Debug::UpdateRenderables(dt);
+
+		//Timer
+		while (timer >= 0.0f) {
+			timer -= dt;
+		}
+
+		Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
+		if (timer <= 0) {
+			Transition();
+		}
+
+	}
+	else {
+		if (player) { player->PausedUpdate(dt); }
+		UpdateKeys();
+
+		renderer->Render();
+		Debug::UpdateRenderables(dt);
+
+
 	}
 
-	UpdateKeys();
-
-	///////Animation Test///////
-	frameTime-=dt;
-	while (frameTime<0.0f)
-	{
-		currentFrame = (currentFrame+1) % AssetManager::Instance().idle->GetFrameCount();
-		frameTime +=1.0f/AssetManager::Instance().idle->GetFrameRate();
-	}
-	///////////////////////////
-	
 	DisplayPathfinding();
 
-	world->UpdateWorld(dt);
 
-	if (networkManager == nullptr) {
-		std::cout << "network manager is null" << std::endl;}
-	else {
-		networkManager->Update();
-	}
 
-	SceneManager::Instance().UpdateBullets(world, dt);
 
-	physics->Update(dt);
-	thirdPersonCam->Update(dt);
-	renderer->Render();
-	Debug::UpdateRenderables(dt);
 
-	//Timer
-	while (timer >= 0.0f) {
-		timer -= dt;
-	}
-	Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
-	if (timer <= 0) {
-		Transition();
-	}
+
 }
 
 void TutorialGame::UpdateKeys() {
@@ -144,7 +153,9 @@ void TutorialGame::UpdateKeys() {
 		networkManager->StartAsClient();
 
 	}
-
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::P)) {
+		TogglePaused();
+	}
 }
 
 
