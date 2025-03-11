@@ -39,7 +39,7 @@ void Player::Init(ThirdPersonCamera* cam)
 	score = 0;
 	acceleratForce = 10;
 	rotationFactor = 40;
-	jumpForce = 600;
+	jumpForce = 700;
 	isOnGround = true;
 	isDashing = false;
 	isDead = false;
@@ -138,9 +138,12 @@ void Player::PausedUpdate(float dt) {
 }
 
 void Player::Update(float dt) {
-	HandleDash(dt);
 
-	HandleAim();
+	UpdateGroundStatus();
+	FixBounce();
+	
+	HandleDash(dt); 
+	HandleAim();    
 
 	//check if is firing
 #ifdef USEAGC
@@ -151,22 +154,18 @@ void Player::Update(float dt) {
 
 	
 	if (firing) {
-		//if is dashing, canceled 
 		if (isDashing) {
 			isDashing   = false;
 			dashTimer   = 0.0f;
 			renderObject->SetColour(defaultColour);
 		}
-		// stop moving
 		if (playerPhysicObject) {
 			Vector3 currentVel = playerPhysicObject->GetLinearVelocity();
 			playerPhysicObject->SetLinearVelocity(Vector3(0, currentVel.y, 0));
 		}
-		
 		FaceAimDirection(dt);
 	}
 	else {
-		// non fire state just do normal walk and rotate
 		if (!isDashing && !isDead) {
 			HandleMovement(dt, inputDir);
 		}
@@ -174,25 +173,20 @@ void Player::Update(float dt) {
 	}
 
 	HandleJump(dt);
-	UpdateGroundStatus();
 	DisplayUI();
 	HealthCheck();
 	animator->Update(dt);
 	myWeapon->Update(dt, firing, aimDir);
 
-	
-	
-
-	// Colour change timer
 	if (isTemporaryColourActive) {
 		colourTimer -= dt;
 		if (colourTimer <= 0.0f) {
-			// Restore default colour
 			this->GetRenderObject()->SetColour(defaultColour);
 			isTemporaryColourActive = false;
 		}
 	}
 }
+
 
 void Player::FaceAimDirection(float dt) {
 	
@@ -523,5 +517,15 @@ void Player::UpdateGroundStatus() {
 		Debug::DrawLine(transform.GetPosition(), origin + direction, Debug::YELLOW);
 		isOnGround = false;
 	}
+}
+
+void Player::FixBounce()
+{
+	if (isOnGround && !wasOnGround) {
+		Vector3 currentVel = playerPhysicObject->GetLinearVelocity();
+		//reset vertical velocity to avoid bounce
+		playerPhysicObject->SetLinearVelocity(Vector3(currentVel.x, 0, currentVel.z));
+	}
+	wasOnGround = isOnGround;
 }
 
