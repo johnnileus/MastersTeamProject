@@ -130,7 +130,7 @@ GameObject* SceneManager::AddDebugSphereToWorld(GameWorld* world, const Vector3&
         AssetManager::Instance().sphereMesh,
         AssetManager::Instance().basicTex,
         AssetManager::Instance().basicShader));
-    debugSphere->SetPhysicsObject(nullptr);
+    debugSphere->SetPhysicsObject(new PhysicsObject(&debugSphere->GetTransform(), debugSphere->GetBoundingVolume()));
 
     debugSphere->GetPhysicsObject()->SetInverseMass(inverseMass);
     debugSphere->GetPhysicsObject()->InitCubeInertia();
