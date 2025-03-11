@@ -133,16 +133,18 @@ TutorialGame::~TutorialGame()	{
 
 
 void TutorialGame::UpdateGame(float dt) {
+	if (!gamePaused) { // if game is not paused :)
 
-	//update objects
-	if (player){player->Update(dt);}
-	if (doorTrigger) { doorTrigger->Update(dt); }
-
-	for (Enemy* enemy : enemies){
-		if (enemy){enemy->Update(dt);}
 	}
 
-	UpdateKeys();
+	//update objects
+	if (player) { player->Update(dt); }
+	if (doorTrigger) { doorTrigger->Update(dt); }
+
+	for (Enemy* enemy : enemies) {
+		if (enemy) { enemy->Update(dt); }
+	}
+
 
 	///////Animation Test///////
 	/*frameTime -= dt;
@@ -151,6 +153,7 @@ void TutorialGame::UpdateGame(float dt) {
 		currentFrame = (currentFrame+1) % AssetManager::Instance().idle->GetFrameCount();
 		frameTime +=1.0f/AssetManager::Instance().idle->GetFrameRate();
 	}*/
+	UpdateKeys();
 	
 	DisplayPathfinding();
 

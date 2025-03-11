@@ -33,13 +33,6 @@ namespace NCL {
 				return mainCamera;
 			}
 
-			void ShuffleConstraints(bool state) {
-				shuffleConstraints = state;
-			}
-
-			void ShuffleObjects(bool state) {
-				shuffleObjects = state;
-			}
 
 			bool Raycast(Ray& r, RayCollision& closestCollision, bool closestObject = false, GameObject* ignore = nullptr) const;
 
@@ -75,8 +68,6 @@ namespace NCL {
 
 			PerspectiveCamera mainCamera;
 
-			bool shuffleConstraints;
-			bool shuffleObjects;
 			int		worldIDCounter;
 			int		worldStateCounter;
 		};
