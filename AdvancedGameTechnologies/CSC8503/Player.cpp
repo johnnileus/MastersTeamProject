@@ -8,6 +8,8 @@
 #include "PhysicsObject.h"
 #include "Pistol.h"
 #include "RenderObject.h"
+#include "AudioManager.h"
+
 
 using namespace NCL;
 using namespace CSC8503;
@@ -182,15 +184,19 @@ void Player::HandleInput()
 	// detect keyboard input
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
 		inputDir.y += -1.0f;  // front
+		AudioManager::GetInstance().PlaySound("Running2.wav");
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
 		inputDir.y += 1.0f;   // back
+		AudioManager::GetInstance().PlaySound("Running2.wav");
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
 		inputDir.x += -1.0f;  // left
+		AudioManager::GetInstance().PlaySound("Running2.wav");
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
 		inputDir.x += 1.0f;   // right
+		AudioManager::GetInstance().PlaySound("Running2.wav");
 	}
 }
 

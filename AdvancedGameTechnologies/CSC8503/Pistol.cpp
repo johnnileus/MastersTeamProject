@@ -2,6 +2,8 @@
 
 #include "Bullet.h"
 
+#include "AudioManager.h"
+
 Pistol::Pistol(Player* owner):Weapon(10,15,0.4,false)
 {
     myCamera=owner->myCam;
@@ -31,5 +33,8 @@ void Pistol::Fire()
 
     //camera effect
     myCamera->Shake(0.05,0.1f);
+
+
+    AudioManager::GetInstance().PlaySound("RifleFire.wav");
 }
 

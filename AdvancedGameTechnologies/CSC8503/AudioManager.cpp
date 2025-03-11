@@ -49,7 +49,6 @@ void AudioManager::Shutdown() {
 std::string AudioManager::GetMediaPath(const std::string& filename) {
 	
 	std::string fullPath = NCL::Assets::SOUNDSDIR + filename;
-
 	if (fs::exists(fullPath)) {
 		return fullPath; 
 	}
@@ -88,5 +87,33 @@ void AudioManager::PlaySound(const std::string& filename) {
 				std::cout << "FMOD playSound failed: " << FMOD_ErrorString(result) << std::endl;
 			}
 		}
+	}
+}
+
+void AudioManager::PlayLoopingSound(const std::string& filename, FMOD::Channel** channel) {
+	auto it = sounds.find(filename);
+	FMOD::Sound* sound = nullptr;
+
+	if (it != sounds.end()) {
+		sound = it->second;
+	}
+	else {
+		std::string fullPath = GetMediaPath(filename);
+		if (fullPath.empty()) return;
+
+
+		system->createSound(fullPath.c_str(), FMOD_LOOP_NORMAL, 0, &sound);
+		sounds[filename] = sound;
+	}
+
+	system->playSound(sound, nullptr, false, channel);
+}
+
+
+
+
+void AudioManager::Update() {
+	if (system) {
+		system->update();
 	}
 }

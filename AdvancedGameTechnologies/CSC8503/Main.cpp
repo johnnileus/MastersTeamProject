@@ -98,10 +98,12 @@ int main() {
 	if (!audio.Init()) {
 		return -1;
 	}
-
-
-	audio.PlaySound("drumloop.wav");
 	
+
+	//audio.PlaySound("BGM.wav");
+
+	
+
 
 
 
@@ -137,6 +139,8 @@ int main() {
 		w->SetTitle("Go Marble Ball: " + std::to_string(1000.0f * dt));
 
 		g->UpdateGame(dt);
+
+		audio.Update();
 	}
 
 	audio.Shutdown();
