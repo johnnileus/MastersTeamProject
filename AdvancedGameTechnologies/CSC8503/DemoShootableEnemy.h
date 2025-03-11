@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector.h"
 #include "GameObject.h"
+#include "SphereVolume.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -16,7 +17,7 @@ namespace NCL {
 				this->respawnTimer = NULL;
 				this->alive = NULL;
 			}
-			GameObject* InitialiseEnemy(float scale, float inverseMass);
+			GameObject* InitialiseEnemy(float scale, float inverseMass, NCL::Maths::Vector3 postion);
 			void UpdateRespawnTimer(float dt) { respawnTimer -= dt; }
 			bool CheckRespawn() { return respawnTimer <= 0; }
 			void Spawn();
