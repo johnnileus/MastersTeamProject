@@ -69,9 +69,10 @@ namespace NCL {
 			//jump
 			float jumpForce;         
 			bool isOnGround;         
-			void HandleJump();
-			bool isAtApex;  // mark arrive high point
-			float downwardForce;
+			void HandleJump(float dt);
+			void UpdateGroundStatus();
+			float jumpTimeCounter;
+			bool wasOnGround = false;
 			
 			
 			//health
