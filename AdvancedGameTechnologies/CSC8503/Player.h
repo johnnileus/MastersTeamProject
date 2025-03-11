@@ -68,6 +68,7 @@ namespace NCL {
 			bool isOnGround;         
 			void HandleJump(float dt);
 			void UpdateGroundStatus();
+			void FixBounce();
 			float jumpTimeCounter;
 			bool wasOnGround = false;
 			
