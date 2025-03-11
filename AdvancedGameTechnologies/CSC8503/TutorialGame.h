@@ -63,7 +63,6 @@ namespace NCL {
 
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
 
-
 		protected:
 			void InitialiseAssets();
 

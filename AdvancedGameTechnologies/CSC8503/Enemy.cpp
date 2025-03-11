@@ -180,7 +180,7 @@ Enemy* Enemy::Instantiate(GameWorld* world, std::vector<Enemy*>& enemyList, Play
     
     // Add to the GameWorld
     if (world) {
-        world->AddGameObject(enemy);
+        //world->AddGameObject(enemy);
     }
 
     return enemy;
@@ -218,5 +218,8 @@ void Enemy::Reset() {
 
 Enemy::~Enemy()
 {
-
+    delete boundingVolume;
+    delete physicsObject;
+    delete renderObject;
+    delete networkObject;
 }

@@ -5,8 +5,6 @@
 #include "RenderObject.h"
 #include "PhysicsObject.h"
 
-
-
 SceneManager& SceneManager::Instance() {
     static SceneManager instance;
     return instance;
@@ -78,7 +76,7 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
 
     terrain->SetRenderObject(new RenderObject(
         &terrain->GetTransform(),
-        AssetManager::Instance().terrainMesh,
+        AssetManager::Instance().cubeMesh,
         AssetManager::Instance().basicTex,
         AssetManager::Instance().basicShader));
 

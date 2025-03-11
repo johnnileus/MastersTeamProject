@@ -21,7 +21,7 @@ Player::Player()
 	if (name == "player")
 	{
 		health = 100;
-		damage =30;
+		damage = 30;
 	}
 }
 

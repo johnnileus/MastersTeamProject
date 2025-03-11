@@ -313,7 +313,6 @@ void TutorialGame::InitWorld() {
 	}
 	
 	world->PrintObjects();
-
 }
 
 

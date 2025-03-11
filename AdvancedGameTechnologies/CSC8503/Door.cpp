@@ -111,7 +111,7 @@ GameObject* Door::CreateDoorPanelObject(GameWorld* world, const Vector3& positio
 
     doorObject->GetPhysicsObject()->SetInverseMass(0);
     doorObject->GetPhysicsObject()->InitCubeInertia();
-    world->AddGameObject(doorObject);
+    //world->AddGameObject(doorObject);
 	
     return doorObject;
 }
@@ -139,8 +139,8 @@ Door* Door::Instantiate(GameWorld* world,
 
     // Add to the GameWorld
     if (world) {
-        world->AddGameObject(door);
-        world->AddGameObject(doorPanel);
+        //world->AddGameObject(door);
+        //world->AddGameObject(doorPanel);
     }
     door->Init(doorPanel);
 
@@ -150,7 +150,10 @@ Door* Door::Instantiate(GameWorld* world,
 
 Door::~Door()
 {
-    
+    delete boundingVolume;
+    delete physicsObject;
+    delete renderObject;
+    delete networkObject;
 }
 
 
