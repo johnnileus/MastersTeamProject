@@ -7,6 +7,7 @@
 #include "GameWorld.h"
 #include "Vector.h"
 #include "Quaternion.h"
+#include "Scene.h"
 
 namespace NCL {
     namespace CSC8503 {
@@ -22,10 +23,7 @@ namespace NCL {
 
             void UpdateBullets(GameWorld*world, float dt);
             void AddBullet(Bullet* bullet);
-            void RemoveBUllet(Bullet* bullet);
 
-            GameObject* AddDebugSphereToWorld(GameWorld* world, const Vector3& pos, float radius, float inverseMass);
-            
         private:
             SceneManager() {}
             SceneManager(const SceneManager&) = delete;
