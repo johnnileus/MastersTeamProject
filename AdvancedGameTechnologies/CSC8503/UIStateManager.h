@@ -2,6 +2,7 @@
 #include "ImGui/imgui.h"
 #include "Inventory.h"
 #include "InventoryUI.h"
+#include "iostream"
 
 enum UIState {
 	MainMenu,
