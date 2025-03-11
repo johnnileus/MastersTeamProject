@@ -610,21 +610,15 @@ void TutorialGame::Transition() {
 void TutorialGame::InitNavigationTestLevel() {
 	//set camera to a debug camera
 
-	//Clear all Assets
-	//world->ClearAndErase();
-	//physics->Clear();
-
-	//Add a Floor
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0, 0, 0), Vector3(257, 1, 257));
-
 	//draw debug graph of all nodes and edges
 	navGrid = new NavMeshGrid();
 	navMeshAgent = new NavMeshAgent();
 	std::vector<NavMeshNode> nodes = navGrid->GetAllNodes();
 	for (int n = 0; n < nodes.size(); ++n) {
-		//SceneManager::Instance().AddDebugSphereToWorld(world, nodes[n].GetPosition(), 0.2, 0);
+		Vector3 nodePos = nodes[n].GetPosition();
+		Debug::DrawLine(Vector3(nodePos.x, nodePos.y - 2, nodePos.z), Vector3(nodePos.x, nodePos.y + 2, nodePos.z), Vector4(1,1,1,1), 60.0F);
 		for (int e = 0; e < nodes[n].GetEdges().size(); ++e) {
-			Debug::DrawLine(nodes[n].GetPosition(), nodes[n].GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7)); //all nodes are initiated correctly, cannot see the debug lines for some reason
+			Debug::DrawLine(nodes[n].GetPosition(), nodes[n].GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7), 60.0F);
 		}
 	}
 	

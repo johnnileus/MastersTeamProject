@@ -114,27 +114,3 @@ void SceneManager::AddBullet(Bullet* bullet)
 {
     bullets.push_back(bullet);
 }
-
-GameObject* SceneManager::AddDebugSphereToWorld(GameWorld* world, const Vector3& pos, float radius, float inverseMass) {
-    GameObject* debugSphere = new GameObject();
-
-    SphereVolume* volume = new SphereVolume(radius);
-    debugSphere->SetBoundingVolume((CollisionVolume*)volume);
-
-    debugSphere->GetTransform()
-        .SetPosition(pos)
-        .SetScale(Vector3(1*radius, 1*radius, 1*radius));
-
-    debugSphere->SetRenderObject(new RenderObject(&debugSphere->GetTransform(),
-        AssetManager::Instance().sphereMesh,
-        AssetManager::Instance().basicTex,
-        AssetManager::Instance().basicShader));
-    debugSphere->SetPhysicsObject(new PhysicsObject(&debugSphere->GetTransform(), debugSphere->GetBoundingVolume()));
-
-    debugSphere->GetPhysicsObject()->SetInverseMass(inverseMass);
-    debugSphere->GetPhysicsObject()->InitCubeInertia();
-
-    world->AddGameObject(debugSphere);
-
-    return debugSphere;
-}
