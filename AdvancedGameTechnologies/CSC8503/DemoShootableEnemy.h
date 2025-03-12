@@ -13,24 +13,29 @@ namespace NCL {
 				Spawn();
 			}
 			~DemoShootableEnemy() {
-				this->health = NULL;
+				this->currentHealth = NULL;
 				this->respawnTimer = NULL;
 				this->alive = NULL;
 			}
 			GameObject* InitialiseEnemy(float scale, float inverseMass, NCL::Maths::Vector3 postion);
-			void UpdateRespawnTimer(float dt) { respawnTimer -= dt; }
+			void UpdateRespawnTimer(float dt) { this->timeToRespawn -= dt; }
 			bool CheckRespawn() { return respawnTimer <= 0; }
 			void Spawn();
 			void KillEnemy();
-			void UpdateHealth(float damage) { this->health -= damage; }
+			void UpdateHealth(float damage) { this->currentHealth -= damage; }
 			void RegisterHit();
 
-			float GetCurrentHealth() { return this->health; }
+			float GetCurrentHealth() { return this->currentHealth; }
 			NCL::Maths::Vector3 GetCurrentPosition() { return this->enemy->GetTransform().GetPosition(); }
 		protected:
-			float health;
+			float maxHealth;
+			float currentHealth;
 			GameObject* enemy;
+			NCL::Maths::Vector3 spawnPosition;
+			float scale;
+			float inverseMass;
 			float respawnTimer;
+			float timeToRespawn;
 			bool alive;
 		};
 	}
