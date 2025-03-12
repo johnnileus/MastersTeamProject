@@ -24,6 +24,9 @@ void DemoShootableEnemy::InitialiseEnemy(GameWorld* world, float scale, float in
 void DemoShootableEnemy::Spawn() {
 	this->currentHealth = this->maxHealth;
 	this->alive = true;
+	this->GetTransform().SetPosition(this->spawnPosition);
+	this->GetPhysicsObject();//need a function to make physics objects active
+	std::cout << "Enemy Spawned";
 }
 
 void DemoShootableEnemy::KillEnemy() {
