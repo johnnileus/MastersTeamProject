@@ -30,14 +30,23 @@ void DemoShootableEnemy::Spawn() {
 }
 
 void DemoShootableEnemy::KillEnemy() {
+	this->GetPhysicsObject();//need a function to make physics objects inactive
 	this->alive = false;
+	this->GetTransform().SetPosition(Vector3(0, -50, 0));
 	this->timeToRespawn = this->respawnTimer;
 }
 
 //function allows us to add additional logic to hits, e.g critical hit, change in behaviour etc
 void DemoShootableEnemy::RegisterHit() {
-	UpdateHealth(15.0f);
+	UpdateHealth(100.0f);
+	std::cout << this->currentHealth;
 	if (this->currentHealth <= 0) {
 		KillEnemy();
+		std::cout << "Enemy Killed";
 	}
+}
+
+void DemoShootableEnemy::OnCollisionBegin(GameObject* otherObject) {
+	std::cout << "collision" << std::endl;
+	if (otherObject->tag == "Bullet") { RegisterHit(); }
 }
