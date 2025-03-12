@@ -37,7 +37,7 @@
 
 #include "NavMeshGrid.h"
 #include "NavMeshAgent.h"
-
+#include "DemoShootableEnemy.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -77,6 +77,7 @@ namespace NCL {
 			void CreateRopeGroup();
 
 			void InitNavigationTestLevel();
+			void InitEnemies();
 
 			//Terrain Generation
 			void InitTerrain();
@@ -151,6 +152,7 @@ namespace NCL {
 
 			NavMeshGrid* navGrid;
 			NavMeshAgent* navMeshAgent;
+			std::vector<DemoShootableEnemy*> enemyList;
 		};
 	}
 }
