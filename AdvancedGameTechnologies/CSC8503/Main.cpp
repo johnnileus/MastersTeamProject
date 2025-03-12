@@ -100,7 +100,7 @@ int main() {
 	}
 	
 
-	//audio.PlaySound("BGM.wav");
+	audio.PlaySound("BGM.wav");
 
 	
 

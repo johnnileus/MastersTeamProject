@@ -172,8 +172,13 @@ void Player::HealthCheck()
 	if (health<=0)
 	{
 		Debug::Print("Dead", Vector2(40,40),Vector4(1,0,0,1));
-		isDead = true;
+
+		if (!isDead) { 
+			isDead = true;
+			AudioManager::GetInstance().PlaySound("DeadScream.wav");
+		}
 	}
+
 }
 
 void Player::HandleInput()
@@ -181,22 +186,47 @@ void Player::HandleInput()
 	//each frame clear the input buffer
 	inputDir=Vector2(0,0);
 	
+	// Check if any movement key is pressed
+	bool isMoving = false;
+
 	// detect keyboard input
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
 		inputDir.y += -1.0f;  // front
-		AudioManager::GetInstance().PlaySound("Running2.wav");
+		isMoving = true;
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
 		inputDir.y += 1.0f;   // back
-		AudioManager::GetInstance().PlaySound("Running2.wav");
+		isMoving = true;
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
 		inputDir.x += -1.0f;  // left
-		AudioManager::GetInstance().PlaySound("Running2.wav");
+		isMoving = true;
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
 		inputDir.x += 1.0f;   // right
-		AudioManager::GetInstance().PlaySound("Running2.wav");
+		isMoving = true;
+	}
+	// Play footstep sound only if moving
+	if (isMoving) {
+		if (!footstepChannel) {
+			
+			AudioManager::GetInstance().PlayLoopingSound("Running2.wav", &footstepChannel);
+		}
+		else {
+		
+			bool isPlaying = false;
+			footstepChannel->isPlaying(&isPlaying);
+			if (!isPlaying) {
+				footstepChannel = nullptr;  
+			}
+		}
+	}
+	else {
+		// Stop sound when no movement key is pressed
+		if (footstepChannel) {
+			footstepChannel->stop();
+			footstepChannel = nullptr;
+		}
 	}
 }
 
@@ -409,6 +439,7 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		else
 		{
 			health-=damage;
+			AudioManager::GetInstance().PlaySound("GetHurt.wav");
 			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
 			SetTemporaryColour(damageColour,0.25f);
 			enemy->Reset();
