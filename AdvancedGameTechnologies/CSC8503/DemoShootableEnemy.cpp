@@ -35,4 +35,11 @@ void DemoShootableEnemy::KillEnemy() {
 	this->enemy->GetTransform().SetPosition(Vector3(0, -50, 0));
 	this->timeToRespawn = this->respawnTimer;
 }
+
+//function allows us to add additional logic to hits, e.g critical hit, change in behaviour etc
+void DemoShootableEnemy::RegisterHit() {
+	UpdateHealth(15.0f);
+	if (this->currentHealth <= 0) {
+		KillEnemy();
+	}
 }
