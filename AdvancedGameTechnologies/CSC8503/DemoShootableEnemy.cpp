@@ -24,7 +24,6 @@ void DemoShootableEnemy::InitialiseEnemy(GameWorld* world, float scale, float in
 void DemoShootableEnemy::Spawn() {
 	this->currentHealth = this->maxHealth;
 	this->alive = true;
-	this->enemy->GetPhysicsObject();//need a function to make physics objects active
 }
 
 void DemoShootableEnemy::KillEnemy() {
