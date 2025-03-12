@@ -116,7 +116,6 @@ void SceneManager::AddBullet(Bullet* bullet)
 }
 
 DemoShootableEnemy* SceneManager::AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass) {
-    DemoShootableEnemy* e = new DemoShootableEnemy(scale, inverseMass, pos);
-    world->AddGameObject(e->GetGameObject());
+    DemoShootableEnemy* e = new DemoShootableEnemy(world, scale, inverseMass, pos);
     return e;
 }
