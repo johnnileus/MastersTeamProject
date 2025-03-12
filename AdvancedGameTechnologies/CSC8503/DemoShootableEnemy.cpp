@@ -3,6 +3,7 @@
 using namespace NCL;
 using namespace CSC8503;
 
+void DemoShootableEnemy::InitialiseEnemy(GameWorld* world, float scale, float inverseMass, NCL::Maths::Vector3 position) {
 	GameObject* e = new GameObject();
 	SphereVolume* volume = new SphereVolume(1.0f);
 
