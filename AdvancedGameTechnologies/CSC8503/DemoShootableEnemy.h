@@ -7,9 +7,14 @@ namespace NCL {
 	namespace CSC8503 {
 		class DemoShootableEnemy {
 		public:
-			DemoShootableEnemy() {
-				this->enemy = InitialiseEnemy();
-				this->respawnTimer = 15.0f;
+			DemoShootableEnemy(float scale, float inverseMass, NCL::Maths::Vector3 spawnPostion, float health = 100, bool alive = true, float respawnTimer = 15.0f) {
+				this->scale = scale;
+				this->inverseMass = inverseMass;
+				this->spawnPosition = spawnPostion;
+				this->enemy = InitialiseEnemy(this->scale, this->inverseMass, this->spawnPosition);
+				this->respawnTimer = respawnTimer;
+				this->timeToRespawn = 0.0f;
+				this->maxHealth = health;
 				Spawn();
 			}
 			~DemoShootableEnemy() {
