@@ -1,6 +1,7 @@
 ﻿#include "Bullet.h"
 
 #include "SceneManager.h"
+#include "DemoShootableEnemy.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -30,7 +31,7 @@ Bullet* Bullet::Instantiate(GameWorld* world, const Vector3& position, const Vec
 {
 
     Bullet* bullet = new Bullet(weapon->getDamage(),200,100);
-    
+    bullet->tag = "Bullet";
     bullet->direction = Vector::Normalise(direction);
     bullet->GetTransform().SetPosition(position); // original position
     bullet->myWorld = world;
