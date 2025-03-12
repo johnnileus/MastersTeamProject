@@ -389,6 +389,7 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 	}
 
 	//collides Enemy
+	/*
 	if (otherObject->tag=="Enemy")
 	{
 		std::cout<<otherObject->GetName()<<std::endl;
@@ -409,7 +410,7 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 
 		}
 	}
-
+	*/
 	//collides Coin
 	if (otherObject->tag=="Coin")
 	{
