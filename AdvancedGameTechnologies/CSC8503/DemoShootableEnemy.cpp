@@ -23,14 +23,11 @@ using namespace CSC8503;
 void DemoShootableEnemy::Spawn() {
 	this->currentHealth = this->maxHealth;
 	this->alive = true;
-	this->enemy->GetTransform().SetPosition(this->spawnPosition);
 	this->enemy->GetPhysicsObject();//need a function to make physics objects active
 }
 
 void DemoShootableEnemy::KillEnemy() {
-	this->enemy->GetPhysicsObject();//need a function to make physics objects inactive
 	this->alive = false;
-	this->enemy->GetTransform().SetPosition(Vector3(0, -50, 0));
 	this->timeToRespawn = this->respawnTimer;
 }
 
