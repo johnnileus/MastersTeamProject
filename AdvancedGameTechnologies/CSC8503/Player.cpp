@@ -14,6 +14,8 @@
 #include <fmt/core.h>
 
 
+#include "Weapon.h"
+
 using namespace NCL;
 using namespace CSC8503;
 //w = (NCL::PS5::PS5Window*)Window::GetWindow();
@@ -56,7 +58,6 @@ void Player::Init(ThirdPersonCamera* cam)
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam=cam;
 	
-
 	myWeapon = new Pistol(this);
 }
 

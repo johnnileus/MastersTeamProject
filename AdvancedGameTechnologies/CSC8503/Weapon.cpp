@@ -10,7 +10,7 @@ void Weapon::Fire() {
     }
     ammo--;
     std::cout << "Weapon fired! Damage: " << damage
-              << ", ammo remaining: " << ammo << std::endl;
+        << ", ammo remaining: " << ammo << std::endl;
 }
 
 void Weapon::Reload() {

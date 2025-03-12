@@ -12,7 +12,7 @@ public:
     virtual ~Pistol();
 
     void Fire() override;
-    
+
 private:
     ThirdPersonCamera* myCamera;
     GameWorld* myWorld;

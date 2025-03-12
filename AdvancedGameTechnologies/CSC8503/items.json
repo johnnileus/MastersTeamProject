@@ -1,0 +1,22 @@
+{
+	"items": [
+		{
+			"uid": 0,
+			"type": 0,
+			"name": "Pistol",
+			"damage": 10,
+			"speed": 10,
+			"effects": null,
+			"stats": []
+		},
+		{
+			"uid": 1,
+			"type": 1,
+			"name": "tbd",
+			"damage": null,
+			"speed": null,
+			"effects": null,
+			"stats": [ "damage", "speed" ]
+		}
+	]
+}

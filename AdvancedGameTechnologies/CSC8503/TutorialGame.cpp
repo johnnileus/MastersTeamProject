@@ -10,11 +10,13 @@
 #include "PositionConstraint.h"
 #include "OrientationConstraint.h"
 #include "StateGameObject.h"
+//#include "json/json11.hpp"
+//#include <iostream>
+//#include <fstream>
+//#include <sstream>
 
 #include "../PS5Core/PS5Window.h"
 
-
-//hi bow here, I have commented out anything to do with the terrain mesh because as of right now it is causing errors with the modular renderer
 
 using namespace NCL;
 using namespace CSC8503;
@@ -111,9 +113,22 @@ void TutorialGame::InitialiseAssets() {
 	std::cout << "InitialiseAssets called" << std::endl;
 	//cubeMesh = renderer.LoadMesh("cube.msh");
 
-	AssetManager::Instance().LoadAssets(&renderer);
-	std::cout << "Assets loaded" << std::endl;
+	/*
+	// DEBUG CODE
+	std::ifstream file("items.json");
+	if (!file) {
+		std::cout << "Could not load json!" << std::endl;
+	}
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	file.close();
+	std::string err;
+	json11::Json json = json11::Json::parse(buffer.str(), err);
+	std::cout << "JSON data: " << json.dump() << "\n";
+	*/
 
+	AssetManager::Instance().LoadAssets(&renderer);
+	
 	InitCamera();
 	std::cout << "Camera initialized" << std::endl;
 
@@ -185,12 +200,6 @@ void TutorialGame::UpdateGame(float dt) {
 	}
 
 	DisplayPathfinding();
-
-
-
-
-
-
 }
 
 void TutorialGame::UpdateKeys() {

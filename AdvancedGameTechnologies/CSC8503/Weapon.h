@@ -17,7 +17,7 @@ namespace NCL {
 
             float shotTimer;      // countdown timer until the next shot is allowed
             bool  wasFiringLastFrame;
-        
+
 
         public:
             Weapon(int maxAmmo, int damage, float interval, bool autoFire)
@@ -29,7 +29,7 @@ namespace NCL {
                 , shotTimer(0.0f)
                 , wasFiringLastFrame(false)
             {
-                
+
             }
 
             virtual ~Weapon() {}
