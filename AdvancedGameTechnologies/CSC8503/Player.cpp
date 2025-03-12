@@ -220,15 +220,23 @@ void Player::HealthCheck()
 {
 	if (health <= 0)
 	{
-		Debug::Print("Dead", Vector2(40, 40), Vector4(1, 0, 0, 1));
-		isDead = true;
+		Debug::Print("Dead", Vector2(40,40),Vector4(1,0,0,1));
+
+		if (!isDead) { 
+			isDead = true;
+			AudioManager::GetInstance().PlaySound("DeadScream.wav");
+		}
 	}
+
 }
 
 void Player::HandleInput()
 {
     // each frame clear the input buffer
     inputDir = Vector2(0, 0);
+
+	// Check if any movement key is pressed
+	bool isMoving = false;
 
 #ifdef USEAGC
 	// detect controller input
@@ -240,11 +248,9 @@ void Player::HandleInput()
 		inputDir.x += leftStickX;
 		inputDir.y += leftStickY;
 		if (leftStickX > 0 || leftStickX < 0) {
-			AudioManager::GetInstance().PlaySound("Running2.wav");
 			isMoving = true;
 		}
 		if (leftStickY > 0 || leftStickY < 0) {
-			AudioManager::GetInstance().PlaySound("Running2.wav");
 			isMoving = true;
 		}
 	}
@@ -264,22 +270,43 @@ void Player::HandleInput()
     // detect keyboard input
     if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
         inputDir.y += -1.0f;  // front
-		AudioManager::GetInstance().PlaySound("Running2.wav");
+		isMoving = true;
     }
     if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
         inputDir.y += 1.0f;   // back
-		AudioManager::GetInstance().PlaySound("Running2.wav");
+		isMoving = true;
     }
     if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
         inputDir.x += -1.0f;  // left
-		AudioManager::GetInstance().PlaySound("Running2.wav");
+		isMoving = true;
     }
     if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
         inputDir.x += 1.0f;   // right
-		AudioManager::GetInstance().PlaySound("Running2.wav");
+		isMoving = true;
     }
 
 #endif // USEAGC
+	if (isMoving) {
+		if (!footstepChannel) {
+
+			AudioManager::GetInstance().PlayLoopingSound("Running2.wav", &footstepChannel);
+		}
+		else {
+
+			bool isPlaying = false;
+			footstepChannel->isPlaying(&isPlaying);
+			if (!isPlaying) {
+				footstepChannel = nullptr;
+			}
+		}
+	}
+	else {
+		// Stop sound when no movement key is pressed
+		if (footstepChannel) {
+			footstepChannel->stop();
+			footstepChannel = nullptr;
+		}
+	}
 }
 
 void Player::HandleMovement(float dt, Vector2 inputDir) {
@@ -469,7 +496,8 @@ void Player::OnCollisionBegin(GameObject * otherObject)
 		}
 		else
 		{
-			health -= damage;
+			health-=damage;
+			AudioManager::GetInstance().PlaySound("GetHurt.wav");
 #ifdef USEAGC
 			Enemy* enemy = static_cast<Enemy*>(otherObject);
 #else
