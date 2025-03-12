@@ -3,22 +3,20 @@
 using namespace NCL;
 using namespace CSC8503;
 
-void DemoShootableEnemy::InitialiseEnemy(GameWorld* world, float scale, float inverseMass, NCL::Maths::Vector3 position) {
-	GameObject* e = new GameObject();
+void DemoShootableEnemy::InitialiseEnemy(float scale, float inverseMass, NCL::Maths::Vector3 position) {
 	SphereVolume* volume = new SphereVolume(1.0f);
 
-	e->SetBoundingVolume((CollisionVolume*)volume);
+	this->SetBoundingVolume((CollisionVolume*)volume);
 
-	e->GetTransform()
+	this->GetTransform()
 		.SetScale(Vector3(scale, scale, scale))
 		.SetPosition(position);
 
-	e->SetRenderObject(new RenderObject(&e->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
-	e->SetPhysicsObject(new PhysicsObject(&e->GetTransform(), e->GetBoundingVolume()));
-	e->GetPhysicsObject()->SetInverseMass(inverseMass);
-	e->GetPhysicsObject()->InitSphereInertia();
-	e->tag = "Enemy";
-	world->AddGameObject(e);
+	this->SetRenderObject(new RenderObject(&this->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
+	this->SetPhysicsObject(new PhysicsObject(&this->GetTransform(), this->GetBoundingVolume()));
+	this->GetPhysicsObject()->SetInverseMass(inverseMass);
+	this->GetPhysicsObject()->InitSphereInertia();
+	this->tag = "Enemy";
 }
 
 void DemoShootableEnemy::Spawn() {
@@ -38,7 +36,7 @@ void DemoShootableEnemy::KillEnemy() {
 
 //function allows us to add additional logic to hits, e.g critical hit, change in behaviour etc
 void DemoShootableEnemy::RegisterHit() {
-	UpdateHealth(100.0f);
+	UpdateHealth(15.0f);
 	std::cout << this->currentHealth;
 	if (this->currentHealth <= 0) {
 		KillEnemy();

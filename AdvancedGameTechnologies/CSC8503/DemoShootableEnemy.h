@@ -2,17 +2,16 @@
 #include "Vector.h"
 #include "GameObject.h"
 #include "SphereVolume.h"
-#include "GameWorld.h"
 
 namespace NCL {
 	namespace CSC8503 {
-		class DemoShootableEnemy : GameObject {
+		class DemoShootableEnemy : public GameObject {
 		public:
-			DemoShootableEnemy(GameWorld* world, float scale, float inverseMass, NCL::Maths::Vector3 spawnPostion, float health = 100, bool alive = true, float respawnTimer = 15.0f) {
+			DemoShootableEnemy(float scale, float inverseMass, NCL::Maths::Vector3 spawnPostion, float health = 100, bool alive = true, float respawnTimer = 15.0f) {
 				this->scale = scale;
 				this->inverseMass = inverseMass;
 				this->spawnPosition = spawnPostion;
-				InitialiseEnemy(world, this->scale, this->inverseMass, this->spawnPosition);
+				InitialiseEnemy(this->scale, this->inverseMass, this->spawnPosition);
 				this->respawnTimer = respawnTimer;
 				this->timeToRespawn = 0.0f;
 				this->maxHealth = health;
@@ -23,14 +22,14 @@ namespace NCL {
 				this->respawnTimer = NULL;
 				this->alive = NULL;
 			}
-			void InitialiseEnemy(GameWorld* world, float scale, float inverseMass, NCL::Maths::Vector3 postion);
+			void InitialiseEnemy(float scale, float inverseMass, NCL::Maths::Vector3 postion);
 			void UpdateRespawnTimer(float dt) { this->timeToRespawn -= dt; }
-			bool CheckRespawn() { return respawnTimer <= 0; }
+			bool CheckRespawn() { return this->timeToRespawn <= 0; }
 			void Spawn();
 			void KillEnemy();
 			void UpdateHealth(float damage) { this->currentHealth -= damage; }
 			void RegisterHit();
-
+			bool CheckAlive() { return this->alive; }
 			void OnCollisionBegin(GameObject* otherObject) override;
 
 			float GetCurrentHealth() { return this->currentHealth; }
