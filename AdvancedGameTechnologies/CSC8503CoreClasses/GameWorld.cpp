@@ -9,8 +9,6 @@ using namespace NCL;
 using namespace NCL::CSC8503;
 
 GameWorld::GameWorld()	{
-	shuffleConstraints	= false;
-	shuffleObjects		= false;
 	worldIDCounter		= 0;
 	worldStateCounter	= 0;
 }
@@ -69,13 +67,6 @@ void GameWorld::UpdateWorld(float dt) {
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 	std::default_random_engine e(seed);
 
-	if (shuffleObjects) {
-		std::shuffle(gameObjects.begin(), gameObjects.end(), e);
-	}
-
-	if (shuffleConstraints) {
-		std::shuffle(constraints.begin(), constraints.end(), e);
-	}
 }
 
 bool GameWorld::Raycast(Ray& r, RayCollision& closestCollision, bool closestObject, GameObject* ignoreThis) const {
@@ -92,7 +83,7 @@ bool GameWorld::Raycast(Ray& r, RayCollision& closestCollision, bool closestObje
 		RayCollision thisCollision;
 		if (CollisionDetection::RayIntersection(r, *i, thisCollision)) {
 				
-			if (!closestObject) {	
+			if (closestObject==false) {	
 				closestCollision		= collision;
 				closestCollision.node = i;
 				return true;

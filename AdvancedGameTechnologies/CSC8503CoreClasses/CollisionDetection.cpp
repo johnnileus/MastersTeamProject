@@ -59,7 +59,7 @@ bool CollisionDetection::RayBoxIntersection(const Ray&r, const Vector3& boxPos, 
 
 	Vector3 tVals(-1, -1, -1);
 
-	// 计算每个轴上的最佳交点
+
 	for (int i = 0; i < 3; ++i) {
 		if (rayDir[i] > 0) {
 			tVals[i] = (boxMin[i] - rayPos[i]) / rayDir[i];
@@ -71,17 +71,17 @@ bool CollisionDetection::RayBoxIntersection(const Ray&r, const Vector3& boxPos, 
 	float bestT = Vector::GetMaxElement(tVals);
 
 	if (bestT < 0.0f) {
-		return false; // 交点在射线后方
+		return false; 
 	}
 
-	// 计算交点
+
 	Vector3 intersection = rayPos + (rayDir * bestT);
 
-	const float epsilon = 0.0001f; // 容差
+	const float epsilon = 0.0001f;
 	for (int i = 0; i < 3; ++i) {
 		if (intersection[i] + epsilon < boxMin[i] ||
 			intersection[i] - epsilon > boxMax[i]) {
-			return false; // 最佳交点未触碰盒子表面
+			return false; 
 			}
 	}
 
@@ -92,7 +92,24 @@ bool CollisionDetection::RayBoxIntersection(const Ray&r, const Vector3& boxPos, 
 }
 
 bool CollisionDetection::RayAABBIntersection(const Ray&r, const Transform& worldTransform, const AABBVolume& volume, RayCollision& collision) {
-	return false;
+	Quaternion orientation = worldTransform.GetOrientation();
+	Vector3 position = worldTransform.GetPosition();
+
+	Matrix3 transform = Quaternion::RotationMatrix<Matrix3>(orientation);
+	Matrix3 invTransform = Quaternion::RotationMatrix<Matrix3>(orientation.Conjugate());
+
+	Vector3 localRayPos = r.GetPosition() - position;
+
+	Ray tempRay(invTransform * localRayPos, invTransform * r.GetDirection());
+
+	bool collided = RayBoxIntersection(tempRay, Vector3(), 
+									   volume.GetHalfDimensions(), collision);
+
+	if (collided) {
+		collision.collidedAt = transform * collision.collidedAt + position;
+	}
+
+	return collided;
 }
 
 bool CollisionDetection::RayOBBIntersection(const Ray&r, const Transform& worldTransform, const OBBVolume& volume, RayCollision& collision) {
@@ -122,27 +139,25 @@ bool CollisionDetection::RaySphereIntersection(const Ray&r, const Transform& wor
 
 	Vector3 spherePos = worldTransform.GetPosition();
 	float sphereRadius = volume.GetRadius();
-
-	// 获取射线起点到球心的方向向量
+	
 	Vector3 dir = (spherePos - r.GetPosition());
 
-	// 将球心投影到射线方向向量上
+
 	float sphereProj = Vector::Dot(dir, r.GetDirection());
 
 	if (sphereProj < 0.0f) {
-		return false; // 球在射线后方
+		return false; 
 	}
 
-	// 计算射线到球心最近点
+
 	Vector3 point = r.GetPosition() + (r.GetDirection() * sphereProj);
 
 	float sphereDist = Vector::Length(point - spherePos);
 
 	if (sphereDist > sphereRadius) {
-		return false; // 射线未碰到球体
+		return false; 
 	}
-
-	// 根据距离计算交点
+	
 	float offset = sqrt((sphereRadius * sphereRadius) - (sphereDist * sphereDist));
 	collision.rayDistance = sphereProj - offset;
 	collision.collidedAt = r.GetPosition() + 

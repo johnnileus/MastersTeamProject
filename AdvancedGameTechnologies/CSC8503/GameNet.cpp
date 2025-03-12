@@ -174,8 +174,6 @@ GameObject* TutorialGame::InitialiseConnectedPlayerObject(int id) {
 
 	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
 
-	newPlayer->SetBoundingVolume((CollisionVolume*)volume);
-
 	newPlayer->GetTransform()
 		.SetScale(Vector3(meshSize, meshSize, meshSize))
 		.SetPosition(Vector3(20, 0, 30));

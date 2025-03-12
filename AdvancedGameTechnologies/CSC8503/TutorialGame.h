@@ -35,6 +35,9 @@
 
 #include "Pistol.h"
 
+#include "NavMeshGrid.h"
+#include "NavMeshAgent.h"
+
 
 namespace NCL {
 	namespace CSC8503 {
@@ -55,12 +58,12 @@ namespace NCL {
 			GameObject** GetConnectedPlayerObjects();
 			void BroadcastPositions();
 
-			int GetID() {
-				return networkManager->GetID();
-			}
+			void ToggleCursor();
+			void TogglePaused() { gamePaused = !gamePaused; }
+			int GetID() { return networkManager->GetID(); }
+			bool IsGamePaused() { return gamePaused; }
 
-			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
-
+			bool GetCursorLocked() { return cursorLocked; }
 
 		protected:
 			void InitialiseAssets();
@@ -70,17 +73,10 @@ namespace NCL {
 
 			void InitWorld();
 
-			void InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius);
-			void InitMixedGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing);
-
 			void InitDefaultFloor();
-			bool SelectObject();
-			void MoveSelectedObject();
-			void DebugObjectMovement();
-			void LockedObjectMovement();
-			void TestLinearMotion();
 			void CreateRopeGroup();
 
+			void InitNavigationTestLevel();
 
 			//Terrain Generation
 			void InitTerrain();
@@ -118,8 +114,9 @@ namespace NCL {
 
 			KeyboardMouseController controller;
 
+			bool cursorLocked;
+			bool gamePaused = false;
 			bool useGravity;
-			bool inSelectionMode;
 
 			float		forceMagnitude;
 
@@ -140,22 +137,20 @@ namespace NCL {
 				lockedObject = o;
 			}
 
+
 			GameObject* objClosest = nullptr;
 			void GenerateWall();
 			void SetWallColour();
 
 			void DisplayPathfinding(); // display navigation path
 			std::vector<Vector3> testNodes; // save nodes
-			
-			bool allCoinsCollected;   // Whether all coins have been collected
-			void CheckCoinsCollected(); // Check if all coins have been collected
-
-			void ShowSuccessMessage();  // Display success message
 
 			void ReloadLevel();
 
 			Door* doorTrigger;
 
+			NavMeshGrid* navGrid;
+			NavMeshAgent* navMeshAgent;
 		};
 	}
 }
