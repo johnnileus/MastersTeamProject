@@ -3,7 +3,6 @@
 using namespace NCL;
 using namespace CSC8503;
 
-GameObject* DemoShootableEnemy::InitialiseEnemy(float scale, float inverseMass, NCL::Maths::Vector3 position) {
 	GameObject* e = new GameObject();
 	SphereVolume* volume = new SphereVolume(1.0f);
 
@@ -17,8 +16,8 @@ GameObject* DemoShootableEnemy::InitialiseEnemy(float scale, float inverseMass, 
 	e->SetPhysicsObject(new PhysicsObject(&e->GetTransform(), e->GetBoundingVolume()));
 	e->GetPhysicsObject()->SetInverseMass(inverseMass);
 	e->GetPhysicsObject()->InitSphereInertia();
-
-	return e;
+	e->tag = "Enemy";
+	world->AddGameObject(e);
 }
 
 void DemoShootableEnemy::Spawn() {
