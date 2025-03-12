@@ -46,6 +46,7 @@ void DemoShootableEnemy::RegisterHit() {
 	}
 }
 
+//this function is not being called for some reason
 void DemoShootableEnemy::OnCollisionBegin(GameObject* otherObject) {
 	std::cout << "collision" << std::endl;
 	if (otherObject->tag == "Bullet") { RegisterHit(); }
