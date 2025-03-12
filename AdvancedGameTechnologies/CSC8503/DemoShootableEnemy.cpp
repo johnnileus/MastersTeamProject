@@ -21,4 +21,11 @@ GameObject* DemoShootableEnemy::InitialiseEnemy(float scale, float inverseMass, 
 
 	return e;
 }
+
+void DemoShootableEnemy::Spawn() {
+	this->currentHealth = this->maxHealth;
+	this->alive = true;
+	this->enemy->GetTransform().SetPosition(this->spawnPosition);
+	this->enemy->GetPhysicsObject();//need a function to make physics objects active
+}
 }
