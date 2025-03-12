@@ -2,16 +2,17 @@
 #include "Vector.h"
 #include "GameObject.h"
 #include "SphereVolume.h"
+#include "GameWorld.h"
 
 namespace NCL {
 	namespace CSC8503 {
-		class DemoShootableEnemy {
+		class DemoShootableEnemy : GameObject {
 		public:
-			DemoShootableEnemy(float scale, float inverseMass, NCL::Maths::Vector3 spawnPostion, float health = 100, bool alive = true, float respawnTimer = 15.0f) {
+			DemoShootableEnemy(GameWorld* world, float scale, float inverseMass, NCL::Maths::Vector3 spawnPostion, float health = 100, bool alive = true, float respawnTimer = 15.0f) {
 				this->scale = scale;
 				this->inverseMass = inverseMass;
 				this->spawnPosition = spawnPostion;
-				this->enemy = InitialiseEnemy(this->scale, this->inverseMass, this->spawnPosition);
+				InitialiseEnemy(world, this->scale, this->inverseMass, this->spawnPosition);
 				this->respawnTimer = respawnTimer;
 				this->timeToRespawn = 0.0f;
 				this->maxHealth = health;
@@ -22,8 +23,7 @@ namespace NCL {
 				this->respawnTimer = NULL;
 				this->alive = NULL;
 			}
-			GameObject* InitialiseEnemy(float scale, float inverseMass, NCL::Maths::Vector3 postion);
-			GameObject* GetGameObject() { return this->enemy; }
+			void InitialiseEnemy(GameWorld* world, float scale, float inverseMass, NCL::Maths::Vector3 postion);
 			void UpdateRespawnTimer(float dt) { this->timeToRespawn -= dt; }
 			bool CheckRespawn() { return respawnTimer <= 0; }
 			void Spawn();
@@ -31,12 +31,13 @@ namespace NCL {
 			void UpdateHealth(float damage) { this->currentHealth -= damage; }
 			void RegisterHit();
 
+			void OnCollisionBegin(GameObject* otherObject) override;
+
 			float GetCurrentHealth() { return this->currentHealth; }
-			NCL::Maths::Vector3 GetCurrentPosition() { return this->enemy->GetTransform().GetPosition(); }
+			NCL::Maths::Vector3 GetCurrentPosition() { return this->GetTransform().GetPosition(); }
 		protected:
 			float maxHealth;
 			float currentHealth;
-			GameObject* enemy;
 			NCL::Maths::Vector3 spawnPosition;
 			float scale;
 			float inverseMass;
