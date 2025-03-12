@@ -7,6 +7,7 @@
 #include "GameWorld.h"
 #include "Vector.h"
 #include "Quaternion.h"
+#include "DemoShootableEnemy.h"
 
 namespace NCL {
     namespace CSC8503 {
@@ -25,6 +26,7 @@ namespace NCL {
             void RemoveBUllet(Bullet* bullet);
 
             GameObject* AddDebugSphereToWorld(GameWorld* world, const Vector3& pos, float radius, float inverseMass);
+            DemoShootableEnemy* AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass);
             
         private:
             SceneManager() {}
