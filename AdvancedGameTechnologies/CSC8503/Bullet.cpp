@@ -8,8 +8,8 @@ using namespace CSC8503;
 Bullet::Bullet(float damage, float speed, float distance)
 {
     this->damage = damage;
-    this->distance = distance;
     this->speed = speed;
+    this->distance = distance;
     this->isDead = false;
 
     SetComponent(0.1,1);
@@ -28,6 +28,7 @@ Bullet::~Bullet()
 /// @return 
 Bullet* Bullet::Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon)
 {
+
     Bullet* bullet = new Bullet(weapon->getDamage(),200,100);
     
     bullet->direction = Vector::Normalise(direction);

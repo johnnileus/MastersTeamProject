@@ -9,6 +9,8 @@
 #include "Pistol.h"
 #include "RenderObject.h"
 
+#include "Weapon.h"
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -51,7 +53,6 @@ void Player::Init(ThirdPersonCamera* cam)
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam=cam;
 	
-
 	myWeapon = new Pistol(this);
 }
 
