@@ -1,6 +1,5 @@
 #include "DemoShootableEnemy.h"
-#include "TutorialGame.h"
-
+#include "SceneManager.h"
 using namespace NCL;
 using namespace CSC8503;
 
