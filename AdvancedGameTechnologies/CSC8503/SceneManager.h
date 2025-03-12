@@ -25,7 +25,6 @@ namespace NCL {
             void AddBullet(Bullet* bullet);
             void RemoveBUllet(Bullet* bullet);
 
-            GameObject* AddDebugSphereToWorld(GameWorld* world, const Vector3& pos, float radius, float inverseMass);
             DemoShootableEnemy* AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass);
             
         private:
