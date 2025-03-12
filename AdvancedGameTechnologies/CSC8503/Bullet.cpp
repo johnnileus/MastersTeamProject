@@ -35,7 +35,7 @@ Bullet* Bullet::Instantiate(GameWorld* world, const Vector3& position, const Vec
     bullet->myWorld = world;
     world->AddGameObject(bullet);//add to physic world
     SceneManager::Instance().AddBullet(bullet);//must add to the manager for updating
-    
+    Debug::DrawLine(position,position+direction*100.0f,Debug::CYAN,0.5);
     return bullet;
 }
 
