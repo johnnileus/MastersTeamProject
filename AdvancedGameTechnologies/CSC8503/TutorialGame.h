@@ -87,6 +87,7 @@ namespace NCL {
 
 			void InitNavigationTestLevel();
 			void InitEnemies();
+			void UpdateEnemies(float dt);
 
 			//Terrain Generation
 			void InitTerrain();

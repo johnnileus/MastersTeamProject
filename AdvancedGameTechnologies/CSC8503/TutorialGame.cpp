@@ -168,9 +168,10 @@ void TutorialGame::UpdateGame(float dt) {
 			networkManager->Update();
 		}
 #endif // _WIN32
-		SceneManager::Instance().UpdateBullets(&world, dt);
 
 
+	SceneManager::Instance().UpdateBullets(&world, dt);
+	UpdateEnemies(dt);
 
 		physics.Update(dt);
 		thirdPersonCam->Update(dt);
@@ -524,4 +525,21 @@ void TutorialGame::ToggleCursor() {
 
 void TutorialGame::InitEnemies() {
 	enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(world, Vector3(10,3,10), 1.0f, 100.0f));
+}
+
+void TutorialGame::UpdateEnemies(float dt) {
+	for (int e = 0; e < enemies.size(); ++e) {
+		if (enemyList[e]->CheckAlive()) {
+			//alive enemy logic
+			continue;
+		}
+		else {
+			if (enemyList[e]->CheckRespawn()) {
+				enemyList[e]->Spawn();
+			}
+			else {
+				enemyList[e]->UpdateRespawnTimer(dt);
+			}
+		}
+	}
 }
