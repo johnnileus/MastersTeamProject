@@ -23,6 +23,7 @@ namespace NCL {
 				this->alive = NULL;
 			}
 			GameObject* InitialiseEnemy(float scale, float inverseMass, NCL::Maths::Vector3 postion);
+			GameObject* GetGameObject() { return this->enemy; }
 			void UpdateRespawnTimer(float dt) { this->timeToRespawn -= dt; }
 			bool CheckRespawn() { return respawnTimer <= 0; }
 			void Spawn();
