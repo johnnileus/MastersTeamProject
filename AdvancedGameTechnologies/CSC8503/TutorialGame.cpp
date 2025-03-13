@@ -41,6 +41,8 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	navMeshAgent = nullptr;
 
 	sceneManager = new SceneManager();
+	sceneManager->InitScenes();
+	sceneManager->SwitchScene("DefaultScene");
 
 	InitialiseAssets();
 }

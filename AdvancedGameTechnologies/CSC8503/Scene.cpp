@@ -113,16 +113,41 @@ void Scene::GenerateWall(GameWorld* world)
     }
 }
 
+void Scene::InitDefaultFloor(GameWorld* world) {
+    Vector3 offset(20, 0, 20);
+
+    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
+    Scene::AddDefaultFloorToWorld(world, Vector3(70, -3, 0) + offset, Vector3(1, 10, 70));
+    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, -70) + offset, Vector3(70, 10, 1));
+    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 70) + offset, Vector3(70, 10, 1));
+    Scene::AddDefaultFloorToWorld(world, Vector3(-70, -3, 0) + offset, Vector3(1, 10, 70));
+}
 
 void Scene::InitScene() {
-	/*world->ClearAndErase();
-
-	SceneManager::Instance().CreateRopeGroup(world);
-	player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
-*/
-
+    std::cout << "empty scene" << std::endl;
 }
 
 void Scene::UpdateScene() {
 
 }
+
+
+void DefaultScene::InitScene() {
+    world = new GameWorld();
+	world->ClearAndErase();
+
+	//CreateRopeGroup(world);
+	//player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
+
+ //   world->GetMainCamera().SetNearPlane(0.1f);
+ //   world->GetMainCamera().SetFarPlane(500.0f);
+
+ //   InitDefaultFloor(world);
+ //   GenerateWall(world);
+
+ //   doorTrigger = Door::Instantiate(world, Vector3(15, 0, 25), Vector3(20, 0, 0), Quaternion(), Quaternion());
+
+
+
+}
+
