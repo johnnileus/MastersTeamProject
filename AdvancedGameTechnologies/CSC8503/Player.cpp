@@ -430,6 +430,8 @@ void Player::HandleDash(float dt) {
 			playerPhysicObject->AddForce(dashForce);  // Dash direction follows the current velocity
 			isDashing = true;
 			dashTimer = dashCooldown;  // Start cooldown timer
+
+			AudioManager::GetInstance().PlaySound("Dash.wav");   // Dashsound
 		}
 	}
 }
@@ -448,6 +450,7 @@ void Player::HandleJump(float dt) {
 	if (isOnGround && Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
 		jumpTimeCounter = 0.1f;
 		isOnGround = false;
+		AudioManager::GetInstance().PlaySound("Jump.wav");
 	}
 #endif // USEAGC
 
