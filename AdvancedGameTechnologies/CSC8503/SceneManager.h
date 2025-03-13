@@ -1,6 +1,9 @@
 ﻿#pragma once
 
 #include <vector>
+#include <unordered_map>
+#include <string>
+
 
 #include "Bullet.h"
 #include "GameObject.h"   // Base class for game objects (Enemy, Player, SimpleSphere, etc.)
@@ -10,6 +13,7 @@
 #include "Scene.h"
 #include "Rope.h"
 #include "DemoShootableEnemy.h"
+
 
 
 namespace NCL {
@@ -31,11 +35,13 @@ namespace NCL {
             void CreateRopeGroup(GameWorld* world);
             void GenerateWall(GameWorld* world);
 
-
-
             void UpdateBullets(GameWorld*world, float dt);
             void AddBullet(Bullet* bullet);
 
+            void InitScenes();
+            void SwitchScene(string newScene);
+            
+            unordered_map<string, Scene*> scenes;
             Scene* activeScene;
 
         private:

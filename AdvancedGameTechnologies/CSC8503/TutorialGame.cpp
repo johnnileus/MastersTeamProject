@@ -102,6 +102,8 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 //#endif // _WIN32
 
 	sceneManager = new SceneManager();
+	sceneManager->InitScenes();
+	sceneManager->SwitchScene("DefaultScene");
 
 	InitialiseAssets();
 	
