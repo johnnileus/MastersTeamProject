@@ -94,6 +94,39 @@ GameObject* SceneManager::AddTerrain(GameWorld* world, const Vector3& pos, const
     return terrain;
 }
 
+void SceneManager::CreateRopeGroup(GameWorld* world){
+
+    Rope::AddRopeToWorld(world, Vector3(0, 0, -5), Vector3(15, 0, -5), 0.7f);
+    Rope::AddRopeToWorld(world, Vector3(0, 0, 10), Vector3(15, 0, 10), 0.7f);
+    Rope::AddRopeToWorld(world, Vector3(-10, 0, 30), Vector3(-10, 0, 40), 0.7f);
+    Rope::AddRopeToWorld(world, Vector3(-10, 0, 30), Vector3(-5, 0, 20), 0.8f);
+    Rope::AddRopeToWorld(world, Vector3(-5, 0, 50), Vector3(-10, 0, 40), 0.8f);
+}
+
+void SceneManager::GenerateWall(GameWorld* world)
+{
+    // add all walls to the list
+    std::vector<GameObject*> floors;
+    floors.push_back(Scene::AddDefaultFloorToWorld(world, Vector3(45, 0, 12), Vector3(6, 1, 1)));
+    floors.push_back(Scene::AddDefaultFloorToWorld(world, Vector3(70, 0, 12), Vector3(6, 1, 1)));
+    floors.push_back(Scene::AddDefaultFloorToWorld(world, Vector3(60, 0, 30), Vector3(8, 1, 3)));
+    floors.push_back(Scene::AddDefaultFloorToWorld(world, Vector3(45, 0, 50), Vector3(8, 1, 3)));
+    floors.push_back(Scene::AddDefaultFloorToWorld(world, Vector3(70, 0, 50), Vector3(3, 1, 3)));
+    floors.push_back(Scene::AddDefaultFloorToWorld(world, Vector3(35, 0, 70), Vector3(9, 1, 3)));
+    floors.push_back(Scene::AddDefaultFloorToWorld(world, Vector3(65, 0, 70), Vector3(8, 1, 3)));
+    floors.push_back(Scene::AddDefaultFloorToWorld(world, Vector3(10, 0, 50), Vector3(4, 1, 4)));
+    floors.push_back(Scene::AddDefaultFloorToWorld(world, Vector3(25, 0, 50), Vector3(2, 1, 4)));
+
+    for (size_t i = 0; i < floors.size(); ++i) {
+        floors[i]->GetRenderObject()->SetColour(Vector4(0.7, 0.7, 0.7, 1));
+    }
+}
+
+
+
+
+
+
 /// update all the bullets here
 /// @param world 
 /// @param dt 

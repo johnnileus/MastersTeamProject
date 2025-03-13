@@ -40,6 +40,8 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 	//physics		= new PhysicsSystem(*world);
 
+	
+
 	forceMagnitude	= 1.0f;
 	useGravity		= false;
 
@@ -98,6 +100,9 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 //#ifdef _WIN32
 //	world.GetMainCamera().SetController(*w->GetController());
 //#endif // _WIN32
+
+	sceneManager = new SceneManager();
+
 	InitialiseAssets();
 	
 }
@@ -354,7 +359,7 @@ void TutorialGame::InitWorld() {
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
-	SceneManager::Instance().AddTerrain(&world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
+	Scene::AddTerrain(&world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
 
 
@@ -370,67 +375,18 @@ void TutorialGame::InitCatCoins() {
 
 }
 
-/*
 
-Builds a game object that uses a sphere mesh for its graphics, and a bounding sphere for its
-rigid body representation. This and the cube function will let you build a lot of 'simple' 
-physics worlds. You'll probably need another function for the creation of OBB cubes too.
 
-*/
-GameObject* TutorialGame::AddSphereToWorld(const Vector3& position,float radius,float inverseMass,const Vector3& initialVelocity) {
-	GameObject* sphere = new GameObject();
 
-	SphereVolume* volume = new SphereVolume(radius);
-	sphere->SetBoundingVolume((CollisionVolume*)volume);
-
-	sphere->GetTransform().SetScale(Vector3(radius, radius, radius));
-	sphere->GetTransform().SetPosition(position);
-
-	sphere->SetRenderObject(new RenderObject(&sphere->GetTransform(),AssetManager::Instance().sphereMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
-	sphere->SetPhysicsObject(new PhysicsObject(&sphere->GetTransform(),sphere->GetBoundingVolume()));
-	sphere->SetName("Sphere");
-
-	PhysicsObject* physicsObject = sphere->GetPhysicsObject();
-	physicsObject->SetInverseMass(inverseMass);
-	physicsObject->SetLinearVelocity(initialVelocity);
-
-	physicsObject->InitSphereInertia();
-
-	world.AddGameObject(sphere);
-	
-	return sphere;
-}
-
-GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass) {
-	GameObject* cube = new GameObject();
-
-	AABBVolume* volume = new AABBVolume(dimensions);
-	cube->SetBoundingVolume((CollisionVolume*)volume);
-
-	cube->GetTransform()
-		.SetPosition(position)
-		.SetScale(dimensions * 2.0f);
-
-	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), AssetManager::Instance().cubeMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
-	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
-	cube->SetName("Cube");
-
-	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
-	cube->GetPhysicsObject()->InitCubeInertia();
-	
-	world.AddGameObject(cube);
-
-	return cube;
-}
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
 
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
 
