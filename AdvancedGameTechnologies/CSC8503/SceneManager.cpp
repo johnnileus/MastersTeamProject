@@ -40,6 +40,7 @@ DemoShootableEnemy* SceneManager::AddEnemyToWorld(GameWorld* world, const Vector
     DemoShootableEnemy* e = new DemoShootableEnemy(scale, inverseMass, pos);
     world->AddGameObject(e);
     return e;
+}
 
 void SceneManager::InitScenes() {
     DefaultScene* defaultScene = new DefaultScene();
