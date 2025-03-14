@@ -2,6 +2,7 @@
 #include <Event.h>
 #include <iostream>
 
+#include "Enums.h"
 #include "ThirdPersonCamera.h"
 
 namespace NCL {
@@ -36,6 +37,7 @@ namespace NCL {
             {
                 reloadTimer = reloadTime;
             }
+            Enums::WeaponType weaponType;
 
             virtual ~Weapon() {}
 
@@ -51,6 +53,11 @@ namespace NCL {
             int  getMaxAmmo() const { return maxAmmo; }
             int  getDamage()  const { return damage; }
             bool IsAutoFire() const { return canAutoFire; }
+            
+            Enums::WeaponType GetWeaponType()
+            {
+                return weaponType;
+            }
 
             Event<Weapon*> OnFireEvent;
             Event<Weapon*> OnReloadStartEvent;
