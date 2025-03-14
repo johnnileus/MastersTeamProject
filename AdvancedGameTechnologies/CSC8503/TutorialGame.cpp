@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TutorialGame.h"
+#include "AudioManager.h"
 
 
 

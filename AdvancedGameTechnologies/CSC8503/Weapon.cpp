@@ -1,4 +1,5 @@
 ﻿#include "Weapon.h"
+#include "AudioManager.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -11,6 +12,8 @@ void Weapon::Fire() {
     ammo--;
     std::cout << "Weapon fired! Damage: " << damage
               << ", ammo remaining: " << ammo << std::endl;
+
+    AudioManager::GetInstance().PlaySound("RifleFire.wav");
 }
 
 void Weapon::Reload() {

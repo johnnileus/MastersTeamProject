@@ -8,6 +8,8 @@
 #include "PhysicsObject.h"
 #include "Pistol.h"
 #include "RenderObject.h"
+#include "AudioManager.h"
+
 
 using namespace NCL;
 using namespace CSC8503;
@@ -197,9 +199,15 @@ void Player::HealthCheck()
 {
 	if (health <= 0)
 	{
-		Debug::Print("Dead", Vector2(40, 40), Vector4(1, 0, 0, 1));
-		isDead = true;
+		Debug::Print("Dead", Vector2(40,40),Vector4(1,0,0,1));
+
+		if (!isDead) { 
+			isDead = true;
+			AudioManager::GetInstance().PlaySound("DeadScream.wav");
+		}
+
 	}
+
 }
 
 void Player::HandleInput()
@@ -207,18 +215,47 @@ void Player::HandleInput()
 	// each frame clear the input buffer
 	inputDir = Vector2(0, 0);
 	
+	// Check if any movement key is pressed
+	bool isMoving = false;
+
 	// detect keyboard input
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
 		inputDir.y += -1.0f;  // front
+		isMoving = true;
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
 		inputDir.y += 1.0f;   // back
+		isMoving = true;
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
 		inputDir.x += -1.0f;  // left
+		isMoving = true;
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
 		inputDir.x += 1.0f;   // right
+		isMoving = true;
+	}
+	// Play footstep sound only if moving
+	if (isMoving) {
+		if (!footstepChannel) {
+			
+			AudioManager::GetInstance().PlayLoopingSound("Running2.wav", &footstepChannel);
+		}
+		else {
+		
+			bool isPlaying = false;
+			footstepChannel->isPlaying(&isPlaying);
+			if (!isPlaying) {
+				footstepChannel = nullptr;  
+			}
+		}
+	}
+	else {
+		// Stop sound when no movement key is pressed
+		if (footstepChannel) {
+			footstepChannel->stop();
+			footstepChannel = nullptr;
+		}
 	}
 }
 
@@ -339,6 +376,8 @@ void Player::HandleDash(float dt) {
 			playerPhysicObject->AddForce(dashForce);  // Dash direction follows the current velocity
 			isDashing = true;
 			dashTimer = dashCooldown;  // Start cooldown timer
+
+			AudioManager::GetInstance().PlaySound("Dash.wav");   // Dashsound
 		}
 	}
 }
@@ -350,6 +389,7 @@ void Player::HandleJump(float dt) {
 	if (isOnGround && Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
 		jumpTimeCounter = 0.1f;
 		isOnGround = false;
+		AudioManager::GetInstance().PlaySound("Jump.wav");
 	}
 	
 	if (jumpTimeCounter > 0) {
@@ -399,7 +439,9 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		}
 		else
 		{
+
 			health -= damage;
+            AudioManager::GetInstance().PlaySound("GetHurt.wav");
 			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
 			SetTemporaryColour(damageColour, 0.25f);
 			enemy->Reset();
