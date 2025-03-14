@@ -57,6 +57,14 @@ namespace NCL {
 			vector<Weapon*> weaponPack;
 			Vector3 shootPoint;
 
+			//getters and setters for stats
+			int GetDamage() const {
+				return damage;
+			}
+			void SetDamage(const int d) {
+				damage = d;
+			}
+
 			Event<Player*> OnSwitchWeaponEvent;
 			
 

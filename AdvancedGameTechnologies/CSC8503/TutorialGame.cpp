@@ -188,14 +188,8 @@ void TutorialGame::UpdateGame(float dt) {
 		//Debug::UpdateRenderables(dt);
 
 		//Timer
-		while (timer >= 0.0f) {
-			timer -= dt;
-		}
-
+		timer += dt;
 		Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
-		if (timer <= 0) {
-			Transition();
-		}
 
 	}
 	else {
@@ -315,6 +309,8 @@ void TutorialGame::InitWorld() {
 	InitTerrain();
 
 	InitDefaultFloor();
+
+	InitItems();
 
 	// Load the navigation grid
 	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
@@ -496,6 +492,10 @@ void TutorialGame::ToggleCursor() {
 
 void TutorialGame::InitEnemies() {
 	meleeEnemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(&world, this->navGrid, Vector3(10,3,10), 1.0f, 1.0f));
+}
+
+void TutorialGame::InitItems() {
+	PassiveItem::Instantiate(world, itemList, player, Vector3(1, 1, 1));
 }
 
 void TutorialGame::UpdateEnemies(float dt) {
