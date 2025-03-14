@@ -20,6 +20,7 @@ namespace NCL {
 			GameObject* playerObject;
 			
 			void Update(float dt);
+			void PausedUpdate(float dt);
 			void Init(ThirdPersonCamera* cam);
 
 			void OnCollisionBegin(GameObject* otherObject) override;
@@ -33,6 +34,7 @@ namespace NCL {
 
 			ThirdPersonCamera* myCam;
 			Weapon* myWeapon;
+			Vector3 shootPoint;
 
 		protected:
 
@@ -59,13 +61,16 @@ namespace NCL {
 			void ClampSpeed(float dt);
 			void HandleInput();
 			void SetComponent(float meshSize, float mass);
+			void FaceAimDirection(float dt);
 
 			//jump
 			float jumpForce;         
 			bool isOnGround;         
-			void HandleJump();
-			bool isAtApex;  // mark arrive high point
-			float downwardForce;
+			void HandleJump(float dt);
+			void UpdateGroundStatus();
+			void FixBounce();
+			float jumpTimeCounter;
+			bool wasOnGround = false;
 			
 			
 			//health

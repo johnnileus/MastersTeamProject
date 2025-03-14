@@ -20,6 +20,8 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 
 	physics		= new PhysicsSystem(*world);
 
+	
+
 	forceMagnitude	= 1.0f;
 	useGravity		= false;
 
@@ -37,6 +39,10 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 
 	navGrid = nullptr;
 	navMeshAgent = nullptr;
+
+	sceneManager = new SceneManager();
+	sceneManager->InitScenes();
+	sceneManager->SwitchScene("DefaultScene");
 
 	InitialiseAssets();
 }
@@ -68,52 +74,63 @@ TutorialGame::~TutorialGame()	{
 
 
 void TutorialGame::UpdateGame(float dt) {
+	if (!gamePaused) { // if game is not paused :)
+		if (player) { player->Update(dt); }
+		if (doorTrigger) { doorTrigger->Update(dt); }
 
-	//update objects
-	if (player){player->Update(dt);}
-	if (doorTrigger) { doorTrigger->Update(dt); }
+		for (Enemy* enemy : enemies) {
+			if (enemy) { enemy->Update(dt); }
+		}
+		UpdateKeys();
+		world->UpdateWorld(dt);
 
-	for (Enemy* enemy : enemies){
-		if (enemy){enemy->Update(dt);}
+		if (networkManager == nullptr) {
+			std::cout << "network manager is null" << std::endl;
+		}
+		else {
+			networkManager->Update();
+		}
+		SceneManager::Instance().UpdateBullets(world, dt);
+
+
+
+		physics->Update(dt);
+		thirdPersonCam->Update(dt);
+
+		renderer->Render();
+		Debug::UpdateRenderables(dt);
+
+		//Timer
+		while (timer >= 0.0f) {
+			timer -= dt;
+		}
+
+		Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
+		if (timer <= 0) {
+			Transition();
+		}
+
+	}
+	else {
+		if (player) { player->PausedUpdate(dt); }
+		UpdateKeys();
+
+		renderer->Render();
+		Debug::UpdateRenderables(dt);
+
+
 	}
 
-	UpdateKeys();
-
-	///////Animation Test///////
-	frameTime-=dt;
-	while (frameTime<0.0f)
-	{
-		currentFrame = (currentFrame+1) % AssetManager::Instance().idle->GetFrameCount();
-		frameTime +=1.0f/AssetManager::Instance().idle->GetFrameRate();
-	}
-	///////////////////////////
-	
 	DisplayPathfinding();
 
-	world->UpdateWorld(dt);
 
-	if (networkManager == nullptr) {
-		std::cout << "network manager is null" << std::endl;}
-	else {
-		networkManager->Update();
-	}
+
 
 	SceneManager::Instance().UpdateBullets(world, dt);
 	UpdateEnemies(dt);
 
-	physics->Update(dt);
-	thirdPersonCam->Update(dt);
-	renderer->Render();
-	Debug::UpdateRenderables(dt);
 
-	//Timer
-	while (timer >= 0.0f) {
-		timer -= dt;
-	}
-	Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
-	if (timer <= 0) {
-		Transition();
-	}
+
 }
 
 void TutorialGame::UpdateKeys() {
@@ -145,7 +162,9 @@ void TutorialGame::UpdateKeys() {
 		networkManager->StartAsClient();
 
 	}
-
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::P)) {
+		TogglePaused();
+	}
 }
 
 
@@ -210,7 +229,7 @@ void TutorialGame::InitWorld() {
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
-	SceneManager::Instance().AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
+	Scene::AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
 
 
@@ -225,65 +244,18 @@ void TutorialGame::InitCatCoins() {
 
 }
 
-/*
 
-Builds a game object that uses a sphere mesh for its graphics, and a bounding sphere for its
-rigid body representation. This and the cube function will let you build a lot of 'simple' 
-physics worlds. You'll probably need another function for the creation of OBB cubes too.
 
-*/
-GameObject* TutorialGame::AddSphereToWorld(const Vector3& position,float radius,float inverseMass,const Vector3& initialVelocity) {
-	GameObject* sphere = new GameObject();
 
-	SphereVolume* volume = new SphereVolume(radius);
-	sphere->SetBoundingVolume((CollisionVolume*)volume);
-
-	sphere->GetTransform().SetScale(Vector3(radius, radius, radius));
-	sphere->GetTransform().SetPosition(position);
-
-	sphere->SetRenderObject(new RenderObject(&sphere->GetTransform(),AssetManager::Instance().sphereMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
-	sphere->SetPhysicsObject(new PhysicsObject(&sphere->GetTransform(),sphere->GetBoundingVolume()));
-
-	PhysicsObject* physicsObject = sphere->GetPhysicsObject();
-	physicsObject->SetInverseMass(inverseMass);
-	physicsObject->SetLinearVelocity(initialVelocity);
-
-	physicsObject->InitSphereInertia();
-
-	world->AddGameObject(sphere);
-	
-	return sphere;
-}
-
-GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass) {
-	GameObject* cube = new GameObject();
-
-	AABBVolume* volume = new AABBVolume(dimensions);
-	cube->SetBoundingVolume((CollisionVolume*)volume);
-
-	cube->GetTransform()
-		.SetPosition(position)
-		.SetScale(dimensions * 2.0f);
-
-	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), AssetManager::Instance().cubeMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
-	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
-
-	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
-	cube->GetPhysicsObject()->InitCubeInertia();
-	
-	world->AddGameObject(cube);
-
-	return cube;
-}
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
 
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
+	Scene::AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
+	Scene::AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
+	Scene::AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	Scene::AddDefaultFloorToWorld(world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
+	Scene::AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
 void TutorialGame::CreateRopeGroup()
@@ -309,15 +281,15 @@ void TutorialGame::DisplayPathfinding() {
 void TutorialGame::GenerateWall()
 {
 	// add all walls to the list
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,12),Vector3(6,1,1)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,12),Vector3(6,1,1)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(60,0,30),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,50),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,50),Vector3(3,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(35,0,70),Vector3(9,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(65,0,70),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(10,0,50),Vector3(4,1,4)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(25,0,50),Vector3(2,1,4)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,12),Vector3(6,1,1)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,12),Vector3(6,1,1)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(60,0,30),Vector3(8,1,3)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,50),Vector3(8,1,3)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,50),Vector3(3,1,3)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(35,0,70),Vector3(9,1,3)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(65,0,70),Vector3(8,1,3)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(10,0,50),Vector3(4,1,4)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(25,0,50),Vector3(2,1,4)));
 
 	SetWallColour();
 }
