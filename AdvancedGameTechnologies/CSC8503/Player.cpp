@@ -11,6 +11,8 @@
 #include "AudioManager.h"
 
 
+#include "Weapon.h"
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -48,6 +50,7 @@ void Player::Init(ThirdPersonCamera* cam)
 	collerctCoinColour = Vector4(0.949f, 1, 0.318f, 1);
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam = cam;
+
 	myWeapon = new Pistol(this);
 }
 

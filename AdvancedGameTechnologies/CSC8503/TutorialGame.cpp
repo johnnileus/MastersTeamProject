@@ -3,7 +3,10 @@
 #include "TutorialGame.h"
 #include "AudioManager.h"
 
-
+//#include "json/json11.hpp"
+//#include <iostream>
+//#include <fstream>
+//#include <sstream>
 
 using namespace NCL;
 using namespace CSC8503;
@@ -56,6 +59,20 @@ for this module, even in the coursework, but you can add it if you like!
 
 */
 void TutorialGame::InitialiseAssets() {
+
+	/*
+	// DEBUG CODE
+	std::ifstream file("items.json");
+	if (!file) {
+		std::cout << "Could not load json!" << std::endl;
+	}
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	file.close();
+	std::string err;
+	json11::Json json = json11::Json::parse(buffer.str(), err);
+	std::cout << "JSON data: " << json.dump() << "\n";
+	*/
 
 	AssetManager::Instance().LoadAssets(renderer);
 	
@@ -118,20 +135,12 @@ void TutorialGame::UpdateGame(float dt) {
 
 		renderer->Render();
 		Debug::UpdateRenderables(dt);
-
-
 	}
 
 	DisplayPathfinding();
-
-
-
-
+  
 	SceneManager::Instance().UpdateBullets(world, dt);
 	UpdateEnemies(dt);
-
-
-
 }
 
 void TutorialGame::UpdateKeys() {
