@@ -11,6 +11,8 @@
 #include "AudioManager.h"
 
 
+#include "Weapon.h"
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -48,6 +50,7 @@ void Player::Init(ThirdPersonCamera* cam)
 	collerctCoinColour = Vector4(0.949f, 1, 0.318f, 1);
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam = cam;
+
 	myWeapon = new Pistol(this);
 }
 
@@ -376,6 +379,8 @@ void Player::HandleDash(float dt) {
 			playerPhysicObject->AddForce(dashForce);  // Dash direction follows the current velocity
 			isDashing = true;
 			dashTimer = dashCooldown;  // Start cooldown timer
+
+			AudioManager::GetInstance().PlaySound("Dash.wav");   // Dashsound
 		}
 	}
 }
@@ -387,6 +392,7 @@ void Player::HandleJump(float dt) {
 	if (isOnGround && Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
 		jumpTimeCounter = 0.1f;
 		isOnGround = false;
+		AudioManager::GetInstance().PlaySound("Jump.wav");
 	}
 	
 	if (jumpTimeCounter > 0) {
@@ -415,8 +421,15 @@ void Player::HandleAim()
 
 void Player::OnCollisionBegin(GameObject* otherObject)
 {
-	// collides Enemy
-	if (otherObject->tag == "Enemy")
+	//collides ground
+	if (otherObject->tag=="Ground")
+	{
+		isOnGround =true;
+	}
+
+	//collides Enemy
+	/*
+	if (otherObject->tag=="Enemy")
 	{
 		std::cout << otherObject->GetName() << std::endl;
 		Debug::DrawLine(this->GetTransform().GetPosition(), otherObject->GetTransform().GetPosition());
@@ -438,9 +451,10 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 
 		}
 	}
+	*/
+	//collides Coin
+	if (otherObject->tag=="Coin")
 
-	// collides Coin
-	if (otherObject->tag == "Coin")
 	{
 		score += 10;
 		otherObject->SetActive(false);

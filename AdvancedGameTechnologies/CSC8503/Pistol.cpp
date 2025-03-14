@@ -6,14 +6,14 @@
 
 Pistol::Pistol(Player* owner):Weapon(10,15,0.4,false)
 {
-    myCamera=owner->myCam;
-    myWorld=owner->myWorld;
-    this->owner=owner;
+    myCamera = owner->myCam;
+    myWorld = owner->myWorld;
+    this->owner = owner;
 }
 
 Pistol::~Pistol()
 {
-    
+
 }
 
 void Pistol::Fire()
@@ -26,7 +26,7 @@ void Pistol::Fire()
 
     //reduce ammo
     ammo--;
-    std::cout << "Weapon fired! Damage: " << damage<< ", ammo remaining: " << ammo << std::endl;
+    std::cout << "Weapon fired! Damage: " << damage << ", ammo remaining: " << ammo << std::endl;
 
     //creat a bullet
     Bullet::Instantiate(myWorld,owner->shootPoint,aimDir,this);
@@ -35,4 +35,3 @@ void Pistol::Fire()
     myCamera->Shake(0.07,0.1f);
     AudioManager::GetInstance().PlaySound("RifleFire.wav");
 }
-

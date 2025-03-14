@@ -10,10 +10,9 @@
 #include "GameWorld.h"
 #include "Vector.h"
 #include "Quaternion.h"
+#include "DemoShootableEnemy.h"
 #include "Scene.h"
 #include "Rope.h"
-
-
 
 namespace NCL {
     namespace CSC8503 {
@@ -36,6 +35,8 @@ namespace NCL {
 
             void UpdateBullets(GameWorld*world, float dt);
             void AddBullet(Bullet* bullet);
+          
+            DemoShootableEnemy* AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass);
 
             void InitScenes();
             void SwitchScene(string newScene);

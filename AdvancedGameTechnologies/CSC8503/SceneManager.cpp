@@ -4,7 +4,7 @@
 #include "SphereVolume.h"
 #include "RenderObject.h"
 #include "PhysicsObject.h"
-
+#include "DemoShootableEnemy.h"
 
 
 SceneManager& SceneManager::Instance() {
@@ -35,6 +35,13 @@ void SceneManager::AddBullet(Bullet* bullet)
     bullets.push_back(bullet);
 }
 
+
+DemoShootableEnemy* SceneManager::AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass) {
+    DemoShootableEnemy* e = new DemoShootableEnemy(scale, inverseMass, pos);
+    world->AddGameObject(e);
+    return e;
+}
+
 void SceneManager::InitScenes() {
     DefaultScene* defaultScene = new DefaultScene();
     defaultScene->InitScene();
@@ -49,5 +56,6 @@ void SceneManager::SwitchScene(string newScene) {
     //    thirdPersonCam->SetPitch(0.0f);
     //    thirdPersonCam->SetYaw(0.0f);
     //}
+
 
 }

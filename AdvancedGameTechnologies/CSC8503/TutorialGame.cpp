@@ -3,7 +3,10 @@
 #include "TutorialGame.h"
 #include "AudioManager.h"
 
-
+//#include "json/json11.hpp"
+//#include <iostream>
+//#include <fstream>
+//#include <sstream>
 
 using namespace NCL;
 using namespace CSC8503;
@@ -56,6 +59,20 @@ for this module, even in the coursework, but you can add it if you like!
 
 */
 void TutorialGame::InitialiseAssets() {
+
+	/*
+	// DEBUG CODE
+	std::ifstream file("items.json");
+	if (!file) {
+		std::cout << "Could not load json!" << std::endl;
+	}
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	file.close();
+	std::string err;
+	json11::Json json = json11::Json::parse(buffer.str(), err);
+	std::cout << "JSON data: " << json.dump() << "\n";
+	*/
 
 	AssetManager::Instance().LoadAssets(renderer);
 	
@@ -118,17 +135,12 @@ void TutorialGame::UpdateGame(float dt) {
 
 		renderer->Render();
 		Debug::UpdateRenderables(dt);
-
-
 	}
 
 	DisplayPathfinding();
-
-
-
-
-
-
+  
+	SceneManager::Instance().UpdateBullets(world, dt);
+	UpdateEnemies(dt);
 }
 
 void TutorialGame::UpdateKeys() {
@@ -196,6 +208,8 @@ void TutorialGame::InitWorld() {
 	doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 	
 	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
+
+	InitEnemies();
 
 	InitTerrain();
 
@@ -338,3 +352,23 @@ void TutorialGame::ToggleCursor() {
 	Window::GetWindow()->LockMouseToWindow(cursorLocked);
 }
 
+void TutorialGame::InitEnemies() {
+	enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(world, Vector3(10,3,10), 1.0f, 100.0f));
+}
+
+void TutorialGame::UpdateEnemies(float dt) {
+	for (int e = 0; e < enemies.size(); ++e) {
+		if (enemyList[e]->CheckAlive()) {
+			//alive enemy logic
+			continue;
+		}
+		else {
+			if (enemyList[e]->CheckRespawn()) {
+				enemyList[e]->Spawn();
+			}
+			else {
+				enemyList[e]->UpdateRespawnTimer(dt);
+			}
+		}
+	}
+}
