@@ -1,22 +1,21 @@
-﻿#include "Pistol.h"
+#include "Rifle.h"
 #include "Player.h"
+#include "AudioManager.h"
 #include "Bullet.h"
 
-#include "AudioManager.h"
-
-Pistol::Pistol(Player* owner):Weapon(10,15,0.4,false,2)
+Rifle::Rifle(Player* owner):Weapon(30,9,0.1f,true,3)
 {
     myCamera = owner->myCam;
     myWorld = owner->myWorld;
     this->owner = owner;
 }
 
-Pistol::~Pistol()
+Rifle::~Rifle()
 {
-
+    
 }
 
-void Pistol::Fire()
+void Rifle::Fire()
 {
     if (ammo <= 0) {
         std::cout << "No ammo left, cannot fire!" << std::endl;
