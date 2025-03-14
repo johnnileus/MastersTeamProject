@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "PhysicsObject.h"
 #include "Pistol.h"
+#include "Rifle.h"
 #include "RenderObject.h"
 #define FMT_LOCALE 0
 #define FMT_STATIC_THOUSANDS_SEPARATOR
@@ -55,7 +56,17 @@ void Player::Init(ThirdPersonCamera* cam)
 	collerctCoinColour = Vector4(0.949f, 1, 0.318f, 1);
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam = cam;
-	myWeapon = new Pistol(this);
+	pistol = new Pistol(this);
+	rifle = new Rifle(this);
+	currentWeapon = rifle;
+	weaponPack = {pistol,rifle};
+
+	//////For weapon debug//////
+	RegisterWeaponEvents();
+	OnSwitchWeaponEvent.AddListener([](Player* m){
+		m->RegisterWeaponEvents();
+	});
+	///////////////////////////
 }
 
 void Player::SetComponent(float meshSize, float mass)
@@ -144,7 +155,8 @@ void Player::Update(float dt) {
 	FixBounce();
 	
 	HandleDash(dt); 
-	HandleAim();    
+	HandleAim();
+	HandleSwitchWeapon();
 
 	//check if is firing
 #ifdef USEAGC
@@ -177,7 +189,7 @@ void Player::Update(float dt) {
 	DisplayUI();
 	HealthCheck();
 	animator->Update(dt);
-	myWeapon->Update(dt, firing, aimDir);
+	currentWeapon->Update(dt, firing, aimDir);
 
 	if (isTemporaryColourActive) {
 		colourTimer -= dt;
@@ -399,8 +411,7 @@ void Player::HandleFire(float dt)
 	if (Window::GetMouse()->ButtonDown(NCL::MouseButtons::Left))
 #endif // USEAGC
 	{
-		Debug::Print("Fire", Vector2(40, 40), Vector4(1, 0, 0, 1));
-		myWeapon->Fire();
+		currentWeapon->Fire();
 	}
 }
 
@@ -573,5 +584,40 @@ void Player::FixBounce()
 		playerPhysicObject->SetLinearVelocity(Vector3(currentVel.x, 0, currentVel.z));
 	}
 	wasOnGround = isOnGround;
+}
+
+void Player::HandleSwitchWeapon()
+{
+	if(Window::GetKeyboard()->KeyDown(KeyCodes::NUM1)&&weaponPack[0]&&currentWeapon!=weaponPack[0])
+	{
+		currentWeapon = weaponPack[0];
+		OnSwitchWeaponEvent.Invoke(this);
+	}
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM2)&&weaponPack[1]&&currentWeapon!=weaponPack[1])
+	{
+		currentWeapon = weaponPack[1];
+		OnSwitchWeaponEvent.Invoke(this);
+	}
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM3)&&weaponPack[2]&&currentWeapon!=weaponPack[2])
+	{
+		currentWeapon = weaponPack[2];
+		OnSwitchWeaponEvent.Invoke(this);
+	}
+}
+
+void Player::RegisterWeaponEvents()
+{
+	currentWeapon->OnFireEvent.AddListener([](Weapon* w)
+	{
+		Debug::Print(std::to_string(w->getAmmo()), Vector2(50,45),Debug::RED);
+	});
+	currentWeapon->OnReloadStartEvent.AddListener([](Weapon* w)
+	{
+		Debug::Print("Start Reload", Vector2(50,43),Debug::RED);
+	});
+	currentWeapon->OnReloadEndEvent.AddListener([](Weapon* w)
+	{
+	Debug::Print("Finish Reload", Vector2(50,43),Debug::RED);
+	});
 }
 

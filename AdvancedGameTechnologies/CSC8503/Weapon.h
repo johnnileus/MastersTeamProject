@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <Event.h>
 #include <iostream>
 
 #include "ThirdPersonCamera.h"
@@ -18,18 +19,22 @@ namespace NCL {
             float shotTimer;      // countdown timer until the next shot is allowed
             bool  wasFiringLastFrame;
 
+            float reloadTimer;
+            float reloadTime;
+            bool isReloading;
 
         public:
-            Weapon(int maxAmmo, int damage, float interval, bool autoFire)
+            Weapon(int maxAmmo, int damage, float interval, bool autoFire, float reloadTime)
                 : ammo(maxAmmo)
                 , maxAmmo(maxAmmo)
                 , damage(damage)
                 , shotInterval(interval)
                 , canAutoFire(autoFire)
                 , shotTimer(0.0f)
+                ,reloadTime(reloadTime)
                 , wasFiringLastFrame(false)
             {
-
+                reloadTimer = reloadTime;
             }
 
             virtual ~Weapon() {}
@@ -46,6 +51,10 @@ namespace NCL {
             int  getMaxAmmo() const { return maxAmmo; }
             int  getDamage()  const { return damage; }
             bool IsAutoFire() const { return canAutoFire; }
+
+            Event<Weapon*> OnFireEvent;
+            Event<Weapon*> OnReloadStartEvent;
+            Event<Weapon*> OnReloadEndEvent;
         };
 
     }

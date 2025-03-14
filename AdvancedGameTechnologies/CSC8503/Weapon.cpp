@@ -12,16 +12,34 @@ void Weapon::Fire() {
     ammo--;
     std::cout << "Weapon fired! Damage: " << damage
               << ", ammo remaining: " << ammo << std::endl;
+    OnFireEvent.Invoke(this);
 
     AudioManager::GetInstance().PlaySound("RifleFire.wav");
 }
 
 void Weapon::Reload() {
-    ammo = maxAmmo;
-    std::cout << "Reload complete! Ammo: " << ammo << std::endl;
+    isReloading = true;
+    OnReloadStartEvent.Invoke(this);
 }
 
 void Weapon::Update(float deltaTime, bool isFiring, const Vector3& direction) {
+    if (isReloading)
+    {
+        reloadTimer-=deltaTime;
+        if (reloadTimer<=0.0f)
+        {
+            ammo = maxAmmo;
+            isReloading = false;
+            reloadTimer =reloadTime;
+            std::cout << "Reload complete! Ammo: " << ammo << std::endl;
+            OnReloadEndEvent.Invoke(this);
+        }
+        else
+        {
+            return;
+        }
+    }
+
     if (shotTimer > 0.0f) {
         shotTimer -= deltaTime;
     }
