@@ -14,6 +14,13 @@ namespace Enums
         Default,
         Skinned
     };
+
+    enum class WeaponType
+    {
+        Pistol,
+        Rifle,
+        Shotgun
+    };
     
 }
 

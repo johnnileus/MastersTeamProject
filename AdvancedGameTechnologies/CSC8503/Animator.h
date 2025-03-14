@@ -22,7 +22,7 @@ namespace NCL
 
             void Draw(int nFrame,MeshAnimation* meshAni);
 
-            void Play(AnimationType animation, bool tween, float animSpeed = 1 );
+            void Play(AnimationType animation, bool tween, float animSpeed = 1, bool loop = true);
 
             void TweenAnim(const float& time);
 
@@ -45,6 +45,7 @@ namespace NCL
             MeshAnimation* pendingAnim;
             RenderObject* renderObject;
             std::vector<Matrix4> frameMatrices;
+            bool loopAnimation = true;
             
             std::map<AnimationType, MeshAnimation*> meshAnims;
         };
