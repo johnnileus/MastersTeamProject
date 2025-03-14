@@ -8,14 +8,13 @@
 #include "PhysicsObject.h"
 #include "Pistol.h"
 #include "Rifle.h"
+#include "Shotgun.h"
 #include "RenderObject.h"
 #define FMT_LOCALE 0
 #define FMT_STATIC_THOUSANDS_SEPARATOR
 #define FMT_HEADER_ONLY 1
 #include <fmt/core.h>
 #include "AudioManager.h"
-
-
 #include "Weapon.h"
 
 using namespace NCL;
@@ -58,8 +57,9 @@ void Player::Init(ThirdPersonCamera* cam)
 	myCam = cam;
 	pistol = new Pistol(this);
 	rifle = new Rifle(this);
+	shotGun = new Shotgun(this);
 	currentWeapon = rifle;
-	weaponPack = {pistol,rifle};
+	weaponPack = {pistol,rifle,shotGun};
 
 	//////For weapon debug//////
 	RegisterWeaponEvents();
@@ -606,6 +606,7 @@ void Player::HandleSwitchWeapon()
 	{
 		Debug::Print("Pistol!", Vector2(50, 40), Debug::RED);
 		currentWeapon = weaponPack[0];
+		renderObject->subTextures[renderObject->subTextures.size()-1] = nullptr;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 #ifdef USEAGC
@@ -617,6 +618,7 @@ void Player::HandleSwitchWeapon()
 	{
 		Debug::Print("Rifle!", Vector2(50, 40), Debug::RED);
 		currentWeapon = weaponPack[1];
+		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().woodTex;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 #ifdef USEAGC
@@ -627,6 +629,7 @@ void Player::HandleSwitchWeapon()
 	{
 		Debug::Print("Shotgun!", Vector2(50, 40), Debug::RED);
 		currentWeapon = weaponPack[2];
+		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().tilesTex;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 }
