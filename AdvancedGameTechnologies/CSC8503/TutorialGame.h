@@ -38,6 +38,7 @@
 #include "NavMeshGrid.h"
 #include "NavMeshAgent.h"
 #include "DemoShootableEnemy.h"
+#include "PassiveItem.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -83,10 +84,11 @@ namespace NCL {
 			void InitTerrain();
 
 			//Timer
-			float timer = 180;
+			float timer = 0;
 
-			//Transitions
-			void Transition();
+			//Items
+			void InitItems();
+			std::vector<PassiveItem*> itemList;
 
 			//networking
 			NetworkManager* networkManager = new NetworkManager();

@@ -37,6 +37,14 @@ namespace NCL {
 			Weapon* myWeapon;
 			Vector3 shootPoint;
 
+			//getters and setters for stats
+			int GetDamage() const {
+				return damage;
+			}
+			void SetDamage(const int d) {
+				damage = d;
+			}
+
 		protected:
 
 			//component
