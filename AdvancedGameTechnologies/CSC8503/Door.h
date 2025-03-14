@@ -34,6 +34,7 @@ namespace NCL
             float minHeight;    // The door's minimum height.
             bool isMovingUp;    
             float originalHeight; // Door's original height (also is the maximum height)
+            bool hasPlayedSound;
             
         };
     }

@@ -19,6 +19,9 @@ namespace NCL {
 			bool Init();                   //initial FMOD
 			void Shutdown();               //release FMOD
 
+			void SetBGMVolume(float volume);
+			float GetBGMVolume()const;
+
 
 			void PlaySound(const std::string& soundName);
 			void PlayLoopingSound(const std::string& filename, FMOD::Channel** channel);
@@ -31,6 +34,9 @@ namespace NCL {
 			FMOD::System* system = nullptr;
 
 			std::string GetMediaPath(const std::string& filename);
+
+			float bgmVolume = 1.0f;  //100% sound
+			FMOD::Channel* bgmChannel = nullptr;  //only save BGM channel
 		};
 	}
 }
