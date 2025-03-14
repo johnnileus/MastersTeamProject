@@ -126,6 +126,9 @@ void TutorialGame::UpdateGame(float dt) {
 
 
 
+	SceneManager::Instance().UpdateBullets(world, dt);
+	UpdateEnemies(dt);
+
 
 
 }
@@ -195,6 +198,8 @@ void TutorialGame::InitWorld() {
 	doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 	
 	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
+
+	InitEnemies();
 
 	InitTerrain();
 
@@ -337,3 +342,23 @@ void TutorialGame::ToggleCursor() {
 	Window::GetWindow()->LockMouseToWindow(cursorLocked);
 }
 
+void TutorialGame::InitEnemies() {
+	enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(world, Vector3(10,3,10), 1.0f, 100.0f));
+}
+
+void TutorialGame::UpdateEnemies(float dt) {
+	for (int e = 0; e < enemies.size(); ++e) {
+		if (enemyList[e]->CheckAlive()) {
+			//alive enemy logic
+			continue;
+		}
+		else {
+			if (enemyList[e]->CheckRespawn()) {
+				enemyList[e]->Spawn();
+			}
+			else {
+				enemyList[e]->UpdateRespawnTimer(dt);
+			}
+		}
+	}
+}

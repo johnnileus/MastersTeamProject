@@ -378,8 +378,15 @@ void Player::HandleAim()
 
 void Player::OnCollisionBegin(GameObject* otherObject)
 {
-	// collides Enemy
-	if (otherObject->tag == "Enemy")
+	//collides ground
+	if (otherObject->tag=="Ground")
+	{
+		isOnGround =true;
+	}
+
+	//collides Enemy
+	/*
+	if (otherObject->tag=="Enemy")
 	{
 		std::cout << otherObject->GetName() << std::endl;
 		Debug::DrawLine(this->GetTransform().GetPosition(), otherObject->GetTransform().GetPosition());
@@ -399,9 +406,10 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 
 		}
 	}
+	*/
+	//collides Coin
+	if (otherObject->tag=="Coin")
 
-	// collides Coin
-	if (otherObject->tag == "Coin")
 	{
 		score += 10;
 		otherObject->SetActive(false);
