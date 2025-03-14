@@ -8,10 +8,9 @@
 #include "PhysicsObject.h"
 #include "Pistol.h"
 #include "Rifle.h"
+#include "Shotgun.h"
 #include "RenderObject.h"
 #include "AudioManager.h"
-
-
 #include "Weapon.h"
 
 using namespace NCL;
@@ -53,8 +52,9 @@ void Player::Init(ThirdPersonCamera* cam)
 	myCam = cam;
 	pistol = new Pistol(this);
 	rifle = new Rifle(this);
+	shotGun = new Shotgun(this);
 	currentWeapon = rifle;
-	weaponPack = {pistol,rifle};
+	weaponPack = {pistol,rifle,shotGun};
 
 	//////For weapon debug//////
 	RegisterWeaponEvents();
@@ -530,16 +530,19 @@ void Player::HandleSwitchWeapon()
 	if(Window::GetKeyboard()->KeyDown(KeyCodes::NUM1)&&weaponPack[0]&&currentWeapon!=weaponPack[0])
 	{
 		currentWeapon = weaponPack[0];
+		renderObject->subTextures[renderObject->subTextures.size()-1] = nullptr;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM2)&&weaponPack[1]&&currentWeapon!=weaponPack[1])
 	{
 		currentWeapon = weaponPack[1];
+		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().woodTex;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM3)&&weaponPack[2]&&currentWeapon!=weaponPack[2])
 	{
 		currentWeapon = weaponPack[2];
+		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().tilesTex;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 }

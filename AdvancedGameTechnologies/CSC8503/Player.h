@@ -15,6 +15,7 @@ namespace NCL {
 
 		class Pistol;
 		class Rifle;
+		class  Shotgun;
 		
 		class Player : public GameObject
 		{
@@ -43,6 +44,7 @@ namespace NCL {
 			Weapon* currentWeapon;
 			Pistol* pistol;
 			Rifle* rifle;
+			Shotgun* shotGun;
 			vector<Weapon*> weaponPack;
 			Vector3 shootPoint;
 
@@ -53,7 +55,6 @@ namespace NCL {
 
 			//component
 			Mesh* playerMesh;
-			Texture* playerTex;
 			Shader* playerShader;
 			PhysicsObject* playerPhysicObject;
 			Transform* renderOffsetTransform;
@@ -119,8 +120,7 @@ namespace NCL {
 			void HealthCheck();
 			bool isDead;
 			FMOD::Channel* footstepChannel = nullptr;
-
-			void DebugWeapon();
+			
 			
 		};
 	}
