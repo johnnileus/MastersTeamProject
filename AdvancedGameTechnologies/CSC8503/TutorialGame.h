@@ -195,6 +195,8 @@ namespace NCL {
 			int rangedEnemyFrameCount;
 			int ghostEnemyFrameCountMax;
 			int ghostEnemyFrameCount;
+
+			float bgmVolume = 0.5f;
 		};
 	}
 }

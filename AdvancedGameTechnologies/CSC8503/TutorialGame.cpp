@@ -251,7 +251,20 @@ void TutorialGame::UpdateKeys() {
 		TogglePaused();
 	}
 
+	// BGM volume adjust
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::NUM1)) { // botton 1 less volume
+		bgmVolume -= 0.1f;
+		if (bgmVolume < 0.0f) bgmVolume = 0.0f;
+		AudioManager::GetInstance().SetBGMVolume(bgmVolume);
+		std::cout << "BGM Volume Down: " << bgmVolume * 100 << "%" << std::endl;
+	}
 
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::NUM2)) { // botton 2 up volume
+		bgmVolume += 0.1f;
+		if (bgmVolume > 1.0f) bgmVolume = 1.0f;
+		AudioManager::GetInstance().SetBGMVolume(bgmVolume);
+		std::cout << "BGM Volume Up: " << bgmVolume * 100 << "%" << std::endl;
+	}
 }
 
 
