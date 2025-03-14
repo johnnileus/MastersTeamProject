@@ -7,6 +7,7 @@
 #include "Quaternion.h"
 #include "ThirdPersonCamera.h"
 #include "Weapon.h"
+#include <fmod.hpp>
 
 namespace NCL {
 	namespace CSC8503 {
@@ -34,6 +35,7 @@ namespace NCL {
 
 			ThirdPersonCamera* myCam;
 			Weapon* myWeapon;
+			Vector3 shootPoint;
 
 		protected:
 
@@ -60,13 +62,16 @@ namespace NCL {
 			void ClampSpeed(float dt);
 			void HandleInput();
 			void SetComponent(float meshSize, float mass);
+			void FaceAimDirection(float dt);
 
 			//jump
 			float jumpForce;         
 			bool isOnGround;         
-			void HandleJump();
-			bool isAtApex;  // mark arrive high point
-			float downwardForce;
+			void HandleJump(float dt);
+			void UpdateGroundStatus();
+			void FixBounce();
+			float jumpTimeCounter;
+			bool wasOnGround = false;
 			
 			
 			//health
@@ -98,6 +103,7 @@ namespace NCL {
 
 			void HealthCheck();
 			bool isDead;
+			FMOD::Channel* footstepChannel = nullptr;
 			
 		};
 	}

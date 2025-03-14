@@ -37,7 +37,7 @@
 
 #include "NavMeshGrid.h"
 #include "NavMeshAgent.h"
-
+#include "DemoShootableEnemy.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -47,7 +47,6 @@ namespace NCL {
 			~TutorialGame();
 
 			virtual void UpdateGame(float dt);
-			GameObject* AddSphereToWorld(const Vector3& position,float radius,float inverseMass,const Vector3& initialVelocity);
 
 			void BroadcastPosition();
 			void SendTransform();
@@ -77,6 +76,8 @@ namespace NCL {
 			void CreateRopeGroup();
 
 			void InitNavigationTestLevel();
+			void InitEnemies();
+			void UpdateEnemies(float dt);
 
 			//Terrain Generation
 			void InitTerrain();
@@ -91,6 +92,8 @@ namespace NCL {
 			NetworkManager* networkManager = new NetworkManager();
 			GameObject* connectedPlayers[8];
 
+			//SceneManager
+			SceneManager* sceneManager;
 
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
 			void InitCatCoins();
@@ -101,7 +104,6 @@ namespace NCL {
 
 			ThirdPersonCamera* thirdPersonCam;
 
-			GameObject* AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 10.0f);
 
 #ifdef USEVULKAN
 			GameTechVulkanRenderer*	renderer;
@@ -151,6 +153,7 @@ namespace NCL {
 
 			NavMeshGrid* navGrid;
 			NavMeshAgent* navMeshAgent;
+			std::vector<DemoShootableEnemy*> enemyList;
 		};
 	}
 }
