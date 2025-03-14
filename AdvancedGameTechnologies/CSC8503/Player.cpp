@@ -542,7 +542,7 @@ void Player::HandleSwitchWeapon()
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM3)&&weaponPack[2]&&currentWeapon!=weaponPack[2])
 	{
 		currentWeapon = weaponPack[2];
-		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().tilesTex;
+		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().metalTex;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 }
@@ -551,15 +551,15 @@ void Player::RegisterWeaponEvents()
 {
 	currentWeapon->OnFireEvent.AddListener([](Weapon* w)
 	{
-		Debug::Print(std::to_string(w->getAmmo()), Vector2(50,45),Debug::RED);
+		Debug::Print(std::to_string(w->getAmmo()), Vector2(52,50),Debug::RED);
 	});
 	currentWeapon->OnReloadStartEvent.AddListener([](Weapon* w)
 	{
-		Debug::Print("Start Reload", Vector2(50,43),Debug::RED);
+		Debug::Print("Start Reload", Vector2(52,50),Debug::RED);
 	});
 	currentWeapon->OnReloadEndEvent.AddListener([](Weapon* w)
 	{
-	Debug::Print("Finish Reload", Vector2(50,43),Debug::RED);
+	Debug::Print("Finish Reload", Vector2(52,50),Debug::RED);
 	});
 }
 
