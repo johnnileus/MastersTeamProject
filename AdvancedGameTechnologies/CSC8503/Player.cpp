@@ -623,6 +623,7 @@ void Player::HandleSwitchWeapon()
 		currentWeapon = weaponPack[0];
 		//renderObject->subTextures[renderObject->subTextures.size()-1] = nullptr;
 		OnSwitchWeaponEvent.Invoke(this);
+		AudioManager::GetInstance().PlaySound("SwitchWeapon.wav");
 	}
 #ifdef USEAGC
 	if (inputController->GetNamedAxis("DY") == -1 && weaponPack[1] && currentWeapon != weaponPack[1])
@@ -635,6 +636,7 @@ void Player::HandleSwitchWeapon()
 		currentWeapon = weaponPack[1];
 		//renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().woodTex;
 		OnSwitchWeaponEvent.Invoke(this);
+		AudioManager::GetInstance().PlaySound("SwitchWeapon.wav");
 	}
 #ifdef USEAGC
 	if (inputController->GetNamedAxis("DX") == 1 && weaponPack[2] && currentWeapon != weaponPack[2])
@@ -646,6 +648,7 @@ void Player::HandleSwitchWeapon()
 		currentWeapon = weaponPack[2];
 		//renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().metalTex;
 		OnSwitchWeaponEvent.Invoke(this);
+		AudioManager::GetInstance().PlaySound("SwitchWeapon.wav");
 	}
 }
 
