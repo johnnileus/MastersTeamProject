@@ -9,8 +9,14 @@
 #include "Weapon.h"
 #include <fmod.hpp>
 
+
 namespace NCL {
 	namespace CSC8503 {
+
+		class Pistol;
+		class Rifle;
+		class  Shotgun;
+		
 		class Player : public GameObject
 		{
 		public:
@@ -34,14 +40,21 @@ namespace NCL {
 			int score;
 
 			ThirdPersonCamera* myCam;
-			Weapon* myWeapon;
+			//Weapon
+			Weapon* currentWeapon;
+			Pistol* pistol;
+			Rifle* rifle;
+			Shotgun* shotGun;
+			vector<Weapon*> weaponPack;
 			Vector3 shootPoint;
+
+			Event<Player*> OnSwitchWeaponEvent;
+			
 
 		protected:
 
 			//component
 			Mesh* playerMesh;
-			Texture* playerTex;
 			Shader* playerShader;
 			PhysicsObject* playerPhysicObject;
 			Transform* renderOffsetTransform;
@@ -94,6 +107,9 @@ namespace NCL {
 			Vector4 attackColour;
 			Vector4 collerctCoinColour;
 
+			void HandleSwitchWeapon();
+			void RegisterWeaponEvents();
+
 			void RemoveObject(GameObject* gameObject);
 			
 			float colourTimer;              
@@ -104,6 +120,7 @@ namespace NCL {
 			void HealthCheck();
 			bool isDead;
 			FMOD::Channel* footstepChannel = nullptr;
+			
 			
 		};
 	}
