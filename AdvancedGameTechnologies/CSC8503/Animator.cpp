@@ -28,6 +28,7 @@ void Animator::Update(float dt)
 
     if (isTweening && pendingAnim != nullptr)
     {
+
         tweenBlendFactor += dt * (1.0f / tweenTime);
         tweenTimeCurrent -= dt;
         if (tweenTimeCurrent <= 0.0f)
@@ -41,17 +42,36 @@ void Animator::Update(float dt)
     else
     {
         frameTime -= dt * currentAnimSpeed;
+        
         while (frameTime < 0.0f) 
         {
-            currentFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
-            nextFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
             frameTime += 1.0f / currentAnim->GetFrameRate();
+            
+            if (loopAnimation) 
+            {
+                currentFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
+            }
+            else 
+            {
+                if (currentFrame <(int)currentAnim->GetFrameCount() - 1)
+                {
+                    currentFrame++;
+                }
+                else
+                {
+                    currentFrame = currentAnim->GetFrameCount() - 1;
+                }
+            }
+            nextFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
         }
     }
-    renderObject->currentFame =currentFrame;
-    renderObject->currentAnimation =currentAnim;
-    Draw(currentFrame,currentAnim);
+    
+    renderObject->currentFame = currentFrame;
+    renderObject->currentAnimation = currentAnim;
+    
+    Draw(currentFrame, currentAnim);
 }
+
 
 bool Animator::LoadAnimation(AnimationType animation)
 {
@@ -111,10 +131,12 @@ void Animator::Draw(int nFrame, MeshAnimation* meshAni)
     }
 }
 
-void Animator::Play(AnimationType anim, bool tween, float animSpeed)
+void Animator::Play(AnimationType anim, bool tween, float animSpeed, bool loop)
 {
     if (currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
         return;
+
+    loopAnimation = loop;
 
     if(currentAnim == nullptr)
         currentAnim = meshAnims[anim];
@@ -131,6 +153,7 @@ void Animator::Play(AnimationType anim, bool tween, float animSpeed)
         currentAnim = meshAnims[anim];
     }
 }
+
 
 void Animator::TweenAnim(const float& time)
 {

@@ -19,7 +19,7 @@ namespace NCL
 
             bool IsDead() const { return isDead; }
             
-            static Bullet* Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon);
+            static Bullet* Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon, float distance = 100);
             GameWorld* myWorld;
         private:
             Vector3 direction; //move direction
