@@ -67,7 +67,6 @@ namespace NCL {
 			bool GetCursorLocked() { return cursorLocked; }
 
 		protected:
-			void InitialiseAssets();
 
 			void InitCamera();
 			void UpdateKeys();

@@ -26,12 +26,14 @@ void GameWorld::Clear() {
 void GameWorld::ClearAndErase() {
 	for (auto& i : gameObjects) {
 		const CollisionVolume* vol = i->GetBoundingVolume();
-		if (vol == (CollisionVolume*) 0xdddddddddddddddd) continue;
+		if (vol == (CollisionVolume*)0xdddddddddddddddd) continue; //TODO fix this
 		delete i;
 	}
 	for (auto& i : constraints) {
 		delete i;
 	}
+
+
 	Clear();
 }
 

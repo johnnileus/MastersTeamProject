@@ -96,6 +96,7 @@ void Scene::CreateRopeGroup(GameWorld* world) {
 
 void Scene::GenerateWall(GameWorld* world)
 {
+    std::cout << "generating walls" << std::endl;
     // add all walls to the list
     std::vector<GameObject*> floors;
     floors.push_back(AddDefaultFloorToWorld(world, Vector3(45, 0, 12), Vector3(6, 1, 1)));
