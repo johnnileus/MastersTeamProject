@@ -217,9 +217,5 @@ void Enemy::Reset() {
 
 
 Enemy::~Enemy() {
-    /*if (stateMachine != nullptr) {
-        delete stateMachine;
-        stateMachine = nullptr;
-    }*/
 
 }

@@ -43,9 +43,8 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 
 void TutorialGame::InitScene() {
 	world->ClearAndErase();
-	//for (auto& i : enemies) { // TODO delete old enemies when reloading world
-	//	delete i;
-	//}
+
+	//delete individual enemies first
 	enemies.clear(); 
 	physics->Clear();
 
@@ -197,31 +196,14 @@ void TutorialGame::InitWorld() {
 	
 	//doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 	
-	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
 
 	InitEnemies();
 
-	InitTerrain();
+	//InitTerrain();
 
-	InitDefaultFloor();
+	Scene::InitDefaultFloor(world);
 
-	// Load the navigation grid
-	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
 
-	// Generate a test path
-	NavigationPath outPath;
-	Vector3 startPos(80, 0, 10); // Start position
-	Vector3 endPos(80, 0, 80);   // End position
-
-	if (navGrid->FindPath(startPos, endPos, outPath)) {
-		Vector3 pos;
-		while (outPath.PopWaypoint(pos)) {
-			testNodes.push_back(pos); // Store path waypoints
-		}
-
-		enemies[0]->SetMovePath(testNodes);
-	}
-	//
 	world->PrintObjects();
 
 }
