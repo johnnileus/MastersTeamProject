@@ -532,18 +532,21 @@ void Player::HandleSwitchWeapon()
 		currentWeapon = weaponPack[0];
 		renderObject->subTextures[renderObject->subTextures.size()-1] = nullptr;
 		OnSwitchWeaponEvent.Invoke(this);
+		AudioManager::GetInstance().PlaySound("SwitchWeapon.wav");
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM2)&&weaponPack[1]&&currentWeapon!=weaponPack[1])
 	{
 		currentWeapon = weaponPack[1];
 		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().woodTex;
 		OnSwitchWeaponEvent.Invoke(this);
+		AudioManager::GetInstance().PlaySound("SwitchWeapon.wav");
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM3)&&weaponPack[2]&&currentWeapon!=weaponPack[2])
 	{
 		currentWeapon = weaponPack[2];
 		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().metalTex;
 		OnSwitchWeaponEvent.Invoke(this);
+		AudioManager::GetInstance().PlaySound("SwitchWeapon.wav");
 	}
 }
 
