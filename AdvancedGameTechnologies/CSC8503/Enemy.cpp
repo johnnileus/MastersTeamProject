@@ -216,10 +216,6 @@ void Enemy::Reset() {
 }
 
 
-Enemy::~Enemy()
-{
-    delete boundingVolume;
-    delete physicsObject;
-    delete renderObject;
-    delete networkObject;
+Enemy::~Enemy() {
+
 }

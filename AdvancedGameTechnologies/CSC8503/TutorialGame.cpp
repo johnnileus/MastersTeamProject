@@ -62,6 +62,7 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 void TutorialGame::InitScene() {
 	world.ClearAndErase();
+	enemies.clear();
 	physics.Clear();
 #ifdef USEAGC
 	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
@@ -274,47 +275,17 @@ void TutorialGame::InitWorld() {
 	
 	doorTrigger = Door::Instantiate(&world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 	
-	Enemy::Instantiate(&world,enemies,player,Vector3(50,0,0));
 
 	InitNavGrid();
 
 	InitEnemies();
 
-	enemyFrameCount = 1;
+	//InitTerrain();
 
-	meleeEnemyFrameCount = 0;
-	meleeEnemyFrameCountMax = meleeEnemyList.size();
+	Scene::InitDefaultFloor(&world);
 
-	rangedEnemyFrameCount = 0;
-	rangedEnemyFrameCountMax =  rangedEnemyList.size();
 
-	ghostEnemyFrameCount = 0;
-	ghostEnemyFrameCountMax = ghostEnemyList.size();
-
-	InitTerrain();
-
-	InitDefaultFloor();
-
-	InitItems();
-
-	// Load the navigation grid
-	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
-
-	//// Generate a test path
-	//NavigationPath outPath;
-	//Vector3 startPos(80, 0, 10); // Start position
-	//Vector3 endPos(80, 0, 80);   // End position
-
-	//if (navGrid->FindPath(startPos, endPos, outPath)) {
-	//	Vector3 pos;
-	//	while (outPath.PopWaypoint(pos)) {
-	//		testNodes.push_back(pos); // Store path waypoints
-	//	}
-
-	//	enemies[0]->SetMovePath(testNodes);
-	//}
-	//
-	//world->PrintObjects();
+	world.PrintObjects();
 
 }
 
