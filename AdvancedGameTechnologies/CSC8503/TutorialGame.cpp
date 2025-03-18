@@ -41,45 +41,8 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 	//physics		= new PhysicsSystem(*world);
 
-	
-
-	forceMagnitude	= 1.0f;
-	useGravity		= false;
-
-#ifdef USEAGC
-	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
-	NCL::PS5::PS5Controller* c = w->GetController();
-	world.GetMainCamera().SetController(*c);
-
-      
-	//c->MapAxis(0, "LeftX");
-	//c->MapAxis(1, "LeftY");
-
-	//c->MapAxis(2, "RightX");
-	//c->MapAxis(3, "RightY");
-
-	//c->MapAxis(4, "DX");
-	//c->MapAxis(5, "DY");
-
-	//c->MapButton(0, "Triangle");
-	//c->MapButton(1, "Circle");
-	//c->MapButton(2, "Cross");
-	//c->MapButton(3, "Square");
-
-	////These are the axis/button aliases the inbuilt camera class reads from:
-	//c->MapAxis(0, "XLook");
-	//c->MapAxis(1, "YLook");
-
-	//c->MapAxis(2, "Sidestep");
-	//c->MapAxis(3, "Forward");
-
-	//c->MapButton(0, "Up");
-	//c->MapButton(2, "Down");
-	std::cout << "Creating ThirdPersonCamera instance" << std::endl;
-	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), *c);
-	std::cout << "ThirdPersonCamera instance created" << std::endl;
-#else
-	world.GetMainCamera().SetController(controller);
+	navGrid = nullptr;
+	navMeshAgent = nullptr;
 
 	controller.MapAxis(0, "Sidestep");
 	controller.MapAxis(1, "UpDown");
@@ -94,20 +57,52 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	std::cout << "ThirdPersonCamera instance created" << std::endl;
 #endif // _WIN32
 
+	forceMagnitude	= 1.0f;
+	useGravity		= false;
+	AssetManager::Instance().LoadAssets(renderer);
 
 	navGrid = nullptr;
 	navMeshAgent = nullptr;
-	
-//#ifdef _WIN32
-//	world.GetMainCamera().SetController(*w->GetController());
-//#endif // _WIN32
+	InitScene();
 
-	sceneManager = new SceneManager();
-	sceneManager->InitScenes();
-	sceneManager->SwitchScene("DefaultScene");
+}
 
-	InitialiseAssets();
-	
+void TutorialGame::InitScene() {
+	world->ClearAndErase();
+	physics->Clear();
+#ifdef USEAGC
+	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+	NCL::PS5::PS5Controller* c = w->GetController();
+	world.GetMainCamera().SetController(*c);
+	world.GetMainCamera().SetNearPlane(0.1f);
+	world.GetMainCamera().SetFarPlane(500.0f);
+
+	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), *c);
+#else
+	world.GetMainCamera().SetController(controller);
+	world.GetMainCamera().SetNearPlane(0.1f);
+	world.GetMainCamera().SetFarPlane(500.0f);
+
+	/*controller.MapAxis(0, "Sidestep");
+	controller.MapAxis(1, "UpDown");
+	controller.MapAxis(2, "Forward");
+
+	controller.MapAxis(3, "XLook");
+	controller.MapAxis(4, "YLook");*/
+#endif // USEAGC
+#ifdef _WIN32
+	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), controller);
+#endif // _WIN32
+
+	if (thirdPersonCam)
+	{
+		thirdPersonCam->SetPitch(0.0f);
+		thirdPersonCam->SetYaw(0.0f);
+	}
+
+
+	InitWorld();
+
 }
 
 /*
@@ -135,13 +130,7 @@ void TutorialGame::InitialiseAssets() {
 	std::cout << "JSON data: " << json.dump() << "\n";
 	*/
 
-	AssetManager::Instance().LoadAssets(&renderer);
-	
-	InitCamera();
-	std::cout << "Camera initialized" << std::endl;
 
-	InitWorld();
-	std::cout << "World initialized" << std::endl;
 }
 
 TutorialGame::~TutorialGame()	{
@@ -160,9 +149,9 @@ void TutorialGame::UpdateGame(float dt) {
 		if (player) { player->Update(dt); }
 		if (doorTrigger) { doorTrigger->Update(dt); }
 
-		for (Enemy* enemy : enemies) {
-			if (enemy) { enemy->Update(dt); }
-		}
+		//for (Enemy* enemy : enemies) {
+		//	if (enemy) { enemy->Update(dt); }
+		//}
 		UpdateKeys();
 		world.UpdateWorld(dt);
 
@@ -250,7 +239,9 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::P)) {
 		TogglePaused();
 	}
-
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
+		InitScene();
+	}
 }
 
 
@@ -269,8 +260,6 @@ void TutorialGame::InitCamera() {
 }
 
 void TutorialGame::InitWorld() {
-	world.ClearAndErase();
-	physics.Clear();
 #ifdef USEAGC
 	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
 	NCL::PS5::PS5Controller* c = w->GetController();
@@ -318,21 +307,21 @@ void TutorialGame::InitWorld() {
 	// Load the navigation grid
 	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
 
-	// Generate a test path
-	NavigationPath outPath;
-	Vector3 startPos(80, 0, 10); // Start position
-	Vector3 endPos(80, 0, 80);   // End position
+	//// Generate a test path
+	//NavigationPath outPath;
+	//Vector3 startPos(80, 0, 10); // Start position
+	//Vector3 endPos(80, 0, 80);   // End position
 
-	if (navGrid->FindPath(startPos, endPos, outPath)) {
-		Vector3 pos;
-		while (outPath.PopWaypoint(pos)) {
-			testNodes.push_back(pos); // Store path waypoints
-		}
+	//if (navGrid->FindPath(startPos, endPos, outPath)) {
+	//	Vector3 pos;
+	//	while (outPath.PopWaypoint(pos)) {
+	//		testNodes.push_back(pos); // Store path waypoints
+	//	}
 
-		enemies[0]->SetMovePath(testNodes);
-	}
-	
-	world.PrintObjects();
+	//	enemies[0]->SetMovePath(testNodes);
+	//}
+	//
+	//world->PrintObjects();
 
 }
 

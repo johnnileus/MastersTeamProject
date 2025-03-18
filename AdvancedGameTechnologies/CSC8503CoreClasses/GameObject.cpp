@@ -16,13 +16,7 @@ GameObject::GameObject(const std::string& objectName)	{
 	networkObject	= nullptr;
 }
 
-void GameObject::Destory()
-{
-	delete boundingVolume;
-	delete physicsObject;
-//	delete renderObject;
-	delete networkObject;
-}
+
 
 GameObject::~GameObject()	{
 	delete boundingVolume;

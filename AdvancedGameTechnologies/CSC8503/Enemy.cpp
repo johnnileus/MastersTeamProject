@@ -60,7 +60,7 @@ void Enemy::Init() {
 
 void Enemy:: Update(float dt)
 {
-    stateMachine->Update(dt);
+    //stateMachine->Update(dt);
     ClampSpeed(dt);
     HandleRotation(dt);
 }

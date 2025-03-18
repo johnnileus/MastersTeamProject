@@ -51,7 +51,6 @@ void UIStateManager::States() {
         }
 
         //Multiplayer
-        //std::cout << "Multiplayer txt " << ImGui::GetWindowWidth() << "\n";
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Hight Score : 00").x) * 0.5f - 25.0f);
         if (ImGui::Button("Multiplayer", ImVec2(300, 60))) {
 
