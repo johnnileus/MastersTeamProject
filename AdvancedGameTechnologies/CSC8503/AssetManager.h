@@ -58,6 +58,7 @@ namespace NCL {
 
             //Material
             MeshMaterial* guardMat;
+			MeshMaterial* cubeMat; 
 
         protected:
             HeightMap* heightmap;

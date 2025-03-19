@@ -5,6 +5,11 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 */////////////////////////////////////////////////////////////////////////////
+#ifdef _WIN32
+
+
+
+
 #include "OGLRenderer.h"
 #include "OGLShader.h"
 #include "OGLMesh.h"
@@ -341,4 +346,5 @@ static void APIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum
 
 	std::cout << "OpenGL Debug Output: " + sourceName + ", " + typeName + ", " + severityName + ", " + string(message) + "\n";
 }
+#endif
 #endif

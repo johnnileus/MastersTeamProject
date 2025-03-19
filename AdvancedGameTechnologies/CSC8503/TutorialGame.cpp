@@ -1,5 +1,6 @@
 #pragma once
 
+//HI BOW, REFRESHER: FOR SOME REASON EVERY OBJECT EXCEPT FOR PLAYER CAUSES CRASHES, LIKELY TO BE A PROBLEM WITH ANYTHING HAVING A JOINT COUNTER LARGER THAN 0
 #include "TutorialGame.h"
 #include "GameWorld.h"
 #include "PhysicsObject.h"
@@ -10,6 +11,8 @@
 #include "OrientationConstraint.h"
 #include "StateGameObject.h"
 
+#include "../PS5Core/PS5Window.h"
+
 
 //hi bow here, I have commented out anything to do with the terrain mesh because as of right now it is causing errors with the modular renderer
 
@@ -17,7 +20,13 @@ using namespace NCL;
 using namespace CSC8503;
 
 TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRenderer, PhysicsSystem& inPhysics) : world(inWorld), renderer(inRenderer), physics(inPhysics),
-	controller(*Window::GetWindow()->GetKeyboard(), *Window::GetWindow()->GetMouse())  {
+#ifdef USEAGC
+	controller(*((NCL::PS5::PS5Window*)Window::GetWindow())->GetController())
+#else
+	controller(*Window::GetWindow()->GetKeyboard(), *Window::GetWindow()->GetMouse())
+#endif
+{
+	std::cout << "TutorialGame constructor called" << std::endl;
 	//world		= new GameWorld();
 #ifdef USEVULKAN
 	renderer	= new GameTechVulkanRenderer(*world);
@@ -34,7 +43,35 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	inSelectionMode = false;
 
 	allCoinsCollected=false;
+#ifdef USEAGC
+	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+	NCL::PS5::PS5Controller* c = w->GetController();
+	world.GetMainCamera().SetController(controller);
 
+	c->MapAxis(0, "LeftX");
+	c->MapAxis(1, "LeftY");
+
+	c->MapAxis(2, "RightX");
+	c->MapAxis(3, "RightY");
+
+	c->MapAxis(4, "DX");
+	c->MapAxis(5, "DY");
+
+	c->MapButton(0, "Triangle");
+	c->MapButton(1, "Circle");
+	c->MapButton(2, "Cross");
+	c->MapButton(3, "Square");
+
+	//These are the axis/button aliases the inbuilt camera class reads from:
+	c->MapAxis(0, "XLook");
+	c->MapAxis(1, "YLook");
+
+	c->MapAxis(2, "Sidestep");
+	c->MapAxis(3, "Forward");
+
+	c->MapButton(0, "Up");
+	c->MapButton(2, "Down");
+#else
 	world.GetMainCamera().SetController(controller);
 
 	controller.MapAxis(0, "Sidestep");
@@ -43,11 +80,16 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 	controller.MapAxis(3, "XLook");
 	controller.MapAxis(4, "YLook");
-
-
-	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(),controller);
-
+#endif // USEAGC
+	std::cout << "Creating ThirdPersonCamera instance" << std::endl;
+	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), controller);
+	std::cout << "ThirdPersonCamera instance created" << std::endl;
+	
+#ifdef _WIN32
+	world.GetMainCamera().SetController(*w->GetController());
+#endif // _WIN32
 	InitialiseAssets();
+	
 }
 
 /*
@@ -58,20 +100,26 @@ for this module, even in the coursework, but you can add it if you like!
 
 */
 void TutorialGame::InitialiseAssets() {
+	std::cout << "InitialiseAssets called" << std::endl;
+	//cubeMesh = renderer.LoadMesh("cube.msh");
 
 	AssetManager::Instance().LoadAssets(&renderer);
-	
+	std::cout << "Assets loaded" << std::endl;
+
 	InitCamera();
+	std::cout << "Camera initialized" << std::endl;
+
 	InitWorld();
+	std::cout << "World initialized" << std::endl;
 }
 
 TutorialGame::~TutorialGame()	{
 
-	//AssetManager::Instance().Cleanup();
+	AssetManager::Instance().Cleanup();
 
 	//delete physics;
 	//delete renderer;
-	delete thirdPersonCam;
+	//delete thirdPersonCam;
 	//delete world;
 }
 
@@ -79,12 +127,13 @@ TutorialGame::~TutorialGame()	{
 void TutorialGame::UpdateGame(float dt) {
 
 
-	if (testStateObject) {
+	/*if (testStateObject) {
 		testStateObject->Update(dt);
-	}
+	}*/
 
 	if (player)
 	{
+		std::cout << "Player Update";
 		player->Update(dt);
 	}
 
@@ -139,12 +188,12 @@ void TutorialGame::UpdateGame(float dt) {
 
 
 	//Animation Test
-	frameTime-=dt;
+	/*frameTime-=dt;
 	while (frameTime<0.0f)
 	{
 		currentFrame = (currentFrame+1) % AssetManager::Instance().idle->GetFrameCount();
 		frameTime +=1.0f/AssetManager::Instance().idle->GetFrameRate();
-	}
+	}*/
 	
 	DisplayPathfinding();
 
@@ -152,6 +201,9 @@ void TutorialGame::UpdateGame(float dt) {
 
 	world.UpdateWorld(dt);
 	//renderer.Update(dt);
+#ifdef WIN32
+
+
 
 	if (networkManager == nullptr) {
 		std::cout << "network manager is null" << std::endl;
@@ -160,14 +212,14 @@ void TutorialGame::UpdateGame(float dt) {
 		networkManager->Update();
 	}
 
-
+#endif // WIN32
 
 
 	physics.Update(dt);
-	thirdPersonCam->Update(dt);
+	//thirdPersonCam->Update(dt);
 	
 	//renderer.Render();
-	Debug::UpdateRenderables(dt);
+	//Debug::UpdateRenderables(dt);
 }
 
 void TutorialGame::UpdateKeys() {
@@ -201,6 +253,9 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F8)) {
 		world.ShuffleObjects(false);
 	}
+#ifdef WIN32
+
+
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::U)) {
 		std::cout << "starting server" << std::endl;
@@ -211,7 +266,7 @@ void TutorialGame::UpdateKeys() {
 		networkManager->StartAsClient();
 
 	}
-
+#endif // WIN32
 
 
 	if (lockedObject) {
@@ -312,9 +367,9 @@ void TutorialGame::InitWorld() {
 
 	InitCatCoins();
 	
-	doorTrigger = Door::Instantiate(&world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
+	//doorTrigger = Door::Instantiate(&world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 	
-	Enemy::Instantiate(&world,enemies,player,Vector3(50,0,0));
+	//Enemy::Instantiate(&world,enemies,player,Vector3(50,0,0));
 
 	//InitTerrain();
 
@@ -334,10 +389,10 @@ void TutorialGame::InitWorld() {
 			testNodes.push_back(pos); // Store path waypoints
 		}
 
-		enemies[0]->SetMovePath(testNodes);
+		//enemies[0]->SetMovePath(testNodes);
 	}
 	
-	SceneManager::Instance().AddCubeToWorld(&world,Vector3(5,0,0),Vector3(1,1,1),1);
+	//SceneManager::Instance().AddCubeToWorld(&world,Vector3(5,0,0),Vector3(1,1,1),1); not this one
 	
 	world.PrintObjects();
 
@@ -352,12 +407,12 @@ void TutorialGame::InitTerrain() {
 
 void TutorialGame::InitCatCoins() {
 	// add CatCoin to the list
-	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 0)));
-	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(20, 0, 20)));
-	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(-10, 0, 25)));
-	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(30, 0, 45)));
-	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(25, 0, -10)));
-	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 50)));
+	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 0)));
+	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(20, 0, 20)));
+	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(-10, 0, 25)));
+	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(30, 0, 45)));
+	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(25, 0, -10)));
+	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 50)));
 
 }
 
@@ -379,6 +434,7 @@ GameObject* TutorialGame::AddSphereToWorld(const Vector3& position,float radius,
 
 	sphere->SetRenderObject(new RenderObject(&sphere->GetTransform(),AssetManager::Instance().sphereMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
 	sphere->SetPhysicsObject(new PhysicsObject(&sphere->GetTransform(),sphere->GetBoundingVolume()));
+	sphere->SetName("Sphere");
 
 	PhysicsObject* physicsObject = sphere->GetPhysicsObject();
 	physicsObject->SetInverseMass(inverseMass);
@@ -403,6 +459,7 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 
 	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), AssetManager::Instance().cubeMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
 	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
+	cube->SetName("Cube");
 
 	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
 	cube->GetPhysicsObject()->InitCubeInertia();
@@ -415,11 +472,11 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
 
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
+	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
+	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
+	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
+	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
 void TutorialGame::InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius) {
@@ -442,7 +499,8 @@ void TutorialGame::InitMixedGridWorld(int numRows, int numCols, float rowSpacing
 			Vector3 position = Vector3(x * colSpacing, 10.0f, z * rowSpacing);
 
 			if (rand() % 2) {
-				AddCubeToWorld(position, cubeDims);
+				//AddCubeToWorld(position, cubeDims);
+				std::cout << "i dont even know anymore man" << std::endl;
 			}
 			else {
 				AddSphereToWorld(position, sphereRadius, Constants::SPHERE_DEFAULT_MASS, Vector3(0,0,0));
@@ -545,11 +603,11 @@ void TutorialGame::TestLinearMotion() {
 
 void TutorialGame::CreateRopeGroup()
 {
-	Rope::AddRopeToWorld(&world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
-	Rope::AddRopeToWorld(&world, Vector3(0,0,10),Vector3(15,0,10),0.7f);
-	Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
-	Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
-	Rope::AddRopeToWorld(&world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
+	//Rope::AddRopeToWorld(&world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
+	//Rope::AddRopeToWorld(&world, Vector3(0,0,10),Vector3(15,0,10),0.7f);
+	//Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
+	//Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
+	//Rope::AddRopeToWorld(&world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
 	
 }
 
@@ -568,13 +626,13 @@ void TutorialGame::DisplayPathfinding() {
 void TutorialGame::GenerateWall()
 {
 	// add all walls to the list
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,12),Vector3(6,1,1)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,12),Vector3(6,1,1)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(60,0,30),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,50),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,50),Vector3(3,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(65,0,70),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(25,0,50),Vector3(2,1,4)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,12),Vector3(6,1,1)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,12),Vector3(6,1,1)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(60,0,30),Vector3(8,1,3)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,50),Vector3(8,1,3)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,50),Vector3(3,1,3)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(65,0,70),Vector3(8,1,3)));
+	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(25,0,50),Vector3(2,1,4)));
 
 	SetWallColour();
 }
@@ -627,10 +685,14 @@ void TutorialGame::BroadcastPosition(){
 	Vector3 pos = player->GetTransform().GetPosition();
 	Quaternion rot = player->GetTransform().GetOrientation();
 
+#ifdef WIN32
+
+
 
 	TransformPacket transform(pos, rot);
 
 	networkManager->BroadcastPacket(transform);
+#endif // WIN32
 }
 
 void TutorialGame::UpdateTransformFromServer(Vector3 pos, Quaternion rot) {

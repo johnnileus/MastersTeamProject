@@ -3,7 +3,7 @@
 #include "GameTechRenderer.h"
 #include "MeshMaterial.h"
 #include "RenderObject.h"
-#include  "bthdef.h"
+//#include  "bthdef.h"
 namespace NCL
 {
     namespace CSC8503
@@ -23,6 +23,8 @@ namespace NCL
             void Play(const std::string& anim, bool tween, float animSpeed);
 
             void TweenAnim(const float& time);
+
+            void TestLerp();
 
             static Matrix4 LerpMat(const Matrix4& a, const Matrix4& b, float t);
 

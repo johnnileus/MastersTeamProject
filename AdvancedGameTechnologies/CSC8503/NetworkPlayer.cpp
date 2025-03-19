@@ -1,3 +1,4 @@
+#ifdef WIN32
 #include "NetworkPlayer.h"
 #include "NetworkedGame.h"
 
@@ -15,9 +16,16 @@ NetworkPlayer::~NetworkPlayer()	{
 
 void NetworkPlayer::OnCollisionBegin(GameObject* otherObject) {
 	if (game) {
+#ifdef USEAGC
+		if (static_cast<NetworkPlayer*>(otherObject))
+#else
 		if (dynamic_cast<NetworkPlayer*>(otherObject))
+#endif 
+
+		//if (dynamic_cast<NetworkPlayer*>(otherObject))
 		{
 			game->OnPlayerCollision(this, (NetworkPlayer*)otherObject);
 		}
 	}
 }
+#endif // WIN32

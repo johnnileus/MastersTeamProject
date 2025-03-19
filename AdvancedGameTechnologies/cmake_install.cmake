@@ -29,7 +29,17 @@ endif()
 
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
-  set(CMAKE_CROSSCOMPILING "FALSE")
+  set(CMAKE_CROSSCOMPILING "TRUE")
+endif()
+
+# Set default install directory permissions.
+if(NOT DEFINED CMAKE_OBJDUMP)
+  set(CMAKE_OBJDUMP "C:/Program Files (x86)/SCE/Prospero SDKs/10.000/host_tools/bin/prospero-llvm-objdump.exe")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-build/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -50,6 +60,16 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/GLTFLoader/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/PS5Core/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)

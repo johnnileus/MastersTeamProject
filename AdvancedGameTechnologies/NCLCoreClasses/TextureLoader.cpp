@@ -47,6 +47,9 @@ bool TextureLoader::LoadTexture(const std::string& filename, char*& outData, uin
 	height		= stbiHeight;
 	channels	= 4; //it gets forced, we don't care about the 'real' channel size
 
+	std::cout << "stb_image loaded: " << realPath << std::endl;
+	std::cout << "Width: " << stbiWidth << ", Height: " << stbiHeight << ", Channels: " << stbiChannels << std::endl;
+
 	if (texData) {
 		outData = (char*)texData;
 		return true;

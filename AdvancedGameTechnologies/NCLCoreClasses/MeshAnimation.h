@@ -27,6 +27,7 @@ namespace NCL::Rendering {
 		}
 
 		size_t GetFrameCount() const {
+			std::cout << "GetFrameCount called on: " << this << std::endl;
 			return frameCount;
 		}
 

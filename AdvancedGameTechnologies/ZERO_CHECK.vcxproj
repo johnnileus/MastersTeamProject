@@ -7,33 +7,33 @@
     <ResolveNugetPackages>false</ResolveNugetPackages>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|x64">
+    <ProjectConfiguration Include="Debug|Prospero">
       <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
+      <Platform>Prospero</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
+    <ProjectConfiguration Include="Release|Prospero">
       <Configuration>Release</Configuration>
-      <Platform>x64</Platform>
+      <Platform>Prospero</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{86BAEB80-4537-342E-8DD3-D718413DEE2A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
-    <Platform>x64</Platform>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <Platform>Prospero</Platform>
     <ProjectName>ZERO_CHECK</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>PS5Clang</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>PS5Clang</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -44,10 +44,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\ThirdParty\reactphysics\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
@@ -56,8 +56,21 @@
       <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
+    <PreBuildEvent>
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message>Checking File Globs</Message>
+      <Command>setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -P C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/VerifyGlobs.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\ThirdParty\reactphysics\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
@@ -66,13 +79,26 @@
       <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
+    <PreBuildEvent>
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message>Checking File Globs</Message>
+      <Command>setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -P C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/VerifyGlobs.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\63d5c3ba38156b71861e06b1f3708cc0\generate.stamp.rule">
       <UseUtf8Encoding>Always</UseUtf8Encoding>
-      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Checking Build System</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">Checking Build System</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">setlocal
 "C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies -BC:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503.sln
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
@@ -81,12 +107,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\WindowsPaths.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\Default.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\DefaultCXX.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\Utils.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeCXXCompiler.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeRCCompiler.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeSystem.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Checking Build System</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">C:\Program Files (x86)\SCE\Prospero\Tools\CMake\PS5.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Clang-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Clang.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\GNU.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\ExternalProject\shared_internal_commands.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FetchContent.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FetchContent\CMakeLists.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Prospero.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\Default.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\DefaultCXX.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\Utils.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeCXXCompiler.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeSystem.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\GLTFLoader\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\PS5Core\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-src\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-src\support\cmake\JoinPaths.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-src\support\cmake\fmt-config.cmake.in;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-src\support\cmake\fmt.pc.in;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-build\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\GLTFLoader\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\PS5Core\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">Checking Build System</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">setlocal
 "C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies -BC:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503.sln
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
@@ -95,9 +121,9 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\WindowsPaths.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\Default.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\DefaultCXX.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\Utils.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeCXXCompiler.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeRCCompiler.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeSystem.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:\Program Files (x86)\SCE\Prospero\Tools\CMake\PS5.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Clang-CXX.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\Clang.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Compiler\GNU.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\ExternalProject\shared_internal_commands.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FetchContent.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\FetchContent\CMakeLists.cmake.in;C:\Program Files\CMake\share\cmake-3.28\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\Platform\Prospero.cmake;C:\Program Files\CMake\share\cmake-3.28\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\Default.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\DefaultCXX.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMake\Utils.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeCXXCompiler.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\3.28.3\CMakeSystem.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\GLTFLoader\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\PS5Core\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-src\CMakeLists.txt;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-src\support\cmake\JoinPaths.cmake;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-src\support\cmake\fmt-config.cmake.in;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-src\support\cmake\fmt.pc.in;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\_deps\fmt-build\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\NCLCoreClasses\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\GLTFLoader\CMakeFiles\generate.stamp;C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\PS5Core\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

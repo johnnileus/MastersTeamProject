@@ -10,6 +10,7 @@ MeshAnimation::MeshAnimation() {
 	jointCount	= 0;
 	frameCount	= 0;
 	frameRate	= 0.0f;
+	std::cout << "MeshAnimation created: " << this << std::endl;
 }
 
 MeshAnimation::MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Matrix4>& frames) {
@@ -17,9 +18,11 @@ MeshAnimation::MeshAnimation(size_t jointCount, size_t frameCount, float frameRa
 	this->frameCount = frameCount;
 	this->frameRate  = frameRate;
 	this->allJoints  = frames;
+	std::cout << "MeshAnimation created with parameters: " << this << std::endl;
 }
 
 MeshAnimation::MeshAnimation(const std::string& filename) : MeshAnimation() {
+	std::cout << "MeshAnimation created from file: " << this << std::endl;
 	std::ifstream file(Assets::MESHDIR + filename);
 
 	std::string filetype;
@@ -52,10 +55,11 @@ MeshAnimation::MeshAnimation(const std::string& filename) : MeshAnimation() {
 }
 
 MeshAnimation::~MeshAnimation() {
-
+	std::cout << "MeshAnimation destroyed: " << this << std::endl;
 }
 
 const Matrix4* MeshAnimation::GetJointData(size_t frame) const {
+	std::cout << "Getting Joint Data... " << std::endl;
 	if (frame >= frameCount) {
 		return nullptr;
 	}

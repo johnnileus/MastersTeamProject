@@ -91,7 +91,7 @@ class DefaultLogger : public Logger {
                     // This is because std::localtime is not thread-safe
 
 #if defined(__unix__)
-                    localtime_r(&time, &bt);
+                    localtime_s(&time, &bt); //this used to be localtime_r, i am testing to see if all is fine with setting this to _s
 #elif defined(_MSC_VER)
                     localtime_s(&bt, &time);
 #else

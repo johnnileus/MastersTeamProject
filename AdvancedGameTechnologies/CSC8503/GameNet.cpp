@@ -1,3 +1,7 @@
+#ifdef WIN32
+
+
+
 #include "GameNet.h"
 #include "TutorialGame.h"
 
@@ -96,3 +100,4 @@ void NetworkManager::BroadcastPacket(TransformPacket p) {
 		server->SendGlobalPacket(p);
 	}
 }
+#endif // WIN32

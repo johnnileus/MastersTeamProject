@@ -1,3 +1,7 @@
+#ifdef WIN32
+
+
+
 #include "GameClient.h"
 #include "./enet/enet.h"
 using namespace NCL;
@@ -50,4 +54,6 @@ void GameClient::SendPacket(GamePacket& payload) {
 	enet_peer_send(netPeer, 0, dataPacket);
 
 }
+
+#endif // WIN32
 

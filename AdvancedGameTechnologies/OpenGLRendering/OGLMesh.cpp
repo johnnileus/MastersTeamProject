@@ -5,7 +5,12 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 */////////////////////////////////////////////////////////////////////////////
+#ifdef WIN32
+
+
+
 #include "OGLMesh.h"
+
 
 using namespace NCL;
 using namespace NCL::Rendering;
@@ -162,3 +167,4 @@ void OGLMesh::RecalculateNormals() {
 
 	}
 }
+#endif // WIN32

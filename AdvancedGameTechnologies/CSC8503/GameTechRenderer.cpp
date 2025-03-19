@@ -1,3 +1,7 @@
+#ifdef WIN32
+
+
+
 #include "GameTechRenderer.h"
 #include "GameObject.h"
 #include "RenderObject.h"
@@ -565,3 +569,4 @@ void GameTechRenderer::SetDebugLineBufferSizes(size_t newVertCount) {
 		glBindVertexArray(0);
 	}
 }
+#endif // WIN32

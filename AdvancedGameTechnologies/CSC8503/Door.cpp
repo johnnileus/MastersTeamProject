@@ -46,7 +46,7 @@ void Door::Init(GameObject* doorPanel)
 }
 
 void Door::Update(float dt) {
-    UpdateDoorMovement(dt);
+    //UpdateDoorMovement(dt);
 }
 
 void Door::UpdateDoorMovement(float dt)
@@ -135,14 +135,14 @@ Door* Door::Instantiate(GameWorld* world,
     door->GetTransform().SetPosition(trigger_pos);
     door->GetTransform().SetOrientation(trigger_quaternion);
 
-    GameObject* doorPanel = door->CreateDoorPanelObject(world,panel_pos, Vector3(6,9,1),panel_quaternion);
+    //GameObject* doorPanel = door->CreateDoorPanelObject(world,panel_pos, Vector3(6,9,1),panel_quaternion);
 
     // Add to the GameWorld
-    if (world) {
+    /*if (world) {
         world->AddGameObject(door);
         world->AddGameObject(doorPanel);
     }
-    door->Init(doorPanel);
+    door->Init(doorPanel);*/
 
     return door;
 }

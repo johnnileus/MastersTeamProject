@@ -20,14 +20,14 @@ void GameObject::Destory()
 {
 	delete boundingVolume;
 	delete physicsObject;
-	delete renderObject;
+//	delete renderObject;
 	delete networkObject;
 }
 
 GameObject::~GameObject()	{
 	delete boundingVolume;
 	delete physicsObject;
-	delete renderObject;
+//	delete renderObject;
 	delete networkObject;
 }
 

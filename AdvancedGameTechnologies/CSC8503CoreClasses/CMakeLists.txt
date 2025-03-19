@@ -105,6 +105,7 @@ source_group("Source Files" FILES ${Source_Files})
 
 set(enet_Files
     #"./enet/callbacks.h"
+    "./enet/unix.h"
     "./enet/callbacks.c"
     "./enet/list.h"
     "./enet/list.c"
@@ -204,3 +205,5 @@ include_directories("./")
 if(MSVC)
     target_link_libraries(${PROJECT_NAME} PRIVATE "ws2_32.lib")
 endif()
+
+target_link_libraries(${PROJECT_NAME} PUBLIC NCLCoreClasses)

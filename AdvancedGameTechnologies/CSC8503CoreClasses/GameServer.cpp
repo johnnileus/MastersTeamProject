@@ -1,3 +1,7 @@
+#ifdef  WIN32
+
+
+
 #include "GameServer.h"
 #include "GameWorld.h"
 #include "./enet/enet.h"
@@ -88,3 +92,5 @@ void GameServer::UpdateServer() {
 void GameServer::SetGameWorld(GameWorld &g) {
 	gameWorld = &g;
 }
+
+#endif //  WIN32

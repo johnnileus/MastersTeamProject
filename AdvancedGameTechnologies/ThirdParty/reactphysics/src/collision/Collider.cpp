@@ -110,8 +110,11 @@ void Collider::setLocalToBodyTransform(const Transform& transform) {
     // Update the local-to-world transform
     const Transform& bodyTransform = mBody->mWorld.mTransformComponents.getTransform(mBody->getEntity());
     mBody->mWorld.mCollidersComponents.setLocalToWorldTransform(mEntity, bodyTransform * transform);
-
+#ifdef USEAGC
+    RigidBody* rigidBody = static_cast<RigidBody*>(mBody);
+#else
     RigidBody* rigidBody = dynamic_cast<RigidBody*>(mBody);
+#endif // for some reason ps5 stuff doesn't like dynamic_cast
     if (rigidBody != nullptr) {
         rigidBody->setIsSleeping(false);
     }

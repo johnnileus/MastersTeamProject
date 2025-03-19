@@ -76,8 +76,11 @@ namespace NCL {
 			StateGameObject* testStateObject;
 
 			GameObject* debugSphere;
-
+#ifdef _WIN32
 			NetworkManager* networkManager = new NetworkManager();
+#endif // WIN32
+
+			
 
 			ThirdPersonCamera* thirdPersonCam;
 
@@ -95,9 +98,11 @@ namespace NCL {
 			//PhysicsSystem*		physics;
 			//GameWorld*			world;
 
-
+#ifdef USEAGC
+			NCL::PS5::PS5Controller controller;
+#else
 			KeyboardMouseController controller;
-
+#endif // _WIN32
 			bool useGravity;
 			bool inSelectionMode;
 
@@ -135,6 +140,7 @@ namespace NCL {
 			void ReloadLevel();
 
 			Door* doorTrigger;
+			Mesh* cubeMesh;
 
 		};
 	}

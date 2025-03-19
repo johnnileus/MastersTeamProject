@@ -33,6 +33,7 @@
 #include <reactphysics3d/collision/shapes/TriangleShape.h>
 #include <reactphysics3d/collision/Collider.h>
 #include <reactphysics3d/collision/HalfEdgeStructure.h>
+#include <vector>
 
 namespace reactphysics3d {
 

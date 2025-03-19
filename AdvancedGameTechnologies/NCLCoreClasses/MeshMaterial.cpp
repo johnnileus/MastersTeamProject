@@ -74,6 +74,10 @@ void MeshMaterial::LoadTextures() {
 void MeshMaterialEntry::LoadTextures() {
 	for (auto& i : entries) {
 		string filename = Assets::TEXTUREDIR + i.second.first;
+		if (filename.find(".TGA") != string::npos || filename.find(".tga") != string::npos) {
+			std::cout << "Ignoring TGA file: " << filename << std::endl;
+			continue; // Skip loading this file, Theres some weird shenanigans to do with the PS5 and TGA files.
+		}
 
 		//Texture* t = TextureLoader::LoadAPITexture(filename);
 

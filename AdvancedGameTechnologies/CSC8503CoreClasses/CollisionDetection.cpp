@@ -412,6 +412,9 @@ Matrix4 GenerateInverseProjection(float aspect, float fov, float nearPlane, floa
 }
 
 Vector3 CollisionDetection::Unproject(const Vector3& screenPos, const PerspectiveCamera& cam) {
+	if (Window::GetWindow() == nullptr) {
+		std::cout << "Window Null :(" ;
+	}
 	Vector2i screenSize = Window::GetWindow()->GetScreenSize();
 
 	float aspect = Window::GetWindow()->GetScreenAspect();
@@ -445,7 +448,11 @@ Vector3 CollisionDetection::Unproject(const Vector3& screenPos, const Perspectiv
 	return Vector3(transformed.x / transformed.w, transformed.y / transformed.w, transformed.z / transformed.w);
 }
 
-Ray CollisionDetection::BuildRayFromMouse(const PerspectiveCamera& cam) {
+Ray CollisionDetection::BuildRayFromMouse(const PerspectiveCamera& cam) 
+{
+	if (Window::GetWindow() == nullptr) {
+		std::cout << "Window Null :(";
+	}
 	Vector2 screenMouse = Window::GetMouse()->GetAbsolutePosition();
 	Vector2i screenSize	= Window::GetWindow()->GetScreenSize();
 
@@ -537,6 +544,9 @@ projection matrix of our scene, and the camera used to form the view matrix.
 Vector3	CollisionDetection::UnprojectScreenPosition(Vector3 position, float aspect, float fov, const PerspectiveCamera& c) {
 	//Create our inverted matrix! Note how that to get a correct inverse matrix,
 	//the order of matrices used to form it are inverted, too.
+	if (Window::GetWindow() == nullptr) {
+		std::cout << "Window Null :(";
+	}
 	Matrix4 invVP = GenerateInverseView(c) * GenerateInverseProjection(aspect, fov, c.GetNearPlane(), c.GetFarPlane());
 
 

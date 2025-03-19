@@ -115,6 +115,8 @@ namespace NCL::Rendering {
 		}
 
 		size_t GetJointCount() const {
+			std::cout << "Joint Count: " << jointNames.size() << std::endl;
+			//std::cout << "on:" << debugName << std::endl;
 			return jointNames.size();
 		}
 
@@ -174,6 +176,13 @@ namespace NCL::Rendering {
 			return jointParents;
 		}
 
+		const std::vector<std::string>& GetJointNames()	const {
+			return jointNames;
+		}
+
+		const std::vector<std::string>& GetSubMeshNames()	const {
+			return subMeshNames;
+		}
 		const std::vector<unsigned int>& GetIndexData()			const { return indices;		}
 
 		void SetVertexPositions(const std::vector<Vector3>& newVerts);
@@ -188,6 +197,10 @@ namespace NCL::Rendering {
 		void SetVertexSkinIndices(const std::vector<Vector4i>& newSkinIndices);
 
 		void SetDebugName(const std::string& debugName);
+
+		const std::string& GetDebugName() const {
+			return debugName;
+		}
 
 		virtual void UploadToGPU(Rendering::RendererBase* renderer = nullptr) = 0;
 

@@ -1,3 +1,7 @@
+#ifdef WIN32
+
+
+
 #include "NetworkBase.h"
 #include "./enet/enet.h"
 NetworkBase::NetworkBase()	{
@@ -33,3 +37,4 @@ bool NetworkBase::ProcessPacket(GamePacket* packet, int peerID) {
         << packet->type << std::endl;
     return false;
 }
+#endif // WIN32

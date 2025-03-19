@@ -7,6 +7,11 @@
 #include "Enemy.h"
 #include "PhysicsObject.h"
 #include "RenderObject.h"
+#define FMT_LOCALE 0
+#define FMT_STATIC_THOUSANDS_SEPARATOR
+#define FMT_HEADER_ONLY 1
+#include <fmt/core.h>
+
 
 using namespace NCL;
 using namespace CSC8503;
@@ -55,7 +60,8 @@ void Player::Init(ThirdPersonCamera* cam)
 
 void Player::SetComponent(float meshSize,float mass)
 {
-	myMesh = AssetManager::Instance().guardMesh;
+	//myMesh = AssetManager::Instance().guardMesh;
+	myMesh = AssetManager::Instance().cubeMesh;
 	//Collider
 	SphereVolume* volume  = new SphereVolume(1);
 	SetBoundingVolume((CollisionVolume*)volume);
@@ -70,16 +76,23 @@ void Player::SetComponent(float meshSize,float mass)
 	GetPhysicsObject()->InitSphereInertia();
 	
 	//Render
-	SetRenderObject(new RenderObject(
+	/*SetRenderObject(new RenderObject(
 		&objectTransform,
 		myMesh,
 		AssetManager::Instance().playerTex[0],
 		AssetManager::Instance().basicShader)
-		);
+		);*/
+	SetRenderObject(new RenderObject(
+		&objectTransform,
+		myMesh,
+		AssetManager::Instance().basicTex,
+		AssetManager::Instance().basicShader)
+	);
 	
 	
-	animator = new Animator();
-	animator->LoadAnimation("Idle");
+	//animator = new Animator();
+	std::cout << "Doing the player animator thingy in Set Component" << std::endl;
+	//animator->LoadAnimation("Idle");
 }
 
 void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
@@ -112,7 +125,8 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	}
 	camera->SetFollowObject(player);
 
-	player->animator->Play("Idle",true,1);
+	std::cout << "Doing the player animator thingy" << std::endl;
+	//player->animator->Play("Idle",true,1);
 	
 	return player;
 }
@@ -128,7 +142,7 @@ void Player::Update(float dt) {
 	DisplayUI();
 	HealthCheck();
 	
-	animator->Update(dt);
+	//animator->Update(dt);
 
 	// Colour change timer
 	if (isTemporaryColourActive) {
@@ -328,7 +342,11 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		Debug::DrawLine(this->GetTransform().GetPosition(),otherObject->GetTransform().GetPosition());
 		if (isDashing)
 		{
+#ifdef USEAGC
+			Enemy* enemy = static_cast<Enemy*>(otherObject);
+#else
 			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
+#endif // USEAGC
 			score+=15;
 			SetTemporaryColour(attackColour,0.25f);
 			enemy->Reset();
@@ -336,7 +354,11 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		else
 		{
 			health-=damage;
+#ifdef USEAGC
+			Enemy* enemy = static_cast<Enemy*>(otherObject);
+#else
 			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
+#endif // USEAGC
 			SetTemporaryColour(damageColour,0.25f);
 			enemy->Reset();
 
@@ -370,7 +392,7 @@ void Player::DisplayUI()
 {
 	
 	float velocity = Vector::Length(playerPhysicObject->GetLinearVelocity());
-	Debug::Print("V:" + std::format("{:.1f}", velocity), Vector2(5, 10));
+	Debug::Print("V:" + fmt::format("{:.1f}", velocity), Vector2(5, 10));
 	Debug::Print("HP:"+std::to_string(health), Vector2(5,15));
 	Debug::Print("Score:"+std::to_string(score), Vector2(80,10));
 }

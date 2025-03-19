@@ -1,3 +1,7 @@
+#ifdef WIN32
+
+
+
 #pragma once
 
 #include <iostream>
@@ -76,5 +80,5 @@ protected:
 	int port = NetworkBase::GetDefaultPort();
 
 };
-
+#endif // WIN32
 

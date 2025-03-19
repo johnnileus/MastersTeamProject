@@ -31,6 +31,7 @@ GameObject* SceneManager::AddCubeToWorld(GameWorld* world,const Vector3& pos, co
 
     cube->GetPhysicsObject()->SetInverseMass(inverseMass);
     cube->GetPhysicsObject()->InitCubeInertia();
+	cube->SetName("Cube");
 	
     world->AddGameObject(cube);
 

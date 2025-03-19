@@ -1,3 +1,7 @@
+#ifdef _WIN32
+
+
+
 #include "NetworkedGame.h"
 #include "NetworkPlayer.h"
 #include "NetworkObject.h"
@@ -168,3 +172,5 @@ void NetworkedGame::OnPlayerCollision(NetworkPlayer* a, NetworkPlayer* b) {
 		thisClient->SendPacket(newPacket);
 	}
 }
+
+#endif // WIN32

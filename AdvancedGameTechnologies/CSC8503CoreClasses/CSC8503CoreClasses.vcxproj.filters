@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\CSC8503CoreClasses.dir\cmake_pch.cxx">
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\CSC8503CoreClasses.dir\cmake_pch.hxx.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\Debug.h">
@@ -186,6 +186,9 @@
     </ClCompile>
     <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\PhysicsSystem.h">
       <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\unix.h">
+      <Filter>eNet</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\callbacks.c">
       <Filter>eNet</Filter>

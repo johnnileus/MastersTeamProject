@@ -13,7 +13,9 @@
 #pragma warning (disable: 4146) // unary minus operator applied to unsigned type
 #endif
 #endif
+#ifdef USEAGC
 
+#else
 #include <stdlib.h>
 #include <winsock2.h>
 
@@ -30,7 +32,7 @@ typedef SOCKET ENetSocket;
 typedef struct
 {
     size_t dataLength;
-    void * data;
+    void* data;
 } ENetBuffer;
 
 #define ENET_CALLBACK __cdecl
@@ -53,5 +55,8 @@ typedef fd_set ENetSocketSet;
 #define ENET_SOCKETSET_CHECK(sockset, socket)  FD_ISSET (socket, & (sockset))
 
 #endif /* __ENET_WIN32_H__ */
+#endif // USEAGC
+
+
 
 

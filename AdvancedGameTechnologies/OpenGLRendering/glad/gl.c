@@ -1,3 +1,7 @@
+#ifdef _WIN32
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9450,3 +9454,5 @@ void gladLoaderUnloadGL(void) {
 #ifdef __cplusplus
 }
 #endif
+
+#endif // _WIN32

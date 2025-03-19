@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include "PS5Window.h"
 
 #include "Debug.h"
 
@@ -24,12 +25,21 @@
 
 
 using namespace NCL;
+using namespace PS5;
 using namespace CSC8503;
+
+#ifdef USEAGC
+size_t sceUserMainThreadStackSize = 2 * 1024 * 1024;
+extern const char sceUserMainThreadName[] = "TeamProjectGameMain";
+int sceUserMainThreadPriority = SCE_KERNEL_PRIO_FIFO_DEFAULT;
+size_t sceLibcHeapSize = 256 * 1024 * 1024;
+#endif // USEAGC
 
 #include <chrono>
 #include <thread>
 #include <sstream>
 #include "NetworkedGame.h"
+#include <GameTechAGCRenderer.h>
 
 std::vector<Vector3> testNodes;
 
@@ -78,68 +88,92 @@ int main() {
 	//std::unique_ptr<Window>		w = std::make_unique<Window>("Hello!", 1920, 1080);
 	std::unique_ptr<GameWorld>		world = std::make_unique<GameWorld>();
 	std::unique_ptr<PhysicsSystem>	physics = std::make_unique<PhysicsSystem>(*world);
-#ifdef PS5
-	GameTechAGCRenderer* renderer = new GameTechAGCRenderer(*world); //this has yet to exist but its ok for now
-#endif // PS5
-
+	
+#ifdef USEAGC
+	std::unique_ptr<PS5Window>		w = std::make_unique<PS5Window>("Hello!", 1920, 1080);
+	GameTechAGCRenderer* renderer = new GameTechAGCRenderer(*world); 
+	PS5Controller* c = w->GetController();
+#else
+	GameTechRenderer* renderer = new GameTechRenderer(*world);
 	WindowInitialisation initInfo;
 	initInfo.width = 1280;
 	initInfo.height = 720;
 	initInfo.windowTitle = "GO MARBLE BALL";
-
 	Window* w = Window::CreateGameWindow(initInfo);
+#endif 
 
-	GameTechRenderer* renderer = new GameTechRenderer(*world);
-	
-
-	
-
-
-	if (!w->HasInitialised()) {
+	/*if (!w->HasInitialised()) {
 		std::cout << "Window failed to initialise!" << std::endl;
 		return -1;
-	}	
+	}*/	
 
-	w->ShowOSPointer(true);
-	w->LockMouseToWindow(false);
+	//w->ShowOSPointer(true);
+	//w->LockMouseToWindow(false);
 	//TestPathfinding();
-
+#ifdef _WIN32
 	std::unique_ptr<NetworkedGame> networkedGame = std::make_unique<NetworkedGame>(*world, *renderer, *physics);
+#endif // WIN32
 
+	c->MapAxis(0, "LeftX");
+	c->MapAxis(1, "LeftY");
+
+	c->MapAxis(2, "RightX");
+	c->MapAxis(3, "RightY");
+
+	c->MapAxis(4, "DX");
+	c->MapAxis(5, "DY");
+
+	c->MapButton(0, "Triangle");
+	c->MapButton(1, "Circle");
+	c->MapButton(2, "Cross");
+	c->MapButton(3, "Square");
+
+	//These are the axis/button aliases the inbuilt camera class reads from:
+	c->MapAxis(0, "XLook");
+	c->MapAxis(1, "YLook");
+
+	c->MapAxis(2, "Sidestep");
+	c->MapAxis(3, "Forward");
+
+	c->MapButton(0, "Up");
+	c->MapButton(2, "Down");
+
+	std::cout << "Creating TutorialGame instance" << std::endl;
 	std::unique_ptr<TutorialGame> g = std::make_unique<TutorialGame>(*world, *renderer, *physics);
 
 	w->GetTimer().GetTimeDeltaSeconds(); //Clear the timer so we don't get a larget first dt!
-	while (w->UpdateWindow() && !Window::GetKeyboard()->KeyDown(KeyCodes::ESCAPE)) {
+	while (w->UpdateWindow() /* && !Window::GetKeyboard()->KeyDown(KeyCodes::ESCAPE) */) {
 		float dt = w->GetTimer().GetTimeDeltaSeconds();
 		if (dt > 0.1f) {
 			std::cout << "Skipping large time delta" << std::endl;
 			continue; //must have hit a breakpoint or something to have a 1 second frame time!
 		}
-		if (Window::GetKeyboard()->KeyPressed(KeyCodes::PRIOR)) {
-			w->ShowConsole(true);
-		}
-		if (Window::GetKeyboard()->KeyPressed(KeyCodes::NEXT)) {
-			w->ShowConsole(false);
-		}
+		//if (Window::GetKeyboard()->KeyPressed(KeyCodes::PRIOR)) {
+		//	w->ShowConsole(true);
+		//}
+		//if (Window::GetKeyboard()->KeyPressed(KeyCodes::NEXT)) {
+		//	w->ShowConsole(false);
+		//}
 
-		if (Window::GetKeyboard()->KeyPressed(KeyCodes::T)) {
-			w->SetWindowPosition(0, 0);
-		}
+		//if (Window::GetKeyboard()->KeyPressed(KeyCodes::T)) {
+		//	w->SetWindowPosition(0, 0);
+		//}
 
-		if (Window::GetKeyboard()->KeyPressed(KeyCodes::O)) {
-			w->ShowOSPointer(false);
-			w->LockMouseToWindow(true);
-		}
+		//if (Window::GetKeyboard()->KeyPressed(KeyCodes::O)) {
+		//	w->ShowOSPointer(false);
+		//	w->LockMouseToWindow(true);
+		//}
 
-		//DisplayPathfinding();
+		////DisplayPathfinding();
 
-		w->SetTitle("Go Marble Ball: " + std::to_string(1000.0f * dt));
+		//w->SetTitle("Go Marble Ball: " + std::to_string(1000.0f * dt));
 
 		g->UpdateGame(dt);
 		renderer->Update(dt);
 		renderer->Render();
+		Debug::UpdateRenderables(dt);
 	}
-	Window::DestroyGameWindow();
+	//Window::DestroyGameWindow(); //I think this needs to be commented out for the uniqueptr approach??
 }
 
 void TestStateMachine() {

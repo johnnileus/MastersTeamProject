@@ -32,6 +32,7 @@
 #include <reactphysics3d/containers/Map.h>
 #include <reactphysics3d/containers/Set.h>
 #include <reactphysics3d/utils/quickhull/QHHalfEdgeStructure.h>
+#include <vector>
 
 /// ReactPhysics3D namespace
 namespace reactphysics3d {
