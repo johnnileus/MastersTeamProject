@@ -1,5 +1,6 @@
 #include "PassiveItem.h"
 #include "AssetManager.h"
+#include "PhysicsObject.h"
 
 #include "json/json11.hpp"
 #include <iostream>
@@ -20,7 +21,7 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 	file.close();
 	std::string err;
 	json11::Json json = json11::Json::parse(buffer.str(), err);
-	//std::cout << "JSON data: " << json.dump() << "\n";
+	std::cout << "JSON data: " << json.dump() << "\n";
 
 	myWorld = world;
 	size = 1;
@@ -34,7 +35,10 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 }
 
 PassiveItem::~PassiveItem() {
-
+	delete boundingVolume;
+	delete physicsObject;
+	delete renderObject;
+	delete networkObject;
 }
 
 void PassiveItem::SetComponent(float meshSize, float inverseMass) {
