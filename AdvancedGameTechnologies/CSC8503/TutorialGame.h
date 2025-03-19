@@ -99,7 +99,8 @@ namespace NCL {
 			void InitTerrain();
 
 			//Timer
-			float timer = 0;
+			float timerSecs = 0;
+			float timerMins = 0;
 
 			//Items
 			void InitItems();

@@ -23,7 +23,7 @@ namespace NCL {
 			float size;
 			float mass;
 
-			int damage;
+			float maxSpeed;
 			int health;
 		};
 	}
