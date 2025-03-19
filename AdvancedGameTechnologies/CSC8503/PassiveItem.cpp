@@ -28,7 +28,7 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 
 	name = "passive";
 	tag = "Passive";
-	damage = 10;//change to json value
+	maxSpeed = 10;//change to json value
 
 	SetComponent(size, mass);
 }
@@ -48,9 +48,9 @@ void PassiveItem::SetComponent(float meshSize, float inverseMass) {
 		AssetManager::Instance().basicTex,
 		AssetManager::Instance().basicShader));
 
-	//SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
-	//GetPhysicsObject()->SetInverseMass(inverseMass);
-	//GetPhysicsObject()->InitSphereInertia();
+	SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
+	GetPhysicsObject()->SetInverseMass(inverseMass);
+	GetPhysicsObject()->InitSphereInertia();
 }
 
 void PassiveItem::Init() {

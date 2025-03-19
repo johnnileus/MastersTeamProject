@@ -119,8 +119,12 @@ void TutorialGame::UpdateGame(float dt) {
 		Debug::UpdateRenderables(dt);
 
 		//Timer
-		timer += dt;
-		Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
+		timerSecs += dt;
+		if (timerSecs >= 60.0f) {
+			timerMins += 1;
+			timerSecs = 0;
+		}
+		Debug::Print("Time:" + std::to_string(static_cast<int>(timerMins)) + ":" + std::to_string(static_cast<int>(timerSecs)), Vector2(80, 15));
 
 	}
 	else {
@@ -349,7 +353,7 @@ void TutorialGame::InitEnemies() {
 }
 
 void TutorialGame::InitItems() {
-	PassiveItem::Instantiate(world, itemList, player, Vector3(1, 1, 1));
+	//PassiveItem::Instantiate(world, itemList, player, Vector3(1, 1, 1));
 }
 
 void TutorialGame::UpdateEnemies(float dt) {
