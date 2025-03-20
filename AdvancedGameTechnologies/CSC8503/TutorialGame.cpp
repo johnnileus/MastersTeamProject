@@ -484,13 +484,13 @@ void TutorialGame::ToggleCursor() {
 }
 
 void TutorialGame::InitEnemies() {
-	/*enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(&world, Vector3(10,3,10), 1.0f, 100.0f));*/
+	enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(&world, this->navGrid, Vector3(10,3,10), 1.0f, 100.0f));
 }
 
 void TutorialGame::UpdateEnemies(float dt) {
 	for (int e = 0; e < enemies.size(); ++e) {
 		if (enemyList[e]->CheckAlive()) {
-			//alive enemy logic
+			enemyList[e]->FollowPath();
 			continue;
 		}
 		else {
