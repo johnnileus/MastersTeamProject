@@ -82,8 +82,8 @@ void NavMeshAgent::setCurrentNode() {
 	int roundedX = std::round(GetCurrentPosition().x);
 	int roundedZ = std::round(GetCurrentPosition().z);
 	for (int n = 0; n < nodeGrid->GetAllNodes().size(); ++n) {
-		if (nodeGrid->GetAllNodes()[n]->GetPosition().x == roundedX && nodeGrid->GetAllNodes()[n]->GetPosition().z == roundedZ) {
-			currentNode = nodeGrid->GetAllNodes()[n];
+		if (this->nodeGrid->GetAllNodes()[n]->GetPosition().x == roundedX && this->nodeGrid->GetAllNodes()[n]->GetPosition().z == roundedZ) {
+			this->currentNode = this->nodeGrid->GetAllNodes()[n];
 			break;
 		}
 	}
@@ -91,11 +91,11 @@ void NavMeshAgent::setCurrentNode() {
 
 void NavMeshAgent::FollowPath() {
 	setCurrentNode();
-	if (currentNode == destination) {
+	if (this->currentNode == this->destination) {
 		return;
 	}
-	if (currentNode == nextNode) {
-		path.erase(path.begin());
-		nextNode = path[0];
+	if (this->currentNode == this->nextNode) {
+		this->path.erase(this->path.begin());
+		this->nextNode = path[0];
 	}
 }
