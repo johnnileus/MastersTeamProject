@@ -209,6 +209,8 @@ void TutorialGame::InitWorld() {
 	
 	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
 
+	InitNavGrid();
+
 	InitEnemies();
 
 	InitTerrain();
@@ -330,7 +332,6 @@ void TutorialGame::InitNavigationTestLevel() {
 	//set camera to a debug camera
 
 	//draw debug graph of all nodes and edges
-	navGrid = new NavMeshGrid();
 	navMeshAgent = new NavMeshAgent(navGrid, 1.0f, 100.0f, Vector3(0,0,0), 100.0f, true, 15.0f);
 	std::vector<NavMeshNode*> nodes = navGrid->GetAllNodes();
 	for (int n = 0; n < nodes.size(); ++n) {
@@ -371,4 +372,8 @@ void TutorialGame::UpdateEnemies(float dt) {
 			}
 		}
 	}
+}
+
+void TutorialGame::InitNavGrid() {
+	this->navGrid = new NavMeshGrid();
 }
