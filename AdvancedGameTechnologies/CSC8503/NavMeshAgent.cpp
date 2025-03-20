@@ -7,35 +7,35 @@
 using namespace NCL;
 using namespace CSC8503;
 
-void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) {
+void NavMeshAgent::FindPath() {
 	this->clearPath();
-	currentNode->SetParent(nullptr);
-	currentNode->SetGScore(0);
-	currentNode->SetHeuristic(calculateHeuristic(currentNode, destination));
-	openList.emplace_back(currentNode);
+	this->currentNode->SetParent(nullptr);
+	this->currentNode->SetGScore(0);
+	this->currentNode->SetHeuristic(calculateHeuristic(this->currentNode, this->destination));
+	this->openList.emplace_back(this->currentNode);
 	NavMeshNode* node = nullptr;
 
-	while (openList.size() > 0) {
-		node = openList[0];
-		for (int n = 1; n < openList.size(); ++n) {
-			if (openList[n]->GetFScore() < node->GetFScore()) {
-				node = openList[n];
+	while (this->openList.size() > 0) {
+		node = this->openList[0];
+		for (int n = 1; n < this->openList.size(); ++n) {
+			if (this->openList[n]->GetFScore() < node->GetFScore()) {
+				node = this->openList[n];
 			}
 		}
-		if (node == destination) {
+		if (node == this->destination) {
 			while (node) {
-				path.emplace_back(node);
+				this->path.emplace_back(node);
 				node = node->GetParent();
 			}
-			std::reverse(path.begin(), path.end());
+			std::reverse(this->path.begin(), this->path.end());
 			return;
 		}
 	}
 
 	for (int e = 0; e < node->GetEdges().size(); ++e) {
 		bool inList = false;
-		for (int i = 0; i < closedList.size(); ++i) {
-			if (node->GetEdges()[e].neighbour == closedList[i]) {
+		for (int i = 0; i < this->closedList.size(); ++i) {
+			if (node->GetEdges()[e].neighbour == this->closedList[i]) {
 				inList = true;
 				break;
 			}
@@ -44,24 +44,24 @@ void NavMeshAgent::FindPath(NavMeshNode* currentNode, NavMeshNode* destination) 
 			continue;
 		}
 
-		newHeuristic = calculateHeuristic(node->GetEdges()[e].neighbour, destination);
-		newGScore = calculateGScore(node->GetEdges()[e].neighbour, node->GetEdges()[e].cost);
-		newFScore = calculateFScore(newHeuristic, newGScore);
+		this->newHeuristic = calculateHeuristic(node->GetEdges()[e].neighbour, this->destination);
+		this->newGScore = calculateGScore(node->GetEdges()[e].neighbour, node->GetEdges()[e].cost);
+		this->newFScore = calculateFScore(this->newHeuristic, this->newGScore);
 
-		if (newFScore < node->GetFScore()) {
-			node->GetEdges()[e].neighbour->SetGScore(newGScore);
-			node->GetEdges()[e].neighbour->SetFScore(newFScore);
+		if (this->newFScore < node->GetFScore()) {
+			node->GetEdges()[e].neighbour->SetGScore(this->newGScore);
+			node->GetEdges()[e].neighbour->SetFScore(this->newFScore);
 			node->GetEdges()[e].neighbour->SetParent(node);
 		}
 	}
-	path.erase(find(path.begin(), path.end(), node));
-	closedList.emplace_back(node);
+	this->path.erase(find(this->path.begin(), this->path.end(), node));
+	this->closedList.emplace_back(node);
 }
 
 void NavMeshAgent::clearPath() {
-	openList.clear();
-	closedList.clear();
-	path.clear();
+	this->openList.clear();
+	this->closedList.clear();
+	this->path.clear();
 }
 
 //Euclidean Distance
@@ -92,13 +92,17 @@ void NavMeshAgent::setCurrentNode() {
 
 void NavMeshAgent::FollowPath() {
 	setCurrentNode();
+
 	if (this->currentNode == this->destination) {
+		SetDestination();
+		FindPath();
 		return;
 	}
 	if (this->currentNode == this->nextNode) {
 		this->path.erase(this->path.begin());
 		this->nextNode = path[0];
 	}
+	MoveTowardsNextNode();
 }
 
 void NavMeshAgent::MoveTowardsNextNode() {
