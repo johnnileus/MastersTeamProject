@@ -138,11 +138,14 @@ void NavMeshAgent::FollowPath() {
 }
 
 void NavMeshAgent::MoveTowardsNextNode() {
-	float currX = this->currentNode->GetPosition().x;
-	float currZ = this->currentNode->GetPosition().z;
-	float nextX = this->nextNode->GetPosition().x;
-	float nextZ = this->nextNode->GetPosition().z;
-	this->GetPhysicsObject()->AddForce(Vector3(nextX - currX, 0, nextZ - currZ));
+    if (this->nextNode == nullptr) {
+        return;
+    }
+
+    const auto& currPos = this->currentNode->GetPosition();
+    const auto& nextPos = this->nextNode->GetPosition();
+    this->GetPhysicsObject()->ClearForces();
+    this->GetPhysicsObject()->AddForce(Vector3((nextPos.x - currPos.x) * 0.05, 0, (nextPos.z - currPos.z) * 0.05));
 }
 
 void NavMeshAgent::SetDestination() {
