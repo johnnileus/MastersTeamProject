@@ -44,9 +44,9 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 	allCoinsCollected=false;
 #ifdef USEAGC
-	/*NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
-	NCL::PS5::PS5Controller* c = w->GetController();*/
-	world.GetMainCamera().SetController(controller);
+	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+	NCL::PS5::PS5Controller* c = w->GetController();
+	world.GetMainCamera().SetController(*c);
 
       
 	//c->MapAxis(0, "LeftX");
@@ -83,7 +83,7 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	controller.MapAxis(4, "YLook");
 #endif // USEAGC
 	std::cout << "Creating ThirdPersonCamera instance" << std::endl;
-	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), controller);
+	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), *c);
 	std::cout << "ThirdPersonCamera instance created" << std::endl;
 	
 #ifdef _WIN32

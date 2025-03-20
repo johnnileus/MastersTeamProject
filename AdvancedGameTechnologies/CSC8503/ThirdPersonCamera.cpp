@@ -47,6 +47,7 @@ void ThirdPersonCamera::Update(float dt) {
     // Get controller input
     float rightStickX = inputController.GetAxis(2);
     float rightStickY = inputController.GetAxis(3);
+    //Debug::Print("Right Stick: " + std::to_string(rightStickX) + ", " + std::to_string(rightStickY), Vector2(5, 70));
 	//Debug::Print("rightStickX: " + std::to_string(rightStickX) + ", rightStickY: " + std::to_string(rightStickY), Vector2(5, 85));
     //std::cout << "rightStickX: " << rightStickX << ", rightStickY: " << rightStickY << std::endl;
     // Adjust yaw and pitch based on delta time
