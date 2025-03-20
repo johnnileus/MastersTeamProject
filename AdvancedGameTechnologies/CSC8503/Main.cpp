@@ -133,17 +133,21 @@ int main() {
 		return -1;
 	}
 	
-
-	audio.PlaySound("BGM.wav");
-
+	audio.LoadBank("../../Assets/Sounds/Master.bank");
+	audio.LoadBank("../../Assets/Sounds/Master.strings.bank");
+	audio.LoadBank("../../Assets/Sounds/Background Sound.bank");
+	audio.LoadBank("../../Assets/Sounds/Game Menu.bank");
+	audio.LoadBank("../../Assets/Sounds/Player.bank");
+	audio.LoadBank("../../Assets/Sounds/Enemy AI.bank");
+	audio.LoadBank("../../Assets/Sounds/Weapon.bank");
+	audio.LoadBank("../../Assets/Sounds/Environmental Effect.bank");
 	
+	audio.PlayEvent("event:/Gaming Background Sound");
 
 
-
-	std::cout << "Creating TutorialGame instance" << std::endl;
 	std::unique_ptr<TutorialGame> g = std::make_unique<TutorialGame>(*world, *renderer, *physics);
+	w->GetTimer().GetTimeDeltaSeconds(); //Clear the timer so we don't get a large first dt!
 
-	w->GetTimer().GetTimeDeltaSeconds(); //Clear the timer so we don't get a larget first dt!
 #ifdef USEAGC
 	while (w->UpdateWindow() && !c->GetNamedButton("Triangle")) {
 #else

@@ -35,6 +35,6 @@ void Pistol::Fire()
 
     //camera effect
     myCamera->Shake(0.07,0.1f);
-    AudioManager::GetInstance().PlaySound("Pistol.wav");
+    AudioManager::GetInstance().PlayEvent("event:/Pistol");
 }
 

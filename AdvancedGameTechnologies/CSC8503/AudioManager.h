@@ -19,29 +19,25 @@ namespace NCL {
 			bool Init();                   //initial FMOD
 			void Shutdown();               //release FMOD
 
-			void SetBGMVolume(float volume);
-			float GetBGMVolume()const;
-
-
-			void PlaySound(const std::string& soundName);
-			void PlayLoopingSound(const std::string& filename, FMOD::Channel** channel);
+			void LoadBank(const std::string& bankName);
+			void PlayEvent(const std::string& eventName);
 			void Update();
 
 
 		private:
 			AudioManager() = default;
 			~AudioManager() = default;
-			std::unordered_map<std::string, FMOD::Sound*> sounds;
-			FMOD::System* system = nullptr;
+			
+			FMOD::Studio::System* studioSystem = nullptr;
+			std::unordered_map<std::string, FMOD::Studio::Bank*>banks;
+			std::unordered_map<std::string, FMOD::Studio::EventInstance*>events;
 
 			std::string GetMediaPath(const std::string& filename);
 
-			float bgmVolume = 1.0f;  //100% sound
-			FMOD::Channel* bgmChannel = nullptr;  //only save BGM channel
+			//float bgmVolume = 1.0f;  //100% sound
+			//FMOD::Channel* bgmChannel = nullptr;  //only save BGM channel
 			SceKernelModule fmodLib;
 			
 		};
 	}
 }
-
-
