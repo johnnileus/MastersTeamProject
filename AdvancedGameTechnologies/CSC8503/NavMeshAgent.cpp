@@ -105,18 +105,36 @@ float NavMeshAgent::calculateFScore(float heuristic, float gScore) {
 }
 
 void NavMeshAgent::FollowPath() {
-	setCurrentNode();
+    const auto& currentPosition = GetCurrentPosition();
+    int roundedX = std::round(currentPosition.x);
+    int roundedZ = std::round(currentPosition.z);
 
-	if (this->currentNode == this->destination || this->destination == nullptr) {
-		SetDestination();
-		FindPath();
-		return;
-	}
-	if (this->currentNode == this->nextNode) {
-		this->path.erase(this->path.begin());
-		this->nextNode = path[0];
-	}
-	MoveTowardsNextNode();
+    if (this->currentNode == nullptr || this->currentNode->GetPosition().x != roundedX || this->currentNode->GetPosition().z != roundedZ) {
+        for (auto& node : this->nodeGrid->GetAllNodes()) {
+            if (node->GetPosition().x == roundedX && node->GetPosition().z == roundedZ) {
+                this->currentNode = node;
+                break;
+            }
+        }
+    }
+
+    if (this->currentNode == this->destination || this->destination == nullptr || this->path.empty()) {
+        SetDestination();
+        FindPath();
+        return;
+    }
+
+    if (this->currentNode == this->nextNode && !this->path.empty()) {
+        this->path.erase(this->path.begin());
+        if (!this->path.empty()) {
+            this->nextNode = this->path.front();
+        }
+    }
+    else if (!this->path.empty()) {
+        this->nextNode = this->path.front();
+    }
+
+    MoveTowardsNextNode();
 }
 
 void NavMeshAgent::MoveTowardsNextNode() {
