@@ -67,8 +67,7 @@ void TutorialGame::InitScene(string name) {
 	
 	player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
 
-	sceneManager->scenes[name]->InitScene(world);
-
+	sceneManager->SwitchScene(name, world);
 }
 
 
@@ -168,7 +167,10 @@ void TutorialGame::UpdateKeys() {
 		TogglePaused();
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
-		sceneManager->SwitchScene("default", world);
+		InitScene("default");
+	}
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::B)) {
+		InitScene("default2");
 	}
 }
 

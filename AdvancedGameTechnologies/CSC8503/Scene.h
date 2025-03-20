@@ -42,5 +42,10 @@ namespace NCL {
 			void InitScene(GameWorld* world) override;
 		};
 
+		class DefaultScene2 : public Scene {
+		public:
+			void InitScene(GameWorld* world) override;
+		};
+
 	}
 }
