@@ -60,7 +60,7 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	InitScene("default");
 }
 
-void TutorialGame::InitScene() {
+void TutorialGame::InitScene(string name) {
 	world.ClearAndErase();
 	physics.Clear();
 #ifdef USEAGC
