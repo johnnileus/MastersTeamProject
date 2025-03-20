@@ -3,60 +3,83 @@
 #include "NavMeshNode.h"
 #include <cmath>
 #include "PhysicsObject.h"
+#include <queue>
+#include <unordered_set>
 
 using namespace NCL;
 using namespace CSC8503;
 
+struct CompareFScore {
+    bool operator()(NavMeshNode* a, NavMeshNode* b) {
+        return a->GetFScore() > b->GetFScore();
+    }
+};
+
 void NavMeshAgent::FindPath() {
-	this->clearPath();
-	this->currentNode->SetParent(nullptr);
-	this->currentNode->SetGScore(0);
-	this->currentNode->SetHeuristic(calculateHeuristic(this->currentNode, this->destination));
-	this->openList.emplace_back(this->currentNode);
-	NavMeshNode* node = nullptr;
+    this->clearPath();
+    if (currentNode == nullptr) {
+        std::cout << "No Current Node" << std::endl;
+        return;
+    }
+    if (destination == nullptr) {
+        std::cout << "No Destination Node" << std::endl;
+        return;
+    }
+    this->currentNode->SetParent(nullptr);
+    this->currentNode->SetGScore(0);
+    this->currentNode->SetHeuristic(calculateHeuristic(this->currentNode, this->destination));
+    this->currentNode->SetFScore(this->currentNode->GetHeuristic()); // Set initial F score
 
-	while (this->openList.size() > 0) {
-		node = this->openList[0];
-		for (int n = 1; n < this->openList.size(); ++n) {
-			if (this->openList[n]->GetFScore() < node->GetFScore()) {
-				node = this->openList[n];
-			}
-		}
-		if (node == this->destination) {
-			while (node) {
-				this->path.emplace_back(node);
-				node = node->GetParent();
-			}
-			std::reverse(this->path.begin(), this->path.end());
-			return;
-		}
+    std::priority_queue<NavMeshNode*, std::vector<NavMeshNode*>, CompareFScore> openQueue;
+    std::unordered_map<NavMeshNode*, float> openSet;
+    std::unordered_set<NavMeshNode*> closedSet;
 
+    openQueue.push(this->currentNode);
+    openSet[this->currentNode] = this->currentNode->GetFScore();
 
-		for (int e = 0; e < node->GetEdges().size(); ++e) {
-			bool inList = false;
-			for (int i = 0; i < this->closedList.size(); ++i) {
-				if (node->GetEdges()[e].neighbour == this->closedList[i]) {
-					inList = true;
-					break;
-				}
-			}
-			if (inList) {
-				continue;
-			}
+    while (!openQueue.empty()) {
+        NavMeshNode* node = openQueue.top();
+        openQueue.pop();
+        openSet.erase(node);
 
-			this->newHeuristic = calculateHeuristic(node->GetEdges()[e].neighbour, this->destination);
-			this->newGScore = calculateGScore(node->GetEdges()[e].neighbour, node->GetEdges()[e].cost);
-			this->newFScore = calculateFScore(this->newHeuristic, this->newGScore);
+        if (node == this->destination) {
+            while (node != nullptr) {
+                this->path.emplace_back(node);
+                node = node->GetParent();
+            }
+            std::reverse(this->path.begin(), this->path.end());
+            return;
+        }
 
-			if (this->newFScore < node->GetFScore()) {
-				node->GetEdges()[e].neighbour->SetGScore(this->newGScore);
-				node->GetEdges()[e].neighbour->SetFScore(this->newFScore);
-				node->GetEdges()[e].neighbour->SetParent(node);
-			}
-		}
-		this->path.erase(find(this->path.begin(), this->path.end(), node));
-		this->closedList.emplace_back(node);
-	}
+        closedSet.insert(node);
+
+        for (const auto& edge : node->GetEdges()) {
+            NavMeshNode* neighbor = edge.neighbour;
+            if (closedSet.find(neighbor) != closedSet.end()) {
+                continue; // Ignore the neighbor which is already evaluated
+            }
+
+            float tentativeGScore = node->GetGScore() + edge.cost;
+            bool inOpenSet = openSet.find(neighbor) != openSet.end();
+
+            if (!inOpenSet || tentativeGScore < neighbor->GetGScore()) {
+                neighbor->SetParent(node);
+                neighbor->SetGScore(tentativeGScore);
+                neighbor->SetHeuristic(calculateHeuristic(neighbor, this->destination));
+                neighbor->SetFScore(neighbor->GetGScore() + neighbor->GetHeuristic());
+
+                if (!inOpenSet) {
+                    openQueue.push(neighbor);
+                    openSet[neighbor] = neighbor->GetFScore();
+                }
+                else {
+                    // Update the F score in the open set
+                    openSet[neighbor] = neighbor->GetFScore();
+                }
+            }
+        }
+    }
+    std::cout << "No path found" << std::endl;
 }
 
 void NavMeshAgent::clearPath() {
