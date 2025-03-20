@@ -29,7 +29,7 @@ void NavMeshAgent::FindPath() {
     this->currentNode->SetParent(nullptr);
     this->currentNode->SetGScore(0);
     this->currentNode->SetHeuristic(calculateHeuristic(this->currentNode, this->destination));
-    this->currentNode->SetFScore(this->currentNode->GetHeuristic()); // Set initial F score
+    this->currentNode->SetFScore(this->currentNode->GetHeuristic());
 
     std::priority_queue<NavMeshNode*, std::vector<NavMeshNode*>, CompareFScore> openQueue;
     std::unordered_map<NavMeshNode*, float> openSet;
@@ -57,7 +57,7 @@ void NavMeshAgent::FindPath() {
         for (const auto& edge : node->GetEdges()) {
             NavMeshNode* neighbor = edge.neighbour;
             if (closedSet.find(neighbor) != closedSet.end()) {
-                continue; // Ignore the neighbor which is already evaluated
+                continue;
             }
 
             float tentativeGScore = node->GetGScore() + edge.cost;
@@ -74,7 +74,6 @@ void NavMeshAgent::FindPath() {
                     openSet[neighbor] = neighbor->GetFScore();
                 }
                 else {
-                    // Update the F score in the open set
                     openSet[neighbor] = neighbor->GetFScore();
                 }
             }
@@ -100,7 +99,6 @@ float NavMeshAgent::calculateGScore(NavMeshNode* node, float edgeCost) {
 	return node->GetGScore() + edgeCost;
 }
 
-//check that the correct values are being pulled here
 float NavMeshAgent::calculateFScore(float heuristic, float gScore) {
 	return heuristic + gScore;
 }
@@ -150,7 +148,6 @@ void NavMeshAgent::MoveTowardsNextNode() {
 }
 
 void NavMeshAgent::SetDestination() {
-	//pick a random node
 	this->destination = this->nodeGrid->GetAllNodes()[rand() % this->nodeGrid->GetAllNodes().size()];
     std::cout << this->destination->GetPosition().x << ", " << this->destination->GetPosition().z << std::endl;
 }
