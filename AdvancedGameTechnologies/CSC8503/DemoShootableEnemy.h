@@ -7,7 +7,7 @@ namespace NCL {
 	namespace CSC8503 {
 		class DemoShootableEnemy : public GameObject {
 		public:
-			DemoShootableEnemy(float scale, float inverseMass, NCL::Maths::Vector3 spawnPostion, float health = 100, bool alive = true, float respawnTimer = 15.0f) {
+			DemoShootableEnemy(float scale = 1.0f, float inverseMass = 100.0f, NCL::Maths::Vector3 spawnPostion = NCL::Maths::Vector3(0,0,0), float health = 100, bool alive = true, float respawnTimer = 15.0f) {
 				this->scale = scale;
 				this->inverseMass = inverseMass;
 				this->spawnPosition = spawnPostion;
