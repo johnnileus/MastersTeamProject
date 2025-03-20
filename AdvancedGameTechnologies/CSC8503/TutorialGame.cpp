@@ -461,12 +461,12 @@ void TutorialGame::InitNavigationTestLevel() {
 	//draw debug graph of all nodes and edges
 	navGrid = new NavMeshGrid();
 	navMeshAgent = new NavMeshAgent(navGrid, 1.0f, 100.0f, Vector3(0,0,0), 100.0f, true, 15.0f);
-	std::vector<NavMeshNode> nodes = navGrid->GetAllNodes();
+	std::vector<NavMeshNode*> nodes = navGrid->GetAllNodes();
 	for (int n = 0; n < nodes.size(); ++n) {
-		Vector3 nodePos = nodes[n].GetPosition();
+		Vector3 nodePos = nodes[n]->GetPosition();
 		Debug::DrawLine(Vector3(nodePos.x, nodePos.y - 2, nodePos.z), Vector3(nodePos.x, nodePos.y + 2, nodePos.z), Vector4(1,1,1,1), 60.0F);
-		for (int e = 0; e < nodes[n].GetEdges().size(); ++e) {
-			Debug::DrawLine(nodes[n].GetPosition(), nodes[n].GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7), 60.0F);
+		for (int e = 0; e < nodes[n]->GetEdges().size(); ++e) {
+			Debug::DrawLine(nodes[n]->GetPosition(), nodes[n]->GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7), 60.0F);
 		}
 	}
 	
