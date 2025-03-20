@@ -65,14 +65,15 @@ void NavMeshAgent::clearPath() {
 	this->path.clear();
 }
 
-//Euclidean Distance
+//Manhattan Distance
 float NavMeshAgent::calculateHeuristic(NavMeshNode* node, NavMeshNode* destination) {
-	NCL::Maths::Vector3 difference = node->GetPosition() - destination->GetPosition();
-	return abs(std::sqrt((difference.x * difference.x) + (difference.y * difference.y) + (difference.z * difference.z)));
+    NCL::Maths::Vector3 difference = node->GetPosition() - destination->GetPosition();
+    return std::abs(difference.x) + std::abs(difference.y) + std::abs(difference.z);
 }
 
 float NavMeshAgent::calculateGScore(NavMeshNode* node, float edgeCost) {
 	return node->GetParent()->GetGScore() + edgeCost;
+	return node->GetGScore() + edgeCost;
 }
 
 //check that the correct values are being pulled here
