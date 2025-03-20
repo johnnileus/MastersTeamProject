@@ -155,6 +155,8 @@ namespace NCL {
 			NavMeshGrid* navGrid;
 			NavMeshAgent* navMeshAgent;
 			std::vector<DemoShootableEnemy*> enemyList;
+
+			float bgmVolume = 0.5f;
 		};
 	}
 }
