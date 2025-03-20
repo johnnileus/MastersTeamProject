@@ -2,6 +2,7 @@
 #include "NavMeshAgent.h"
 #include "NavMeshNode.h"
 #include <cmath>
+#include "PhysicsObject.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -98,4 +99,12 @@ void NavMeshAgent::FollowPath() {
 		this->path.erase(this->path.begin());
 		this->nextNode = path[0];
 	}
+}
+
+void NavMeshAgent::MoveTowardsNextNode() {
+	float currX = this->currentNode->GetPosition().x;
+	float currZ = this->currentNode->GetPosition().z;
+	float nextX = this->nextNode->GetPosition().x;
+	float nextZ = this->nextNode->GetPosition().z;
+	this->GetPhysicsObject()->AddForce(Vector3(nextX - currX, 0, nextZ - currZ));
 }
