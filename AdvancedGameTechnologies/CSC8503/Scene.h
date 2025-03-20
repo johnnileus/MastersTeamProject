@@ -21,7 +21,7 @@ namespace NCL {
 		class Scene {
 		public:
 
-			virtual void InitScene();
+			virtual void InitScene(GameWorld* world);
 			virtual void UpdateScene();
 
 			static GameObject* AddCubeToWorld(GameWorld* world, const Vector3& pos, const Vector3& size, float inverseMass);
@@ -32,17 +32,14 @@ namespace NCL {
 			static void GenerateWall(GameWorld* world);
 
 		protected:
-			GameWorld* world;
-			ThirdPersonCamera* thirdPersonCam;
-			Player* player;
 
 		};
 
+
+
 		class DefaultScene : public Scene {
 		public:
-			void InitScene() override;
-		protected:
-			Door* doorTrigger;
+			void InitScene(GameWorld* world) override;
 		};
 
 	}

@@ -28,7 +28,6 @@ void UIStateManager::States() {
         ImGui::SetWindowFontScale(2.0f);
         ImGui::SetWindowSize(ImVec2(843,488));
         ImGui::SetWindowPos(ImVec2(185,100));
-        std::cout << ImGui::GetWindowWidth() << "\n";
 
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Hight Score : 00").x) * 0.5f);
 

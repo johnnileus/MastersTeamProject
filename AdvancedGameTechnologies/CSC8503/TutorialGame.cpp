@@ -38,14 +38,16 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	useGravity		= false;
 	AssetManager::Instance().LoadAssets(renderer);
 
-	InitScene();
+	sceneManager = new SceneManager();
+	sceneManager->InitScenes();
+
+	InitScene("default");
 }
 
-void TutorialGame::InitScene() {
+void TutorialGame::InitScene(string name) {
 	world->ClearAndErase();
 
 	//delete individual enemies first
-	enemies.clear(); 
 	physics->Clear();
 
 	world->GetMainCamera().SetController(controller);
@@ -60,9 +62,12 @@ void TutorialGame::InitScene() {
 		thirdPersonCam->SetPitch(0.0f);
 		thirdPersonCam->SetYaw(0.0f);
 	}
+	std::cout << "aa " << sceneManager->scenes.size() << std::endl;
+	std::cout << sceneManager << std::endl;
+	
+	player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
 
-
-	InitWorld();
+	sceneManager->scenes[name]->InitScene(world);
 
 }
 
@@ -127,7 +132,6 @@ void TutorialGame::UpdateGame(float dt) {
 
 	DisplayPathfinding();
   
-	SceneManager::Instance().UpdateBullets(world, dt);
 	UpdateEnemies(dt);
 }
 
@@ -164,7 +168,7 @@ void TutorialGame::UpdateKeys() {
 		TogglePaused();
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
-		InitScene();
+		sceneManager->SwitchScene("default", world);
 	}
 }
 

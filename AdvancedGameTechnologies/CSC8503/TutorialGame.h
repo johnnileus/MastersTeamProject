@@ -46,7 +46,7 @@ namespace NCL {
 			TutorialGame();
 			~TutorialGame();
 
-			void InitScene();
+			void InitScene(string name);
 
 			virtual void UpdateGame(float dt);
 
