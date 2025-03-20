@@ -27,6 +27,7 @@ namespace NCL {
 			float calculateFScore(float heuristic, float gScore);
 			void setCurrentNode();
 			void FollowPath();
+			void MoveTowardsNextNode();
 		protected:
 			float newFScore;
 			float newGScore;
