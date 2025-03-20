@@ -82,6 +82,7 @@ void NavMeshAgent::FindPath() {
     std::cout << "No path found" << std::endl;
 }
 
+
 void NavMeshAgent::clearPath() {
 	this->openList.clear();
 	this->closedList.clear();
@@ -101,17 +102,6 @@ float NavMeshAgent::calculateGScore(NavMeshNode* node, float edgeCost) {
 //check that the correct values are being pulled here
 float NavMeshAgent::calculateFScore(float heuristic, float gScore) {
 	return heuristic + gScore;
-}
-
-void NavMeshAgent::setCurrentNode() {
-	int roundedX = std::round(GetCurrentPosition().x);
-	int roundedZ = std::round(GetCurrentPosition().z);
-	for (int n = 0; n < nodeGrid->GetAllNodes().size(); ++n) {
-		if (this->nodeGrid->GetAllNodes()[n]->GetPosition().x == roundedX && this->nodeGrid->GetAllNodes()[n]->GetPosition().z == roundedZ) {
-			this->currentNode = this->nodeGrid->GetAllNodes()[n];
-			break;
-		}
-	}
 }
 
 void NavMeshAgent::FollowPath() {
