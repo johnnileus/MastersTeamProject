@@ -47,18 +47,13 @@ MeleeEnemy* SceneManager::AddEnemyToWorld(GameWorld* world,NavMeshGrid* nodeGrid
 }
 
 void SceneManager::InitScenes() {
+
     DefaultScene* defaultScene = new DefaultScene();
-    defaultScene->InitScene();
+    scenes["default"] = defaultScene;
+    std::cout << "aab" << scenes.size() << std::endl;
 
 }
 
-void SceneManager::SwitchScene(string newScene) {
-    //world->GetMainCamera().SetController(controller);
-//thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(), controller);
-    //if (thirdPersonCam)
-    //{
-    //    thirdPersonCam->SetPitch(0.0f);
-    //    thirdPersonCam->SetYaw(0.0f);
-    //}
+void SceneManager::SwitchScene(string newScene, GameWorld* world) {
 
 }

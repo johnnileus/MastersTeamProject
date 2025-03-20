@@ -51,7 +51,7 @@ namespace NCL {
 			TutorialGame(GameWorld& gameWorld, GameTechRendererInterface& renderer, PhysicsSystem& physics);
 			~TutorialGame();
 
-			void InitScene();
+			void InitScene(string name);
 
 			virtual void UpdateGame(float dt);
 
