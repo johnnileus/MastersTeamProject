@@ -82,4 +82,13 @@ float NavMeshAgent::calculateFScore(float heuristic, float gScore) {
 void NavMeshAgent::setCurrentNode() {
 	//determine the nearest node to the agent
 	//currentNode = nearestNode;
+void NavMeshAgent::FollowPath() {
+	setCurrentNode();
+	if (currentNode == destination) {
+		return;
+	}
+	if (currentNode == nextNode) {
+		path.erase(path.begin());
+		nextNode = path[0];
+	}
 }
