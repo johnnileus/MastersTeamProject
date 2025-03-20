@@ -151,4 +151,9 @@ void NavMeshAgent::MoveTowardsNextNode() {
 void NavMeshAgent::SetDestination() {
 	//pick a random node
 	this->destination = this->nodeGrid->GetAllNodes()[rand() % this->nodeGrid->GetAllNodes().size()];
+    std::cout << this->destination->GetPosition().x << ", " << this->destination->GetPosition().z << std::endl;
+}
+
+void NavMeshAgent::SetDestinationNull() {
+    this->destination = nullptr;
 }
