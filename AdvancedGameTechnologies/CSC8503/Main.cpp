@@ -69,15 +69,18 @@ int main() {
 		return -1;
 	}
 	
-
-	audio.PlaySound("BGM.wav");
-
+	audio.LoadBank("../../Assets/Sounds/Master.bank");
+	audio.LoadBank("../../Assets/Sounds/Master.strings.bank");
+	audio.LoadBank("../../Assets/Sounds/Background Sound.bank");
+	audio.LoadBank("../../Assets/Sounds/Game Menu.bank");
+	audio.LoadBank("../../Assets/Sounds/Player.bank");
+	audio.LoadBank("../../Assets/Sounds/Enemy AI.bank");
+	audio.LoadBank("../../Assets/Sounds/Weapon.bank");
+	audio.LoadBank("../../Assets/Sounds/Environmental Effect.bank");
 	
+	audio.PlayEvent("event:/Gaming Background Sound");
 
 
-
-
-	
 	g = new TutorialGame();
 	w->GetTimer().GetTimeDeltaSeconds(); //Clear the timer so we don't get a large first dt!
 
