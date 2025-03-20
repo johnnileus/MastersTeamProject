@@ -29,6 +29,7 @@ namespace NCL {
 			void FollowPath();
 			void MoveTowardsNextNode();
 			void SetDestination();
+			void SetDestinationNull();
 		protected:
 			float newFScore;
 			float newGScore;
