@@ -5,6 +5,7 @@
 #include "RenderObject.h"
 #include "PhysicsObject.h"
 #include "DemoShootableEnemy.h"
+#include "NavMeshAgent.h"
 
 
 SceneManager& SceneManager::Instance() {
@@ -33,6 +34,13 @@ void SceneManager::UpdateBullets(GameWorld* world,float dt) {
 void SceneManager::AddBullet(Bullet* bullet)
 {
     bullets.push_back(bullet);
+}
+
+
+NavMeshAgent* SceneManager::AddEnemyToWorld(GameWorld* world,NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+    NavMeshAgent* e = new NavMeshAgent(nodeGrid, scale, inverseMass, pos);
+    world->AddGameObject(e);
+    return e;
 }
 
 void SceneManager::InitScenes() {

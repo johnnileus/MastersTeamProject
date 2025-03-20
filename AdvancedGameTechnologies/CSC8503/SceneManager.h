@@ -12,9 +12,8 @@
 #include "Quaternion.h"
 #include "Scene.h"
 #include "Rope.h"
-#include "DemoShootableEnemy.h"
-
-
+#include "NavMeshGrid.h"
+#include "NavMeshAgent.h"
 
 namespace NCL {
     namespace CSC8503 {
@@ -37,11 +36,13 @@ namespace NCL {
 
             void UpdateBullets(GameWorld*world, float dt);
             void AddBullet(Bullet* bullet);
+          
+            NavMeshAgent* AddEnemyToWorld(GameWorld* world,NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
 
             void InitScenes();
             void SwitchScene(string newScene);
 
-            DemoShootableEnemy* AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass);
+            
             
             unordered_map<string, Scene*> scenes;
             Scene* activeScene;
