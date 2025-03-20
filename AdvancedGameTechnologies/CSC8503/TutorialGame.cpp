@@ -381,13 +381,13 @@ void TutorialGame::InitCatCoins() {
 
 
 void TutorialGame::InitDefaultFloor() {
-	Vector3 offset(20,0,20);
+	Vector3 offset(0,0,0);
 
-	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(128,2, 128));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(128,-3,0)+offset, Vector3(1,10, 128));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,-128)+offset, Vector3(128,10,1));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3, 128)+offset, Vector3(128,10,1));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(-128,-3,0)+offset, Vector3(1,10, 128));
 }
 
 
