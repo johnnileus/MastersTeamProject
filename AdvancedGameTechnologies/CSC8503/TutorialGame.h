@@ -76,6 +76,7 @@ namespace NCL {
 			void CreateRopeGroup();
 
 			void InitNavigationTestLevel();
+			void InitNavGrid();
 			void InitEnemies();
 			void UpdateEnemies(float dt);
 
@@ -153,7 +154,7 @@ namespace NCL {
 
 			NavMeshGrid* navGrid;
 			NavMeshAgent* navMeshAgent;
-			std::vector<DemoShootableEnemy*> enemyList;
+			std::vector<NavMeshAgent*> enemyList;
 		};
 	}
 }
