@@ -16,6 +16,9 @@ namespace NCL {
 				this->newFScore = 0;
 				this->newGScore = 0;
 				this->newHeuristic = 0;
+				this->destination = nullptr;
+				this->currentNode = nullptr;
+				this->nextNode = nullptr;
 			}
 			void FindPath(NavMeshNode* currentNode, NavMeshNode* destination);
 			void clearPath();//clear path, open list and closed list
