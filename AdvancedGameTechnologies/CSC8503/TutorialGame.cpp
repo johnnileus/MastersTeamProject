@@ -102,32 +102,8 @@ void TutorialGame::InitScene(string name) {
 
 	sceneManager->scenes[name]->InitScene(&world);
 
+	sceneManager->SwitchScene(name, &world);
 }
-
-/*
-
-Each of the little demo scenarios used in the game uses the same 2 meshes, 
-and the same texture and shader. There's no need to ever load in anything else
-for this module, even in the coursework, but you can add it if you like!
-
-*/
-void TutorialGame::InitialiseAssets() {
-	std::cout << "InitialiseAssets called" << std::endl;
-	//cubeMesh = renderer.LoadMesh("cube.msh");
-
-	/*
-	// DEBUG CODE
-	std::ifstream file("items.json");
-	if (!file) {
-		std::cout << "Could not load json!" << std::endl;
-	}
-	std::stringstream buffer;
-	buffer << file.rdbuf();
-	file.close();
-	std::string err;
-	json11::Json json = json11::Json::parse(buffer.str(), err);
-	std::cout << "JSON data: " << json.dump() << "\n";
-	*/
 
 
 }
@@ -241,7 +217,10 @@ void TutorialGame::UpdateKeys() {
 		TogglePaused();
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
-		sceneManager->SwitchScene("default", &world);
+		InitScene("default");
+	}
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::B)) {
+		InitScene("default2");
 	}
 }
 

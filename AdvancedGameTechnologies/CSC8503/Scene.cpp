@@ -136,8 +136,16 @@ void DefaultScene::InitScene(GameWorld* world) {
 
     CreateRopeGroup(world);
 
-    GenerateWall(world);
+    //GenerateWall(world);
 
     InitDefaultFloor(world);
 }
 
+void DefaultScene2::InitScene(GameWorld* world) {
+
+    //CreateRopeGroup(world);
+
+    GenerateWall(world);
+
+    InitDefaultFloor(world);
+}
