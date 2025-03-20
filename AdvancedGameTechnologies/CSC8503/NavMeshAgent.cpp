@@ -30,32 +30,33 @@ void NavMeshAgent::FindPath() {
 			std::reverse(this->path.begin(), this->path.end());
 			return;
 		}
-	}
 
-	for (int e = 0; e < node->GetEdges().size(); ++e) {
-		bool inList = false;
-		for (int i = 0; i < this->closedList.size(); ++i) {
-			if (node->GetEdges()[e].neighbour == this->closedList[i]) {
-				inList = true;
-				break;
+
+		for (int e = 0; e < node->GetEdges().size(); ++e) {
+			bool inList = false;
+			for (int i = 0; i < this->closedList.size(); ++i) {
+				if (node->GetEdges()[e].neighbour == this->closedList[i]) {
+					inList = true;
+					break;
+				}
+			}
+			if (inList) {
+				continue;
+			}
+
+			this->newHeuristic = calculateHeuristic(node->GetEdges()[e].neighbour, this->destination);
+			this->newGScore = calculateGScore(node->GetEdges()[e].neighbour, node->GetEdges()[e].cost);
+			this->newFScore = calculateFScore(this->newHeuristic, this->newGScore);
+
+			if (this->newFScore < node->GetFScore()) {
+				node->GetEdges()[e].neighbour->SetGScore(this->newGScore);
+				node->GetEdges()[e].neighbour->SetFScore(this->newFScore);
+				node->GetEdges()[e].neighbour->SetParent(node);
 			}
 		}
-		if (inList) {
-			continue;
-		}
-
-		this->newHeuristic = calculateHeuristic(node->GetEdges()[e].neighbour, this->destination);
-		this->newGScore = calculateGScore(node->GetEdges()[e].neighbour, node->GetEdges()[e].cost);
-		this->newFScore = calculateFScore(this->newHeuristic, this->newGScore);
-
-		if (this->newFScore < node->GetFScore()) {
-			node->GetEdges()[e].neighbour->SetGScore(this->newGScore);
-			node->GetEdges()[e].neighbour->SetFScore(this->newFScore);
-			node->GetEdges()[e].neighbour->SetParent(node);
-		}
+		this->path.erase(find(this->path.begin(), this->path.end(), node));
+		this->closedList.emplace_back(node);
 	}
-	this->path.erase(find(this->path.begin(), this->path.end(), node));
-	this->closedList.emplace_back(node);
 }
 
 void NavMeshAgent::clearPath() {
@@ -93,7 +94,7 @@ void NavMeshAgent::setCurrentNode() {
 void NavMeshAgent::FollowPath() {
 	setCurrentNode();
 
-	if (this->currentNode == this->destination) {
+	if (this->currentNode == this->destination || this->destination == nullptr) {
 		SetDestination();
 		FindPath();
 		return;
