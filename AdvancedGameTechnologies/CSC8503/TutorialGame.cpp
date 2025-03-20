@@ -281,7 +281,7 @@ void TutorialGame::InitWorld() {
 
 	
 
-	CreateRopeGroup();
+	//CreateRopeGroup();
 	
 	//InitPlayer();
 #ifdef USEAGC
@@ -289,7 +289,7 @@ void TutorialGame::InitWorld() {
 #else
 	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30));
 #endif // USEAGC
-	GenerateWall();
+	//GenerateWall();
 
 	InitCatCoins();
 	
@@ -385,11 +385,11 @@ void TutorialGame::InitCatCoins() {
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(0,0,0);
 
-	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(128,2, 128));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(128,-3,0)+offset, Vector3(1,10, 128));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,-128)+offset, Vector3(128,10,1));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3, 128)+offset, Vector3(128,10,1));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(-128,-3,0)+offset, Vector3(1,10, 128));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(129,2, 129));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(130,-3,0)+offset, Vector3(1,10, 130));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,-130)+offset, Vector3(130,10,1));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3, 130)+offset, Vector3(130,10,1));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(-130,-3,0)+offset, Vector3(1,10, 130));
 }
 
 
@@ -496,6 +496,8 @@ void TutorialGame::UpdateEnemies(float dt) {
 		else {
 			if (enemyList[e]->CheckRespawn()) {
 				enemyList[e]->Spawn();
+				enemyList[e]->SetDestinationNull();
+				
 			}
 			else {
 				enemyList[e]->UpdateRespawnTimer(dt);
