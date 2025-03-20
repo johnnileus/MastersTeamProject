@@ -15,7 +15,7 @@
 
 using namespace NCL;
 using namespace CSC8503;
-
+//w = (NCL::PS5::PS5Window*)Window::GetWindow();
 
 
 Player::Player()
@@ -60,8 +60,8 @@ void Player::Init(ThirdPersonCamera* cam)
 
 void Player::SetComponent(float meshSize,float mass)
 {
-	//myMesh = AssetManager::Instance().guardMesh;
 	myMesh = AssetManager::Instance().cubeMesh;
+	//myMesh = AssetManager::Instance().cubeMesh;
 	//Collider
 	SphereVolume* volume  = new SphereVolume(1);
 	SetBoundingVolume((CollisionVolume*)volume);
@@ -90,9 +90,9 @@ void Player::SetComponent(float meshSize,float mass)
 	);
 	
 	
-	//animator = new Animator();
+	animator = new Animator();
 	std::cout << "Doing the player animator thingy in Set Component" << std::endl;
-	//animator->LoadAnimation("Idle");
+	animator->LoadAnimation("Idle");
 }
 
 void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
@@ -118,15 +118,20 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	player->playerObject =player;
 	player->myWorld = world;
 	player->Init(camera);
+#ifdef USEAGC
+	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+	player->controller = w->GetController();
+#endif // USEAGC
 
 	// Add to the GameWorld
 	if (world) {
+		std::cout << "Adding player to world" << std::endl;
 		world->AddGameObject(player);
 	}
 	camera->SetFollowObject(player);
 
 	std::cout << "Doing the player animator thingy" << std::endl;
-	//player->animator->Play("Idle",true,1);
+	player->animator->Play("Idle",true,1);
 	
 	return player;
 }
@@ -142,7 +147,7 @@ void Player::Update(float dt) {
 	DisplayUI();
 	HealthCheck();
 	
-	//animator->Update(dt);
+	animator->Update(dt);
 
 	// Colour change timer
 	if (isTemporaryColourActive) {

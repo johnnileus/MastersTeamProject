@@ -284,6 +284,7 @@ void GameTechAGCRenderer::GPUSkinningPass() {
 	for (auto& i : frameJobs) {
 		std::cout << "GPUSkinningPass: Processing frame job.\n";
 		NCL::PS5::AGCMesh* m = (AGCMesh*)i.object->GetMesh();
+		std::cout << m << std::endl;
 
 		sce::Agc::Core::Buffer inputBuffers[6];
 
@@ -571,6 +572,10 @@ void GameTechAGCRenderer::UpdateObjectList() {
 	int at = 0;
 	gameWorld.OperateOnContents(
 		[&](GameObject* o) {
+			if (o == nullptr) {
+				std::cout << "Object is null" << std::endl;
+				return;
+			}
 			if (o->IsActive()) {
 				RenderObject* g = o->GetRenderObject();
 				if (g) {
@@ -588,12 +593,16 @@ void GameTechAGCRenderer::UpdateObjectList() {
 						state.index[0] = t->GetAssetID();
 					}
 					std::cout << "Getting AGCMesh" << std::endl;
-					AGCMesh* m = (AGCMesh*)g->GetMesh();
+					AGCMesh* m = (AGCMesh*)g->GetMesh(); //??????????
 					std::cout << "Got AGCMesh: " << std::endl;
 					std::cout << m << std::endl;
 					std::cout << o->GetName() << std::endl;
 					//std::cout << m->GetDebugName() << std::endl;
 					std::cout << "Getting Joint Count" << std::endl;
+					if (!m) {
+						std::cout << "m is null!!!";
+						return;
+					}
 					if (m && m->GetJointCount() > 0) {//It's a skeleton mesh, need to update transformed vertices buffer //other meshes than player cause crash, possibly because of undefined joint count
 						std::cout << "JointCount > 0 Getting GPU Buffer" << std::endl;
 						Buffer* b = g->GetGPUBuffer();

@@ -16,14 +16,14 @@ namespace NCL {
 		class RenderObject
 		{
 		public:
-			RenderObject(Transform* parentTransform, Mesh* mesh, Texture* tex, Shader* shader) {
+			RenderObject(Transform* parentTransform, Mesh* inMesh, Texture* tex, Shader* inShader) {
 				buffer = nullptr;
 				anim = nullptr;
 
 				transform = parentTransform;
-				mesh = mesh;
+				mesh = inMesh;
 				texture = tex;
-				shader = shader;
+				shader = inShader;
 				colour = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 			}
 			~RenderObject();

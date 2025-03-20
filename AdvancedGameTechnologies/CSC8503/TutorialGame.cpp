@@ -44,33 +44,34 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 	allCoinsCollected=false;
 #ifdef USEAGC
-	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
-	NCL::PS5::PS5Controller* c = w->GetController();
+	/*NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+	NCL::PS5::PS5Controller* c = w->GetController();*/
 	world.GetMainCamera().SetController(controller);
 
-	c->MapAxis(0, "LeftX");
-	c->MapAxis(1, "LeftY");
+      
+	//c->MapAxis(0, "LeftX");
+	//c->MapAxis(1, "LeftY");
 
-	c->MapAxis(2, "RightX");
-	c->MapAxis(3, "RightY");
+	//c->MapAxis(2, "RightX");
+	//c->MapAxis(3, "RightY");
 
-	c->MapAxis(4, "DX");
-	c->MapAxis(5, "DY");
+	//c->MapAxis(4, "DX");
+	//c->MapAxis(5, "DY");
 
-	c->MapButton(0, "Triangle");
-	c->MapButton(1, "Circle");
-	c->MapButton(2, "Cross");
-	c->MapButton(3, "Square");
+	//c->MapButton(0, "Triangle");
+	//c->MapButton(1, "Circle");
+	//c->MapButton(2, "Cross");
+	//c->MapButton(3, "Square");
 
-	//These are the axis/button aliases the inbuilt camera class reads from:
-	c->MapAxis(0, "XLook");
-	c->MapAxis(1, "YLook");
+	////These are the axis/button aliases the inbuilt camera class reads from:
+	//c->MapAxis(0, "XLook");
+	//c->MapAxis(1, "YLook");
 
-	c->MapAxis(2, "Sidestep");
-	c->MapAxis(3, "Forward");
+	//c->MapAxis(2, "Sidestep");
+	//c->MapAxis(3, "Forward");
 
-	c->MapButton(0, "Up");
-	c->MapButton(2, "Down");
+	//c->MapButton(0, "Up");
+	//c->MapButton(2, "Down");
 #else
 	world.GetMainCamera().SetController(controller);
 
@@ -119,7 +120,7 @@ TutorialGame::~TutorialGame()	{
 
 	//delete physics;
 	//delete renderer;
-	//delete thirdPersonCam;
+	delete thirdPersonCam;
 	//delete world;
 }
 
@@ -130,6 +131,7 @@ void TutorialGame::UpdateGame(float dt) {
 	/*if (testStateObject) {
 		testStateObject->Update(dt);
 	}*/
+	
 
 	if (player)
 	{
@@ -216,7 +218,7 @@ void TutorialGame::UpdateGame(float dt) {
 
 
 	physics.Update(dt);
-	//thirdPersonCam->Update(dt);
+	thirdPersonCam->Update(dt);
 	
 	//renderer.Render();
 	//Debug::UpdateRenderables(dt);
@@ -355,8 +357,8 @@ void TutorialGame::InitCamera() {
 }
 
 void TutorialGame::InitWorld() {
-	//world.ClearAndErase();
-	//physics.Clear();
+	world.ClearAndErase();
+	physics.Clear();
 
 	CreateRopeGroup();
 	
@@ -367,9 +369,9 @@ void TutorialGame::InitWorld() {
 
 	InitCatCoins();
 	
-	//doorTrigger = Door::Instantiate(&world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
+	doorTrigger = Door::Instantiate(&world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 	
-	//Enemy::Instantiate(&world,enemies,player,Vector3(50,0,0));
+	Enemy::Instantiate(&world,enemies,player,Vector3(50,0,0));
 
 	//InitTerrain();
 
@@ -389,10 +391,10 @@ void TutorialGame::InitWorld() {
 			testNodes.push_back(pos); // Store path waypoints
 		}
 
-		//enemies[0]->SetMovePath(testNodes);
+		enemies[0]->SetMovePath(testNodes);
 	}
 	
-	//SceneManager::Instance().AddCubeToWorld(&world,Vector3(5,0,0),Vector3(1,1,1),1); not this one
+	SceneManager::Instance().AddCubeToWorld(&world,Vector3(5,0,0),Vector3(1,1,1),1);
 	
 	world.PrintObjects();
 
@@ -407,12 +409,12 @@ void TutorialGame::InitTerrain() {
 
 void TutorialGame::InitCatCoins() {
 	// add CatCoin to the list
-	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 0)));
-	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(20, 0, 20)));
-	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(-10, 0, 25)));
-	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(30, 0, 45)));
-	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(25, 0, -10)));
-	//catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 50)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 0)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(20, 0, 20)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(-10, 0, 25)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(30, 0, 45)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(25, 0, -10)));
+	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 50)));
 
 }
 
@@ -472,11 +474,11 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
 
-	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
-	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
-	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
-	//SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
+	SceneManager::Instance().AddDefaultFloorToWorld(&world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
 void TutorialGame::InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius) {
@@ -499,8 +501,8 @@ void TutorialGame::InitMixedGridWorld(int numRows, int numCols, float rowSpacing
 			Vector3 position = Vector3(x * colSpacing, 10.0f, z * rowSpacing);
 
 			if (rand() % 2) {
-				//AddCubeToWorld(position, cubeDims);
-				std::cout << "i dont even know anymore man" << std::endl;
+				AddCubeToWorld(position, cubeDims);
+				
 			}
 			else {
 				AddSphereToWorld(position, sphereRadius, Constants::SPHERE_DEFAULT_MASS, Vector3(0,0,0));
@@ -603,11 +605,11 @@ void TutorialGame::TestLinearMotion() {
 
 void TutorialGame::CreateRopeGroup()
 {
-	//Rope::AddRopeToWorld(&world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
-	//Rope::AddRopeToWorld(&world, Vector3(0,0,10),Vector3(15,0,10),0.7f);
-	//Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
-	//Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
-	//Rope::AddRopeToWorld(&world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
+	Rope::AddRopeToWorld(&world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
+	Rope::AddRopeToWorld(&world, Vector3(0,0,10),Vector3(15,0,10),0.7f);
+	Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
+	Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
+	Rope::AddRopeToWorld(&world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
 	
 }
 
@@ -626,13 +628,13 @@ void TutorialGame::DisplayPathfinding() {
 void TutorialGame::GenerateWall()
 {
 	// add all walls to the list
-	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,12),Vector3(6,1,1)));
-	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,12),Vector3(6,1,1)));
-	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(60,0,30),Vector3(8,1,3)));
-	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,50),Vector3(8,1,3)));
-	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,50),Vector3(3,1,3)));
-	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(65,0,70),Vector3(8,1,3)));
-	//floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(25,0,50),Vector3(2,1,4)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,12),Vector3(6,1,1)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,12),Vector3(6,1,1)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(60,0,30),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(45,0,50),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(70,0,50),Vector3(3,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(65,0,70),Vector3(8,1,3)));
+	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(&world,Vector3(25,0,50),Vector3(2,1,4)));
 
 	SetWallColour();
 }

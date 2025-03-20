@@ -93,6 +93,7 @@ namespace NCL {
 
 			void HealthCheck();
 			bool isDead;
+			NCL::PS5::PS5Controller* controller;
 			
 		};
 	}

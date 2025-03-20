@@ -40,15 +40,15 @@ void ThirdPersonCamera::Update(float dt) {
 #ifdef _WIN32
     // Get mouse input
     Vector2 mouseDelta = Window::GetMouse()->GetRelativePosition();
-
     // Adjust yaw and pitch based on delta time
     yaw   -= mouseDelta.x * rotationSpeed * dt * 100;
     pitch -= mouseDelta.y * rotationSpeed * dt * 100;
 #elif (USEAGC)
     // Get controller input
-    float rightStickX = inputController.GetAxis(0);
-    float rightStickY = inputController.GetAxis(1);
-
+    float rightStickX = inputController.GetAxis(2);
+    float rightStickY = inputController.GetAxis(3);
+	//Debug::Print("rightStickX: " + std::to_string(rightStickX) + ", rightStickY: " + std::to_string(rightStickY), Vector2(5, 85));
+    //std::cout << "rightStickX: " << rightStickX << ", rightStickY: " << rightStickY << std::endl;
     // Adjust yaw and pitch based on delta time
     yaw   -= rightStickX * rotationSpeed * dt * 100;
     pitch -= rightStickY * rotationSpeed * dt * 100;

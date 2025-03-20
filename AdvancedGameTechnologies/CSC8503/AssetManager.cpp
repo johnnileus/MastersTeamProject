@@ -14,7 +14,7 @@ AssetManager& AssetManager::Instance() {
 
 void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
     //load heightmap
-    heightmap = new HeightMap(256, 0.1f, 50.0f);
+    //heightmap = new HeightMap(256, 0.1f, 50.0f);
 
     // load mesh resources
 	std::cout << "Loading Meshes" << std::endl;
@@ -23,14 +23,14 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
 		std::cout << "Cube mesh is null" << std::endl;
 	}
     //std::cout << cubeMesh << std::endl;
-    //sphereMesh = renderer->LoadMesh("sphere.msh");
-    //catMesh = renderer->LoadMesh("ORIGAMI_Chat.msh");
-    //kittenMesh = renderer->LoadMesh("Kitten.msh");
-    //enemyMesh = renderer->LoadMesh("Keeper.msh");
-    //bonusMesh = renderer->LoadMesh("19463_Kitten_Head_v1.msh");
-    //capsuleMesh = renderer->LoadMesh("capsule.msh");
+    sphereMesh = renderer->LoadMesh("sphere.msh");
+    catMesh = renderer->LoadMesh("ORIGAMI_Chat.msh");
+    kittenMesh = renderer->LoadMesh("Kitten.msh");
+    enemyMesh = renderer->LoadMesh("Keeper.msh");
+    bonusMesh = renderer->LoadMesh("19463_Kitten_Head_v1.msh");
+    capsuleMesh = renderer->LoadMesh("capsule.msh");
 
-    //guardMesh = renderer->LoadMesh("Male_Guard.msh");
+    guardMesh = renderer->LoadMesh("Male_Guard.msh");
 
     //terrainMesh = renderer->GenerateTerrainMesh(heightmap);
 
@@ -50,7 +50,7 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
     RegisterAnimation("Idle",idle);
 
     //load material
-    /*guardMat = new MeshMaterial("Male_Guard.mat");
+    guardMat = new MeshMaterial("Male_Guard.mat");
 
     guardMat->LoadTextures();
     for (int i = 0; i< guardMesh->GetSubMeshCount(); i++)
@@ -66,8 +66,8 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
                 playerTex.emplace_back(renderer->LoadTexture(*filename));
             }
         }
-    }*/
-    cubeMat = new MeshMaterial("Cube.mat");
+    }
+   /* cubeMat = new MeshMaterial("Cube.mat");
 
     cubeMat->LoadTextures();
     for (int i = 0; i < cubeMesh->GetSubMeshCount(); i++)
@@ -83,7 +83,7 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
                 playerTex.emplace_back(renderer->LoadTexture(*filename));
             }
         }
-    }
+    }*/
     
 }
 

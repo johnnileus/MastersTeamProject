@@ -115,8 +115,6 @@ namespace NCL::Rendering {
 		}
 
 		size_t GetJointCount() const {
-			std::cout << "Joint Count: " << jointNames.size() << std::endl;
-			//std::cout << "on:" << debugName << std::endl;
 			return jointNames.size();
 		}
 

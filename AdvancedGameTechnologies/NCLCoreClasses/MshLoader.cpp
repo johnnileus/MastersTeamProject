@@ -13,6 +13,7 @@ using namespace Rendering;
 using namespace Maths;
 
 bool MshLoader::LoadMesh(const std::string& filename, Mesh& destinationMesh) {
+	std::cout << "Loading Mesh: " << filename << std::endl;
 	std::ifstream file(Assets::MESHDIR + filename);
 
 	std::string filetype;

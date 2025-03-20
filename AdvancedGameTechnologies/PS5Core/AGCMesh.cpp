@@ -100,19 +100,19 @@ void AGCMesh::UploadToGPU(Rendering::RendererBase* renderer) {
 	};
 
 	attributeBuildFunc(VertexAttribute::Positions	, GetPositionData().size()		, (const char*)GetPositionData().data()		, bufferOffset);
-	std::cout << "GetPositionData().size(): " << GetPositionData().data() << std::endl;
+	std::cout << "GetPositionData().data(): " << GetPositionData().data() << std::endl;
 	attributeBuildFunc(VertexAttribute::Colours		, GetColourData().size()		, (const char*)GetColourData().data()		, bufferOffset);
-	std::cout << "GetColourData().size(): " << GetColourData().data() << std::endl;
+	std::cout << "GetColourData().data(): " << GetColourData().data() << std::endl;
 	attributeBuildFunc(VertexAttribute::TextureCoords, GetTextureCoordData().size()	, (const char*)GetTextureCoordData().data()	, bufferOffset);
-	std::cout << "GetTextureCoordData().size(): " << GetTextureCoordData().data() << std::endl;
+	std::cout << "GetTextureCoordData().data(): " << GetTextureCoordData().data() << std::endl;
 	attributeBuildFunc(VertexAttribute::Normals		, GetNormalData().size()		, (const char*)GetNormalData().data()		, bufferOffset);
-	std::cout << "GetNormalData().size(): " << GetNormalData().data() << std::endl;
+	std::cout << "GetNormalData().data(): " << GetNormalData().data() << std::endl;
 	attributeBuildFunc(VertexAttribute::Tangents	, GetTangentData().size()		, (const char*)GetTangentData().data()		, bufferOffset);
-	std::cout << "GetTangentData().size(): " << GetTangentData().data() << std::endl;
+	std::cout << "GetTangentData().data(): " << GetTangentData().data() << std::endl;
 	attributeBuildFunc(VertexAttribute::JointWeights, GetSkinWeightData().size()	, (const char*)GetSkinWeightData().data()	, bufferOffset);
-	std::cout << "GetSkinWeightData().size(): " << GetSkinWeightData().data() << std::endl;
+	std::cout << "GetSkinWeightData().size(): " << GetSkinWeightData().size() << std::endl;
 	attributeBuildFunc(VertexAttribute::JointIndices, GetSkinIndexData().size()		, (const char*)GetSkinIndexData().data()	, bufferOffset);
-	std::cout << "GetSkinIndexData().size(): " << GetSkinIndexData().data() << std::endl;
+	std::cout << "GetSkinIndexData().size(): " << GetSkinIndexData().size() << std::endl;
 }
 
 void AGCMesh::BindVertexBuffers(sce::Agc::Core::StageBinder& binder) {
