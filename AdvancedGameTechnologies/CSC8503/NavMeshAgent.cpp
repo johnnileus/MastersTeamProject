@@ -79,8 +79,16 @@ float NavMeshAgent::calculateFScore(float heuristic, float gScore) {
 }
 
 void NavMeshAgent::setCurrentNode() {
-	//determine the nearest node to the agent
-	//currentNode = nearestNode;
+	int roundedX = std::round(GetCurrentPosition().x);
+	int roundedZ = std::round(GetCurrentPosition().z);
+	for (int n = 0; n < nodeGrid->GetAllNodes().size(); ++n) {
+		if (nodeGrid->GetAllNodes()[n]->GetPosition().x == roundedX && nodeGrid->GetAllNodes()[n]->GetPosition().z == roundedZ) {
+			currentNode = nodeGrid->GetAllNodes()[n];
+			break;
+		}
+	}
+}
+
 void NavMeshAgent::FollowPath() {
 	setCurrentNode();
 	if (currentNode == destination) {
