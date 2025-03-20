@@ -43,19 +43,17 @@ DemoShootableEnemy* SceneManager::AddEnemyToWorld(GameWorld* world, const Vector
 }
 
 void SceneManager::InitScenes() {
+
     DefaultScene* defaultScene = new DefaultScene();
-    defaultScene->InitScene();
+    scenes["default"] = defaultScene;
+    DefaultScene2* defaultScene2 = new DefaultScene2();
+    scenes["default2"] = defaultScene2;
 
 }
 
-void SceneManager::SwitchScene(string newScene) {
-    //world->GetMainCamera().SetController(controller);
-//thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(), controller);
-    //if (thirdPersonCam)
-    //{
-    //    thirdPersonCam->SetPitch(0.0f);
-    //    thirdPersonCam->SetYaw(0.0f);
-    //}
+void SceneManager::SwitchScene(string newScene, GameWorld* world) {
+
+    scenes[newScene]->InitScene(world);
 
 
 }
