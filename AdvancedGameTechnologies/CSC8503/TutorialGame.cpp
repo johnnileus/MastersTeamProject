@@ -171,6 +171,7 @@ void TutorialGame::UpdateKeys() {
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::B)) {
 		InitScene("default2");
+	}
 
 	// BGM volume adjust
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::NUM1)) { // botton 1 less volume

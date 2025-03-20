@@ -142,7 +142,6 @@ namespace NCL {
 
 
 			GameObject* objClosest = nullptr;
-			void GenerateWall();
 			void SetWallColour();
 
 			void DisplayPathfinding(); // display navigation path
