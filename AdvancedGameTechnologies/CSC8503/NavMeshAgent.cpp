@@ -71,7 +71,6 @@ float NavMeshAgent::calculateHeuristic(NavMeshNode* node, NavMeshNode* destinati
 
 float NavMeshAgent::calculateGScore(NavMeshNode* node, float edgeCost) {
 	return node->GetParent()->GetGScore() + edgeCost;
-	return 0;
 }
 
 //check that the correct values are being pulled here
