@@ -20,7 +20,7 @@ namespace NCL {
 				this->currentNode = nullptr;
 				this->nextNode = nullptr;
 			}
-			void FindPath(NavMeshNode* currentNode, NavMeshNode* destination);
+			void FindPath();
 			void clearPath();//clear path, open list and closed list
 			float calculateHeuristic(NavMeshNode* node, NavMeshNode* destination);
 			float calculateGScore(NavMeshNode* node, float edgeCost);
@@ -28,6 +28,7 @@ namespace NCL {
 			void setCurrentNode();
 			void FollowPath();
 			void MoveTowardsNextNode();
+			void SetDestination();
 		protected:
 			float newFScore;
 			float newGScore;

@@ -112,3 +112,8 @@ void NavMeshAgent::MoveTowardsNextNode() {
 	float nextZ = this->nextNode->GetPosition().z;
 	this->GetPhysicsObject()->AddForce(Vector3(nextX - currX, 0, nextZ - currZ));
 }
+
+void NavMeshAgent::SetDestination() {
+	//pick a random node
+	this->destination = this->nodeGrid->GetAllNodes()[rand() % this->nodeGrid->GetAllNodes().size()];
+}
