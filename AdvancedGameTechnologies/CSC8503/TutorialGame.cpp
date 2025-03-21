@@ -353,7 +353,7 @@ void TutorialGame::InitEnemies() {
 }
 
 void TutorialGame::InitItems() {
-	//PassiveItem::Instantiate(world, itemList, player, Vector3(1, 1, 1));
+	PassiveItem::Instantiate(world, itemList, player, Vector3(10, 0, 20));
 }
 
 void TutorialGame::UpdateEnemies(float dt) {

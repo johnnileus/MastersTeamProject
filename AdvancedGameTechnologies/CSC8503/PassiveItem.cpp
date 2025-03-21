@@ -1,3 +1,7 @@
+//init gameobject of type item
+//oncontactbegin change stats of player
+
+#pragma once
 #include "PassiveItem.h"
 #include "AssetManager.h"
 #include "PhysicsObject.h"
@@ -30,7 +34,6 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 	name = "passive";
 	tag = "Passive";
 	maxSpeed = 10;//change to json value
-
 	SetComponent(size, mass);
 }
 
@@ -58,7 +61,6 @@ void PassiveItem::SetComponent(float meshSize, float inverseMass) {
 }
 
 void PassiveItem::Init() {
-	//stat changes go here
 	return;
 }
 
@@ -72,4 +74,18 @@ PassiveItem* PassiveItem::Instantiate(GameWorld* world, std::vector<PassiveItem*
 	world->AddGameObject(passive);
 
 	return passive;
+}
+
+//update stats
+void PassiveItem::UpdateStats(Player* player) {
+	//change to json data
+	maxSpeed += player->GetSpeed();
+	player->SetSpeed(maxSpeed);
+}
+
+void PassiveItem::OnCollisionBegin(GameObject* otherObject) {
+	if (otherObject->tag == "Player") {
+		otherObject->SetActive(false);
+		UpdateStats(player);
+	}
 }
