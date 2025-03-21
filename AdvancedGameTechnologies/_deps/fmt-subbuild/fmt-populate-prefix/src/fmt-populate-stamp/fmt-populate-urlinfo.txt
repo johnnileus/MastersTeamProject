@@ -3,10 +3,10 @@
 # No other meaning or use of this file is supported.
 
 method=url
-command=C:/Program Files/CMake/bin/cmake.exe;-P;C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/download-fmt-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-P;C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/verify-fmt-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-P;C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/extract-fmt-populate.cmake
-source_dir=C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-src
-work_dir=C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps
+command=C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/download-fmt-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/verify-fmt-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/extract-fmt-populate.cmake
+source_dir=C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-src
+work_dir=C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps
 url(s)=https://github.com/fmtlib/fmt/releases/download/10.1.0/fmt-10.1.0.zip
 hash=
-no_extract=
+      no_extract=
 

@@ -1,69 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\OpenGLRendering.dir\cmake_pch.hxx.cxx">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\OpenGLRendering.dir\cmake_pch.hxx.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLTexture.h">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLTexture.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLShader.h">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLShader.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLRenderer.h">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLRenderer.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLMesh.h">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLMesh.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLComputeShader.h">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLComputeShader.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLTexture.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLShader.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLRenderer.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLMesh.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\OGLComputeShader.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\OGLComputeShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\glad\gl.h">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\glad\gl.h">
       <Filter>GLAD</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\glad\gl.c">
+    <ClCompile Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\glad\gl.c">
       <Filter>GLAD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\OpenGLRendering.dir\Debug\cmake_pch.hxx">
+    <ClInclude Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\OpenGLRendering.dir\Debug\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\OpenGLRendering.dir\Release\cmake_pch.hxx">
+    <ClInclude Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\CMakeFiles\OpenGLRendering.dir\Release\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\OpenGLRendering\CMakeLists.txt" />
+    <CustomBuild Include="C:\Git\MastersTeamProject-bow\AdvancedGameTechnologies\OpenGLRendering\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GLAD">
-      <UniqueIdentifier>{5777CDE3-2BEF-3A8C-8977-0C881888608D}</UniqueIdentifier>
+      <UniqueIdentifier>{4B9FD7E8-4529-3660-8135-8CAE940E7479}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{2BAB6B57-A9A4-3D7E-96F1-4163A815E66E}</UniqueIdentifier>
+      <UniqueIdentifier>{23EB7420-70A8-3EDE-9B01-4DFE39CF5053}</UniqueIdentifier>
     </Filter>
     <Filter Include="Precompile Header File">
-      <UniqueIdentifier>{7F968CC4-ABE4-3502-8775-A0F1E6E9BBB5}</UniqueIdentifier>
+      <UniqueIdentifier>{7A67A297-8F19-3DE8-ADDE-AF0F5073DBFB}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{330C4AFD-C142-3CF1-A7DF-BA1DD2B16E6B}</UniqueIdentifier>
+      <UniqueIdentifier>{7DA890C3-7979-3370-8C6F-F63EF40CD535}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

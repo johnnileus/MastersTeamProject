@@ -1,7 +1,7 @@
 # Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
 # file Copyright.txt or https://cmake.org/licensing for details.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION ${CMAKE_VERSION}) # this file comes with cmake
 
 function(check_file_hash has_hash hash_is_good)
   if("${has_hash}" STREQUAL "")
@@ -21,15 +21,15 @@ function(check_file_hash has_hash hash_is_good)
 
   set("${has_hash}" TRUE PARENT_SCOPE)
 
-  message(STATUS "verifying file...
-       file='C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip'")
+  message(VERBOSE "verifying file...
+       file='C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip'")
 
-  file("" "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip" actual_value)
+  file("" "C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip" actual_value)
 
   if(NOT "${actual_value}" STREQUAL "")
     set("${hash_is_good}" FALSE PARENT_SCOPE)
-    message(STATUS " hash of
-    C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip
+    message(VERBOSE " hash of
+    C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip
   does not match expected value
     expected: ''
       actual: '${actual_value}'")
@@ -44,7 +44,7 @@ function(sleep_before_download attempt)
   endif()
 
   if(attempt EQUAL 1)
-    message(STATUS "Retrying...")
+    message(VERBOSE "Retrying...")
     return()
   endif()
 
@@ -66,59 +66,52 @@ function(sleep_before_download attempt)
     set(sleep_seconds 1200)
   endif()
 
-  message(STATUS "Retry after ${sleep_seconds} seconds (attempt #${attempt}) ...")
+  message(VERBOSE "Retry after ${sleep_seconds} seconds (attempt #${attempt}) ...")
 
   execute_process(COMMAND "${CMAKE_COMMAND}" -E sleep "${sleep_seconds}")
 endfunction()
 
-if("C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip" STREQUAL "")
-  message(FATAL_ERROR "LOCAL can't be empty")
-endif()
-
-if("https://github.com/fmtlib/fmt/releases/download/10.1.0/fmt-10.1.0.zip" STREQUAL "")
-  message(FATAL_ERROR "REMOTE can't be empty")
-endif()
-
-if(EXISTS "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip")
+if(EXISTS "C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip")
   check_file_hash(has_hash hash_is_good)
   if(has_hash)
     if(hash_is_good)
-      message(STATUS "File already exists and hash match (skip download):
-  file='C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip'
+      message(VERBOSE "File already exists and hash match (skip download):
+  file='C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip'
   =''"
       )
       return()
     else()
-      message(STATUS "File already exists but hash mismatch. Removing...")
-      file(REMOVE "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip")
+      message(VERBOSE "File already exists but hash mismatch. Removing...")
+      file(REMOVE "C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip")
     endif()
   else()
-    message(STATUS "File already exists but no hash specified (use URL_HASH):
-  file='C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip'
+    message(VERBOSE "File already exists but no hash specified (use URL_HASH):
+  file='C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip'
 Old file will be removed and new file downloaded from URL."
     )
-    file(REMOVE "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip")
+    file(REMOVE "C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip")
   endif()
 endif()
 
 set(retry_number 5)
 
-message(STATUS "Downloading...
-   dst='C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip'
+message(VERBOSE "Downloading...
+   dst='C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip'
    timeout='none'
    inactivity timeout='none'"
 )
-set(download_retry_codes 7 6 8 15 28)
+set(download_retry_codes 7 6 8 15 28 35)
 set(skip_url_list)
 set(status_code)
 foreach(i RANGE ${retry_number})
   if(status_code IN_LIST download_retry_codes)
     sleep_before_download(${i})
   endif()
-  foreach(url https://github.com/fmtlib/fmt/releases/download/10.1.0/fmt-10.1.0.zip)
+  foreach(url IN ITEMS [====[https://github.com/fmtlib/fmt/releases/download/10.1.0/fmt-10.1.0.zip]====])
     if(NOT url IN_LIST skip_url_list)
-      message(STATUS "Using src='${url}'")
+      message(VERBOSE "Using src='${url}'")
 
+      
       
       
       
@@ -126,7 +119,7 @@ foreach(i RANGE ${retry_number})
 
       file(
         DOWNLOAD
-        "${url}" "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip"
+        "${url}" "C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip"
         SHOW_PROGRESS
         # no TIMEOUT
         # no INACTIVITY_TIMEOUT
@@ -142,10 +135,10 @@ foreach(i RANGE ${retry_number})
       if(status_code EQUAL 0)
         check_file_hash(has_hash hash_is_good)
         if(has_hash AND NOT hash_is_good)
-          message(STATUS "Hash mismatch, removing...")
-          file(REMOVE "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip")
+          message(VERBOSE "Hash mismatch, removing...")
+          file(REMOVE "C:/Git/MastersTeamProject-bow/AdvancedGameTechnologies/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-10.1.0.zip")
         else()
-          message(STATUS "Downloading... done")
+          message(VERBOSE "Downloading... done")
           return()
         endif()
       else()
