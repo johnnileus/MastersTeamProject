@@ -1,5 +1,5 @@
 #ifdef _WIN32
-
+//if time allows, this apparently isn't too hard, look up (inet?) for the linux enet implementation. need to apply patches to get it working
 
 
 #include "GameNet.h"

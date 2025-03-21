@@ -5,8 +5,12 @@
 #include "GameObject.h"
 #include "Maths.h"
 #include "Quaternion.h" // 需要有四元数类的头文件
+#ifdef USEAGC
 #include <PS5Controller.h>
 #include <PS5Window.h>
+#endif // USEAGC
+
+
 
 namespace NCL {
     namespace CSC8503 {

@@ -11,6 +11,7 @@
 #include "GameTechVulkanRenderer.h"
 #endif
 #include "GameTechRendererInterface.h"
+#include <Enums.h>
 
 namespace NCL {
     namespace CSC8503 {
@@ -20,8 +21,9 @@ namespace NCL {
 
             void LoadAssets(GameTechRendererInterface* renderer);
 
-            MeshAnimation* GetAnimation(const string& name);
-            void RegisterAnimation(const std::string& name,MeshAnimation* anim);
+            MeshAnimation* GetAnimation(Enums::AnimationType);
+            void RegisterAnimation(Enums::AnimationType, MeshAnimation* anim);
+            std::vector<Texture*> FindAndLoadSubTextures(MeshMaterial* mat, const Mesh* mesh, GameTechRendererInterface* renderer);
 
             void Cleanup();
 
@@ -36,6 +38,7 @@ namespace NCL {
             Mesh* bonusMesh = nullptr;
 
             Mesh* guardMesh = nullptr;
+            Mesh* roleMesh = nullptr;
 
             OGLMesh* terrainMesh = nullptr;
 
@@ -47,14 +50,18 @@ namespace NCL {
             Texture* tilesTex = nullptr;
             Texture* floorTex = nullptr;
             vector<Texture*> playerTex;
+            Texture* bossTex;
 
             //Shader
             Shader* basicShader = nullptr;
+            Shader* characterShader = nullptr;
+            Shader* terrainShader = nullptr;
 
 
             //Ani
             MeshAnimation* idle;
             MeshAnimation* walk;
+            MeshAnimation* jump;
 
             //Material
             MeshMaterial* guardMat;
@@ -67,7 +74,7 @@ namespace NCL {
             AssetManager() = default;
             ~AssetManager() = default;
             GameTechRendererInterface* renderer = nullptr;
-            std::map<std::string, MeshAnimation*> animationMap;
+            std::map<Enums::AnimationType, MeshAnimation*> animationMap;
         };
     }
 }

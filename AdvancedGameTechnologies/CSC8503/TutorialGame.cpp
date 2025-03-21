@@ -245,8 +245,11 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F2)) {
 		InitCamera(); //F2 will reset the camera to a specific default place
 	}
-
+#ifdef USEAGC
 	if (c->GetNamedButton("Square")) {
+#else
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
+#endif // USEAGC
 		useGravity = !useGravity; //Toggle gravity!
 		physics.UseGravity(useGravity);
 	}
