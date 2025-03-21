@@ -58,11 +58,11 @@ namespace NCL {
 			Vector3 shootPoint;
 
 			//getters and setters for stats
-			int GetDamage() const {
-				return damage;
+			int GetSpeed() const {
+				return maxSpeed;
 			}
-			void SetDamage(const int d) {
-				damage = d;
+			void SetSpeed(const int s) {
+				maxSpeed = s;
 			}
 
 			Event<Player*> OnSwitchWeaponEvent;

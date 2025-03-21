@@ -18,8 +18,12 @@ namespace NCL {
 			void OnCollisionBegin(GameObject* otherObject) override;
 
 			GameWorld* myWorld;
+
+			Player* player;
 		protected:
 			void SetComponent(float meshSize, float InverseMass);
+			void RemoveObject(GameObject* object);
+			void UpdateStats(Player* player);
 			float size;
 			float mass;
 
