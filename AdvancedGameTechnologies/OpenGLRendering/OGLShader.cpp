@@ -5,7 +5,7 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 */////////////////////////////////////////////////////////////////////////////
-#ifdef WIN32
+#ifdef _WIN32
 
 #include "OGLShader.h"
 #include "Assets.h"

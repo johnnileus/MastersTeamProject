@@ -13,7 +13,13 @@ ThirdPersonCamera::ThirdPersonCamera(Camera* cam, NCL::PS5::PS5Controller& contr
     orbitRadius    = 10.0f;   // Camera distance from the target
     pitch          = -15.0f;  // Initial pitch angle
     yaw            = 0.0f;    // Initial yaw angle
-    rotationSpeed  = 2.0f;    // Controller sensitivity
+#ifdef USEAGC
+	rotationSpeed = 1.0f;    // Controller sensitivity
+#else
+    rotationSpeed = 2.0f;    // Controller sensitivity
+#endif // USEAGC
+
+    
     std::cout << "ThirdPersonCamera constructor called" << std::endl;
     std::cout << "this pointer: " << reinterpret_cast<uintptr_t>(this) << std::endl;
 }

@@ -203,7 +203,7 @@ void TutorialGame::UpdateGame(float dt) {
 
 	world.UpdateWorld(dt);
 	//renderer.Update(dt);
-#ifdef WIN32
+#ifdef _WIN32
 
 
 
@@ -255,7 +255,7 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F8)) {
 		world.ShuffleObjects(false);
 	}
-#ifdef WIN32
+#ifdef _WIN32
 
 
 
@@ -359,11 +359,13 @@ void TutorialGame::InitCamera() {
 void TutorialGame::InitWorld() {
 	world.ClearAndErase();
 	physics.Clear();
+	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+	NCL::PS5::PS5Controller* c = w->GetController();
 
 	CreateRopeGroup();
 	
 	//InitPlayer();
-	player = Player::Instantiate(&world,thirdPersonCam,Vector3(20,0,30));
+	player = Player::Instantiate(&world,thirdPersonCam,Vector3(20,0,30), *c);
 
 	GenerateWall();
 
@@ -687,7 +689,7 @@ void TutorialGame::BroadcastPosition(){
 	Vector3 pos = player->GetTransform().GetPosition();
 	Quaternion rot = player->GetTransform().GetOrientation();
 
-#ifdef WIN32
+#ifdef _WIN32
 
 
 

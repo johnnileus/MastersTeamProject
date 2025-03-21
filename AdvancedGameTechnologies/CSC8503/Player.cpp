@@ -107,7 +107,7 @@ void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransform
 /// @param camera his camera
 /// @param position instantiate position
 /// @return 
-Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const Vector3& position)
+Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const Vector3& position, NCL::PS5::PS5Controller& controller)
 {
 	Player* player = new Player();
 
@@ -119,8 +119,7 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	player->myWorld = world;
 	player->Init(camera);
 #ifdef USEAGC
-	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
-	player->controller = w->GetController();
+	player->inputController = &controller;
 #endif // USEAGC
 
 	// Add to the GameWorld
@@ -185,22 +184,35 @@ void Player::HealthCheck()
 
 void Player::HandleInput()
 {
-	//each frame clear the input buffer
-	inputDir=Vector2(0,0);
-	
-	// detect keyboard input
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
-		inputDir.y += -1.0f;  // front
+    // each frame clear the input buffer
+    inputDir = Vector2(0, 0);
+
+#ifdef USEAGC
+	// detect controller input
+	if (inputController) {
+		float leftStickX = inputController->GetAxis(0);
+		float leftStickY = inputController->GetAxis(1);
+
+		// map controller stick input to inputDir
+		inputDir.x += leftStickX;
+		inputDir.y += leftStickY;  // assuming up on the stick is negative Y // and thus I've reinvented tank controls
 	}
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
-		inputDir.y += 1.0f;   // back
-	}
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
-		inputDir.x += -1.0f;  // left
-	}
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
-		inputDir.x += 1.0f;   // right
-	}
+#elif _WIN32
+    // detect keyboard input
+    if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
+        inputDir.y += -1.0f;  // front
+    }
+    if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
+        inputDir.y += 1.0f;   // back
+    }
+    if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
+        inputDir.x += -1.0f;  // left
+    }
+    if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
+        inputDir.x += 1.0f;   // right
+    }
+
+#endif // USEAGC
 }
 
 void Player::HandleMovement(float dt, Vector2 inputDir) {
@@ -308,7 +320,11 @@ void Player::HandleDash(float dt) {
 	}
 
 	// if press Shift
+#ifdef USEAGC
+	if (inputController->GetNamedButton("Circle")) {
+#else
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::SHIFT)) {
+#endif // USEAGC
 		Vector3 velocity = playerPhysicObject->GetLinearVelocity();
 		if (Vector::Length(velocity) > 0) {  // If the ball has velocity
 			Vector3 dashForce = Vector::Normalise(velocity) * acceleratForce * dashForceMultiplier;
@@ -322,9 +338,15 @@ void Player::HandleDash(float dt) {
 
 
 void Player::HandleJump() {
-	if (!playerPhysicObject || !isOnGround) return;  // Can only jump when on the ground
-
+#ifdef USEAGC
+	if (inputController->GetNamedButton("Cross")) {
+		Debug::Print("Jump", Vector2(40, 40), Vector4(1, 0, 0, 1));
+#else
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
+#endif // USEAGC
+		if (!playerPhysicObject || !isOnGround) {
+			return;
+		}// Can only jump when on the ground
 		Vector3 jump = Vector3(0, jumpForce, 0);  // Apply upward force
 		playerPhysicObject->AddForce(jump);
 		isOnGround = false;  // Mark as off the ground

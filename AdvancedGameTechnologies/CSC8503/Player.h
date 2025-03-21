@@ -25,7 +25,7 @@ namespace NCL {
 			void OnCollisionBegin(GameObject* otherObject) override;
 			void OnCollisionEnd(GameObject* otherObject) override;
 			void SetTemporaryColour(const Vector4& colour, float duration);
-			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position);
+			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position, NCL::PS5::PS5Controller& controller);
 
 			GameWorld* myWorld;
 
@@ -93,7 +93,7 @@ namespace NCL {
 
 			void HealthCheck();
 			bool isDead;
-			NCL::PS5::PS5Controller* controller;
+			NCL::PS5::PS5Controller* inputController;
 			
 		};
 	}
