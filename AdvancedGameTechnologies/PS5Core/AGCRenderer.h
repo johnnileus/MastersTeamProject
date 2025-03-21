@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #pragma once
 #include "RendererBase.h"
 #include "PS5MemoryAllocator.h"
@@ -78,3 +82,4 @@ namespace NCL::PS5 {
 		sce::Agc::CxDepthRenderTarget			depthTarget;
 	};
 }
+#endif // USEAGC

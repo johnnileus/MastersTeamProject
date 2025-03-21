@@ -11,6 +11,10 @@
 #include "../CSC8503CoreClasses/Debug.h"
 #include "Assets.h"
 
+#ifdef USEAGC
+
+
+
 using namespace NCL;
 using namespace Rendering;
 using namespace CSC8503;
@@ -40,7 +44,7 @@ GameTechAGCRenderer::GameTechAGCRenderer(GameWorld& world) : AGCRenderer(*Window
 	error = sce::Agc::Core::initialize(&arrayBuffer, &buffSpec);
 	bufferCount = 1; //We skip over index 0, makes some selection logic easier later
 
-	defaultTexture = (AGCTexture*)LoadTexture("Default.png");
+	//defaultTexture = (AGCTexture*)LoadTexture("Default.png");
 	//std::cout << "Default texture is " << defaultTexture->GetAssetID() << std::endl;
 
 	skyboxTexture = (AGCTexture*)LoadTexture("Skybox.dds");
@@ -666,3 +670,4 @@ void GameTechAGCRenderer::UpdateObjectList() {
 	sce::Agc::Core::initialize(&currentFrame->objectBuffer, &bufSpec);
 	std::cout << "Initialized Object Buffer" << std::endl;
 }
+#endif // USEAGC

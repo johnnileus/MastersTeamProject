@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #pragma once
 
 #include "Texture.h"
@@ -34,3 +38,4 @@ namespace NCL::PS5 {
 		sce::Agc::Core::Texture agcTex;
 	};
 }
+#endif // USEAGC

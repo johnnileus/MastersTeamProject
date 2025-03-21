@@ -25,7 +25,10 @@
 
 
 using namespace NCL;
+#ifdef USEAGC
 using namespace PS5;
+#endif // USEAGC
+
 using namespace CSC8503;
 
 #ifdef USEAGC
@@ -113,7 +116,7 @@ int main() {
 #ifdef _WIN32
 	std::unique_ptr<NetworkedGame> networkedGame = std::make_unique<NetworkedGame>(*world, *renderer, *physics);
 #endif // WIN32
-
+#ifdef USEAGC
 	c->MapAxis(0, "LeftX");
 	c->MapAxis(1, "LeftY");
 
@@ -137,6 +140,9 @@ int main() {
 
 	c->MapButton(0, "Up");
 	c->MapButton(2, "Down");
+#endif // USEAGC
+
+	
 
 	std::cout << "Creating TutorialGame instance" << std::endl;
 	std::unique_ptr<TutorialGame> g = std::make_unique<TutorialGame>(*world, *renderer, *physics);

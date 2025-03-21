@@ -7,8 +7,15 @@
 using namespace NCL;
 using namespace CSC8503;
 
+#ifdef USEAGC
 ThirdPersonCamera::ThirdPersonCamera(Camera* cam, NCL::PS5::PS5Controller& controller)
     : camera(cam), inputController(controller) {
+#else
+ThirdPersonCamera::ThirdPersonCamera(Camera * cam, KeyboardMouseController& controller)
+    : camera(cam), inputController(controller) {
+#endif // USEAGC
+
+
     followObject   = nullptr;
     orbitRadius    = 10.0f;   // Camera distance from the target
     pitch          = -15.0f;  // Initial pitch angle
@@ -21,25 +28,25 @@ ThirdPersonCamera::ThirdPersonCamera(Camera* cam, NCL::PS5::PS5Controller& contr
 
     
     std::cout << "ThirdPersonCamera constructor called" << std::endl;
-    std::cout << "this pointer: " << reinterpret_cast<uintptr_t>(this) << std::endl;
+    //std::cout << "this pointer: " << reinterpret_cast<uintptr_t>(this) << std::endl;
 }
 
 ThirdPersonCamera::~ThirdPersonCamera() {
     std::cout << "ThirdPersonCamera destructor called" << std::endl;
-    std::cout << "this pointer: " << reinterpret_cast<uintptr_t>(this) << std::endl;
+    //std::cout << "this pointer: " << reinterpret_cast<uintptr_t>(this) << std::endl;
 }
 
 void ThirdPersonCamera::SetFollowObject(GameObject* obj) {
-    std::cout << "SetFollowObject called" << std::endl;
+    //std::cout << "SetFollowObject called" << std::endl;
 	std::cout << obj->GetName() << std::endl;
-    std::cout << "obj pointer: " << reinterpret_cast<uintptr_t>(obj) << std::endl;
-    std::cout << "this pointer: " << reinterpret_cast<uintptr_t>(this) << std::endl;
+    //std::cout << "obj pointer: " << reinterpret_cast<uintptr_t>(obj) << std::endl;
+    //std::cout << "this pointer: " << reinterpret_cast<uintptr_t>(this) << std::endl;
     if (obj == nullptr) {
         std::cout << "Error: obj is a null pointer!" << std::endl;
     }
-    std::cout << "followObject pointer before assignment: " << reinterpret_cast<uintptr_t>(followObject) << std::endl;
+    //std::cout << "followObject pointer before assignment: " << reinterpret_cast<uintptr_t>(followObject) << std::endl;
     followObject = obj;
-    std::cout << "followObject pointer after assignment: " << reinterpret_cast<uintptr_t>(followObject) << std::endl;
+    //std::cout << "followObject pointer after assignment: " << reinterpret_cast<uintptr_t>(followObject) << std::endl;
 }
 
 void ThirdPersonCamera::Update(float dt) {

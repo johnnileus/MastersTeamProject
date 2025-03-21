@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #include "AGCMesh.h"
 #include "AGCRenderer.h"
 #include "PS5MemoryAllocator.h"
@@ -149,3 +153,4 @@ bool	AGCMesh::GetAGCBuffer(NCL::Rendering::VertexAttribute::Type type, sce::Agc:
 	}
 	return false;
 }
+#endif // USEAGC

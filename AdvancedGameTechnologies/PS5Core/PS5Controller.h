@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #pragma once
 #include "Controller.h"
 #include "pad.h"
@@ -32,3 +36,4 @@ namespace NCL::PS5 {
 		float	buttons[BUTTON_COUNT];
 	};
 }
+#endif // USEAGC

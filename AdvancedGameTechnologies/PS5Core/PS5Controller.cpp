@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #include "PS5Controller.h"
 #include <sys\_defines\_sce_ok.h>
 #include <pad.h>
@@ -87,3 +91,4 @@ bool	PS5Controller::GetButton(uint32_t button) const {
 	}
 	return buttons[button] > 0.1f ? true : false;
 };
+#endif // USEAGC

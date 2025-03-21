@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #include "AGCTexture.h"
 #include "PS5MemoryAllocator.h"
 #include "Assets.h"
@@ -64,3 +68,4 @@ AGCTexture::AGCTexture(const MemoryAllocator& a) {
 AGCTexture::~AGCTexture() {
 
 }
+#endif // USEAGC

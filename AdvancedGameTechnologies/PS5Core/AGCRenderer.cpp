@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #include "AGCRenderer.h"
 #include <video_out.h>
 
@@ -301,3 +305,4 @@ void AGCRenderer::CreateQuad(AGCMesh* m) {
 		3,4,5
 	});
 }
+#endif // USEAGC

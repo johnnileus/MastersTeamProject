@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #include "PS5MemoryAllocator.h"
 #include <agc.h>
 using namespace NCL;
@@ -35,3 +39,4 @@ void* MemoryAllocator::Allocate(size_t size, size_t alignment) const {
 	SCE_AGC_ASSERT_MSG(ret == SCE_OK, "Unable to map memory");
 	return (uint8_t*)ptr;
 }
+#endif // USEAGC

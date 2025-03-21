@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #include "AGCShader.h"
 #include "Assets.h"
 #include "PS5MemoryAllocator.h"
@@ -40,3 +44,4 @@ void AGCShader::ReloadShader() {
 
 
 }
+#endif // USEAGC

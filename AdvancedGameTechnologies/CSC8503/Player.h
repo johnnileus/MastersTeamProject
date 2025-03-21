@@ -25,8 +25,11 @@ namespace NCL {
 			void OnCollisionBegin(GameObject* otherObject) override;
 			void OnCollisionEnd(GameObject* otherObject) override;
 			void SetTemporaryColour(const Vector4& colour, float duration);
+#ifdef USEAGC
 			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position, NCL::PS5::PS5Controller& controller);
-
+#else
+			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position);
+#endif // USEAGC
 			GameWorld* myWorld;
 
 			int score;
@@ -93,7 +96,9 @@ namespace NCL {
 
 			void HealthCheck();
 			bool isDead;
+#ifdef USEAGC
 			NCL::PS5::PS5Controller* inputController;
+#endif // USEAGC
 			
 		};
 	}

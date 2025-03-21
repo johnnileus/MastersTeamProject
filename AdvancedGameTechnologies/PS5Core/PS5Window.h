@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #pragma once
 
 #include "Window.h"
@@ -30,3 +34,4 @@ namespace NCL::PS5 {
 		PS5Controller* testController;
 	};
 }
+#endif // USEAGC

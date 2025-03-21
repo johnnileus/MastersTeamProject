@@ -14,6 +14,8 @@
 # EXTERNAL cache entries
 ########################
 
+ASSET_ROOT:STRING=C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/
+
 //archive
 CMAKE_AR:PATH=C:/Program Files (x86)/SCE/Prospero SDKs/10.000/host_tools/bin/prospero-llvm-ar.exe
 

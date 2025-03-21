@@ -72,6 +72,9 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 	//c->MapButton(0, "Up");
 	//c->MapButton(2, "Down");
+	std::cout << "Creating ThirdPersonCamera instance" << std::endl;
+	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), *c);
+	std::cout << "ThirdPersonCamera instance created" << std::endl;
 #else
 	world.GetMainCamera().SetController(controller);
 
@@ -82,13 +85,17 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	controller.MapAxis(3, "XLook");
 	controller.MapAxis(4, "YLook");
 #endif // USEAGC
-	std::cout << "Creating ThirdPersonCamera instance" << std::endl;
-	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), *c);
-	std::cout << "ThirdPersonCamera instance created" << std::endl;
-	
 #ifdef _WIN32
-	world.GetMainCamera().SetController(*w->GetController());
+	std::cout << "Creating ThirdPersonCamera instance" << std::endl;
+	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), controller);
+	std::cout << "ThirdPersonCamera instance created" << std::endl;
 #endif // _WIN32
+
+	
+	
+//#ifdef _WIN32
+//	world.GetMainCamera().SetController(*w->GetController());
+//#endif // _WIN32
 	InitialiseAssets();
 	
 }
@@ -157,7 +164,7 @@ void TutorialGame::UpdateGame(float dt) {
 	// if (!inSelectionMode) {
 	// 	world->GetMainCamera().UpdateCamera(dt);
 	// }
-
+	
 	UpdateKeys();
 
 	if (useGravity) {
@@ -225,6 +232,11 @@ void TutorialGame::UpdateGame(float dt) {
 }
 
 void TutorialGame::UpdateKeys() {
+#ifdef USEAGC
+	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+	NCL::PS5::PS5Controller* c = w->GetController();
+	world.GetMainCamera().SetController(*c);
+#endif // USEAGC
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F1)) {
 		InitWorld(); //We can reset the simulation at any time with F1
 		selectionObject = nullptr;
@@ -234,7 +246,7 @@ void TutorialGame::UpdateKeys() {
 		InitCamera(); //F2 will reset the camera to a specific default place
 	}
 
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
+	if (c->GetNamedButton("Square")) {
 		useGravity = !useGravity; //Toggle gravity!
 		physics.UseGravity(useGravity);
 	}
@@ -359,14 +371,21 @@ void TutorialGame::InitCamera() {
 void TutorialGame::InitWorld() {
 	world.ClearAndErase();
 	physics.Clear();
+#ifdef USEAGC
 	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
 	NCL::PS5::PS5Controller* c = w->GetController();
+#endif // USEAGC
+
+	
 
 	CreateRopeGroup();
 	
 	//InitPlayer();
-	player = Player::Instantiate(&world,thirdPersonCam,Vector3(20,0,30), *c);
-
+#ifdef USEAGC
+	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30), *c);
+#else
+	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30));
+#endif // USEAGC
 	GenerateWall();
 
 	InitCatCoins();

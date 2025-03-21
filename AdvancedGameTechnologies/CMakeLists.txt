@@ -6,7 +6,7 @@ project(CSC8503 CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 add_compile_options(-std=c++17)
-add_compile_options(-Wno-pragma-once-outside-header)
+#add_compile_options(-Wno-pragma-once-outside-header)
 ################################################################################
 # Set target arch type if empty. Visual studio solution generator provides it.
 ################################################################################

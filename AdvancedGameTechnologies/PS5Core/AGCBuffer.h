@@ -6,6 +6,9 @@ Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
 #pragma once
+#ifdef USEAGC
+
+
 
 #include "Buffer.h"
 
@@ -41,3 +44,4 @@ namespace NCL::PS5 {
 		void* gpuAllocation;
 	};
 }
+#endif // USEAGC

@@ -336,63 +336,63 @@ buffered_file file::fdopen(const char* mode) {
   return bf;
 }
 
-#  if defined(_WIN32) && !defined(__MINGW32__)
-file file::open_windows_file(wcstring_view path, int oflag) {
-  int fd = -1;
-  auto err = _wsopen_s(&fd, path.c_str(), oflag, _SH_DENYNO, default_open_mode);
-  if (fd == -1) {
-    FMT_THROW(system_error(err, FMT_STRING("cannot open file {}"),
-                           detail::to_utf8<wchar_t>(path.c_str()).c_str()));
-  }
-  return file(fd);
-}
-#  endif
+//#  if defined(_WIN32) && !defined(__MINGW32__)
+//file file::open_windows_file(wcstring_view path, int oflag) {
+//  int fd = -1;
+//  auto err = _wsopen_s(&fd, path.c_str(), oflag, _SH_DENYNO, default_open_mode);
+//  if (fd == -1) {
+//    FMT_THROW(system_error(err, FMT_STRING("cannot open file {}"),
+//                           detail::to_utf8<wchar_t>(path.c_str()).c_str()));
+//  }
+//  return file(fd);
+//}
+//#  endif
 
-#  if !defined(__MSDOS__)
-long getpagesize() {
-#    ifdef _WIN32
-  SYSTEM_INFO si;
-  GetSystemInfo(&si);
-  return si.dwPageSize;
-#    else
-#      ifdef _WRS_KERNEL
-  long size = FMT_POSIX_CALL(getpagesize());
-//#      else
-//  long size = FMT_POSIX_CALL(sysconf(_SC_PAGESIZE));
-//#      endif
+//#  if !defined(__MSDOS__)
+//long getpagesize() {
+//#    ifdef _WIN32
+//  SYSTEM_INFO si;
+//  GetSystemInfo(&si);
+//  return si.dwPageSize;
+//#    else
+//#      ifdef _WRS_KERNEL
+//  long size = FMT_POSIX_CALL(getpagesize());
+////#      else
+////  long size = FMT_POSIX_CALL(sysconf(_SC_PAGESIZE));
+////#      endif
+//
+//  if (size < 0)
+//    FMT_THROW(system_error(errno, FMT_STRING("cannot get memory page size")));
+//  return size;
+//#    endif
+//}
+//#  endif
 
-  if (size < 0)
-    FMT_THROW(system_error(errno, FMT_STRING("cannot get memory page size")));
-  return size;
-#    endif
-}
-#  endif
-
-namespace detail {
-
-void file_buffer::grow(size_t) {
-  if (this->size() == this->capacity()) flush();
-}
-
-file_buffer::file_buffer(cstring_view path,
-                         const detail::ostream_params& params)
-    : file_(path, params.oflag) {
-  set(new char[params.buffer_size], params.buffer_size);
-}
-
-file_buffer::file_buffer(file_buffer&& other)
-    : detail::buffer<char>(other.data(), other.size(), other.capacity()),
-      file_(std::move(other.file_)) {
-  other.clear();
-  other.set(nullptr, 0);
-}
-
-file_buffer::~file_buffer() {
-  flush();
-  delete[] data();
-}
-}  // namespace detail
-
-ostream::~ostream() = default;
-#endif  // FMT_USE_FCNTL
+//namespace detail {
+//
+//void file_buffer::grow(size_t) {
+//  if (this->size() == this->capacity()) flush();
+//}
+//
+//file_buffer::file_buffer(cstring_view path,
+//                         const detail::ostream_params& params)
+//    : file_(path, params.oflag) {
+//  set(new char[params.buffer_size], params.buffer_size);
+//}
+//
+//file_buffer::file_buffer(file_buffer&& other)
+//    : detail::buffer<char>(other.data(), other.size(), other.capacity()),
+//      file_(std::move(other.file_)) {
+//  other.clear();
+//  other.set(nullptr, 0);
+//}
+//
+//file_buffer::~file_buffer() {
+//  flush();
+//  delete[] data();
+//}
+//}  // namespace detail
+//
+//ostream::~ostream() = default;
+//#endif  // FMT_USE_FCNTL
 FMT_END_NAMESPACE

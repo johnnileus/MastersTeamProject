@@ -38,7 +38,7 @@ void Player::Init(ThirdPersonCamera* cam)
 	score = 0;
 	acceleratForce = 10;
 	rotationFactor = 40;
-	jumpForce = 25;
+	jumpForce = 50;
 	isAtApex = false;
 	downwardForce = 20.0f; //gravity
 	isOnGround = true;
@@ -107,7 +107,11 @@ void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransform
 /// @param camera his camera
 /// @param position instantiate position
 /// @return 
+#ifdef USEAGC
 Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const Vector3& position, NCL::PS5::PS5Controller& controller)
+#else
+Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const Vector3& position)
+#endif
 {
 	Player* player = new Player();
 
@@ -338,15 +342,16 @@ void Player::HandleDash(float dt) {
 
 
 void Player::HandleJump() {
+	if (!playerPhysicObject || !isOnGround) {
+		return;
+	}// Can only jump when on the ground
 #ifdef USEAGC
 	if (inputController->GetNamedButton("Cross")) {
 		Debug::Print("Jump", Vector2(40, 40), Vector4(1, 0, 0, 1));
 #else
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
 #endif // USEAGC
-		if (!playerPhysicObject || !isOnGround) {
-			return;
-		}// Can only jump when on the ground
+		
 		Vector3 jump = Vector3(0, jumpForce, 0);  // Apply upward force
 		playerPhysicObject->AddForce(jump);
 		isOnGround = false;  // Mark as off the ground

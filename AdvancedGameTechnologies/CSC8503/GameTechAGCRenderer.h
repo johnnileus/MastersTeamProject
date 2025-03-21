@@ -1,4 +1,8 @@
 #pragma once
+#ifdef USEAGC
+
+
+
 #include "../CSC8503CoreClasses/GameWorld.h"
 
 #include "GameTechRendererInterface.h"
@@ -172,3 +176,4 @@ namespace NCL {
 		};
 	}
 }
+#endif // USEAGC

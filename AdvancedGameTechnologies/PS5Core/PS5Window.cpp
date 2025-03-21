@@ -5,6 +5,10 @@ Author:Rich Davison
 Contact:richgdavison@gmail.com
 License: MIT (see LICENSE file at the top of the source tree)
 *//////////////////////////////////////////////////////////////////////////////
+#ifdef USEAGC
+
+
+
 #include "PS5Window.h"
 #include "Pad.h"
 #include <sys\_defines\_sce_ok.h>
@@ -45,3 +49,4 @@ bool PS5Window::InternalUpdate() {
 	testController->Update(1.0f);
 	return true;
 }
+#endif // USEAGC

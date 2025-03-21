@@ -2,6 +2,10 @@
  @file  unix.h
  @brief ENet Unix header
 */
+#ifdef USEAGC
+
+
+
 #ifndef __ENET_UNIX_H__
 #define __ENET_UNIX_H__
 
@@ -46,3 +50,4 @@ typedef fd_set ENetSocketSet;
     
 #endif /* __ENET_UNIX_H__ */
 
+#endif // USEAGC
