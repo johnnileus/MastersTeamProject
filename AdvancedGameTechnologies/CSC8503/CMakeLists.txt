@@ -31,11 +31,12 @@ else()
 	list(REMOVE_ITEM Header_Files ${CMAKE_CURRENT_SOURCE_DIR}/GameTechVulkanRenderer.h)
 	list(REMOVE_ITEM Source_Files ${CMAKE_CURRENT_SOURCE_DIR}/GameTechVulkanRenderer.cpp)
 endif()
-
+if(USE_AGC)
 file(GLOB_RECURSE ALL_SHADERS CONFIGURE_DEPENDS #BOW COME BACK TO THIS BECAUSE IT MIGHT CAUSE ISSUES
 	${COMPILE_ASSET_ROOT}Shaders/PSSL/*.pssl 
 )
 source_group("Shader Files" FILES ${ALL_SHADERS})
+endif()
 
 
 file(GLOB_RECURSE ALL_TEXTURES CONFIGURE_DEPENDS 
@@ -233,6 +234,7 @@ endif()
 if(MSVC)
     target_link_libraries(${PROJECT_NAME} LINK_PUBLIC  "Winmm.lib")
 endif()
+if(USE_AGC)
 target_include_directories (${PROJECT_NAME} 
     PUBLIC ${CMAKE_SOURCE_DIR}/NCLCoreClasses
     PUBLIC ${CMAKE_SOURCE_DIR}/PS5Core
@@ -241,6 +243,7 @@ target_include_directories (${PROJECT_NAME}
 	PUBLIC ${CMAKE_SOURCE_DIR}/CSC8503CoreClasses
     PUBLIC ${CMAKE_SOURCE_DIR}/CSC8503
 )
+
 
 # Set the tool and GenerateHeader on PSSL files in ${PSSL_SHADERS}
 set_property(SOURCE ${ALL_SHADERS} PROPERTY VS_TOOL_OVERRIDE WavePsslc)
@@ -253,7 +256,7 @@ set_property(TARGET CSC8503 PROPERTY VS_SOURCE_SETTINGS_WavePsslc "FileType=Docu
 add_custom_target(
     Shaders
 )
-
+endif()
 include_directories("../OpenGLRendering/")
 include_directories("../NCLCoreClasses/")
 include_directories("../CSC8503CoreClasses/")
@@ -261,7 +264,7 @@ include_directories("../CSC8503CoreClasses/")
 target_link_libraries(${PROJECT_NAME} LINK_PUBLIC NCLCoreClasses)
 target_link_libraries(${PROJECT_NAME} LINK_PUBLIC CSC8503CoreClasses)
 target_link_libraries(${PROJECT_NAME} LINK_PUBLIC OpenGLRendering)
-
+if(USE_AGC)
 foreach (file ${ALL_TEXTURES})
     get_filename_component(file_name ${file} NAME)
 	get_filename_component(file_ext ${file} EXT)
@@ -317,6 +320,7 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 include_directories(${COMPILE_ASSET_ROOT}) 
+endif()
 
 if(USE_VULKAN)
     include_directories("../VulkanRendering/")

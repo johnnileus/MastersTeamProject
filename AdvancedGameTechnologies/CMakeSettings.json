@@ -12,7 +12,7 @@
       "ctestCommandArgs": "",
       "variables": [
         {
-          "name": "USE_VULKAN",
+          "name": "USE_AGC",
           "value": "True",
           "type": "BOOL"
         }

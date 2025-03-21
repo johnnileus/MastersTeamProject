@@ -3,9 +3,11 @@
 #include "Animator.h"
 #include "Player.h"
 #include "GameTechRendererInterface.h"
+#include "Enums.h"
 
 using namespace NCL;
 using namespace CSC8503;
+using namespace Enums;
 
 AssetManager& AssetManager::Instance() {
     static AssetManager instance;
@@ -30,12 +32,14 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
     bonusMesh = renderer->LoadMesh("19463_Kitten_Head_v1.msh");
     capsuleMesh = renderer->LoadMesh("capsule.msh");
 
-    guardMesh = renderer->LoadMesh("Male_Guard.msh");
+    guardMesh = renderer->LoadMesh("Character_Boss.msh");
+    roleMesh = renderer->LoadMesh("Role_T.msh");
 
     //terrainMesh = renderer->GenerateTerrainMesh(heightmap);
 
 
     // load texture resources
+    //only load textures for simple models; for objects with submeshes, load them using the FindAndLoadSubTextures method.
     basicTex = renderer->LoadTexture("checkerboard.png");
     woodTex = renderer->LoadTexture("wood.png");
     metalTex = renderer->LoadTexture("Metal.png");
@@ -44,71 +48,71 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
 
     // load shader resources
     basicShader = renderer->LoadShader("scene.vert", "scene.frag");
+    terrainShader = renderer->LoadShader("terrain.vert", "terrain.frag");
+    characterShader = renderer->LoadShader("character.vert", "character.frag");
 
     //load animation resources 
-    idle = new MeshAnimation("Idle1.anm");
-    RegisterAnimation("Idle",idle);
+    idle = new MeshAnimation("Boss_Gun_Idle.anm");
+    walk = new MeshAnimation("Boss_Gun_Run.anm");
+    jump = new MeshAnimation("Boss_Gun_Jump.anm");
+    RegisterAnimation(AnimationType::Player_Idle, idle);
+    RegisterAnimation(AnimationType::Player_Walk, walk);
+    RegisterAnimation(AnimationType::Player_Jump, walk);
 
     //load material
-    guardMat = new MeshMaterial("Male_Guard.mat");
+    guardMat = new MeshMaterial("Character_Boss.mat");
+    playerTex = FindAndLoadSubTextures(guardMat, guardMesh, renderer);
 
-    guardMat->LoadTextures();
-    for (int i = 0; i< guardMesh->GetSubMeshCount(); i++)
-    {
-        const MeshMaterialEntry* matEntry = guardMat ->GetMaterialForLayer(i);
-        if (matEntry)
-        {
-            const string* filename = nullptr;
-
-            if (matEntry->GetEntry("Diffuse", &filename))
-            {
-                std::cout << i << " Diffuse Texture File: " << *filename << std::endl;
-                playerTex.emplace_back(renderer->LoadTexture(*filename));
-            }
-        }
-    }
-   /* cubeMat = new MeshMaterial("Cube.mat");
-
-    cubeMat->LoadTextures();
-    for (int i = 0; i < cubeMesh->GetSubMeshCount(); i++)
-    {
-        const MeshMaterialEntry* matEntry = cubeMat->GetMaterialForLayer(i);
-        if (matEntry)
-        {
-            const string* filename = nullptr;
-
-            if (matEntry->GetEntry("Diffuse", &filename))
-            {
-                std::cout << i << " Diffuse Texture File: " << *filename << std::endl;
-                playerTex.emplace_back(renderer->LoadTexture(*filename));
-            }
-        }
-    }*/
-    
 }
 
-MeshAnimation* AssetManager::GetAnimation(const string& name)
+/// get the animation based on the registered animation name.
+/// @param name the name that registered in the AssetManager
+/// @return 
+MeshAnimation* AssetManager::GetAnimation(AnimationType animation)
 {
-    std::cout << "Retrieving animation: " << name << std::endl;
-    auto it = animationMap.find(name);
+    auto it = animationMap.find(animation);
     if (it != animationMap.end()) {
-        std::cout << "Animation found: " << it->second << std::endl;
         return it->second;
-    }
-    else {
-        std::cout << "Animation not found: " << name << std::endl;
     }
     return nullptr;
 }
 
-void AssetManager::RegisterAnimation(const std::string& name, MeshAnimation* anim)
+void AssetManager::RegisterAnimation(AnimationType animationType, MeshAnimation* anim)
 {
-	std::cout << "Registering animation: " << name << std::endl;
     if (anim) {
-        animationMap[name] = anim;
+        animationMap[animationType] = anim;
     }
 }
 
+//Texture* AssetManager::AddTexture(const string& name)
+//{
+//    Texture* tex = renderer->LoadTexture(name);
+//    return tex;
+//}
+
+/// Find the textures required by the mesh based on its material information
+/// @param mat the mesh's material
+/// @param mesh mesh with submeshes
+/// @param renderer target gameTecRenderer
+std::vector<Texture*> AssetManager::FindAndLoadSubTextures(MeshMaterial* mat, const Mesh* mesh, GameTechRendererInterface* renderer)
+{
+    std::vector<Texture*> textures;
+    mat->LoadTextures();
+    for (int i = 0; i < mesh->GetSubMeshCount(); i++)
+    {
+        const MeshMaterialEntry* matEntry = mat->GetMaterialForLayer(i);
+        if (matEntry)
+        {
+            const string* filename = nullptr;
+            if (matEntry->GetEntry("Diffuse", &filename))
+            {
+                std::cout << i << " Diffuse Texture File: " << *filename << std::endl;
+                textures.emplace_back(renderer->LoadTexture(*filename));
+            }
+        }
+    }
+    return textures;
+}
 
 void AssetManager::Cleanup() {
     delete cubeMesh;
@@ -131,4 +135,6 @@ void AssetManager::Cleanup() {
     delete floorTex;
 
     delete basicShader;
+	delete terrainShader;
+    delete characterShader;
 }

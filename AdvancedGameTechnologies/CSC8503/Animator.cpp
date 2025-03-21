@@ -12,7 +12,7 @@ constexpr T lerp(T a, T b, T t) {
 }
 #endif // USEAGC
 
-Animator::Animator()
+Animator::Animator(RenderObject* renderObject)
 {
     std::cout << "Animator created: " << this << std::endl;
     currentAnimSpeed = 1.0f;
@@ -22,8 +22,10 @@ Animator::Animator()
     tweenTimeCurrent = 0.0f;
     isTweening = false;
     currentFrame = 0;
-	currentAnim = nullptr;
+	//currentAnim = nullptr;
     pendingAnim = nullptr;
+    this->renderObject = renderObject;
+    //renderObject->BindAnimator(this);
 }
 
 Animator::~Animator()
@@ -33,17 +35,11 @@ Animator::~Animator()
 
 void Animator::Update(float dt)
 {
-    std::cout << "Animator::Update called with dt: " << dt << std::endl;
-    if (currentAnim) {
-        std::cout << "Current animation: " << currentAnim << std::endl;
-    }
-    else {
-        std::cout << "No current animation" << std::endl;
-    }
     if (!currentAnim) return;
 
     if (isTweening && pendingAnim != nullptr)
     {
+
         tweenBlendFactor += dt * (1.0f / tweenTime);
         tweenTimeCurrent -= dt;
         if (tweenTimeCurrent <= 0.0f)
@@ -57,22 +53,41 @@ void Animator::Update(float dt)
     else
     {
         frameTime -= dt * currentAnimSpeed;
-        while (frameTime < 0.0f) 
-        {
-            std::cout << "Current frame before update: " << currentFrame << std::endl;
-            if (currentAnim) {
-                currentFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
-                std::cout << "Current frame after update: " << currentFrame << std::endl;
-                nextFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
-                frameTime += 1.0f / currentAnim->GetFrameRate();
-            }
-            else {
-				std::cout << "No current animation" << std::endl;
-                return;
-            }
-        }
 
+        while (frameTime < 0.0f)
+        {
+            frameTime += 1.0f / currentAnim->GetFrameRate();
+
+            if (loopAnimation)
+            {
+                currentFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
+            }
+            else
+            {
+                if (currentFrame < (int)currentAnim->GetFrameCount() - 1)
+                {
+                    currentFrame++;
+                }
+                else
+                {
+                    currentFrame = currentAnim->GetFrameCount() - 1;
+                }
+            }
+            nextFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
+        }
     }
+
+    renderObject->currentFame = currentFrame;
+    renderObject->currentAnimation = currentAnim;
+
+    Draw(currentFrame, currentAnim);
+}
+
+
+bool Animator::LoadAnimation(AnimationType animation)
+{
+    meshAnims[animation] = AssetManager::Instance().GetAnimation(animation);
+    return (meshAnims[animation] != nullptr);
 }
 //void Animator::TestLerp() {
 //    std::cout << "Testing lerp function:" << std::endl;
@@ -85,83 +100,82 @@ void Animator::Update(float dt)
 //    std::cout << "lerp(-10, 10, 0.5) = " << lerp(-10.0f, 10.0f, 0.5f) << std::endl; // Expected: 0
 //}
 
-bool Animator::LoadAnimation(const std::string& animationName)
+
+/// The actual skinning rendering method
+/// @param nFrame target frame
+/// @param meshAni target animation
+void Animator::Draw(int nFrame, MeshAnimation* meshAni)
 {
-    //Animator::TestLerp();
-    std::cout << "Loading animation: " << animationName << std::endl;
-    meshAnims[animationName] = AssetManager::Instance().GetAnimation("name");
-    if (meshAnims[animationName] != nullptr) {
-        std::cout << "Animation loaded successfully: " << animationName << std::endl;
+    //get mesh and joints count
+    OGLMesh* animMesh = (OGLMesh*)renderObject->GetMesh();
+    size_t jointCount = animMesh->GetJointCount();
+
+    //target frame data
+    const Matrix4* frameData = currentAnim->GetJointData(nFrame);
+
+    // Mesh can use GetInverseBindPose() get each joint's inverse bind pose matrix
+    const auto& invBindPose = animMesh->GetInverseBindPose();
+
+    std::vector<Matrix4> finalMatrices(jointCount);
+
+    if (isTweening && pendingAnim != nullptr) {
+        const Matrix4* pendingFrameData = pendingAnim->GetJointData(0);
+
+        for (size_t i = 0; i < jointCount; ++i) {
+            Matrix4 oldMat = frameData[i];
+            Matrix4 newMat = pendingFrameData[i];
+            // lerp old and new matrices then multiply inverse bind pose get the interpolated matrix
+            Matrix4 blended = LerpMat(oldMat, newMat, tweenBlendFactor);
+            finalMatrices[i] = blended * invBindPose[i];
+        }
     }
     else {
-        std::cout << "Failed to load animation: " << animationName << std::endl;
+        for (size_t i = 0; i < jointCount; ++i) {
+            finalMatrices[i] = frameData[i] * invBindPose[i];
+        }
     }
-    return (meshAnims[animationName]!=nullptr);
+
+    //get shader and activate gl program
+    OGLShader* shader = (OGLShader*)renderObject->GetShader();
+    GLuint programID = shader->GetProgramID();
+    glUseProgram(programID);
+
+    //upload these matrices data to GPU
+    GLint jointsLoc = glGetUniformLocation(programID, "joints");
+    if (jointsLoc == -1)
+    {
+        std::cout << "!!!!!!!ERROR: Uniform 'joints' not found in shader !!!!!!!!!!";
+    }
+    else
+    {
+        glUniformMatrix4fv(jointsLoc, (GLsizei)jointCount, GL_FALSE,
+            reinterpret_cast<const float*>(finalMatrices.data()));
+    }
 }
 
-
-
-void Animator::Draw(RenderObject* renderObj)
+void Animator::Play(AnimationType anim, bool tween, float animSpeed, bool loop)
 {
-	std::cout << "Drawing render object: " << renderObj << std::endl;
-    Mesh* mesh = renderObj->GetMesh();
-    Shader* shader = renderObj->GetShader();
-
-    const Matrix4* invBindPose = mesh->GetInverseBindPose().data();
-
-    // if (isTweening && (pendingAnim != nullptr))
-    // {
-    //     const Matrix4* animCurrentFrame = currentAnim->GetJointData(currentFrame);
-    //     
-    //     const Matrix4* animPendingFrame = pendingAnim->GetJointData(0);
-    //
-    //     std::vector<Matrix4> finalBlending;
-    //     for (size_t i = 0; i < mesh->GetJointCount(); i++)
-    //         finalBlending.emplace_back( LerpMat(animCurrentFrame[i], animPendingFrame[i], tweenBlendFactor));
-    //
-    //     for (size_t i = 0; i < mesh->GetJointCount(); i++)
-    //         frameMatrices.emplace_back(finalBlending[i] * invBindPose[i]);
-    // }
-    // else
-    // {
-    //     const Matrix4* frameData = currentAnim->GetJointData(currentFrame);
-    //
-    //     for (unsigned int i = 0; i < mesh->GetJointCount(); i++)
-    //         frameMatrices.emplace_back(frameData[i] * invBindPose[i]);
-    // }
-
-    // int j = glGetUniformLocation(GetProcessId(shader), "joints");
-    // glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
-    //
-    //frameMatrices.clear();
-    
-}
-
-void Animator::Play(const std::string& anim, bool tween, float animSpeed)
-{
-    std::cout << "Playing animation: " << anim << " with tween: " << tween << " and speed: " << animSpeed << std::endl;
-    if (anim.empty() || currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
-        std::cout << "Animation is empty, already playing, or not found: " << anim << std::endl;
+    if (currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
         return;
 
-    if(currentAnim == nullptr)
+    loopAnimation = loop;
+
+    if (currentAnim == nullptr)
         currentAnim = meshAnims[anim];
-    std::cout << "Set currentAnim to: " << currentAnim << std::endl;
 
     if (tween)
     {
         pendingAnim = meshAnims[anim];
-        std::cout << "Set pendingAnim to: " << pendingAnim << std::endl;
-        TweenAnim(0.15f);
+        TweenAnim(0.1f);
     }
     else
     {
         currentFrame = 0;
         currentAnimSpeed = animSpeed;
         currentAnim = meshAnims[anim];
-        std::cout << "Set currentAnim to: " << currentAnim << std::endl;
     }
 }
+
 
 void Animator::TweenAnim(const float& time)
 {
@@ -182,7 +196,11 @@ Matrix4 Animator::LerpMat(const Matrix4& a, const Matrix4& b, float t)
     {
         for (int j = 0; j < 4; j++)
         {
+#ifdef USEAGC
             res.array[i][j] = lerp(a.array[i][j], b.array[i][j], t);
+#else
+            res.array[i][j] = std::lerp(a.array[i][j], b.array[i][j], t);
+#endif // USEAGC       
         }
     }
 
