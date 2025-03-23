@@ -184,8 +184,10 @@ Matrix4 Animator::LerpMat(const Matrix4& a, const Matrix4& b, float t)
         {
 #ifdef USEAGC
             res.array[i][j] = lerp(a.array[i][j], b.array[i][j], t);
-#endif // USEAGC
+#else
             res.array[i][j] = std::lerp(a.array[i][j], b.array[i][j], t);
+#endif // USEAGC
+            
         }
     }
 

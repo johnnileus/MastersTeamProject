@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\cmake_pch.cxx">
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\cmake_pch.hxx.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Animator.cpp">
@@ -155,14 +155,134 @@
     <CustomBuild Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0001.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0002.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0003.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0004.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0005.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0006.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Default.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBeige.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBlack.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBlack2.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBody.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBrown.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\MB_BodyNone_Guard_Albedo.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\MB_Head_White01_Albedo.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Metal.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Metal053B_1K-PNG_Color.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\PressStart2P.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Tiles.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\WoodFloor.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\checkerboard.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\wood.png">
+      <Filter>Texture Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Skybox.dds">
+      <Filter>Texture Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\DebugLine_p.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\DebugLine_vv.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\DebugText_p.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\DebugText_vv.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\PixelShader_p.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Shadow_p.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Shadow_vv.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Skybox_p.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Skybox_vv.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Tech_p.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Tech_vv.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\VertexShader_vv.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\gamma_c.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\skinning_c.pssl">
+      <Filter>Shader Files</Filter>
+    </WavePsslc>
+  </ItemGroup>
+  <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{2BAB6B57-A9A4-3D7E-96F1-4163A815E66E}</UniqueIdentifier>
     </Filter>
     <Filter Include="Precompile Header File">
       <UniqueIdentifier>{7F968CC4-ABE4-3502-8775-A0F1E6E9BBB5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader Files">
+      <UniqueIdentifier>{0E1F6540-00C5-32CD-85C8-A7229F8AAC85}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{330C4AFD-C142-3CF1-A7DF-BA1DD2B16E6B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture Files">
+      <UniqueIdentifier>{494CB37D-C879-336B-9F9E-A282947104C2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -71,14 +71,14 @@ set_target_properties(fmt::fmt-header-only PROPERTIES
 set_property(TARGET fmt::fmt APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
 set_target_properties(fmt::fmt PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "CXX"
-  IMPORTED_LOCATION_DEBUG "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-build/Debug/fmtd.lib"
+  IMPORTED_LOCATION_DEBUG "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-build/Debug/libfmtd.a"
   )
 
 # Import target "fmt::fmt" for configuration "Release"
 set_property(TARGET fmt::fmt APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(fmt::fmt PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-build/Release/fmt.lib"
+  IMPORTED_LOCATION_RELEASE "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/_deps/fmt-build/Release/libfmt.a"
   )
 
 # This file does not depend on other imported targets which have

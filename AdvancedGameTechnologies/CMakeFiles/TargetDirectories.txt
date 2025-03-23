@@ -12,6 +12,8 @@ C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/
 C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/OpenGLRendering/CMakeFiles/OpenGLRendering.dir
 C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/OpenGLRendering/CMakeFiles/INSTALL.dir
 C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir
+C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/Shaders.dir
+C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/Textures.dir
 C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/INSTALL.dir
 C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/GLTFLoader/CMakeFiles/GLTFLoader.dir
 C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/GLTFLoader/CMakeFiles/INSTALL.dir

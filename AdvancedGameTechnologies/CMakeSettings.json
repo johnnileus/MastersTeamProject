@@ -18,7 +18,7 @@
         },
         {
           "name": "USE_AGC",
-          "value": "False",
+          "value": "True",
           "type": "BOOL"
         }
       ]
