@@ -1,6 +1,10 @@
 #pragma once
 #include "Window.h"
+#ifdef USEAGC
 #include "PS5Window.h"
+#endif // USEAGC
+
+
 
 #include "Debug.h"
 
@@ -42,7 +46,9 @@ size_t sceLibcHeapSize = 256 * 1024 * 1024;
 #include <thread>
 #include <sstream>
 #include "NetworkedGame.h"
+#ifdef USEAGC
 #include <GameTechAGCRenderer.h>
+#endif // USEAGC
 
 std::vector<Vector3> testNodes;
 
@@ -97,12 +103,12 @@ int main() {
 	GameTechAGCRenderer* renderer = new GameTechAGCRenderer(*world); 
 	PS5Controller* c = w->GetController();
 #else
-	GameTechRenderer* renderer = new GameTechRenderer(*world);
 	WindowInitialisation initInfo;
 	initInfo.width = 1280;
 	initInfo.height = 720;
 	initInfo.windowTitle = "GO MARBLE BALL";
 	Window* w = Window::CreateGameWindow(initInfo);
+	GameTechRenderer* renderer = new GameTechRenderer(*world);
 #endif 
 
 	/*if (!w->HasInitialised()) {

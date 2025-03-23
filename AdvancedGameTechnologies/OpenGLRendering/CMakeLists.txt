@@ -70,10 +70,18 @@ target_include_directories (${PROJECT_NAME}
 ################################################################################
 # Dependencies
 ################################################################################
-
+if (MSVC)
 set(ADDITIONAL_LIBRARY_DEPENDENCIES
     "NCLCoreClasses"
-    #"opengl32.lib" #hi bow here, commented this out for ps5 stuff, if you are getting errors, uncomment this, i shouldve before throwing it back into main, sorry
+    "opengl32.lib" #hi bow here, commented this out for ps5 stuff, if you are getting errors, uncomment this, i shouldve before throwing it back into main, sorry
 )
+endif()
+
+if (USE_AGC)
+set(ADDITIONAL_LIBRARY_DEPENDENCIES
+    "NCLCoreClasses"
+    #"opengl32.lib" #commented this out for ps5 stuff
+)
+endif()
 
 target_link_libraries(${PROJECT_NAME} PUBLIC "${ADDITIONAL_LIBRARY_DEPENDENCIES}")

@@ -36,9 +36,9 @@ if(MSVC)
     add_compile_definitions("WIN32_LEAN_AND_MEAN") 
 endif()
 
-
+if(USE_AGC)
 add_compile_definitions("USEAGC") 
-
+endif()
 ################################################################################
 # Global configuration types
 ################################################################################
