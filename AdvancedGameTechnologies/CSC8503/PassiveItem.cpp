@@ -34,7 +34,7 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 
 	name = "passive";
 	tag = "Passive";
-	maxSpeed = 2;//change to json value
+	maxSpeed = 20;//change to json value
 	SetComponent(size, mass);
 }
 
@@ -65,15 +65,14 @@ void PassiveItem::SetUid(int uid) {
 	myUid = uid;
 }
 
-void PassiveItem::Init() {
-	return;
+void PassiveItem::UpdateCall() {
+	UpdateStats(myPlayer, myUid);
 }
 
 PassiveItem* PassiveItem::Instantiate(GameWorld* world, std::vector<PassiveItem*> itemList, Player* player, const Vector3& position, int uid) {
 	PassiveItem* passive = new PassiveItem(player, world);
 
 	passive->GetTransform().SetPosition(position);
-	passive->Init();
 	passive->SetUid(uid);
 	itemList.push_back(passive);
 
@@ -91,12 +90,5 @@ void PassiveItem::UpdateStats(Player* player, int myUid) {
 	}
 	else {
 		return;
-	}
-}
-
-void PassiveItem::OnCollisionBegin(GameObject* otherObject) {
-	if (otherObject->tag == "Player") {
-		otherObject->SetActive(false);
-		UpdateStats(myPlayer, myUid);
 	}
 }
