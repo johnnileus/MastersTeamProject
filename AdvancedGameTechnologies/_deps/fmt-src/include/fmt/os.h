@@ -14,7 +14,7 @@
 #include <system_error>  // std::system_error
 
 #if defined __APPLE__ || defined(__FreeBSD__)
-#include <locale.h>  // for LC_NUMERIC_MASK on OS X
+#  include <xlocale.h>  // for LC_NUMERIC_MASK on OS X
 #endif
 
 #include "format.h"

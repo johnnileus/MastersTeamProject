@@ -1,288 +1,168 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\cmake_pch.hxx.cxx">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\cmake_pch.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Animator.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Animator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Bullet.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enemy.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameNet.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameNet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechAGCRenderer.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechAGCRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRenderer.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRendererInterface.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRendererInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\HeightMap.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\HeightMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Main.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Pistol.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Pistol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Rope.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Rope.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SampleSphere.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SampleSphere.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SceneManager.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\ThirdPersonCamera.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\ThirdPersonCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Weapon.cpp">
+    <ClCompile Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Weapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Animator.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Animator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\AssetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Bullet.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enemy.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameNet.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameNet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechAGCRenderer.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechAGCRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRenderer.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRendererInterface.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRendererInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\HeightMap.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\HeightMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Pistol.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Pistol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Rope.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Rope.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SampleSphere.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SampleSphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SceneManager.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\StateGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\ThirdPersonCamera.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\ThirdPersonCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\TutorialGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Weapon.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\stb_perlin.h">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\stb_perlin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Debug\cmake_pch.hxx">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Debug\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Release\cmake_pch.hxx">
+    <ClInclude Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeFiles\CSC8503.dir\Release\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0001.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0002.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0003.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0004.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0005.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Cubemap\skyrender0006.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Default.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBeige.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBlack.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBlack2.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBody.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\GoatBrown.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\MB_BodyNone_Guard_Albedo.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\MB_Head_White01_Albedo.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Metal.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Metal053B_1K-PNG_Color.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\PressStart2P.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Tiles.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\WoodFloor.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\checkerboard.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-    <Image Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\wood.png">
-      <Filter>Texture Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Textures\Skybox.dds">
-      <Filter>Texture Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\DebugLine_p.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\DebugLine_vv.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\DebugText_p.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\DebugText_vv.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\PixelShader_p.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Shadow_p.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Shadow_vv.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Skybox_p.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Skybox_vv.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Tech_p.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\Tech_vv.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\VertexShader_vv.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\gamma_c.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
-    <WavePsslc Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\Assets\Shaders\PSSL\skinning_c.pssl">
-      <Filter>Shader Files</Filter>
-    </WavePsslc>
+    <CustomBuild Include="C:\Git\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{2BAB6B57-A9A4-3D7E-96F1-4163A815E66E}</UniqueIdentifier>
+      <UniqueIdentifier>{17623B21-4827-3AAA-930C-E467AC58BE7D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Precompile Header File">
-      <UniqueIdentifier>{7F968CC4-ABE4-3502-8775-A0F1E6E9BBB5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader Files">
-      <UniqueIdentifier>{0E1F6540-00C5-32CD-85C8-A7229F8AAC85}</UniqueIdentifier>
+      <UniqueIdentifier>{04369F10-D462-3EDC-A90C-109E0A5C3866}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{330C4AFD-C142-3CF1-A7DF-BA1DD2B16E6B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Texture Files">
-      <UniqueIdentifier>{494CB37D-C879-336B-9F9E-A282947104C2}</UniqueIdentifier>
+      <UniqueIdentifier>{0449FEB1-1118-3A8E-AADF-89664DD21215}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,5 +1,4 @@
 # CMake generation dependency list for this directory.
-C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMake/Default.cmake
-C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMake/DefaultCXX.cmake
-C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/cmake.verify_globs
-C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeLists.txt
+C:/Git/MastersTeamProject/AdvancedGameTechnologies/CMake/Default.cmake
+C:/Git/MastersTeamProject/AdvancedGameTechnologies/CMake/DefaultCXX.cmake
+C:/Git/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeLists.txt

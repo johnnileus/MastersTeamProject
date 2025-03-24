@@ -192,25 +192,25 @@ int buffered_file::descriptor() const {
   return fd;
 }
 
-//#if FMT_USE_FCNTL
-//#  ifdef _WIN32
-//using mode_t = int;
-//#  endif
-//constexpr mode_t default_open_mode =
-//    S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
+#if FMT_USE_FCNTL
+#  ifdef _WIN32
+using mode_t = int;
+#  endif
+constexpr mode_t default_open_mode =
+    S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
 
-//file::file(cstring_view path, int oflag) {
-//#  if defined(_WIN32) && !defined(__MINGW32__)
-//  fd_ = -1;
-//  auto converted = detail::utf8_to_utf16(string_view(path.c_str()));
-//  *this = file::open_windows_file(converted.c_str(), oflag);
-//#  else
-//  FMT_RETRY(fd_, FMT_POSIX_CALL(open(path.c_str(), oflag, default_open_mode)));
-//  if (fd_ == -1)
-//    FMT_THROW(
-//        system_error(errno, FMT_STRING("cannot open file {}"), path.c_str()));
-//#  endif
-//}
+file::file(cstring_view path, int oflag) {
+#  if defined(_WIN32) && !defined(__MINGW32__)
+  fd_ = -1;
+  auto converted = detail::utf8_to_utf16(string_view(path.c_str()));
+  *this = file::open_windows_file(converted.c_str(), oflag);
+#  else
+  FMT_RETRY(fd_, FMT_POSIX_CALL(open(path.c_str(), oflag, default_open_mode)));
+  if (fd_ == -1)
+    FMT_THROW(
+        system_error(errno, FMT_STRING("cannot open file {}"), path.c_str()));
+#  endif
+}
 
 file::~file() noexcept {
   // Don't retry close in case of EINTR!
@@ -271,54 +271,54 @@ std::size_t file::write(const void* buffer, std::size_t count) {
   return detail::to_unsigned(result);
 }
 
-//file file::dup(int fd) {
-//  // Don't retry as dup doesn't return EINTR.
-//  // http://pubs.opengroup.org/onlinepubs/009695399/functions/dup.html
-//  int new_fd = FMT_POSIX_CALL(dup(fd));
-//  if (new_fd == -1)
-//    FMT_THROW(system_error(
-//        errno, FMT_STRING("cannot duplicate file descriptor {}"), fd));
-//  return file(new_fd);
-//}
+file file::dup(int fd) {
+  // Don't retry as dup doesn't return EINTR.
+  // http://pubs.opengroup.org/onlinepubs/009695399/functions/dup.html
+  int new_fd = FMT_POSIX_CALL(dup(fd));
+  if (new_fd == -1)
+    FMT_THROW(system_error(
+        errno, FMT_STRING("cannot duplicate file descriptor {}"), fd));
+  return file(new_fd);
+}
 
-//void file::dup2(int fd) {
-//  int result = 0;
-//  FMT_RETRY(result, FMT_POSIX_CALL(dup2(fd_, fd)));
-//  if (result == -1) {
-//    FMT_THROW(system_error(
-//        errno, FMT_STRING("cannot duplicate file descriptor {} to {}"), fd_,
-//        fd));
-//  }
-//}
+void file::dup2(int fd) {
+  int result = 0;
+  FMT_RETRY(result, FMT_POSIX_CALL(dup2(fd_, fd)));
+  if (result == -1) {
+    FMT_THROW(system_error(
+        errno, FMT_STRING("cannot duplicate file descriptor {} to {}"), fd_,
+        fd));
+  }
+}
 
-//void file::dup2(int fd, std::error_code& ec) noexcept {
-//  int result = 0;
-//  FMT_RETRY(result, FMT_POSIX_CALL(dup2(fd_, fd)));
-//  if (result == -1) ec = std::error_code(errno, std::generic_category());
-//}
+void file::dup2(int fd, std::error_code& ec) noexcept {
+  int result = 0;
+  FMT_RETRY(result, FMT_POSIX_CALL(dup2(fd_, fd)));
+  if (result == -1) ec = std::error_code(errno, std::generic_category());
+}
 
-//void file::pipe(file& read_end, file& write_end) {
-//  // Close the descriptors first to make sure that assignments don't throw
-//  // and there are no leaks.
-//  read_end.close();
-//  write_end.close();
-//  int fds[2] = {};
-//#  ifdef _WIN32
-//  // Make the default pipe capacity same as on Linux 2.6.11+.
-//  enum { DEFAULT_CAPACITY = 65536 };
-//  int result = FMT_POSIX_CALL(pipe(fds, DEFAULT_CAPACITY, _O_BINARY));
-////#  else
-////  // Don't retry as the pipe function doesn't return EINTR.
-////  // http://pubs.opengroup.org/onlinepubs/009696799/functions/pipe.html
-////  int result = FMT_POSIX_CALL(pipe(fds));
-////#  endif
-//  if (result != 0)
-//    FMT_THROW(system_error(errno, FMT_STRING("cannot create pipe")));
-//  // The following assignments don't throw because read_fd and write_fd
-//  // are closed.
-//  read_end = file(fds[0]);
-//  write_end = file(fds[1]);
-//}
+void file::pipe(file& read_end, file& write_end) {
+  // Close the descriptors first to make sure that assignments don't throw
+  // and there are no leaks.
+  read_end.close();
+  write_end.close();
+  int fds[2] = {};
+#  ifdef _WIN32
+  // Make the default pipe capacity same as on Linux 2.6.11+.
+  enum { DEFAULT_CAPACITY = 65536 };
+  int result = FMT_POSIX_CALL(pipe(fds, DEFAULT_CAPACITY, _O_BINARY));
+#  else
+  // Don't retry as the pipe function doesn't return EINTR.
+  // http://pubs.opengroup.org/onlinepubs/009696799/functions/pipe.html
+  int result = FMT_POSIX_CALL(pipe(fds));
+#  endif
+  if (result != 0)
+    FMT_THROW(system_error(errno, FMT_STRING("cannot create pipe")));
+  // The following assignments don't throw because read_fd and write_fd
+  // are closed.
+  read_end = file(fds[0]);
+  write_end = file(fds[1]);
+}
 
 buffered_file file::fdopen(const char* mode) {
 // Don't retry as fdopen doesn't return EINTR.
@@ -336,63 +336,63 @@ buffered_file file::fdopen(const char* mode) {
   return bf;
 }
 
-//#  if defined(_WIN32) && !defined(__MINGW32__)
-//file file::open_windows_file(wcstring_view path, int oflag) {
-//  int fd = -1;
-//  auto err = _wsopen_s(&fd, path.c_str(), oflag, _SH_DENYNO, default_open_mode);
-//  if (fd == -1) {
-//    FMT_THROW(system_error(err, FMT_STRING("cannot open file {}"),
-//                           detail::to_utf8<wchar_t>(path.c_str()).c_str()));
-//  }
-//  return file(fd);
-//}
-//#  endif
+#  if defined(_WIN32) && !defined(__MINGW32__)
+file file::open_windows_file(wcstring_view path, int oflag) {
+  int fd = -1;
+  auto err = _wsopen_s(&fd, path.c_str(), oflag, _SH_DENYNO, default_open_mode);
+  if (fd == -1) {
+    FMT_THROW(system_error(err, FMT_STRING("cannot open file {}"),
+                           detail::to_utf8<wchar_t>(path.c_str()).c_str()));
+  }
+  return file(fd);
+}
+#  endif
 
-//#  if !defined(__MSDOS__)
-//long getpagesize() {
-//#    ifdef _WIN32
-//  SYSTEM_INFO si;
-//  GetSystemInfo(&si);
-//  return si.dwPageSize;
-//#    else
-//#      ifdef _WRS_KERNEL
-//  long size = FMT_POSIX_CALL(getpagesize());
-////#      else
-////  long size = FMT_POSIX_CALL(sysconf(_SC_PAGESIZE));
-////#      endif
-//
-//  if (size < 0)
-//    FMT_THROW(system_error(errno, FMT_STRING("cannot get memory page size")));
-//  return size;
-//#    endif
-//}
-//#  endif
+#  if !defined(__MSDOS__)
+long getpagesize() {
+#    ifdef _WIN32
+  SYSTEM_INFO si;
+  GetSystemInfo(&si);
+  return si.dwPageSize;
+#    else
+#      ifdef _WRS_KERNEL
+  long size = FMT_POSIX_CALL(getpagesize());
+#      else
+  long size = FMT_POSIX_CALL(sysconf(_SC_PAGESIZE));
+#      endif
 
-//namespace detail {
-//
-//void file_buffer::grow(size_t) {
-//  if (this->size() == this->capacity()) flush();
-//}
-//
-//file_buffer::file_buffer(cstring_view path,
-//                         const detail::ostream_params& params)
-//    : file_(path, params.oflag) {
-//  set(new char[params.buffer_size], params.buffer_size);
-//}
-//
-//file_buffer::file_buffer(file_buffer&& other)
-//    : detail::buffer<char>(other.data(), other.size(), other.capacity()),
-//      file_(std::move(other.file_)) {
-//  other.clear();
-//  other.set(nullptr, 0);
-//}
-//
-//file_buffer::~file_buffer() {
-//  flush();
-//  delete[] data();
-//}
-//}  // namespace detail
-//
-//ostream::~ostream() = default;
-//#endif  // FMT_USE_FCNTL
+  if (size < 0)
+    FMT_THROW(system_error(errno, FMT_STRING("cannot get memory page size")));
+  return size;
+#    endif
+}
+#  endif
+
+namespace detail {
+
+void file_buffer::grow(size_t) {
+  if (this->size() == this->capacity()) flush();
+}
+
+file_buffer::file_buffer(cstring_view path,
+                         const detail::ostream_params& params)
+    : file_(path, params.oflag) {
+  set(new char[params.buffer_size], params.buffer_size);
+}
+
+file_buffer::file_buffer(file_buffer&& other)
+    : detail::buffer<char>(other.data(), other.size(), other.capacity()),
+      file_(std::move(other.file_)) {
+  other.clear();
+  other.set(nullptr, 0);
+}
+
+file_buffer::~file_buffer() {
+  flush();
+  delete[] data();
+}
+}  // namespace detail
+
+ostream::~ostream() = default;
+#endif  // FMT_USE_FCNTL
 FMT_END_NAMESPACE
