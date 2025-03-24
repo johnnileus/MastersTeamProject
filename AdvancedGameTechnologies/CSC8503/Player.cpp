@@ -10,7 +10,7 @@
 #include "RenderObject.h"
 #include "AudioManager.h"
 
-
+#include "PassiveItem.h"
 #include "Weapon.h"
 
 using namespace NCL;
@@ -460,6 +460,15 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		otherObject->SetActive(false);
 		RemoveObject(otherObject);
 		SetTemporaryColour(collerctCoinColour, 0.25f);
+	}
+
+	if (otherObject->tag == "Passive") {
+		otherObject->SetActive(false);
+		RemoveObject(otherObject);
+		PassiveItem* passiveItem = dynamic_cast<PassiveItem*>(otherObject);
+		if (passiveItem) {
+			passiveItem->UpdateCall();
+		}
 	}
 }
 
