@@ -6,15 +6,10 @@
 #include <queue>
 #include <unordered_set>
 #include "Debug.h"
+#include <algorithm>
 
 using namespace NCL;
 using namespace CSC8503;
-
-struct CompareFScore {
-    bool operator()(NavMeshNode* a, NavMeshNode* b) {
-        return a->GetFScore() > b->GetFScore();
-    }
-};
 
 void NavMeshAgent::FindPath() {
     this->clearPath();
@@ -31,19 +26,11 @@ void NavMeshAgent::FindPath() {
     this->currentNode->SetHeuristic(calculateHeuristic(this->currentNode, this->destination));
     this->currentNode->SetFScore(this->currentNode->GetHeuristic());
 
-    std::priority_queue<NavMeshNode*, std::vector<NavMeshNode*>, CompareFScore> openQueue;
-    std::unordered_map<NavMeshNode*, float> openSet;
-    std::unordered_set<NavMeshNode*> closedSet;
+    this->openList.emplace_back(this->currentNode);
 
-    openQueue.push(this->currentNode);
-    openSet[this->currentNode] = this->currentNode->GetFScore();
-
-    //generated path appears to be too long
-    //need to fix the logic error causing this
-    while (!openQueue.empty()) {
-        NavMeshNode* node = openQueue.top();
-        openQueue.pop();
-        openSet.erase(node);
+    //path is fixed, takes too long to generate, not sure on a good solution
+    while (!this->openList.empty()) {
+        NavMeshNode* node = openList[0];
 
         if (node == this->destination) {
             while (node != nullptr) {
@@ -55,34 +42,32 @@ void NavMeshAgent::FindPath() {
             return;
         }
 
-        closedSet.insert(node);
-
         for (const auto& edge : node->GetEdges()) {
-            NavMeshNode* neighbor = edge.neighbour;
-            if (closedSet.find(neighbor) != closedSet.end()) {
+
+            NavMeshNode* neighbour = edge.neighbour;
+
+            //slow
+            if (std::find(this->closedList.begin(), this->closedList.end(), neighbour) != this->closedList.end()) {
                 continue;
             }
 
-            float tentativeGScore = node->GetGScore() + edge.cost;
-            bool inOpenSet = openSet.find(neighbor) != openSet.end();
+            float tempHeuristic = calculateHeuristic(neighbour, destination);
+            float tempGScore = node->GetGScore() + edge.cost;
+            float tempFScore = tempHeuristic + tempGScore;
 
-            //might be overwriting parent of a node
-            //not using F score here, probably the cause of my issues
-            if (!inOpenSet || tentativeGScore < neighbor->GetGScore()) {
-                neighbor->SetParent(node);
-                neighbor->SetGScore(tentativeGScore);
-                neighbor->SetHeuristic(calculateHeuristic(neighbor, this->destination));
-                neighbor->SetFScore(neighbor->GetGScore() + neighbor->GetHeuristic());
+            bool inOpenList = std::find(this->openList.begin(), this->openList.end(), neighbour) != this->openList.end();
 
-                if (!inOpenSet) {
-                    openQueue.push(neighbor);
-                    openSet[neighbor] = neighbor->GetFScore();
-                }
-                else {
-                    openSet[neighbor] = neighbor->GetFScore();
-                }
+            if (!inOpenList || tempFScore < node->GetFScore()) {
+                neighbour->SetParent(node);
+                neighbour->SetGScore(tempGScore);
+                neighbour->SetHeuristic(tempHeuristic);
+                neighbour->SetFScore(tempFScore);
+                openList.emplace_back(neighbour);
             }
         }
+        //slow
+        openList.erase(find(openList.begin(), openList.end(), node));
+        closedList.emplace_back(node);
     }
     std::cout << "No path found" << std::endl;
 }
@@ -139,7 +124,7 @@ void NavMeshAgent::FollowPath() {
         this->nextNode = this->path.front();
     }
     for (int n = 0; n < size(path) - 1; ++n) {
-        Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 1.0f);
+        Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 0.1f);
     }
     MoveTowardsNextNode();
 }
