@@ -154,7 +154,11 @@ int main() {
 	std::unique_ptr<TutorialGame> g = std::make_unique<TutorialGame>(*world, *renderer, *physics);
 
 	w->GetTimer().GetTimeDeltaSeconds(); //Clear the timer so we don't get a larget first dt!
-	while (w->UpdateWindow() /* && !Window::GetKeyboard()->KeyDown(KeyCodes::ESCAPE) */) {
+#ifdef USEAGC
+	while (w->UpdateWindow() && !c->GetNamedButton("Triangle")) {
+#else
+	while (w->UpdateWindow() && !Window::GetKeyboard()->KeyDown(KeyCodes::ESCAPE)) {
+#endif // USEAGC
 		float dt = w->GetTimer().GetTimeDeltaSeconds();
 		if (dt > 0.1f) {
 			std::cout << "Skipping large time delta" << std::endl;
@@ -185,7 +189,9 @@ int main() {
 		renderer->Render();
 		Debug::UpdateRenderables(dt);
 	}
-	//Window::DestroyGameWindow(); //I think this needs to be commented out for the uniqueptr approach??
+#ifdef _WIN32
+	Window::DestroyGameWindow();
+#endif // _WIN32
 }
 
 void TestStateMachine() {
