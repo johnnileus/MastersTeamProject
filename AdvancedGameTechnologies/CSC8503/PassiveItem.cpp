@@ -28,12 +28,13 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 	std::cout << "JSON data: " << json.dump() << "\n";
 
 	myWorld = world;
+	myPlayer = player;
 	size = 1;
 	mass = 10.0f;
 
 	name = "passive";
 	tag = "Passive";
-	maxSpeed = 10;//change to json value
+	maxSpeed = 2;//change to json value
 	SetComponent(size, mass);
 }
 
@@ -60,15 +61,20 @@ void PassiveItem::SetComponent(float meshSize, float inverseMass) {
 	GetPhysicsObject()->InitSphereInertia();
 }
 
+void PassiveItem::SetUid(int uid) {
+	myUid = uid;
+}
+
 void PassiveItem::Init() {
 	return;
 }
 
-PassiveItem* PassiveItem::Instantiate(GameWorld* world, std::vector<PassiveItem*> itemList, Player* player, const Vector3& position) {
+PassiveItem* PassiveItem::Instantiate(GameWorld* world, std::vector<PassiveItem*> itemList, Player* player, const Vector3& position, int uid) {
 	PassiveItem* passive = new PassiveItem(player, world);
 
 	passive->GetTransform().SetPosition(position);
 	passive->Init();
+	passive->SetUid(uid);
 	itemList.push_back(passive);
 
 	world->AddGameObject(passive);
@@ -77,15 +83,20 @@ PassiveItem* PassiveItem::Instantiate(GameWorld* world, std::vector<PassiveItem*
 }
 
 //update stats
-void PassiveItem::UpdateStats(Player* player) {
+void PassiveItem::UpdateStats(Player* player, int myUid) {
 	//change to json data
-	maxSpeed += player->GetSpeed();
-	player->SetSpeed(maxSpeed);
+	if (myUid == 2) {
+		maxSpeed += myPlayer->GetSpeed();
+		myPlayer->SetSpeed(maxSpeed);
+	}
+	else {
+		return;
+	}
 }
 
 void PassiveItem::OnCollisionBegin(GameObject* otherObject) {
 	if (otherObject->tag == "Player") {
 		otherObject->SetActive(false);
-		UpdateStats(player);
+		UpdateStats(myPlayer, myUid);
 	}
 }
