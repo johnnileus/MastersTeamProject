@@ -13,19 +13,21 @@ namespace NCL {
 
 			void Init();
 
-			static PassiveItem* Instantiate(GameWorld* world, std::vector<PassiveItem*> itemList, Player* player, const Vector3& position);
+			static PassiveItem* Instantiate(GameWorld* world, std::vector<PassiveItem*> itemList, Player* player, const Vector3& position, int uid);
 
 			void OnCollisionBegin(GameObject* otherObject) override;
 
 			GameWorld* myWorld;
 
-			Player* player;
+			Player* myPlayer;
 		protected:
 			void SetComponent(float meshSize, float InverseMass);
+			void SetUid(int uid);
 			void RemoveObject(GameObject* object);
-			void UpdateStats(Player* player);
+			void UpdateStats(Player* player, int uid);
 			float size;
 			float mass;
+			int myUid;
 
 			float maxSpeed;
 			int health;
