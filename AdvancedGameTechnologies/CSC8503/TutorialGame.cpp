@@ -354,7 +354,7 @@ void TutorialGame::ToggleCursor() {
 }
 
 void TutorialGame::InitEnemies() {
-	enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(world, this->navGrid, Vector3(10,3,10), 1.0f, 100.0f));
+	enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(world, this->navGrid, Vector3(10,3,10), 1.0f, 0.01f));
 }
 
 void TutorialGame::UpdateEnemies(float dt) {

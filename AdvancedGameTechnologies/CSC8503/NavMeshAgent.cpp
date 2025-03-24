@@ -5,6 +5,7 @@
 #include "PhysicsObject.h"
 #include <queue>
 #include <unordered_set>
+#include "Debug.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -37,6 +38,8 @@ void NavMeshAgent::FindPath() {
     openQueue.push(this->currentNode);
     openSet[this->currentNode] = this->currentNode->GetFScore();
 
+    //generated path appears to be too long
+    //need to fix the logic error causing this
     while (!openQueue.empty()) {
         NavMeshNode* node = openQueue.top();
         openQueue.pop();
@@ -48,6 +51,7 @@ void NavMeshAgent::FindPath() {
                 node = node->GetParent();
             }
             std::reverse(this->path.begin(), this->path.end());
+            std::cout << "Destination: " << destination->GetPosition().x << " " << destination->GetPosition().z << std::endl;
             return;
         }
 
@@ -62,6 +66,8 @@ void NavMeshAgent::FindPath() {
             float tentativeGScore = node->GetGScore() + edge.cost;
             bool inOpenSet = openSet.find(neighbor) != openSet.end();
 
+            //might be overwriting parent of a node
+            //not using F score here, probably the cause of my issues
             if (!inOpenSet || tentativeGScore < neighbor->GetGScore()) {
                 neighbor->SetParent(node);
                 neighbor->SetGScore(tentativeGScore);
@@ -89,6 +95,7 @@ void NavMeshAgent::clearPath() {
 }
 
 //Manhattan Distance
+//check this as it could be returning wrong values
 float NavMeshAgent::calculateHeuristic(NavMeshNode* node, NavMeshNode* destination) {
     NCL::Maths::Vector3 difference = node->GetPosition() - destination->GetPosition();
     return std::abs(difference.x) + std::abs(difference.y) + std::abs(difference.z);
@@ -131,18 +138,21 @@ void NavMeshAgent::FollowPath() {
     else if (!this->path.empty()) {
         this->nextNode = this->path.front();
     }
-
+    for (int n = 0; n < size(path) - 1; ++n) {
+        Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 1.0f);
+    }
     MoveTowardsNextNode();
 }
 
+//agent slides around and misses nodes?
+//could also be due to the errors in the pathfinding route
 void NavMeshAgent::MoveTowardsNextNode() {
     if (this->nextNode == nullptr) {
         return;
     }
 
-    const auto& currPos = this->currentNode->GetPosition();
+    const auto& currPos = this->GetCurrentPosition();
     const auto& nextPos = this->nextNode->GetPosition();
-    this->GetPhysicsObject()->ClearForces();
     this->GetPhysicsObject()->AddForce(Vector3((nextPos.x - currPos.x) * 0.05, 0, (nextPos.z - currPos.z) * 0.05));
 }
 
