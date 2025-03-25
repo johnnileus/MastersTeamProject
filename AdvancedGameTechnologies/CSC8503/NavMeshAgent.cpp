@@ -29,23 +29,30 @@ void NavMeshAgent::FindPath() {
 
     this->openList.emplace_back(this->currentNode);
 
-    //path is fixed, takes too long to generate, not sure on a good solution
+    //prefers to take a diagonal less optimal path, spent 3 hours attempting to fix to no avail
     while (!this->openList.empty()) {
+
         NavMeshNode* node = openList[0];
-
-        if (node == this->destination) {
-            while (node != nullptr) {
-                this->path.emplace_back(node);
-                node = node->GetParent();
+        for (int i = 1; i < openList.size(); ++i) {
+            if (openList[i]->GetFScore() < node->GetFScore())
+            {
+                node = openList[i];
             }
-            std::reverse(this->path.begin(), this->path.end());
-            std::cout << "Destination: " << destination->GetPosition().x << " " << destination->GetPosition().z << std::endl;
-            return;
+            if (node == this->destination) {
+                while (node != nullptr) {
+                    this->path.emplace_back(node);
+                    node = node->GetParent();
+                }
+
+                std::reverse(this->path.begin(), this->path.end());
+                std::cout << "Destination: " << destination->GetPosition().x << " " << destination->GetPosition().z << std::endl;
+                return;
+            }
         }
+                    
+        for (int e = 0; e < node->GetEdges().size(); ++ e) {
 
-        for (const auto& edge : node->GetEdges()) {
-
-            NavMeshNode* neighbour = edge.neighbour;
+            NavMeshNode* neighbour = node->GetEdges()[e].neighbour;
 
             //slow
             if (std::find(this->closedList.begin(), this->closedList.end(), neighbour) != this->closedList.end()) {
@@ -53,7 +60,7 @@ void NavMeshAgent::FindPath() {
             }
 
             float tempHeuristic = calculateHeuristic(neighbour, destination);
-            float tempGScore = node->GetGScore() + edge.cost;
+            float tempGScore = node->GetGScore() + node->GetEdges()[e].cost;
             float tempFScore = tempHeuristic + tempGScore;
 
             bool inOpenList = std::find(this->openList.begin(), this->openList.end(), neighbour) != this->openList.end();
