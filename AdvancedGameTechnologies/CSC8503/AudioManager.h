@@ -20,7 +20,7 @@ namespace NCL {
 			void Shutdown();               //release FMOD
 
 			void LoadBank(const std::string& bankName);
-			void PlayEvent(const std::string& eventName);
+			FMOD::Studio::EventInstance* PlayEvent(const std::string& eventName);
 			void Update();
 
 		private:
