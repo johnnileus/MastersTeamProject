@@ -82,71 +82,46 @@ GameTechRenderer::GameTechRenderer(GameWorld& world) : OGLRenderer(*Window::GetW
 }
 
 //Terrain Generation
-Mesh* GameTechRenderer::GenerateTerrainMesh(HeightMap* heightmap) {
+OGLMesh* GameTechRenderer::GenerateTerrainMesh(HeightMap* heightmap) {
 	terrainMesh = new OGLMesh();
 
-	std::vector<Vector3> vertices;
+	std::vector<Vector3> positions;
 	std::vector<Vector2> texCoords;
-	std::vector<GLuint> indices;
-	std::vector<Vector3> normals;
+	std::vector<unsigned int> indices;
 
 	int terrainSize = heightmap->GetSize();
 
 	for (int x = 0; x < terrainSize; x++) {
 		for (int y = 0; y < terrainSize; y++) {
 			float height = heightmap->GetHeight(x, y);
-			Vector3 normal = CalculateNormal(x, y, heightmap);
-			vertices.push_back(Vector3(y, height, x));
-			texCoords.push_back(Vector2((float)y / terrainSize, (float)x / terrainSize));
-			normals.push_back(normal);
+			positions.push_back(Vector3(x, height, y));
+			texCoords.push_back(Vector2((float)x / terrainSize, (float)y / terrainSize));
 		}
 	}
 
 	for (int x = 0; x < terrainSize - 1; x++) {
 		for (int y = 0; y < terrainSize - 1; y++) {
-			int topLeft = (x * terrainSize) + y;
-			int topRight = (x * terrainSize) + (y + 1);
-			int bottomLeft = ((x + 1) * terrainSize) + (y + 1);
-			int bottomRight = ((x + 1) * terrainSize) + y;
+			int topLeft = x * terrainSize + y;
+			int topRight = topLeft + 1;
+			int bottomLeft = (x + 1) * terrainSize + y;
+			int bottomRight = bottomLeft + 1;
 
-			//int topLeft = x * terrainSize + y;
-			//int topRight = topLeft + 1;
-			//int bottomLeft = (x + 1) * terrainSize + y;
-			//int bottomRight = bottomLeft + 1;
+			indices.push_back(topLeft);
+			indices.push_back(bottomLeft);
+			indices.push_back(topRight);
 
-			indices.push_back(topLeft);//a
-			indices.push_back(bottomLeft);//c
-			indices.push_back(topRight);//b
-
-			indices.push_back(bottomLeft);//c
-			indices.push_back(topLeft);//a
-			indices.push_back(bottomRight);//d
-
-			//indices.push_back(topRight);//b
-			//indices.push_back(bottomLeft);//c
-			//indices.push_back(bottomRight);//d
+			indices.push_back(topRight);
+			indices.push_back(bottomLeft);
+			indices.push_back(bottomRight);
 		}
 	}
 
-	terrainMesh->SetVertexPositions(vertices);
+	terrainMesh->SetVertexPositions(positions);
 	terrainMesh->SetVertexTextureCoords(texCoords);
-	terrainMesh->SetVertexIndices(indices);	
-	terrainMesh->SetVertexNormals(normals);
+	terrainMesh->SetVertexIndices(indices);
 	terrainMesh->UploadToGPU();
-	//BindMesh(*terrainMesh);
 
 	return terrainMesh;
-}
-
-Vector3 GameTechRenderer::CalculateNormal(int x, int y, HeightMap* heightmap) {
-	float left = heightmap->GetHeight(x - 1, y);
-	float right = heightmap->GetHeight(x + 1, y);
-	float top = heightmap->GetHeight(x, y + 1);
-	float bottom = heightmap->GetHeight(x, y - 1);
-
-	Vector3 normal = Vector3(left - right, 2.0f, bottom - top);
-
-	return Vector::Normalise(normal);
 }
 
 GameTechRenderer::~GameTechRenderer()	{

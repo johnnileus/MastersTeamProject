@@ -49,11 +49,7 @@ void OGLMesh::BindVertexAttribute(int attribSlot, int buffer, int bindingID, int
 
 void OGLMesh::UploadToGPU(Rendering::RendererBase* renderer) {
 	if (!ValidateMeshData()) {
-		std::cout << "Invalid mesh data!" << std::endl;
 		return;
-	}
-	else {
-		std::cout << "Valid mesh data!" << std::endl;
 	}
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
