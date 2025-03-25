@@ -12,7 +12,7 @@ std::vector<std::vector<NavMeshNode*>> NavMeshGrid::GenerateNavMeshGrid(int leve
 	for (int x = 0; x < levelSize; ++x) {
 		nodeRow.clear();
 		for (int z = 0; z < levelSize; ++z) {
-			NCL::Maths::Vector3 nodePosition = NCL::Maths::Vector3(2* (x - levelSize/2), 10, 2*(z - levelSize/2));//replace 500 with the height of the vertex for the node
+			NCL::Maths::Vector3 nodePosition = NCL::Maths::Vector3(1* (x - levelSize/2), 10, 1*(z - levelSize/2));//replace 500 with the height of the vertex for the node
 			nodeRow.emplace_back(new NavMeshNode(nodePosition));
 		}
 		nodeGrid.emplace_back(nodeRow);
@@ -87,5 +87,5 @@ std::vector<std::vector<NavMeshNode*>> NavMeshGrid::GenerateNavMeshGrid(int leve
 
 float  NavMeshGrid::CalculateDistance(const NCL::Maths::Vector3& pos1, const NCL::Maths::Vector3& pos2) {
     NCL::Maths::Vector3 difference = pos1 - pos2;
-    return abs(std::sqrtf((difference.x * difference.x) + (difference.z * difference.z)));
+    return std::abs(std::sqrtf((difference.x * difference.x) + (difference.z * difference.z)));
 }
