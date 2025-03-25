@@ -122,6 +122,7 @@ void NavMeshAgent::FollowPath() {
     if (this->currentNode == this->nextNode && !this->path.empty()) {
         this->path.erase(this->path.begin());
         if (!this->path.empty()) {
+            this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
             this->nextNode = this->path.front();
         }
     }
@@ -143,7 +144,7 @@ void NavMeshAgent::MoveTowardsNextNode() {
 
     const auto& currPos = this->GetCurrentPosition();
     const auto& nextPos = this->nextNode->GetPosition();
-    this->GetPhysicsObject()->AddForce(Vector3((nextPos.x - currPos.x) * 0.05, 0, (nextPos.z - currPos.z) * 0.05));
+    this->GetPhysicsObject()->AddForce(Vector::Normalise(Vector3((nextPos.x - currPos.x), 0, (nextPos.z - currPos.z))));
 }
 
 void NavMeshAgent::SetDestination() {
