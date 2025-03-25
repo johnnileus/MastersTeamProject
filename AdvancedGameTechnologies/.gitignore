@@ -379,3 +379,5 @@ Makefile
 
 #Ignore sce_module because it is lowkey illegal to put this on github
 sce_module/
+#Same thing for PS5 FMOD
+FMOD Studio API PS5/

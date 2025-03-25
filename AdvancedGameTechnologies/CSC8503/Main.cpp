@@ -52,6 +52,7 @@ size_t sceLibcHeapSize = 256 * 1024 * 1024;
 #ifdef USEAGC
 #include <GameTechAGCRenderer.h>
 #endif // USEAGC
+#include <AudioManager.h>
 
 std::vector<Vector3> testNodes;
 
@@ -151,32 +152,15 @@ int main() {
 	c->MapButton(2, "Down");
 #endif // USEAGC
 
-	// Initialize FMOD system
-	FMOD::System* system = nullptr;
-	FMOD_RESULT result = FMOD_OK;
-	// Initialize FMOD system
-	result = FMOD::System_Create(&system);
-	if (result != FMOD_OK) {
-		printf("FMOD system creation failed: %s\n", FMOD_ErrorString(result));
-		return -1;
-	}
 
-	// Initialize FMOD 
-	result = system->init(512, FMOD_INIT_NORMAL, 0);
-	if (result != FMOD_OK) {
-		printf("FMOD system initialization failed: %s\n", FMOD_ErrorString(result));
+	AudioManager& audio = AudioManager::GetInstance();
+	if (!audio.Init()) {
 		return -1;
 	}
 
 
+	audio.PlaySound("BGM.wav");
 
-
-
-
-
-	
-
-	
 
 	std::cout << "Creating TutorialGame instance" << std::endl;
 	std::unique_ptr<TutorialGame> g = std::make_unique<TutorialGame>(*world, *renderer, *physics);
@@ -218,9 +202,7 @@ int main() {
 		Debug::UpdateRenderables(dt);
 	}
 
-	// Clean up FMOD
-	system->close();
-	system->release();
+	
 
 
 #ifdef _WIN32

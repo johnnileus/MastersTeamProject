@@ -341,31 +341,118 @@ if(USE_VULKAN)
 endif()
 
 ################################################################################
-#set root path
-set(FMOD_ROOT "C:/dev/CppSeries/MastersTeamProject/AdvancedGameTechnologies/SDK/FMOD Studio API Windows/api")
+if(MSVC)
+    #set root path
+    set(FMOD_ROOT "${CMAKE_SOURCE_DIR}/SDK/FMOD Studio API Windows/api")
 
-#include head file
-include_directories(${FMOD_ROOT}/core/inc)
+    #include head file
+    include_directories(${FMOD_ROOT}/core/inc)
+
+    #include FMOD lib path
+    link_directories(${FMOD_ROOT}/core/lib)
+
+    #choose Debug or Release
+    if (CMAKE_BUILD_TYPE MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
+        set(FMOD_LIB "${FMOD_ROOT}/core/lib/x64/fmodL_vc.lib")
+    else()
+        set(FMOD_LIB "${FMOD_ROOT}/core/lib/x64/fmod_vc.lib")
+    endif()
+
+    # add FMOD lib
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${FMOD_LIB})
+
+    #ensure FMOD.dll useable
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        "${FMOD_ROOT}/core/lib/x64/fmodL.dll"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+    )
+endif()
+if(USE_AGC)
+    #set root path
+    set(FMOD_ROOT "${CMAKE_SOURCE_DIR}/SDK/FMOD Studio API PS5/api")
+
+    #include head file
+    include_directories(${FMOD_ROOT}/core/inc)
+
+    #include FMOD lib path
+    link_directories(${FMOD_ROOT}/core/lib)
+
+    #choose Debug or Release
+    if (CMAKE_BUILD_TYPE MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
+        set(FMOD_LIB "${FMOD_ROOT}/core/lib/libfmodL_stub_weak.a")
+    else()
+        set(FMOD_LIB "${FMOD_ROOT}/core/lib/libfmod_stub_weak.a")
+    endif()
+
+    # add FMOD lib
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${FMOD_LIB})
+
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        "${FMOD_ROOT}/core/lib/libfmodL.prx"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+    )
+endif()
+
+################################################################################
+if(MSVC)
+#include studio head file
+include_directories(${FMOD_ROOT}/studio/inc)
 
 #include FMOD lib path
-link_directories(${FMOD_ROOT}/core/lib)
+link_directories(${FMOD_ROOT}/studio/lib)
 
 #choose Debug or Release
 if (CMAKE_BUILD_TYPE MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
-    set(FMOD_LIB "${FMOD_ROOT}/core/lib/x64/fmodL_vc.lib")
+
+    set(FMOD_STUDIO_LIB "${FMOD_ROOT}/studio/lib/wx64/fmodstudioL_vc.lib")
 else()
-    set(FMOD_LIB "${FMOD_ROOT}/core/lib/x64/fmod_vc.lib")
+    set(FMOD_STUDIO_LIB "${FMOD_ROOT}/studio/lib/wx64/fmodstudio_vc.lib")
+
 endif()
 
 # add FMOD lib
-target_link_libraries(${PROJECT_NAME} PRIVATE ${FMOD_LIB})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${FMOD_STUDIO_LIB})
 
 #ensure FMOD.dll useable
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
-    "${FMOD_ROOT}/core/lib/x64/fmodL.dll"
+
+    "${FMOD_ROOT}/studio/lib/wx64/fmodstudioL.dll"
+
     "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
 )
+endif()
+
+if(USE_AGC)
+    #include studio head file
+    include_directories(${FMOD_ROOT}/studio/inc)
+
+    #include FMOD lib path
+    link_directories(${FMOD_ROOT}/studio/lib)
+
+    #choose Debug or Release
+    if (CMAKE_BUILD_TYPE MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
+
+        set(FMOD_STUDIO_LIB "${FMOD_ROOT}/studio/lib/libfmodstudioL_stub_weak.a")
+    else()
+        set(FMOD_STUDIO_LIB "${FMOD_ROOT}/studio/lib/libfmodstudio_stub_weak.a")
+
+    endif()
+
+    # add FMOD lib
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${FMOD_STUDIO_LIB})
+
+    #cant do this on PS5
+    #add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+       # COMMAND ${CMAKE_COMMAND} -E copy
+
+        #"${FMOD_ROOT}/studio/lib/wx64/fmodstudioL.dll"
+
+        #"$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+    #)
+endif()
 
 
 
