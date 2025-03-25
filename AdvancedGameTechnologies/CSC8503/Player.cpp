@@ -149,7 +149,6 @@ void Player::Update(float dt) {
 	}
 	HandleRotation(dt);
 	HandleJump();
-	HandleAim();
 	DisplayUI();
 	HealthCheck();
 	
@@ -394,44 +393,6 @@ void Player::HandleJump() {
 	}
 
 }
-
-void Player::HandleAim()
-{
-	Ray ray = CollisionDetection::BuildRayFromCamera(myWorld->GetMainCamera(),100,*myCam);
-	RayCollision closestCollision;
-
-	Vector3 hitPoint = CollisionDetection::GetRayHitPoint(ray);
-	aimDir = hitPoint-transform.GetPosition();
-	Debug::DrawLine(transform.GetPosition(),hitPoint,Debug::RED);
-	
-}
-
-Vector3 CollisionDetection::GetRayHitPoint(const Ray& ray)
-{
-
-	Vector3 planeNormal(0, 1, 0);
-	float d = 0.0f;
-    
-
-	float denom = Vector::Dot(ray.GetDirection(), planeNormal);
-    
-
-	if (fabs(denom) > 1e-6)
-	{
-		
-		float t = -(Vector::Dot(ray.GetPosition(), planeNormal) + d) / denom;
-		if (t >= 0)
-		{
-			// 返回交点
-			return ray.GetPosition() + ray.GetDirection() * t;
-		}
-	}
-    
-	
-	return Vector3(-1, -1, -1);
-}
-
-
 
 void Player::OnCollisionBegin(GameObject* otherObject)
 {

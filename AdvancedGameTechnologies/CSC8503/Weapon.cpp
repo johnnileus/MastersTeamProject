@@ -18,7 +18,7 @@ void Weapon::Reload() {
     std::cout << "Reload complete! Ammo: " << ammo << std::endl;
 }
 
-void Weapon::Update(float deltaTime, bool isFiring, const Vector3& direction) {
+void Weapon::Update(float deltaTime, bool isFiring) {
     if (shotTimer > 0.0f) {
         shotTimer -= deltaTime;
     }
@@ -42,5 +42,4 @@ void Weapon::Update(float deltaTime, bool isFiring, const Vector3& direction) {
     }
     // update the firing state for the next frame
     wasFiringLastFrame = isFiring;
-    aimDir = direction;
 }

@@ -10,7 +10,6 @@
 #include "SphereVolume.h"
 #include "CapsuleVolume.h"
 #include "Ray.h"
-#include "../CSC8503/ThirdPersonCamera.h"
 
 using NCL::Camera;
 using namespace NCL::Maths;
@@ -75,7 +74,7 @@ namespace NCL {
 		static bool RayBoxIntersection(const Ray&r, const Vector3& boxPos, const Vector3& boxSize, RayCollision& collision);
 
 		static Ray BuildRayFromMouse(const PerspectiveCamera& c);
-		static Ray BuildRayFromCamera(const PerspectiveCamera& cam, float distance, const ThirdPersonCamera& TPCam);
+
 		static bool RayIntersection(const Ray&r, GameObject& object, RayCollision &collisions);
 
 
@@ -83,7 +82,7 @@ namespace NCL {
 		static bool RayOBBIntersection(const Ray&r, const Transform& worldTransform, const OBBVolume&	volume, RayCollision& collision);
 		static bool RaySphereIntersection(const Ray&r, const Transform& worldTransform, const SphereVolume& volume, RayCollision& collision);
 		static bool RayCapsuleIntersection(const Ray& r, const Transform& worldTransform, const CapsuleVolume& volume, RayCollision& collision);
-		static  Vector3 GetRayHitPoint(const Ray& ray);
+
 
 		static bool RayPlaneIntersection(const Ray&r, const Plane&p, RayCollision& collisions);
 

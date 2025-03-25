@@ -38,9 +38,9 @@ namespace NCL {
             virtual void Reload();
 
             // Update method, called each frame
-            virtual void Update(float deltaTime, bool isFiring, const Vector3& direction);
-
-            Vector3 aimDir;
+            //  - deltaTime: time elapsed since last frame
+            //  - isFiring: whether the fire button is currently down
+            virtual void Update(float deltaTime, bool isFiring);
 
             int  getAmmo()    const { return ammo; }
             int  getMaxAmmo() const { return maxAmmo; }
