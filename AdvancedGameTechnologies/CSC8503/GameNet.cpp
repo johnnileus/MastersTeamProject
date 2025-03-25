@@ -27,7 +27,7 @@ void MainPacketReceiver::ReceivePacket(int type, GamePacket* payload, int source
 void NetworkManager::StartAsServer() {
 	isServer = true;
 	id = 0;
-	server = new GameServer(port, 8);
+	server = new GameServer(port, 1);
 
 	server->RegisterPacketHandler(String_Message, &networkReceiver);
 	server->RegisterPacketHandler(Transform_Data, &networkReceiver);
