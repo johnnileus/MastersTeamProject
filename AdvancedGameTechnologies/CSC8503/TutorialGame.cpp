@@ -1,6 +1,5 @@
 #pragma once
 
-//HI BOW, REFRESHER: FOR SOME REASON EVERY OBJECT EXCEPT FOR PLAYER CAUSES CRASHES, LIKELY TO BE A PROBLEM WITH ANYTHING HAVING A JOINT COUNTER LARGER THAN 0
 #include "TutorialGame.h"
 #include "GameWorld.h"
 #include "PhysicsObject.h"
@@ -173,25 +172,7 @@ void TutorialGame::UpdateGame(float dt) {
 	}
 	else {
 		//Debug::Print("(G)ravity off", Vector2(5, 95), Debug::RED);
-	}
-
-
-		rayDir = selectionObject->GetTransform().GetOrientation() * Vector3(0, 0, -1);
-
-		rayPos = selectionObject->GetTransform().GetPosition();
-
-		Ray r = Ray(rayPos, rayDir);
-
-		if (world.Raycast(r, closestCollision, true, selectionObject)) {
-			if (objClosest) {
-				objClosest->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
-			}
-			objClosest = (GameObject*)closestCollision.node;
-
-			objClosest->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
-		}
-	}
-
+	}	
 
 	//Animation Test
 	/*frameTime-=dt;
