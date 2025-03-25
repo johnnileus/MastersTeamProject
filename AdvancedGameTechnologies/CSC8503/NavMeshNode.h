@@ -33,7 +33,7 @@ namespace NCL {
 			float GetFScore(){ return this->fScore; }
 			float GetHeuristic(){ return this->heuristic; }
 			void SetGScore(float gScore) { this->gScore = gScore; }
-			void SetFScore(float fScore) { this->gScore = fScore; }
+			void SetFScore(float fScore) { this->fScore = fScore; }
 			void SetHeuristic(float heuristic) { this->heuristic = heuristic; }
 			void SetParent(NavMeshNode* parent) { this->parent = parent; }
 			NavMeshNode* GetParent() { return this->parent; }
