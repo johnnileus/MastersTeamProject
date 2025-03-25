@@ -15,6 +15,8 @@
 // - Getting Started      https://dearimgui.com/getting-started
 // - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
 // - Introduction, links and more at the top of imgui.cpp
+#ifdef _WIN32
+
 
 #include "imgui.h"
 #ifndef IMGUI_DISABLE
@@ -890,3 +892,5 @@ void ImGui_ImplWin32_EnableAlphaCompositing(void* hwnd)
 //---------------------------------------------------------------------------------------------------------
 
 #endif // #ifndef IMGUI_DISABLE
+
+#endif // _WIN32

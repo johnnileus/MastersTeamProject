@@ -1,3 +1,7 @@
+#ifdef _WIN32
+
+
+
 #include "UIStateManager.h"
 #include "iostream"
 
@@ -217,3 +221,5 @@ UIState UIStateManager::GetCurrentState() {
 void UIStateManager::SetCurrentState(UIState newState) {
     currentState = newState;
 }
+
+#endif // _WIN32

@@ -1,3 +1,4 @@
+#ifdef _WIN32
 #include "GameUI.h"
 #include "Win32Window.h"
 #include "ImGui/imgui_impl_opengl3.h"
@@ -43,4 +44,7 @@ void GameUI::RenderUI() {
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
+
+#endif // _WIN32
+
 

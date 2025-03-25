@@ -235,6 +235,54 @@
     <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\enet\peer.c">
       <Filter>eNet</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_impl_opengl3.h">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_impl_opengl3_loader.h">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_impl_win32.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_impl_win32.h">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\ImGui\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503CoreClasses\CMakeFiles\CSC8503CoreClasses.dir\Debug\cmake_pch.hxx">
@@ -268,6 +316,9 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{2BAB6B57-A9A4-3D7E-96F1-4163A815E66E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{97082B43-5BE4-3D2D-AAD5-E5222557D6A8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Networking">
       <UniqueIdentifier>{F9A114BE-1FA3-3835-8B64-60BF6A711708}</UniqueIdentifier>

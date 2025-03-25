@@ -126,6 +126,26 @@ set(enet_Files
 )
 source_group("eNet" FILES ${enet_Files})
 
+set(ImGui_Files
+   "ImGui/imconfig.h"
+   "ImGui/imgui.cpp"
+   "ImGui/imgui.h"
+   "ImGui/imgui_demo.cpp"
+   "ImGui/imgui_draw.cpp"
+   "ImGui/imgui_impl_opengl3.cpp"
+   "ImGui/imgui_impl_opengl3.h"
+   "ImGui/imgui_impl_opengl3_loader.h"
+   "ImGui/imgui_impl_win32.cpp"
+   "ImGui/imgui_impl_win32.h"
+   "ImGui/imgui_internal.h"
+   "ImGui/imgui_tables.cpp"
+   "ImGui/imgui_widgets.cpp"
+   "ImGui/imstb_rectpack.h"
+   "ImGui/imstb_textedit.h"
+   "ImGui/imstb_truetype.h"
+)
+source_group("ImGui" FILES ${ImGui_Files})
+
 set(ALL_FILES
     ${Header_Files}
     ${Source_Files}
@@ -136,7 +156,8 @@ set(ALL_FILES
     ${Collision_Detection}
     ${Networking}
     ${Physics}
-    ${enet_Files}   
+    ${enet_Files} 
+    ${ImGui_Files}
 )
 
 set_source_files_properties(${ALL_FILES} PROPERTIES LANGUAGE CXX)

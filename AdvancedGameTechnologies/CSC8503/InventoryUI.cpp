@@ -1,3 +1,7 @@
+#ifdef _WIN32
+
+
+
 #pragma once
 #include "InventoryUI.h"
 #include "ImGui/imgui.h"
@@ -43,3 +47,4 @@ void InventoryUI::BuildInventoryUI() {
 
     ImGui::End();
 }
+#endif // _WIN32
