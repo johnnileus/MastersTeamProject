@@ -23,6 +23,9 @@ namespace NCL {
 			FMOD::Studio::EventInstance* PlayEvent(const std::string& eventName);
 			void Update();
 
+			void SetMasterVolume(int volume); 
+
+
 		private:
 			AudioManager() = default;
 			~AudioManager() = default;
