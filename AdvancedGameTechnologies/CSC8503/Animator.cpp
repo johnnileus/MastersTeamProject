@@ -95,7 +95,7 @@ bool Animator::LoadAnimation(const std::string& animationName)
 
 void Animator::Draw(RenderObject* renderObj)
 {
-	std::cout << "Drawing render object: " << renderObj << std::endl;
+	/*std::cout << "Drawing render object: " << renderObj << std::endl;
     Mesh* mesh = renderObj->GetMesh();
     
     
@@ -126,7 +126,7 @@ void Animator::Draw(RenderObject* renderObj)
     int j = glGetUniformLocation(GetProcessId(shader), "joints");
     glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
     
-    frameMatrices.clear();
+    frameMatrices.clear();*/
     
 }
 
