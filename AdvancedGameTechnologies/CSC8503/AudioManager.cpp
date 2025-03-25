@@ -116,6 +116,22 @@ FMOD::Studio::EventInstance* AudioManager::PlayEvent(const std::string& eventNam
 	return eventInstance;
 }
 
+void AudioManager::SetMasterVolume(int volume) {
+	float fVolume = std::clamp(volume / 100.0f, 0.0f, 1.0f);
+
+	if (studioSystem) {
+		FMOD::Studio::Bus* masterBus = nullptr;
+
+		FMOD_RESULT result = studioSystem->getBus("bus:/", &masterBus);
+		if (result == FMOD_OK && masterBus) {
+			masterBus->setVolume(fVolume); // Set the volume of the master bus
+			std::cout << "[AudioManager] Set master volume to " << fVolume << std::endl;
+		}
+		else {
+			std::cout << "[AudioManager] Failed to get master bus: " << FMOD_ErrorString(result) << std::endl;
+		}
+	}
+}
 
 
 void AudioManager::Update()

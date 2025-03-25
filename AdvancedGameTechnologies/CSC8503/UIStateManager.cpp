@@ -141,6 +141,7 @@ void UIStateManager::States() {
 
         if (ImGui::Button("Save", ImVec2(200, 40))) {
             SetCurrentState(UIState::Paused);
+            AudioManager::GetInstance().SetMasterVolume(audio);
         }
 
         ImGui::End();
