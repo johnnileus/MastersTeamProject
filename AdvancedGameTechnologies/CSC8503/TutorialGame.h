@@ -76,6 +76,8 @@ namespace NCL {
 		
 			
 
+			Player* getPlayer() { return player; }
+
 		protected:
 			void InitialiseAssets();
 

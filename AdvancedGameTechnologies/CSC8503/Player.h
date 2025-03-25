@@ -37,7 +37,13 @@ namespace NCL {
 			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position, NCL::PS5::PS5Controller& controller);
 #else
 			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position);
+
 #endif // USEAGC
+
+			int GetHealth() {
+				return health;
+			}
+
 			GameWorld* myWorld;
 
 			int score;
