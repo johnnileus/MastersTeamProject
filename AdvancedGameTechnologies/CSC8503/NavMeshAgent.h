@@ -3,6 +3,7 @@
 #include "NavMeshNode.h"
 #include <vector>
 #include "DemoShootableEnemy.h"
+#include "unordered_set"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -34,8 +35,8 @@ namespace NCL {
 			float newFScore;
 			float newGScore;
 			float newHeuristic;
-			std::vector<NavMeshNode*> openList;
-			std::vector<NavMeshNode*> closedList;
+			std::unordered_set<NavMeshNode*> openList;
+			std::unordered_set<NavMeshNode*> closedList;
 			std::vector<NavMeshNode*> path;
 			NavMeshGrid* nodeGrid;
 			NavMeshNode* destination;
