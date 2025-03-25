@@ -150,6 +150,12 @@ int main() {
 
 	c->MapButton(0, "Up");
 	c->MapButton(2, "Down");
+	c->MapButton(4, "L2");
+	c->MapButton(5, "R2");
+	c->MapButton(6, "L1");
+	c->MapButton(7, "R1");
+	c->MapButton(8, "L3");
+	c->MapButton(9, "R3");
 #endif // USEAGC
 
 

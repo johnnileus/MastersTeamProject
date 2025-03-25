@@ -205,6 +205,18 @@ void Player::HandleInput()
 		inputDir.x += leftStickX;
 		inputDir.y += leftStickY;  // assuming up on the stick is negative Y // and thus I've reinvented tank controls
 	}
+	/*if (inputController->GetNamedButton("L2")) {
+		Debug::Print("L2 pressed", Vector2(40, 40), Vector4(1, 0, 0, 1));
+	}
+	if (inputController->GetNamedButton("R2")) {
+		Debug::Print("R2 pressed", Vector2(40, 40), Vector4(1, 0, 0, 1));
+	}
+	if (inputController->GetNamedButton("L1")) {
+		Debug::Print("L1 pressed", Vector2(40, 40), Vector4(1, 0, 0, 1));
+	}
+	if (inputController->GetNamedButton("R1")) {
+		Debug::Print("R1 pressed", Vector2(40, 40), Vector4(1, 0, 0, 1));
+	}*/
 #elif _WIN32
     // detect keyboard input
     if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
@@ -311,8 +323,13 @@ void Player::HandleRotation(float dt) {
 
 void Player::HandleFire(float dt)
 {
+#ifdef USEAGC
+	if (inputController->GetNamedButton("R2"))
+#else
 	if (Window::GetMouse()->ButtonDown(NCL::MouseButtons::Left))
+#endif // USEAGC
 	{
+		Debug::Print("Fire", Vector2(40, 40), Vector4(1, 0, 0, 1));
 		myWeapon->Fire();
 	}
 }
