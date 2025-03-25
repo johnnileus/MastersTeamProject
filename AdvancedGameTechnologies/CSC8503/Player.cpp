@@ -423,10 +423,10 @@ void Player::SetTemporaryColour(const Vector4& colour, float duration) {
 
 void Player::DisplayUI()
 {
-	float velocity = Vector::Length(playerPhysicObject->GetLinearVelocity());
+	/*float velocity = Vector::Length(playerPhysicObject->GetLinearVelocity());
 	Debug::Print("V:" + std::format("{:.1f}", velocity), Vector2(5, 10));
 	Debug::Print("HP:" + std::to_string(health), Vector2(5, 15));
-	Debug::Print("Score:" + std::to_string(score), Vector2(80, 10));
+	Debug::Print("Score:" + std::to_string(score), Vector2(80, 10));*/
 }
 
 void Player::RemoveObject(GameObject* gameObject)
