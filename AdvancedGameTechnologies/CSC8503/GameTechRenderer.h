@@ -26,6 +26,10 @@ namespace NCL {
 			//Terrain Generation
 			OGLMesh* GenerateTerrainMesh(HeightMap* heightmap);
 
+			//Game UI
+			GameUI* gameUIHandler;
+			
+
 		protected:
 			void NewRenderLines();
 			void NewRenderText();
@@ -82,9 +86,6 @@ namespace NCL {
 			GLuint textColourVBO;
 			GLuint textTexVBO;
 			size_t textCount;
-
-			//UI handler
-			GameUI* gameUIHandler;
 
 			//Terrain Generation
 			OGLMesh* terrainMesh;
