@@ -222,6 +222,8 @@ set(ADDITIONAL_LIBRARY_DEPENDENCIES
 
 include_directories("../NCLCoreClasses/")
 include_directories("./")
+include_directories("../PS5Core")
+
 
 if(MSVC)
     target_link_libraries(${PROJECT_NAME} PRIVATE "ws2_32.lib")
