@@ -153,8 +153,15 @@ void Player::Update(float dt) {
 	DisplayUI();
 	HealthCheck();
 	
-	animator->Update(dt);
-	myWeapon->Update(dt,Window::GetMouse()->ButtonDown(MouseButtons::Left),aimDir);
+	animator->Update(dt);	
+#ifdef USEAGC
+	myWeapon->Update(dt, inputController->GetNamedButton("R2"), aimDir);
+#else
+	myWeapon->Update(dt, Window::GetMouse()->ButtonDown(MouseButtons::Left), aimDir);
+#endif // USEAGC
+
+	
+	
 
 	// Colour change timer
 	if (isTemporaryColourActive) {

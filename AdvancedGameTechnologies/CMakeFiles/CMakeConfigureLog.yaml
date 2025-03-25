@@ -25,7 +25,7 @@ events:
       The output was:
       0
       MSBuild version 17.13.9+e0f243f1e for .NET Framework
-      Build started 25/03/2025 11:58:04.
+      Build started 25/03/2025 16:29:07.
       
       Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\3.28.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -55,7 +55,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.54
+      Time Elapsed 00:00:00.51
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.elf"
@@ -74,8 +74,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-9vkqxf"
-      binary: "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-9vkqxf"
+      source: "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-q1p695"
+      binary: "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-q1p695"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
       CMAKE_CXX_FLAGS: "\t\t\t     "
@@ -85,25 +85,25 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-9vkqxf'
+        Change Dir: 'C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-q1p695'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_c8b55.vcxproj /p:Configuration=Debug /p:Platform=Prospero /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_543b6.vcxproj /p:Configuration=Debug /p:Platform=Prospero /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.13.9+e0f243f1e for .NET Framework
-        Build started 25/03/2025 11:58:05.
+        Build started 25/03/2025 16:29:08.
         
-        Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\cmTC_c8b55.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\cmTC_543b6.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_c8b55.dir\\Debug\\".
-          Creating directory "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\Debug\\".
-          Creating directory "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\".
+          Creating directory "cmTC_543b6.dir\\Debug\\".
+          Creating directory "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\Debug\\".
+          Creating directory "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\unsuccessfulbuild".
+          Creating "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\unsuccessfulbuild".
         _GetBuildSdkVersion:
           Building with PS5 SDK 10.00.00.48
         ClCompile:
           CMakeCXXCompilerABI.cpp
-          prospero-clang.exe -o cmTC_c8b55.dir\\Debug\\CMakeCXXCompilerABI.o -c -MD -MV -fdiagnostics-format=msvc -D_DEBUG -D"CMAKE_INTDIR=\\"Debug\\"" -g -Wall -fdiagnostics-parseable-fixits -O0 -v "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"
+          prospero-clang.exe -o cmTC_543b6.dir\\Debug\\CMakeCXXCompilerABI.o -c -MD -MV -fdiagnostics-format=msvc -D_DEBUG -D"CMAKE_INTDIR=\\"Debug\\"" -g -Wall -fdiagnostics-parseable-fixits -O0 -v "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"
           clang version 18.1.6 (PS5 clang version 10.00.0.548 e1fa16f4 selfhost)
           SelfhostVersion: clang version 17.0.6 (ALL clang version 17.00.0.501 cdbd5f6a)
           SIE CONFIDENTIAL
@@ -111,7 +111,7 @@ events:
           Target: x86_64-sie-ps5
           InstalledDir: C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000\\host_tools\\bin
            (in-process)
-           "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\bin\\\\prospero-clang.exe" -cc1 -triple x86_64-sie-ps5 -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -fhalf-no-semantic-interposition -mframe-pointer=non-leaf -ffp-contract=on -fdenormal-fp-math=preserve-sign,preserve-sign -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -fno-use-init-array -fvisibility=hidden -fvisibility-global-new-delete=source -fvisibility-from-dllstorageclass -fvisibility-dllexport=protected -fvisibility-nodllstorageclass=keep -fvisibility-externs-dllimport=default -fvisibility-externs-nodllstorageclass=keep -target-cpu znver2s -gno-column-info -fdebug-info-for-profiling -debug-info-kind=limited -dwarf-version=5 -debugger-tuning=sce -gtemplate-alias -mllvm -generate-arange-section -debug-forward-template-params -dwarf-explicit-import "-fdebug-compilation-dir=C:\\\\Users\\\\c1030300\\\\source\\\\repos\\\\johnnileus\\\\MastersTeamProject\\\\MastersTeamProject\\\\AdvancedGameTechnologies\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-9vkqxf" -v -ffunction-sections -fdata-sections "-fcoverage-compilation-dir=C:\\\\Users\\\\c1030300\\\\source\\\\repos\\\\johnnileus\\\\MastersTeamProject\\\\MastersTeamProject\\\\AdvancedGameTechnologies\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-9vkqxf" -resource-dir "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\lib\\\\clang" -dependency-file "cmTC_c8b55.dir\\\\Debug\\\\CMakeCXXCompilerABI.d" -MT "cmTC_c8b55.dir\\\\Debug\\\\CMakeCXXCompilerABI.o" -sys-header-deps -MV -D _DEBUG -D "CMAKE_INTDIR=\\"Debug\\"" -internal-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\lib\\\\clang\\\\include" -internal-externc-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000/target/include" -internal-externc-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000/target/include_common" -O0 -Wall -fdeprecated-macro -ferror-limit 19 -fsuppress-unneeded-method-debug-info -fdiagnostics-parseable-fixits -stack-protector 2 -fno-rtti -fgnuc-version=4.2.1 -sce-stdlib=v1 -fdeclspec -fskip-odr-check-in-gmf -fdiagnostics-format msvc -femit-typedefs-in-template-types -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o "cmTC_c8b55.dir\\\\Debug\\\\CMakeCXXCompilerABI.o" -x c++ "C:\\\\Program Files\\\\CMake\\\\share\\\\cmake-3.28\\\\Modules\\\\CMakeCXXCompilerABI.cpp"
+           "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\bin\\\\prospero-clang.exe" -cc1 -triple x86_64-sie-ps5 -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -fhalf-no-semantic-interposition -mframe-pointer=non-leaf -ffp-contract=on -fdenormal-fp-math=preserve-sign,preserve-sign -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -fno-use-init-array -fvisibility=hidden -fvisibility-global-new-delete=source -fvisibility-from-dllstorageclass -fvisibility-dllexport=protected -fvisibility-nodllstorageclass=keep -fvisibility-externs-dllimport=default -fvisibility-externs-nodllstorageclass=keep -target-cpu znver2s -gno-column-info -fdebug-info-for-profiling -debug-info-kind=limited -dwarf-version=5 -debugger-tuning=sce -gtemplate-alias -mllvm -generate-arange-section -debug-forward-template-params -dwarf-explicit-import "-fdebug-compilation-dir=C:\\\\Users\\\\c1030300\\\\source\\\\repos\\\\johnnileus\\\\MastersTeamProject\\\\MastersTeamProject\\\\AdvancedGameTechnologies\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-q1p695" -v -ffunction-sections -fdata-sections "-fcoverage-compilation-dir=C:\\\\Users\\\\c1030300\\\\source\\\\repos\\\\johnnileus\\\\MastersTeamProject\\\\MastersTeamProject\\\\AdvancedGameTechnologies\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-q1p695" -resource-dir "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\lib\\\\clang" -dependency-file "cmTC_543b6.dir\\\\Debug\\\\CMakeCXXCompilerABI.d" -MT "cmTC_543b6.dir\\\\Debug\\\\CMakeCXXCompilerABI.o" -sys-header-deps -MV -D _DEBUG -D "CMAKE_INTDIR=\\"Debug\\"" -internal-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\lib\\\\clang\\\\include" -internal-externc-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000/target/include" -internal-externc-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000/target/include_common" -O0 -Wall -fdeprecated-macro -ferror-limit 19 -fsuppress-unneeded-method-debug-info -fdiagnostics-parseable-fixits -stack-protector 2 -fno-rtti -fgnuc-version=4.2.1 -sce-stdlib=v1 -fdeclspec -fskip-odr-check-in-gmf -fdiagnostics-format msvc -femit-typedefs-in-template-types -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o "cmTC_543b6.dir\\\\Debug\\\\CMakeCXXCompilerABI.o" -x c++ "C:\\\\Program Files\\\\CMake\\\\share\\\\cmake-3.28\\\\Modules\\\\CMakeCXXCompilerABI.cpp"
           clang -cc1 version 18.1.6 based upon LLVM 18.1.6 default target x86_64-sie-ps5
           #include "..." search starts here:
           #include <...> search starts here:
@@ -120,22 +120,22 @@ events:
            C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000/target/include_common
           End of search list.
         Link:
-          C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000\\host_tools\\bin\\prospero-lld.exe --vs-diagnostics -o "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\Debug\\cmTC_c8b55.elf" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib/Debug" --start-group cmTC_c8b55.dir\\Debug\\CMakeCXXCompilerABI.o --end-group -v
+          C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000\\host_tools\\bin\\prospero-lld.exe --vs-diagnostics -o "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\Debug\\cmTC_543b6.elf" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib/Debug" --start-group cmTC_543b6.dir\\Debug\\CMakeCXXCompilerABI.o --end-group -v
           LLD 18.1.6 (PS5 LLD version 10.00.0.548 e1fa16f4 selfhost)
           SelfhostVersion: clang version 17.0.6 (ALL clang version 17.00.0.501 cdbd5f6a)
           SIE CONFIDENTIAL
           Copyright (C) 2024 Sony Interactive Entertainment Inc.
-          cmTC_c8b55.vcxproj -> C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\Debug\\cmTC_c8b55.elf
+          cmTC_543b6.vcxproj -> C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\Debug\\cmTC_543b6.elf
         FinalizeBuildStatus:
-          Deleting file "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\unsuccessfulbuild".
-          Touching "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\cmTC_c8b55.lastbuildstate".
-        Done Building Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\cmTC_c8b55.vcxproj" (default targets).
+          Deleting file "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\unsuccessfulbuild".
+          Touching "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\cmTC_543b6.lastbuildstate".
+        Done Building Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\cmTC_543b6.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.45
+        Time Elapsed 00:00:00.46
         
       exitCode: 0
   -
@@ -167,25 +167,25 @@ events:
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(prospero-lld\\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: 'C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-9vkqxf']
+        ignore line: [Change Dir: 'C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-q1p695']
         ignore line: []
-        ignore line: [Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_c8b55.vcxproj /p:Configuration=Debug /p:Platform=Prospero /p:VisualStudioVersion=17.0 /v:n]
+        ignore line: [Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_543b6.vcxproj /p:Configuration=Debug /p:Platform=Prospero /p:VisualStudioVersion=17.0 /v:n]
         ignore line: [MSBuild version 17.13.9+e0f243f1e for .NET Framework]
-        ignore line: [Build started 25/03/2025 11:58:05.]
+        ignore line: [Build started 25/03/2025 16:29:08.]
         ignore line: []
-        ignore line: [Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\cmTC_c8b55.vcxproj" on node 1 (default targets).]
+        ignore line: [Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\cmTC_543b6.vcxproj" on node 1 (default targets).]
         ignore line: [PrepareForBuild:]
-        ignore line: [  Creating directory "cmTC_c8b55.dir\\Debug\\".]
-        ignore line: [  Creating directory "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\Debug\\".]
-        ignore line: [  Creating directory "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\".]
+        ignore line: [  Creating directory "cmTC_543b6.dir\\Debug\\".]
+        ignore line: [  Creating directory "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\Debug\\".]
+        ignore line: [  Creating directory "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\".]
         ignore line: [InitializeBuildStatus:]
-        ignore line: [  Creating "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.]
-        ignore line: [  Touching "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\unsuccessfulbuild".]
+        ignore line: [  Creating "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.]
+        ignore line: [  Touching "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\unsuccessfulbuild".]
         ignore line: [_GetBuildSdkVersion:]
         ignore line: [  Building with PS5 SDK 10.00.00.48]
         ignore line: [ClCompile:]
         ignore line: [  CMakeCXXCompilerABI.cpp]
-        ignore line: [  prospero-clang.exe -o cmTC_c8b55.dir\\Debug\\CMakeCXXCompilerABI.o -c -MD -MV -fdiagnostics-format=msvc -D_DEBUG -D"CMAKE_INTDIR=\\"Debug\\"" -g -Wall -fdiagnostics-parseable-fixits -O0 -v "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"]
+        ignore line: [  prospero-clang.exe -o cmTC_543b6.dir\\Debug\\CMakeCXXCompilerABI.o -c -MD -MV -fdiagnostics-format=msvc -D_DEBUG -D"CMAKE_INTDIR=\\"Debug\\"" -g -Wall -fdiagnostics-parseable-fixits -O0 -v "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"]
         ignore line: [  clang version 18.1.6 (PS5 clang version 10.00.0.548 e1fa16f4 selfhost)]
         ignore line: [  SelfhostVersion: clang version 17.0.6 (ALL clang version 17.00.0.501 cdbd5f6a)]
         ignore line: [  SIE CONFIDENTIAL]
@@ -193,7 +193,7 @@ events:
         ignore line: [  Target: x86_64-sie-ps5]
         ignore line: [  InstalledDir: C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000\\host_tools\\bin]
         ignore line: [   (in-process)]
-        ignore line: [   "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\bin\\\\prospero-clang.exe" -cc1 -triple x86_64-sie-ps5 -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -fhalf-no-semantic-interposition -mframe-pointer=non-leaf -ffp-contract=on -fdenormal-fp-math=preserve-sign preserve-sign -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -fno-use-init-array -fvisibility=hidden -fvisibility-global-new-delete=source -fvisibility-from-dllstorageclass -fvisibility-dllexport=protected -fvisibility-nodllstorageclass=keep -fvisibility-externs-dllimport=default -fvisibility-externs-nodllstorageclass=keep -target-cpu znver2s -gno-column-info -fdebug-info-for-profiling -debug-info-kind=limited -dwarf-version=5 -debugger-tuning=sce -gtemplate-alias -mllvm -generate-arange-section -debug-forward-template-params -dwarf-explicit-import "-fdebug-compilation-dir=C:\\\\Users\\\\c1030300\\\\source\\\\repos\\\\johnnileus\\\\MastersTeamProject\\\\MastersTeamProject\\\\AdvancedGameTechnologies\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-9vkqxf" -v -ffunction-sections -fdata-sections "-fcoverage-compilation-dir=C:\\\\Users\\\\c1030300\\\\source\\\\repos\\\\johnnileus\\\\MastersTeamProject\\\\MastersTeamProject\\\\AdvancedGameTechnologies\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-9vkqxf" -resource-dir "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\lib\\\\clang" -dependency-file "cmTC_c8b55.dir\\\\Debug\\\\CMakeCXXCompilerABI.d" -MT "cmTC_c8b55.dir\\\\Debug\\\\CMakeCXXCompilerABI.o" -sys-header-deps -MV -D _DEBUG -D "CMAKE_INTDIR=\\"Debug\\"" -internal-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\lib\\\\clang\\\\include" -internal-externc-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000/target/include" -internal-externc-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000/target/include_common" -O0 -Wall -fdeprecated-macro -ferror-limit 19 -fsuppress-unneeded-method-debug-info -fdiagnostics-parseable-fixits -stack-protector 2 -fno-rtti -fgnuc-version=4.2.1 -sce-stdlib=v1 -fdeclspec -fskip-odr-check-in-gmf -fdiagnostics-format msvc -femit-typedefs-in-template-types -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o "cmTC_c8b55.dir\\\\Debug\\\\CMakeCXXCompilerABI.o" -x c++ "C:\\\\Program Files\\\\CMake\\\\share\\\\cmake-3.28\\\\Modules\\\\CMakeCXXCompilerABI.cpp"]
+        ignore line: [   "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\bin\\\\prospero-clang.exe" -cc1 -triple x86_64-sie-ps5 -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -fhalf-no-semantic-interposition -mframe-pointer=non-leaf -ffp-contract=on -fdenormal-fp-math=preserve-sign preserve-sign -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -fno-use-init-array -fvisibility=hidden -fvisibility-global-new-delete=source -fvisibility-from-dllstorageclass -fvisibility-dllexport=protected -fvisibility-nodllstorageclass=keep -fvisibility-externs-dllimport=default -fvisibility-externs-nodllstorageclass=keep -target-cpu znver2s -gno-column-info -fdebug-info-for-profiling -debug-info-kind=limited -dwarf-version=5 -debugger-tuning=sce -gtemplate-alias -mllvm -generate-arange-section -debug-forward-template-params -dwarf-explicit-import "-fdebug-compilation-dir=C:\\\\Users\\\\c1030300\\\\source\\\\repos\\\\johnnileus\\\\MastersTeamProject\\\\MastersTeamProject\\\\AdvancedGameTechnologies\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-q1p695" -v -ffunction-sections -fdata-sections "-fcoverage-compilation-dir=C:\\\\Users\\\\c1030300\\\\source\\\\repos\\\\johnnileus\\\\MastersTeamProject\\\\MastersTeamProject\\\\AdvancedGameTechnologies\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-q1p695" -resource-dir "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\lib\\\\clang" -dependency-file "cmTC_543b6.dir\\\\Debug\\\\CMakeCXXCompilerABI.d" -MT "cmTC_543b6.dir\\\\Debug\\\\CMakeCXXCompilerABI.o" -sys-header-deps -MV -D _DEBUG -D "CMAKE_INTDIR=\\"Debug\\"" -internal-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000\\\\host_tools\\\\lib\\\\clang\\\\include" -internal-externc-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000/target/include" -internal-externc-isystem "C:\\\\Program Files (x86)\\\\SCE\\\\Prospero SDKs\\\\10.000/target/include_common" -O0 -Wall -fdeprecated-macro -ferror-limit 19 -fsuppress-unneeded-method-debug-info -fdiagnostics-parseable-fixits -stack-protector 2 -fno-rtti -fgnuc-version=4.2.1 -sce-stdlib=v1 -fdeclspec -fskip-odr-check-in-gmf -fdiagnostics-format msvc -femit-typedefs-in-template-types -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o "cmTC_543b6.dir\\\\Debug\\\\CMakeCXXCompilerABI.o" -x c++ "C:\\\\Program Files\\\\CMake\\\\share\\\\cmake-3.28\\\\Modules\\\\CMakeCXXCompilerABI.cpp"]
         ignore line: [  clang -cc1 version 18.1.6 based upon LLVM 18.1.6 default target x86_64-sie-ps5]
         ignore line: [  #include "..." search starts here:]
         ignore line: [  #include <...> search starts here:]
@@ -202,22 +202,22 @@ events:
         ignore line: [   C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000/target/include_common]
         ignore line: [  End of search list.]
         ignore line: [Link:]
-        ignore line: [  C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000\\host_tools\\bin\\prospero-lld.exe --vs-diagnostics -o "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\Debug\\cmTC_c8b55.elf" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib/Debug" --start-group cmTC_c8b55.dir\\Debug\\CMakeCXXCompilerABI.o --end-group -v]
+        ignore line: [  C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000\\host_tools\\bin\\prospero-lld.exe --vs-diagnostics -o "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\Debug\\cmTC_543b6.elf" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib/Debug" --start-group cmTC_543b6.dir\\Debug\\CMakeCXXCompilerABI.o --end-group -v]
         ignore line: [  LLD 18.1.6 (PS5 LLD version 10.00.0.548 e1fa16f4 selfhost)]
         ignore line: [  SelfhostVersion: clang version 17.0.6 (ALL clang version 17.00.0.501 cdbd5f6a)]
         ignore line: [  SIE CONFIDENTIAL]
         ignore line: [  Copyright (C) 2024 Sony Interactive Entertainment Inc.]
-        ignore line: [  cmTC_c8b55.vcxproj -> C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\Debug\\cmTC_c8b55.elf]
+        ignore line: [  cmTC_543b6.vcxproj -> C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\Debug\\cmTC_543b6.elf]
         ignore line: [FinalizeBuildStatus:]
-        ignore line: [  Deleting file "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\unsuccessfulbuild".]
-        ignore line: [  Touching "cmTC_c8b55.dir\\Debug\\cmTC_c8b55.tlog\\cmTC_c8b55.lastbuildstate".]
-        ignore line: [Done Building Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-9vkqxf\\cmTC_c8b55.vcxproj" (default targets).]
+        ignore line: [  Deleting file "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\unsuccessfulbuild".]
+        ignore line: [  Touching "cmTC_543b6.dir\\Debug\\cmTC_543b6.tlog\\cmTC_543b6.lastbuildstate".]
+        ignore line: [Done Building Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-q1p695\\cmTC_543b6.vcxproj" (default targets).]
         ignore line: []
         ignore line: [Build succeeded.]
         ignore line: [    0 Warning(s)]
         ignore line: [    0 Error(s)]
         ignore line: []
-        ignore line: [Time Elapsed 00:00:00.45]
+        ignore line: [Time Elapsed 00:00:00.46]
         ignore line: []
         ignore line: []
         implicit libs: []
@@ -236,8 +236,8 @@ events:
     checks:
       - "Performing Test HAS_NULLPTR_WARNING"
     directories:
-      source: "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-rnrrad"
-      binary: "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-rnrrad"
+      source: "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-1vma26"
+      binary: "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-1vma26"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
       CMAKE_CXX_FLAGS: "\t\t\t     "
@@ -248,38 +248,38 @@ events:
       variable: "HAS_NULLPTR_WARNING"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-rnrrad'
+        Change Dir: 'C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CMakeFiles/CMakeScratch/TryCompile-1vma26'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_4ae1e.vcxproj /p:Configuration=Debug /p:Platform=Prospero /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_b16d2.vcxproj /p:Configuration=Debug /p:Platform=Prospero /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.13.9+e0f243f1e for .NET Framework
-        Build started 25/03/2025 11:58:07.
+        Build started 25/03/2025 16:29:09.
         
-        Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-rnrrad\\cmTC_4ae1e.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-1vma26\\cmTC_b16d2.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_4ae1e.dir\\Debug\\".
-          Creating directory "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-rnrrad\\Debug\\".
-          Creating directory "cmTC_4ae1e.dir\\Debug\\cmTC_4ae1e.tlog\\".
+          Creating directory "cmTC_b16d2.dir\\Debug\\".
+          Creating directory "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-1vma26\\Debug\\".
+          Creating directory "cmTC_b16d2.dir\\Debug\\cmTC_b16d2.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_4ae1e.dir\\Debug\\cmTC_4ae1e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_4ae1e.dir\\Debug\\cmTC_4ae1e.tlog\\unsuccessfulbuild".
+          Creating "cmTC_b16d2.dir\\Debug\\cmTC_b16d2.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_b16d2.dir\\Debug\\cmTC_b16d2.tlog\\unsuccessfulbuild".
         _GetBuildSdkVersion:
           Building with PS5 SDK 10.00.00.48
         ClCompile:
           src.cxx
-          prospero-clang.exe -o cmTC_4ae1e.dir\\Debug\\src.o -c -MD -MV -fdiagnostics-format=msvc -D_DEBUG -DHAS_NULLPTR_WARNING -D"CMAKE_INTDIR=\\"Debug\\"" -g -Wall -Wzero-as-null-pointer-constant -fdiagnostics-parseable-fixits -O0 C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-rnrrad\\src.cxx
+          prospero-clang.exe -o cmTC_b16d2.dir\\Debug\\src.o -c -MD -MV -fdiagnostics-format=msvc -D_DEBUG -DHAS_NULLPTR_WARNING -D"CMAKE_INTDIR=\\"Debug\\"" -g -Wall -Wzero-as-null-pointer-constant -fdiagnostics-parseable-fixits -O0 C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-1vma26\\src.cxx
         Link:
-          C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000\\host_tools\\bin\\prospero-lld.exe --vs-diagnostics -o "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-rnrrad\\Debug\\cmTC_4ae1e.elf" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib/Debug" --start-group cmTC_4ae1e.dir\\Debug\\src.o --end-group
-          cmTC_4ae1e.vcxproj -> C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-rnrrad\\Debug\\cmTC_4ae1e.elf
+          C:\\Program Files (x86)\\SCE\\Prospero SDKs\\10.000\\host_tools\\bin\\prospero-lld.exe --vs-diagnostics -o "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-1vma26\\Debug\\cmTC_b16d2.elf" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib" -L"C:/Program Files (x86)/SCE/Prospero SDKs/10.000/target/lib/Debug" --start-group cmTC_b16d2.dir\\Debug\\src.o --end-group
+          cmTC_b16d2.vcxproj -> C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-1vma26\\Debug\\cmTC_b16d2.elf
         FinalizeBuildStatus:
-          Deleting file "cmTC_4ae1e.dir\\Debug\\cmTC_4ae1e.tlog\\unsuccessfulbuild".
-          Touching "cmTC_4ae1e.dir\\Debug\\cmTC_4ae1e.tlog\\cmTC_4ae1e.lastbuildstate".
-        Done Building Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-rnrrad\\cmTC_4ae1e.vcxproj" (default targets).
+          Deleting file "cmTC_b16d2.dir\\Debug\\cmTC_b16d2.tlog\\unsuccessfulbuild".
+          Touching "cmTC_b16d2.dir\\Debug\\cmTC_b16d2.tlog\\cmTC_b16d2.lastbuildstate".
+        Done Building Project "C:\\Users\\c1030300\\source\\repos\\johnnileus\\MastersTeamProject\\MastersTeamProject\\AdvancedGameTechnologies\\CMakeFiles\\CMakeScratch\\TryCompile-1vma26\\cmTC_b16d2.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.43
+        Time Elapsed 00:00:00.45
         
       exitCode: 0
 ...
