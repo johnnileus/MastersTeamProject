@@ -216,7 +216,6 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 LRESULT CALLBACK Win32Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)	{
 
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam)) {
-		std::cout << "ImGui handled message: " << message << std::endl;
 		return true; // ImGui handled the event
 	}
 
