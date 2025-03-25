@@ -76,8 +76,6 @@ namespace NCL {
 #ifdef _WIN32
 			NetworkManager* networkManager = new NetworkManager();
 #endif // _WIN32
-
-			
 			std::vector<GameObject*> connectedPlayers;
 			//
 #
