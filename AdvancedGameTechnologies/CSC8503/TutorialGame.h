@@ -89,10 +89,6 @@ namespace NCL {
 			std::vector<GameObject*> connectedPlayers;
 			//
 #
-
-
-			//Terrain Generation
-			void InitTerrain();
 			
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
 			void InitCatCoins();
