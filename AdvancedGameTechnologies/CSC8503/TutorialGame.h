@@ -74,9 +74,6 @@ namespace NCL {
 			void TestLinearMotion();
 			void CreateRopeGroup();
 
-
-			//networking
-			GameObject* InitialiseConnectedPlayer(int id);
 #ifdef _WIN32
 			NetworkManager* networkManager = new NetworkManager();
 #endif // _WIN32
