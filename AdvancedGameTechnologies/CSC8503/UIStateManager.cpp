@@ -4,6 +4,7 @@
 
 #include "UIStateManager.h"
 #include "TutorialGame.h"
+#include "AudioManager.h"
 
 UIStateManager::UIStateManager() {
 
@@ -46,6 +47,7 @@ void UIStateManager::States() {
         if (ImGui::Button("Start Game", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::InGame);
+            AudioManager::GetInstance().PlayEvent("event:/Game Start");
         }
 
         //Multiplayer
@@ -54,6 +56,7 @@ void UIStateManager::States() {
         if (ImGui::Button("Multiplayer", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::Multiplayer);
+            AudioManager::GetInstance().PlayEvent("event:/Game Start");
         }
 
         ImGui::End();

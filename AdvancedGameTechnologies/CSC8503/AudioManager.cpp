@@ -87,36 +87,35 @@ void AudioManager::LoadBank(const std::string& bankName)
 }
 
 
-void AudioManager::PlayEvent(const std::string& eventName)
+FMOD::Studio::EventInstance* AudioManager::PlayEvent(const std::string& eventName)
 {
 	auto it = events.find(eventName);
 	FMOD::Studio::EventInstance* eventInstance = nullptr;
 
-	if (it != events.end())
-	{
+	if (it != events.end()) {
 		eventInstance = it->second;
 	}
 	else {
 		FMOD::Studio::EventDescription* eventDescription = nullptr;
 		FMOD_RESULT result = studioSystem->getEvent(eventName.c_str(), &eventDescription);
-		if (result != FMOD_OK)
-		{
+		if (result != FMOD_OK) {
 			std::cout << "Failed to find event: " << eventName << " - " << FMOD_ErrorString(result) << std::endl;
-			return;
+			return nullptr;
 		}
 
 		result = eventDescription->createInstance(&eventInstance);
-		if (result != FMOD_OK)
-		{
+		if (result != FMOD_OK) {
 			std::cout << "Failed to create event instance: " << eventName << " - " << FMOD_ErrorString(result) << std::endl;
-			return;
+			return nullptr;
 		}
 
 		events[eventName] = eventInstance;
 	}
 
 	eventInstance->start();
+	return eventInstance;
 }
+
 
 
 void AudioManager::Update()

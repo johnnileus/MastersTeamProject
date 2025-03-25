@@ -311,22 +311,25 @@ void Player::HandleInput()
 	if (isMoving) {
 		if (!footstepChannel) {
 
-			AudioManager::GetInstance().PlayEvent("event:/Player Running");
+	if (isMoving) {
+		bool isPlaying = false;
+		if (footstepEvent) {
+			FMOD_STUDIO_PLAYBACK_STATE state;
+			footstepEvent->getPlaybackState(&state);
+			isPlaying = (state == FMOD_STUDIO_PLAYBACK_PLAYING);
+		}
+
+		if (!isPlaying) {
+			footstepEvent = AudioManager::GetInstance().PlayEvent("event:/Player Running");
 		}
 		else {
-
-			bool isPlaying = false;
-			footstepChannel->isPlaying(&isPlaying);
-			if (!isPlaying) {
-				footstepChannel = nullptr;
-			}
+			footstepEvent->setPaused(false);
 		}
 	}
 	else {
-		// Stop sound when no movement key is pressed
-		if (footstepChannel) {
-			footstepChannel->stop();
-			footstepChannel = nullptr;
+		// stop footstep sound
+		if (footstepEvent) {
+			footstepEvent->setPaused(true);
 		}
 	}
 }
