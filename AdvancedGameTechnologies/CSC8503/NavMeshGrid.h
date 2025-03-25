@@ -8,7 +8,7 @@ namespace NCL {
 		class NavMeshGrid {
 		public:
 			NavMeshGrid() { 
-				levelSize = 64; 
+				levelSize = 256; 
 				nodeGrid = GenerateNavMeshGrid(levelSize);
 				for (int x = 0; x < levelSize; ++x) {
 					for (int z = 0; z < levelSize; ++z) {
