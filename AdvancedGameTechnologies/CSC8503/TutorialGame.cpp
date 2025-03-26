@@ -300,8 +300,9 @@ void TutorialGame::InitWorld() {
 	InitNavGrid();
 
 	InitEnemies();
-
-	//InitTerrain();
+	EnemyFrameCount = 0;
+	EnemyFrameCountMax = enemyList.size();
+	InitTerrain();
 
 	InitDefaultFloor();
 

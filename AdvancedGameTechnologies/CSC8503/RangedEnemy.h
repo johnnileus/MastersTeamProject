@@ -8,6 +8,7 @@ namespace NCL {
 		class RangedEnemy : StateMachine, NavMeshAgent {
 		public:
 			RangedEnemy();
+			void InitStateMachine();
 			void PatrolState();
 			void ChaseState();
 			void AttackState();
