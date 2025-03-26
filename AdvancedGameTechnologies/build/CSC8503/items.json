@@ -1,28 +1,12 @@
 {
 	"items": [
 		{
-			"uid": 0,
-			"type": 0,
-			"name": "Pistol",
-			"damage": 15,
-			"ammo": 10,
-			"maxAmmo": 10,
-			"shotInterval":  0.4,
-			"speed": 10,
-			"effects": null,
-			"stats": []
-		},
-		{
-			"uid": 1,
+			"uid": 2,
 			"type": 1,
-			"name": "tbd",
-			"damage": null,
-			"ammo": null,
-			"maxAmmo": null,
-			"shotInterval": null,
-			"speed": null,
-			"effects": null,
-			"stats": [ "damage", "speed" ]
+			"name": "speedTest",
+			"health": 0,
+			"damage": 0,
+			"maxSpeed": 10
 		}
 	]
 }
