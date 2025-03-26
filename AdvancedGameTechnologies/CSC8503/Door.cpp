@@ -7,6 +7,7 @@
 #include "RenderObject.h"
 #include "SphereVolume.h"
 #include "PhysicsObject.h"
+#include "AudioManager.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -20,6 +21,7 @@ Door::Door()
     originalHeight =0;
     moveSpeed=5.0f;
     minHeight=-10.0f;
+    hasPlayedSound = false;
 
     //Collider
     AABBVolume* volume = new AABBVolume(Vector3(1,1,1));
@@ -58,20 +60,42 @@ void Door::UpdateDoorMovement(float dt)
             // moving up
             if (currentPosition.y < originalHeight) {
                 currentPosition.y += moveSpeed * dt;
+                isMoving = true;
                 doorObject->GetTransform().SetPosition(currentPosition);
             } else {
                 isMoving = false; // The door reaches the top and stops moving
+                
             }
         } else {
             // moving down
             if (currentPosition.y > minHeight) {
                 currentPosition.y -= moveSpeed * dt;
+                isMoving = true;
                 doorObject->GetTransform().SetPosition(currentPosition);
             } else {
                 isMoving = false; // The door reaches the bottom and stops moving
+  
             }
         }
     }
+
+    if (isMoving) {
+        if (!hasPlayedSound) {
+            
+            AudioManager::GetInstance().PlayEvent("event:/DoorDown");
+            hasPlayedSound = true;  
+        }
+    }
+    else {
+        
+        if (hasPlayedSound) {
+            hasPlayedSound = false;  
+        }
+    }
+
+
+
+
 }
 
 

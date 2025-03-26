@@ -60,7 +60,7 @@ void Enemy::Init() {
 
 void Enemy:: Update(float dt)
 {
-    stateMachine->Update(dt);
+    //stateMachine->Update(dt);
     ClampSpeed(dt);
     HandleRotation(dt);
 }
@@ -214,7 +214,6 @@ void Enemy::Reset() {
     //          << movePath[0].y << ", " 
     //          << movePath[0].z << std::endl;
 }
-
 
 Enemy::~Enemy()
 {

@@ -7,10 +7,16 @@
 #include "Quaternion.h"
 #include "ThirdPersonCamera.h"
 #include "Weapon.h"
-#include <fmod.hpp>
+#include <fmod_studio.hpp>
+
 
 namespace NCL {
 	namespace CSC8503 {
+
+		class Pistol;
+		class Rifle;
+		class  Shotgun;
+		
 		class Player : public GameObject
 		{
 		public:
@@ -34,7 +40,12 @@ namespace NCL {
 			int score;
 
 			ThirdPersonCamera* myCam;
-			Weapon* myWeapon;
+			//Weapon
+			Weapon* currentWeapon;
+			Pistol* pistol;
+			Rifle* rifle;
+			Shotgun* shotGun;
+			vector<Weapon*> weaponPack;
 			Vector3 shootPoint;
 
 			//getters and setters for stats
@@ -57,11 +68,12 @@ namespace NCL {
 				maxSpeed = s;
 			}
 
+			Event<Player*> OnSwitchWeaponEvent;
+
 		protected:
 
 			//component
 			Mesh* playerMesh;
-			Texture* playerTex;
 			Shader* playerShader;
 			PhysicsObject* playerPhysicObject;
 			Transform* renderOffsetTransform;
@@ -83,6 +95,8 @@ namespace NCL {
 			void HandleInput();
 			void SetComponent(float meshSize, float mass);
 			void FaceAimDirection(float dt);
+
+			FMOD::Studio::EventInstance* footstepEvent = nullptr;
 
 			//jump
 			float jumpForce;         
@@ -114,6 +128,9 @@ namespace NCL {
 			Vector4 attackColour;
 			Vector4 collerctCoinColour;
 
+			void HandleSwitchWeapon();
+			void RegisterWeaponEvents();
+
 			void RemoveObject(GameObject* gameObject);
 			
 			float colourTimer;              
@@ -122,8 +139,7 @@ namespace NCL {
 			void DisplayUI();
 
 			void HealthCheck();
-			bool isDead;
-			FMOD::Channel* footstepChannel = nullptr;
+			bool isDead;	
 			
 		};
 	}

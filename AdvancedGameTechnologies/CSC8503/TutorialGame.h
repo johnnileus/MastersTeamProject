@@ -47,6 +47,8 @@ namespace NCL {
 			TutorialGame();
 			~TutorialGame();
 
+			void InitScene(string name);
+
 			virtual void UpdateGame(float dt);
 
 			void BroadcastPosition();
@@ -66,7 +68,6 @@ namespace NCL {
 			bool GetCursorLocked() { return cursorLocked; }
 
 		protected:
-			void InitialiseAssets();
 
 			void InitCamera();
 			void UpdateKeys();
@@ -144,7 +145,6 @@ namespace NCL {
 
 
 			GameObject* objClosest = nullptr;
-			void GenerateWall();
 			void SetWallColour();
 
 			void DisplayPathfinding(); // display navigation path
@@ -157,6 +157,8 @@ namespace NCL {
 			NavMeshGrid* navGrid;
 			NavMeshAgent* navMeshAgent;
 			std::vector<DemoShootableEnemy*> enemyList;
+
+			float bgmVolume = 0.5f;
 		};
 	}
 }
