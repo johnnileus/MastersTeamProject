@@ -85,10 +85,10 @@ void Animator::Update(float dt)
 //    std::cout << "lerp(-10, 10, 0.5) = " << lerp(-10.0f, 10.0f, 0.5f) << std::endl; // Expected: 0
 //}
 
-bool Animator::LoadAnimation(PlayerAnimation animation)
+bool Animator::LoadAnimation(const std::string& animationName)
 {
-    meshAnims[animation] = AssetManager::Instance().GetAnimation(animation);
-    return (meshAnims[animation]!=nullptr);
+    meshAnims[animationName] = AssetManager::Instance().GetAnimation(animationName);
+    return (meshAnims[animationName] != nullptr);
 }
 
 
@@ -153,7 +153,7 @@ void Animator::Draw(RenderObject* renderObj)
 #pragma endregion
 
     //get mesh and joints count
-    OGLMesh* animMesh = (OGLMesh*)renderObj->GetMesh();
+	OGLMesh* animMesh = (OGLMesh*)renderObj->GetMesh(); //Change to AGCMesh
     size_t jointCount = animMesh->GetJointCount();
 
     //target frame data
@@ -169,12 +169,12 @@ void Animator::Draw(RenderObject* renderObj)
     }
 
     //get shader and activate gl program
-    OGLShader* shader = (OGLShader*)renderObj->GetShader();
+    OGLShader* shader = (OGLShader*)renderObj->GetShader(); //Also needs to be AGC Compatible
     GLuint programID = shader->GetProgramID();
     glUseProgram(programID);
     
     //upload these matrices data to GPU
-    GLint jointsLoc = glGetUniformLocation(programID, "joints");
+	GLint jointsLoc = glGetUniformLocation(programID, "joints"); //Also needs to be AGC Compatible
     if (jointsLoc==-1)
     {
         std::cout<<"!!!!!!!ERROE:Uniform 'joints' not found in shader !!!!!!!!!!";
@@ -192,9 +192,11 @@ void Animator::Draw(RenderObject* renderObj)
 
 }
 
-void Animator::Play(PlayerAnimation anim, bool tween, float animSpeed)
+void Animator::Play(const std::string& anim, bool tween, float animSpeed)
 {
-    if (currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
+    std::cout << "Playing animation: " << anim << " with tween: " << tween << " and speed: " << animSpeed << std::endl;
+    if (anim.empty() || currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
+        std::cout << "Animation is empty, already playing, or not found: " << anim << std::endl;
         return;
 
     if(currentAnim == nullptr)

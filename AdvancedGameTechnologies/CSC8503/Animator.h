@@ -6,7 +6,6 @@
 //#include  "bthdef.h"
 #include "Enums.h"
 
-using namespace Enums;
 namespace NCL
 {
     namespace CSC8503
@@ -19,11 +18,11 @@ namespace NCL
 
             void Update(float dt);
 
-            bool LoadAnimation(PlayerAnimation);
+            bool LoadAnimation(const std::string& animationName);
 
             void Draw(RenderObject* renderObj);
 
-            void Play(PlayerAnimation animation, bool tween, float animSpeed);
+            void Play(const std::string& anim, bool tween, float animSpeed);
 
             void TweenAnim(const float& time);
 
@@ -48,7 +47,7 @@ namespace NCL
             MeshAnimation* pendingAnim;
             std::vector<Matrix4> frameMatrices;
             
-            std::map<PlayerAnimation, MeshAnimation*> meshAnims;
+            std::map<std::string, MeshAnimation*> meshAnims;
         };
     }
 }
