@@ -38,10 +38,22 @@ namespace NCL {
 			Vector3 shootPoint;
 
 			//getters and setters for stats
+			int GetHealth() const {
+				return health;
+			}
+			void SetHealth(const int h) {
+				health = h;
+			}
+			int GetDamage() const {
+				return damage;
+			}
+			void SetDamage(const int d) {
+				damage = d;
+			}
 			int GetSpeed() const {
 				return maxSpeed;
 			}
-			void SetSpeed(const int s) {
+			void SetSpeed(const float s) {
 				maxSpeed = s;
 			}
 
@@ -83,8 +95,8 @@ namespace NCL {
 			
 			
 			//health
-			int health;
-			int damage; 
+			float health;
+			float damage; 
 
 			//dash
 			bool isDashing;           // Whether the player is dashing
