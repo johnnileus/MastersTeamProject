@@ -85,10 +85,10 @@ void Animator::Update(float dt)
 //    std::cout << "lerp(-10, 10, 0.5) = " << lerp(-10.0f, 10.0f, 0.5f) << std::endl; // Expected: 0
 //}
 
-bool Animator::LoadAnimation(const std::string& animationName)
+bool Animator::LoadAnimation(PlayerAnimation animation)
 {
-    meshAnims[animationName] = AssetManager::Instance().GetAnimation(animationName);
-    return (meshAnims[animationName] != nullptr);
+    meshAnims[animation] = AssetManager::Instance().GetAnimation(animation);
+    return (meshAnims[animation]!=nullptr);
 }
 
 
@@ -153,7 +153,7 @@ void Animator::Draw(RenderObject* renderObj)
 #pragma endregion
 
     //get mesh and joints count
-	OGLMesh* animMesh = (OGLMesh*)renderObj->GetMesh(); //Change to AGCMesh
+    OGLMesh* animMesh = (OGLMesh*)renderObj->GetMesh();
     size_t jointCount = animMesh->GetJointCount();
 
     //target frame data
@@ -169,12 +169,12 @@ void Animator::Draw(RenderObject* renderObj)
     }
 
     //get shader and activate gl program
-    OGLShader* shader = (OGLShader*)renderObj->GetShader(); //Also needs to be AGC Compatible
+    OGLShader* shader = (OGLShader*)renderObj->GetShader();
     GLuint programID = shader->GetProgramID();
     glUseProgram(programID);
     
     //upload these matrices data to GPU
-	GLint jointsLoc = glGetUniformLocation(programID, "joints"); //Also needs to be AGC Compatible
+    GLint jointsLoc = glGetUniformLocation(programID, "joints");
     if (jointsLoc==-1)
     {
         std::cout<<"!!!!!!!ERROE:Uniform 'joints' not found in shader !!!!!!!!!!";
@@ -192,11 +192,9 @@ void Animator::Draw(RenderObject* renderObj)
 
 }
 
-void Animator::Play(const std::string& anim, bool tween, float animSpeed)
+void Animator::Play(PlayerAnimation anim, bool tween, float animSpeed)
 {
-    std::cout << "Playing animation: " << anim << " with tween: " << tween << " and speed: " << animSpeed << std::endl;
-    if (anim.empty() || currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
-        std::cout << "Animation is empty, already playing, or not found: " << anim << std::endl;
+    if (currentAnim == meshAnims.at(anim) || meshAnims.at(anim) == nullptr)
         return;
 
     if(currentAnim == nullptr)
