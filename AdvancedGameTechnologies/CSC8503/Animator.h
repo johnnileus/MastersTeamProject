@@ -4,6 +4,7 @@
 #include "MeshMaterial.h"
 #include "RenderObject.h"
 //#include  "bthdef.h"
+#include "Enums.h"
 
 namespace NCL
 {
