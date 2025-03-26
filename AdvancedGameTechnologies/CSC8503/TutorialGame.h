@@ -155,6 +155,9 @@ namespace NCL {
 			NavMeshGrid* navGrid;
 			NavMeshAgent* navMeshAgent;
 			std::vector<NavMeshAgent*> enemyList;
+
+			int EnemyFrameCountMax;
+			int EnemyFrameCount;
 		};
 	}
 }

@@ -19,4 +19,4 @@ namespace NCL {
 			Player* currentTarget;
 		};
 	}
-}#pragma once
+}
