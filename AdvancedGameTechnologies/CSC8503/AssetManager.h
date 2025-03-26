@@ -68,7 +68,7 @@ namespace NCL {
             AssetManager() = default;
             ~AssetManager() = default;
             std::map<Enums::PlayerAnimation, MeshAnimation*> animationMap;
-            GameTechRendererInterface* renderer = nullptr
+            GameTechRendererInterface* renderer = nullptr;
         };
     }
 }
