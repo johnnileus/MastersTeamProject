@@ -44,7 +44,6 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
 
     // load shader resources
     basicShader = renderer->LoadShader("scene.vert", "scene.frag");
-    characterShader = renderer->LoadShader("character.vert", "character.frag");
 
     //load animation resources 
     idle = new MeshAnimation("Idle1.anm");
@@ -123,5 +122,4 @@ void AssetManager::Cleanup() {
     delete floorTex;
 
     delete basicShader;
-    delete characterShader;
 }

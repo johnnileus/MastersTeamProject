@@ -82,7 +82,7 @@ void Player::SetComponent(float meshSize,float mass)
 		&objectTransform,
 		myMesh,
 		AssetManager::Instance().playerTex[0],
-		AssetManager::Instance().characterShader)
+		AssetManager::Instance().basicShader)
 		);*/
 	SetRenderObject(new RenderObject(
 		&objectTransform,
@@ -185,7 +185,7 @@ void Player::Update(float dt) {
 	if (isOnGround) {
 		isAtApex = false;  
 	}
-	animator->Draw(renderObject);
+	
 }
 
 void Player::HealthCheck()
