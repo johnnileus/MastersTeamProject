@@ -48,8 +48,27 @@ namespace NCL {
 			vector<Weapon*> weaponPack;
 			Vector3 shootPoint;
 
+			//getters and setters for stats
+			int GetHealth() const {
+				return health;
+			}
+			void SetHealth(const int h) {
+				health = h;
+			}
+			int GetDamage() const {
+				return damage;
+			}
+			void SetDamage(const int d) {
+				damage = d;
+			}
+			int GetSpeed() const {
+				return maxSpeed;
+			}
+			void SetSpeed(const float s) {
+				maxSpeed = s;
+			}
+
 			Event<Player*> OnSwitchWeaponEvent;
-			
 
 		protected:
 
@@ -90,8 +109,8 @@ namespace NCL {
 			
 			
 			//health
-			int health;
-			int damage; 
+			float health;
+			float damage; 
 
 			//dash
 			bool isDashing;           // Whether the player is dashing

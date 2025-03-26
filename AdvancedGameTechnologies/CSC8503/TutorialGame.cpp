@@ -111,14 +111,12 @@ void TutorialGame::UpdateGame(float dt) {
 		Debug::UpdateRenderables(dt);
 
 		//Timer
-		while (timer >= 0.0f) {
-			timer -= dt;
+		timerSecs += dt;
+		if (timerSecs >= 60.0f) {
+			timerMins += 1;
+			timerSecs = 0;
 		}
-
-		Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
-		if (timer <= 0) {
-			Transition();
-		}
+		Debug::Print("Time:" + std::to_string(static_cast<int>(timerMins)) + ":" + std::to_string(static_cast<int>(timerSecs)), Vector2(80, 15));
 
 	}
 	else {
@@ -210,6 +208,23 @@ void TutorialGame::InitWorld() {
 
 	Scene::InitDefaultFloor(world);
 
+	InitItems();
+
+  /*
+	// Load the navigation grid
+	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
+
+	// Generate a test path
+	NavigationPath outPath;
+	Vector3 startPos(80, 0, 10); // Start position
+	Vector3 endPos(80, 0, 80);   // End position
+
+	if (navGrid->FindPath(startPos, endPos, outPath)) {
+		Vector3 pos;
+		while (outPath.PopWaypoint(pos)) {
+			testNodes.push_back(pos); // Store path waypoints
+		}
+  */
 
 	world->PrintObjects();
 
@@ -287,10 +302,6 @@ void TutorialGame::ReloadLevel() {
 	std::cout << "Level reloaded!" << std::endl;
 }
 
-void TutorialGame::Transition() {
-	return;
-}
-
 void TutorialGame::InitNavigationTestLevel() {
 	//set camera to a debug camera
 
@@ -319,6 +330,14 @@ void TutorialGame::ToggleCursor() {
 
 void TutorialGame::InitEnemies() {
 	enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(world, Vector3(10,3,10), 1.0f, 100.0f));
+}
+
+void TutorialGame::InitItems() {
+	for (int i = 0; i < 2; i++) {
+		int x = 10;
+		int rand = (std::rand() % 5) + 1;
+		PassiveItem::Instantiate(world, itemList, player, Vector3(x + (i * 10), 0, 40), rand);
+	}
 }
 
 void TutorialGame::UpdateEnemies(float dt) {

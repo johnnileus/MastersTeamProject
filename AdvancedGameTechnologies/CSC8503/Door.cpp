@@ -174,7 +174,10 @@ Door* Door::Instantiate(GameWorld* world,
 
 Door::~Door()
 {
-    
+    delete boundingVolume;
+    delete physicsObject;
+    delete renderObject;
+    delete networkObject;
 }
 
 
