@@ -48,9 +48,7 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
 
     //load animation resources 
     idle = new MeshAnimation("Idle1.anm");
-    walk = new MeshAnimation("Role_T.anm");
-    RegisterAnimation(PlayerAnimation::Idle,idle);
-    RegisterAnimation(PlayerAnimation::Walk,walk);
+    RegisterAnimation("Idle", idle);
 
     //load material
     guardMat = new MeshMaterial("Male_Guard.mat");
@@ -75,7 +73,7 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
 /// get the animation based on the registered animation name.
 /// @param name the name you registered in the AssetManager
 /// @return 
-MeshAnimation* AssetManager::GetAnimation(PlayerAnimation animation)
+MeshAnimation* AssetManager::GetAnimation(const string& name)
 {
     std::cout << "Retrieving animation: " << name << std::endl;
     auto it = animationMap.find(name);
@@ -89,11 +87,11 @@ MeshAnimation* AssetManager::GetAnimation(PlayerAnimation animation)
     return nullptr;
 }
 
-void AssetManager::RegisterAnimation(PlayerAnimation animationType, MeshAnimation* anim)
+void AssetManager::RegisterAnimation(const std::string& name, MeshAnimation* anim)
 {
-	std::cout << "Registering animation: " << name << std::endl;
+    std::cout << "Registering animation: " << name << std::endl;
     if (anim) {
-        animationMap[animationType] = anim;
+        animationMap[name] = anim;
     }
 }
 
