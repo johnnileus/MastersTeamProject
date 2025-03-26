@@ -12,7 +12,7 @@ constexpr T lerp(T a, T b, T t) {
 }
 #endif // USEAGC
 
-Animator::Animator(RenderObject* renderObject)
+Animator::Animator()
 {
     std::cout << "Animator created: " << this << std::endl;
     currentAnimSpeed = 1.0f;
@@ -24,8 +24,6 @@ Animator::Animator(RenderObject* renderObject)
     currentFrame = 0;
 	currentAnim = nullptr;
     pendingAnim = nullptr;
-
-    this->renderObject = renderObject;
 }
 
 Animator::~Animator()
@@ -61,13 +59,18 @@ void Animator::Update(float dt)
         frameTime -= dt * currentAnimSpeed;
         while (frameTime < 0.0f) 
         {
-            currentFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
-            nextFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
-            frameTime += 1.0f / currentAnim->GetFrameRate();
+            std::cout << "Current frame before update: " << currentFrame << std::endl;
+            if (currentAnim) {
+                currentFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
+                std::cout << "Current frame after update: " << currentFrame << std::endl;
+                nextFrame = (currentFrame + 1) % currentAnim->GetFrameCount();
+                frameTime += 1.0f / currentAnim->GetFrameRate();
+            }
+            else {
+				std::cout << "No current animation" << std::endl;
+                return;
+            }
         }
-    }
-    Draw(currentFrame);
-}
 
     }
 }
@@ -88,7 +91,9 @@ bool Animator::LoadAnimation(const std::string& animationName)
     return (meshAnims[animationName] != nullptr);
 }
 
-void Animator::Draw(int nFrame)
+
+
+void Animator::Draw(RenderObject* renderObj)
 {
 #pragma region Old function
     // //get mesh and shader data
@@ -148,11 +153,12 @@ void Animator::Draw(int nFrame)
 #pragma endregion
 
     //get mesh and joints count
-	OGLMesh* animMesh = (OGLMesh*)renderObject->GetMesh(); //Change to AGCMesh
+	OGLMesh* animMesh = (OGLMesh*)renderObj->GetMesh(); //Change to AGCMesh
     size_t jointCount = animMesh->GetJointCount();
 
     //target frame data
-    const Matrix4* frameData = meshAnims["Role_Walk"]->GetJointData(nFrame);
+    size_t nFrame = 10;
+    const Matrix4* frameData = meshAnims["Idle"]->GetJointData(nFrame);
     
     // Mesh can use GetInverseBindPose() get each joint's inverse bind pose matrix
     const auto& invBindPose = animMesh->GetInverseBindPose();
@@ -163,7 +169,7 @@ void Animator::Draw(int nFrame)
     }
 
     //get shader and activate gl program
-	OGLShader* shader = (OGLShader*)renderObject->GetShader(); //also needs to be AGC Compatible
+    OGLShader* shader = (OGLShader*)renderObj->GetShader(); //Also needs to be AGC Compatible
     GLuint programID = shader->GetProgramID();
     glUseProgram(programID);
     

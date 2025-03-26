@@ -31,7 +31,6 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
     capsuleMesh = renderer->LoadMesh("capsule.msh");
 
     guardMesh = renderer->LoadMesh("Male_Guard.msh");
-    roleMesh = renderer->LoadMesh("Role_T.msh");
 
     //terrainMesh = renderer->GenerateTerrainMesh(heightmap);
 
@@ -49,9 +48,7 @@ void AssetManager::LoadAssets(GameTechRendererInterface* renderer)  {
 
     //load animation resources 
     idle = new MeshAnimation("Idle1.anm");
-    walk = new MeshAnimation("Role_T.anm");
-    RegisterAnimation("Idle",idle);
-    RegisterAnimation("Role_Walk",walk);
+    RegisterAnimation("Idle", idle);
 
     //load material
     guardMat = new MeshMaterial("Male_Guard.mat");

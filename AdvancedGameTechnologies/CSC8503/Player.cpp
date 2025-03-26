@@ -62,7 +62,8 @@ void Player::Init(ThirdPersonCamera* cam)
 
 void Player::SetComponent(float meshSize,float mass)
 {
-	myMesh = AssetManager::Instance().roleMesh;
+	myMesh = AssetManager::Instance().cubeMesh;
+	//myMesh = AssetManager::Instance().cubeMesh;
 	//Collider
 	SphereVolume* volume  = new SphereVolume(1);
 	SetBoundingVolume((CollisionVolume*)volume);
@@ -77,17 +78,25 @@ void Player::SetComponent(float meshSize,float mass)
 	GetPhysicsObject()->InitSphereInertia();
 	
 	//Render
-	 SetRenderObject(new RenderObject(
-	 	&objectTransform,
-	 	myMesh,
-	 	AssetManager::Instance().playerTex[1],
-	 	AssetManager::Instance().characterShader)
-	 	);
-	renderObject->SetMaterial(AssetManager::Instance().guardMat);
+	/*SetRenderObject(new RenderObject(
+		&objectTransform,
+		myMesh,
+		AssetManager::Instance().playerTex[0],
+		AssetManager::Instance().characterShader)
+		);
+		renderObject->SetMaterial(AssetManager::Instance().guardMat);
+		*/
+	SetRenderObject(new RenderObject(
+		&objectTransform,
+		myMesh,
+		AssetManager::Instance().basicTex,
+		AssetManager::Instance().basicShader)
+	);
 	
 	
-	animator = new Animator(renderObject);
-	animator->LoadAnimation("Role_Walk");
+	animator = new Animator();
+	std::cout << "Doing the player animator thingy in Set Component" << std::endl;
+	animator->LoadAnimation("Idle");
 }
 
 void ApplyBoneTransformsToModel(const std::vector<Maths::Matrix4>& boneTransforms, Mesh* mesh) {
@@ -128,7 +137,8 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	}
 	camera->SetFollowObject(player);
 	
-	player-> animator->Play("Role_Walk",true,1);
+	player-> animator->Play("Idle",true,1);
+	player -> animator->Draw(player->renderObject);
 	
 	return player;
 }
@@ -177,7 +187,7 @@ void Player::Update(float dt) {
 	if (isOnGround) {
 		isAtApex = false;  
 	}
-	animator->Update(dt);
+	//animator->Draw(renderObject);
 }
 
 void Player::HealthCheck()

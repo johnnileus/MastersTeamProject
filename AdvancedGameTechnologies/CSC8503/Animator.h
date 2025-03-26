@@ -13,14 +13,14 @@ namespace NCL
         class Animator
         {
         public:
-            Animator(RenderObject* renderObject);
+            Animator();
             ~Animator();
 
             void Update(float dt);
 
             bool LoadAnimation(const std::string& animationName);
 
-            void Draw(int nFrame);
+            void Draw(RenderObject* renderObj);
 
             void Play(const std::string& anim, bool tween, float animSpeed);
 
@@ -45,7 +45,6 @@ namespace NCL
             float	currentAnimSpeed;
             MeshAnimation* currentAnim;
             MeshAnimation* pendingAnim;
-            RenderObject* renderObject;
             std::vector<Matrix4> frameMatrices;
             
             std::map<std::string, MeshAnimation*> meshAnims;
