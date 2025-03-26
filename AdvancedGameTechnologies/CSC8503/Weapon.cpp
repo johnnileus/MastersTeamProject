@@ -14,7 +14,7 @@ void Weapon::Fire() {
               << ", ammo remaining: " << ammo << std::endl;
     OnFireEvent.Invoke(this);
 
-    AudioManager::GetInstance().PlaySound("RifleFire.wav");
+    AudioManager::GetInstance().PlayEvent("event:/RifleFire");
 }
 
 void Weapon::Reload() {
@@ -27,7 +27,7 @@ void Weapon::Update(float deltaTime, bool isFiring, const Vector3& direction) {
     if (isReloading)
     {
         if (!hasPlayedReloadSound) {
-            AudioManager::GetInstance().PlaySound("Reload.wav");
+            AudioManager::GetInstance().PlayEvent("event:/Rifle reload");
             hasPlayedReloadSound = true;
         }
         reloadTimer-=deltaTime;

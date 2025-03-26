@@ -7,7 +7,7 @@
 #include "Quaternion.h"
 #include "ThirdPersonCamera.h"
 #include "Weapon.h"
-#include <fmod.hpp>
+#include <fmod_studio.hpp>
 
 
 namespace NCL {
@@ -77,6 +77,8 @@ namespace NCL {
 			void SetComponent(float meshSize, float mass);
 			void FaceAimDirection(float dt);
 
+			FMOD::Studio::EventInstance* footstepEvent = nullptr;
+
 			//jump
 			float jumpForce;         
 			bool isOnGround;         
@@ -118,9 +120,7 @@ namespace NCL {
 			void DisplayUI();
 
 			void HealthCheck();
-			bool isDead;
-			FMOD::Channel* footstepChannel = nullptr;
-			
+			bool isDead;	
 			
 		};
 	}

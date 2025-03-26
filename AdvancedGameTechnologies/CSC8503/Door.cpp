@@ -82,7 +82,7 @@ void Door::UpdateDoorMovement(float dt)
     if (isMoving) {
         if (!hasPlayedSound) {
             
-            AudioManager::GetInstance().PlaySound("DoorDown.wav");
+            AudioManager::GetInstance().PlayEvent("event:/DoorDown");
             hasPlayedSound = true;  
         }
     }

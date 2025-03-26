@@ -217,7 +217,7 @@ void Player::HealthCheck()
 
 		if (!isDead) { 
 			isDead = true;
-			AudioManager::GetInstance().PlaySound("DeadScream.wav");
+			AudioManager::GetInstance().PlayEvent("event:/Player Dead");
 		}
 
 	}
@@ -228,7 +228,7 @@ void Player::HandleInput()
 {
 	// each frame clear the input buffer
 	inputDir = Vector2(0, 0);
-	
+
 	// Check if any movement key is pressed
 	bool isMoving = false;
 
@@ -249,26 +249,26 @@ void Player::HandleInput()
 		inputDir.x += 1.0f;   // right
 		isMoving = true;
 	}
-	// Play footstep sound only if moving
+
 	if (isMoving) {
-		if (!footstepChannel) {
-			
-			AudioManager::GetInstance().PlayLoopingSound("Running2.wav", &footstepChannel);
+		bool isPlaying = false;
+		if (footstepEvent) {
+			FMOD_STUDIO_PLAYBACK_STATE state;
+			footstepEvent->getPlaybackState(&state);
+			isPlaying = (state == FMOD_STUDIO_PLAYBACK_PLAYING);
+		}
+
+		if (!isPlaying) {
+			footstepEvent = AudioManager::GetInstance().PlayEvent("event:/Player Running");
 		}
 		else {
-		
-			bool isPlaying = false;
-			footstepChannel->isPlaying(&isPlaying);
-			if (!isPlaying) {
-				footstepChannel = nullptr;  
-			}
+			footstepEvent->setPaused(false);
 		}
 	}
 	else {
-		// Stop sound when no movement key is pressed
-		if (footstepChannel) {
-			footstepChannel->stop();
-			footstepChannel = nullptr;
+		// stop footstep sound
+		if (footstepEvent) {
+			footstepEvent->setPaused(true);
 		}
 	}
 }
@@ -391,7 +391,7 @@ void Player::HandleDash(float dt) {
 			isDashing = true;
 			dashTimer = dashCooldown;  // Start cooldown timer
 
-			AudioManager::GetInstance().PlaySound("Dash.wav");   // Dashsound
+			AudioManager::GetInstance().PlayEvent("event:/Dash");   // Dashsound
 		}
 	}
 }
@@ -403,7 +403,7 @@ void Player::HandleJump(float dt) {
 	if (isOnGround && Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
 		jumpTimeCounter = 0.1f;
 		isOnGround = false;
-		AudioManager::GetInstance().PlaySound("Jump.wav");
+		AudioManager::GetInstance().PlayEvent("event:/Player jump");
 	}
 	
 	if (jumpTimeCounter > 0) {
@@ -532,21 +532,21 @@ void Player::HandleSwitchWeapon()
 		currentWeapon = weaponPack[0];
 		renderObject->subTextures[renderObject->subTextures.size()-1] = nullptr;
 		OnSwitchWeaponEvent.Invoke(this);
-		AudioManager::GetInstance().PlaySound("SwitchWeapon.wav");
+		AudioManager::GetInstance().PlayEvent("event:/SwitchWeapon");
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM2)&&weaponPack[1]&&currentWeapon!=weaponPack[1])
 	{
 		currentWeapon = weaponPack[1];
 		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().woodTex;
 		OnSwitchWeaponEvent.Invoke(this);
-		AudioManager::GetInstance().PlaySound("SwitchWeapon.wav");
+		AudioManager::GetInstance().PlayEvent("event:/SwitchWeapon");
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM3)&&weaponPack[2]&&currentWeapon!=weaponPack[2])
 	{
 		currentWeapon = weaponPack[2];
 		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().metalTex;
 		OnSwitchWeaponEvent.Invoke(this);
-		AudioManager::GetInstance().PlaySound("SwitchWeapon.wav");
+		AudioManager::GetInstance().PlayEvent("event:/SwitchWeapon");
 	}
 }
 
