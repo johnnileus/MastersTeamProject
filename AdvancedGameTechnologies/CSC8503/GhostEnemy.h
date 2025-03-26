@@ -5,9 +5,9 @@
 
 namespace NCL {
 	namespace CSC8503 {
-		class MeleeEnemy : StateMachine, NavMeshAgent {
+		class GhostEnemy : NavMeshAgent {
 		public:
-			MeleeEnemy();
+			GhostEnemy();
 			void PatrolState();
 			void ChaseState();
 			void AttackState();
@@ -19,4 +19,4 @@ namespace NCL {
 			Player* currentTarget;
 		};
 	}
-}
+}#pragma once
