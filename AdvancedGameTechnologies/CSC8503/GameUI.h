@@ -23,5 +23,8 @@ protected:
 
 	int maxHealth = 100;
 	int currentHealth = maxHealth;
+	int selected_weapon = 0;
+	float fade_alpha = 0.0f;
+	float flash_alpha = 0.0f;
 
 };

@@ -5,9 +5,6 @@
 #include "UIStateManager.h"
 #include "TutorialGame.h"
 
-extern TutorialGame* g;
-
-
 UIStateManager::UIStateManager() {
 
 }
