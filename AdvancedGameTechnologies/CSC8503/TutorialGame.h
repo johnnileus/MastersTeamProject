@@ -51,6 +51,7 @@ namespace NCL {
 			void SendTransform();
 			void UpdateConnectedPlayer(int id, Vector3 pos, Quaternion rot);
 
+#ifdef _WIN32
 			//called by GameServer when player connects
 			GameObject* InitialiseConnectedPlayerObject(int id);
 			GameObject** GetConnectedPlayerObjects();
@@ -61,8 +62,9 @@ namespace NCL {
 			}
 
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
+#endif // _WIN32
 
-
+		
 		protected:
 			void InitialiseAssets();
 
