@@ -94,12 +94,6 @@ void AssetManager::RegisterAnimation(const std::string& name, MeshAnimation* ani
     }
 }
 
-Texture* AssetManager::AddTexture(const string& name)
-{
-    Texture* tex =  gameTechRenderer->LoadTexture(name);
-    return tex;
-}
-
 
 void AssetManager::Cleanup() {
     delete cubeMesh;
