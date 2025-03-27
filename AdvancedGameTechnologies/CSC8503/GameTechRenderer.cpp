@@ -21,23 +21,27 @@ GameTechRenderer::GameTechRenderer(GameWorld& world) : OGLRenderer(*Window::GetW
 	debugShader  = new OGLShader("debug.vert", "debug.frag");
 	shadowShader = new OGLShader("shadow.vert", "shadow.frag");
 	skinnedShadowShader = new OGLShader("skinnedShadow.vert","shadow.frag");
+	// shadowTex 
 	glGenTextures(1, &shadowTex);
 	glBindTexture(GL_TEXTURE_2D, shadowTex);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
-			     SHADOWSIZE, SHADOWSIZE, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-	
+
+	//  PCF shadow
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+				 SHADOWSIZE, SHADOWSIZE, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glGenFramebuffers(1, &shadowFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,GL_TEXTURE_2D, shadowTex, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowTex, 0);
 	glDrawBuffer(GL_NONE);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 
 	glClearColor(1, 1, 1, 1);
 
@@ -677,70 +681,98 @@ void GameTechRenderer::Draw(Mesh* mesh, bool multilayer) {
 	}
 }
 
-void GameTechRenderer::PostProcessingInit()
-{
-
-	glGenTextures(1, &postProcessColor);
-	glBindTexture(GL_TEXTURE_2D, postProcessColor);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, windowSize.x, windowSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-
-	glGenRenderbuffers(1, &postProcessDepth);
-	glBindRenderbuffer(GL_RENDERBUFFER, postProcessDepth);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, windowSize.x, windowSize.y);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-
-	glGenFramebuffers(1, &postProcessFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, postProcessFBO);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, postProcessColor, 0);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, postProcessDepth);
-
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		std::cout << "PostProcess FBO creation failed!" << std::endl;
-	}
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+void GameTechRenderer::PostProcessingInit() {
+    glGenTextures(1, &postProcessColor);
+    glBindTexture(GL_TEXTURE_2D, postProcessColor);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, windowSize.x, windowSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
 	
-	fullScreenQuad = new OGLMesh();
-	fullScreenQuad->SetVertexPositions({
-		Vector3(-1,  1, 0),
-		Vector3(-1, -1, 0),
-		Vector3( 1, -1, 0),
-		Vector3( 1,  1, 0)
-	});
-	fullScreenQuad->SetVertexTextureCoords({
-		Vector2(0, 1),
-		Vector2(0, 0),
-		Vector2(1, 0),
-		Vector2(1, 1)
-	});
-	fullScreenQuad->SetVertexIndices({0,1,2,2,3,0});
-	fullScreenQuad->UploadToGPU();
+    glGenTextures(1, &postProcessDepthTexID);
+    glBindTexture(GL_TEXTURE_2D, postProcessDepthTexID);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, 
+                 windowSize.x, windowSize.y, 0,
+                 GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	
-	postProcessShader = new OGLShader("PostProcess.vert", "PostProcess.frag");
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
 
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+	
+    glGenFramebuffers(1, &postProcessFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, postProcessFBO);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, postProcessColor, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, postProcessDepthTexID, 0);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        std::cout << "PostProcess FBO creation failed!" << std::endl;
+    }
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
+    fullScreenQuad = new OGLMesh();
+    fullScreenQuad->SetVertexPositions({
+        Vector3(-1,  1, 0),
+        Vector3(-1, -1, 0),
+        Vector3( 1, -1, 0),
+        Vector3( 1,  1, 0)
+    });
+    fullScreenQuad->SetVertexTextureCoords({
+        Vector2(0, 1),
+        Vector2(0, 0),
+        Vector2(1, 0),
+        Vector2(1, 1)
+    });
+    fullScreenQuad->SetVertexIndices({0,1,2,2,3,0});
+    fullScreenQuad->UploadToGPU();
+	
+    postProcessShader = new OGLShader("PostProcess.vert", "PostProcess.frag");
+	
+    postProcessColorTex = new OGLTexture();
+    postProcessColorTex->texID = postProcessColor;
+
+    postProcessDepthTex = new OGLTexture();
+    postProcessDepthTex->texID = postProcessDepthTexID;
 }
+
 
 void GameTechRenderer::DoPostProcessPass() {
-	//bind post process shader
 	UseShader(*postProcessShader);
-	
-	BindTextureToShader(*(new OGLTexture(postProcessColor)), "sceneTex", 0);
-	
-	Matrix4 viewProj = Matrix4(); 
-	int loc = glGetUniformLocation(postProcessShader->GetProgramID(), "viewProjMatrix");
-	glUniformMatrix4fv(loc, 1, false, (float*)viewProj.array);
 
+	//bind scene and depth tex
+	BindTextureToShader(*postProcessColorTex, "sceneTex", 0);
+	BindTextureToShader(*postProcessDepthTex, "depthTex", 1);
 
+	// near/far
+	int nearLoc = glGetUniformLocation(postProcessShader->GetProgramID(), "cameraNear");
+	glUniform1f(nearLoc, 1.0f);
+
+	int farLoc  = glGetUniformLocation(postProcessShader->GetProgramID(), "cameraFar");
+	glUniform1f(farLoc, 1000.0f);
+
+	// fog color and density
+	int fogColorLoc = glGetUniformLocation(postProcessShader->GetProgramID(), "fogColor");
+	glUniform3f(fogColorLoc, 0.5f, 0.5f, 0.5f);
+
+	int densityLoc = glGetUniformLocation(postProcessShader->GetProgramID(), "fogDensity");
+	glUniform1f(densityLoc, 0.005f);
+
+	//bloom
+	int thresholdLoc = glGetUniformLocation(postProcessShader->GetProgramID(), "bloomThreshold");
+	glUniform1f(thresholdLoc, 1.0f);
+
+	int intensityLoc = glGetUniformLocation(postProcessShader->GetProgramID(), "bloomIntensity");
+	glUniform1f(intensityLoc, 0.5f);
+	
 	BindMesh(*fullScreenQuad);
-
 	DrawBoundMesh();
 }
+
 
 
 
