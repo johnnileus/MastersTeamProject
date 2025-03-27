@@ -1,4 +1,71 @@
 #include "MeleeEnemy.h"void MeleeEnemy::RestState(float dt) {
+void  MeleeEnemy::InitStateMachine() {
+    State* patrolState = new State([&](float dt) -> void {
+        this->PatrolState();
+        });
+
+    State* chaseState = new State([&](float dt) -> void {
+        this->ChaseState();
+        });
+
+    State* attackState = new State([&](float dt) {
+        this->AttackState(dt);
+        });
+
+    State* retreatState = new State([&](float dt) -> void {
+        this->RetreatState();
+        });
+
+    State* restState = new State([&](float dt) {
+        this->RestState(dt);
+        });
+
+    stateMachine->AddState(patrolState);
+    stateMachine->AddState(chaseState);
+    stateMachine->AddState(attackState);
+    stateMachine->AddState(retreatState);
+    stateMachine->AddState(restState);
+
+    stateMachine->AddTransition(new StateTransition(patrolState, chaseState, [&]() -> bool {
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 20.0f;
+        }));
+
+    stateMachine->AddTransition(new StateTransition(chaseState, patrolState, [&]() -> bool {
+        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 20.0f;
+        }));
+
+    stateMachine->AddTransition(new StateTransition(chaseState, attackState, [&]() -> bool {
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 5.0f;
+        }));
+
+    stateMachine->AddTransition(new StateTransition(attackState, chaseState, [&]() -> bool {
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 5.0f;
+        }));
+
+    stateMachine->AddTransition(new StateTransition(patrolState, retreatState, [&]() -> bool {
+        return this->currentHealth < 0.15f * this->maxHealth;
+        }));
+
+    stateMachine->AddTransition(new StateTransition(chaseState, retreatState, [&]() -> bool {
+        return this->currentHealth < 0.15f * this->maxHealth;
+        }));
+
+    stateMachine->AddTransition(new StateTransition(attackState, retreatState, [&]() -> bool {
+        return this->currentHealth < 0.15f * this->maxHealth;
+        }));
+
+    stateMachine->AddTransition(new StateTransition(retreatState, restState, [&]() -> bool {
+        return this->currentHealth < 0.15f * this->maxHealth && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 50.0f;
+        }));
+
+    stateMachine->AddTransition(new StateTransition(restState, patrolState, [&]() -> bool {
+        return this->currentHealth > 0.5f * this->maxHealth;
+        }));
+
+    stateMachine->AddTransition(new StateTransition(restState, retreatState, [&]() -> bool {
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 30.0f;
+        }));
+}
 void MeleeEnemy::PatrolState() {
     float closestDistance = std::numeric_limits<float>::max();
     NCL::Maths::Vector3 enemyPosition = this->GetTransform().GetPosition();
