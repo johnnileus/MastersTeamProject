@@ -319,8 +319,6 @@ void TutorialGame::InitWorld() {
 		enemies[0]->SetMovePath(testNodes);
 	}
 	
-	SceneManager::Instance().AddCubeToWorld(&world,Vector3(5,0,0),Vector3(1,1,1),1);
-	
 	world.PrintObjects();
 
 }
