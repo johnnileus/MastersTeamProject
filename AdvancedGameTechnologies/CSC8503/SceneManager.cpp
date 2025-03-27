@@ -5,7 +5,10 @@
 #include "RenderObject.h"
 #include "PhysicsObject.h"
 #include "DemoShootableEnemy.h"
-
+#include "NavMeshAgent.h"
+#include "MeleeEnemy.h"
+#include "RangedEnemy.h"
+#include "GhostEnemy.h"
 
 SceneManager& SceneManager::Instance() {
     static SceneManager instance;
@@ -36,8 +39,9 @@ void SceneManager::AddBullet(Bullet* bullet)
 }
 
 
-DemoShootableEnemy* SceneManager::AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass) {
-    DemoShootableEnemy* e = new DemoShootableEnemy(scale, inverseMass, pos);
+MeleeEnemy* SceneManager::AddEnemyToWorld(GameWorld* world,NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+    MeleeEnemy* e = new MeleeEnemy(nodeGrid, scale, inverseMass, pos, 100.0f, true, 15.0f, 10.0f, world);
+    e->Spawn();
     world->AddGameObject(e);
     return e;
 }

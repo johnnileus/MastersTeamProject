@@ -4,27 +4,7 @@ using namespace NCL;
 using namespace CSC8503;
 
 void DemoShootableEnemy::InitialiseEnemy(float scale, float inverseMass, NCL::Maths::Vector3 position) {
-	SphereVolume* volume = new SphereVolume(1.0f);
-
-	this->SetBoundingVolume((CollisionVolume*)volume);
-
-	this->GetTransform()
-		.SetScale(Vector3(scale, scale, scale))
-		.SetPosition(position);
-
-	this->SetRenderObject(new RenderObject(&this->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
-	this->SetPhysicsObject(new PhysicsObject(&this->GetTransform(), this->GetBoundingVolume()));
-	this->GetPhysicsObject()->SetInverseMass(inverseMass);
-	this->GetPhysicsObject()->InitSphereInertia();
-	this->tag = "Enemy";
-}
-
-void DemoShootableEnemy::Spawn() {
-	this->currentHealth = this->maxHealth;
-	this->alive = true;
-	this->GetTransform().SetPosition(this->spawnPosition);
-	this->GetPhysicsObject();//need a function to make physics objects active
-	std::cout << "Enemy Spawned";
+	
 }
 
 void DemoShootableEnemy::KillEnemy() {
