@@ -105,9 +105,6 @@ void TutorialGame::UpdateGame(float dt) {
 		if (player) { player->Update(dt); }
 		if (doorTrigger) { doorTrigger->Update(dt); }
 
-		//for (Enemy* enemy : enemies) {
-		//	if (enemy) { enemy->Update(dt); }
-		//}
 		UpdateKeys();
 		world->UpdateWorld(dt);
 
@@ -227,22 +224,6 @@ void TutorialGame::InitWorld() {
 
 	// Load the navigation grid
 	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
-
-	//// Generate a test path
-	//NavigationPath outPath;
-	//Vector3 startPos(80, 0, 10); // Start position
-	//Vector3 endPos(80, 0, 80);   // End position
-
-	//if (navGrid->FindPath(startPos, endPos, outPath)) {
-	//	Vector3 pos;
-	//	while (outPath.PopWaypoint(pos)) {
-	//		testNodes.push_back(pos); // Store path waypoints
-	//	}
-
-	//	enemies[0]->SetMovePath(testNodes);
-	//}
-	//
-	//world->PrintObjects();
 
 }
 

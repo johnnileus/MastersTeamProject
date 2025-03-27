@@ -504,34 +504,34 @@ void Player::HandleAim()
 void Player::OnCollisionBegin(GameObject * otherObject)
 {
 	// collides Enemy
-	if (otherObject->tag == "Enemy")
-	{
-		std::cout << otherObject->GetName() << std::endl;
-		Debug::DrawLine(this->GetTransform().GetPosition(), otherObject->GetTransform().GetPosition());
-		if (isDashing)
-		{
-#ifdef USEAGC
-			Enemy* enemy = static_cast<Enemy*>(otherObject);
-#else
-			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
-#endif // USEAGC
-			score += 15;
-			SetTemporaryColour(attackColour, 0.25f);
-			enemy->Reset();
-		}
-		else
-		{
-			health-=damage;
-			//AudioManager::GetInstance().PlaySound("GetHurt.wav");
-#ifdef USEAGC
-			Enemy* enemy = static_cast<Enemy*>(otherObject);
-#else
-			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
-#endif // USEAGC
-			SetTemporaryColour(damageColour, 0.25f);
-			enemy->Reset();
-		}
-	}
+//	if (otherObject->tag == "Enemy")
+//	{
+//		std::cout << otherObject->GetName() << std::endl;
+//		Debug::DrawLine(this->GetTransform().GetPosition(), otherObject->GetTransform().GetPosition());
+//		if (isDashing)
+//		{
+//#ifdef USEAGC
+//			Enemy* enemy = static_cast<Enemy*>(otherObject);
+//#else
+//			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
+//#endif // USEAGC
+//			score += 15;
+//			SetTemporaryColour(attackColour, 0.25f);
+//			enemy->Reset();
+//		}
+//		else
+//		{
+//			health-=damage;
+//			//AudioManager::GetInstance().PlaySound("GetHurt.wav");
+//#ifdef USEAGC
+//			Enemy* enemy = static_cast<Enemy*>(otherObject);
+//#else
+//			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
+//#endif // USEAGC
+//			SetTemporaryColour(damageColour, 0.25f);
+//			enemy->Reset();
+//		}
+//	}
 
 	// collides Coin
 	if (otherObject->tag == "Coin")
