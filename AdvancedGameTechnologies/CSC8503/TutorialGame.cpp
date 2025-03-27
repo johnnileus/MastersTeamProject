@@ -384,7 +384,6 @@ void TutorialGame::InitEnemies() {
 }
 
 void TutorialGame::InitItems() {
-	//todo: random placement of items
 	for (int i = 0; i < 5; i++) {
 		int x = 10;
 		int rand = (std::rand() % 5) + 1;
