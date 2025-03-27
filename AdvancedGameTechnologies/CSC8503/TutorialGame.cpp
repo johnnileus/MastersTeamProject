@@ -153,7 +153,7 @@ void TutorialGame::UpdateGame(float dt) {
 			networkManager->Update();
 		}
 #endif // _WIN32
-		SceneManager::Instance().UpdateBullets(world, dt);
+		SceneManager::Instance().UpdateBullets(&world, dt);
 
 
 
@@ -175,7 +175,7 @@ void TutorialGame::UpdateGame(float dt) {
 
 	}
 	else {
-		if (player) { player->PausedUpdate(dt); }
+		if (player) { player->PausedUpdate(dt); } //HI BOW HERE, THIS WILL NOT WORK IN THIS BUILD AS RENDERER IS NOT UPDATED HERE, NEED TO TRANSFER THIS TO MAIN SOMEHOW, POSSIBLY A FLAG?
 		UpdateKeys();
 
 		//renderer->Render();
