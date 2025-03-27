@@ -33,7 +33,7 @@ namespace NCL {
 				this->stateMachine = new StateMachine();
 				this->currentTarget = nullptr;
 				this->attackCooldown = 3;
-				this->chargeForce = 5;
+				this->chargeForce = 50;
 
 				auto findPlayers = [this](GameObject* obj) {
 					if (obj->tag == "Player") {
