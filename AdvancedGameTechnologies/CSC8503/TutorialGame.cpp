@@ -419,7 +419,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 				meleeEnemyList[meleeEnemyFrameCount]->SetDestinationNull();
 			}
 			else {
-				meleeEnemyList[meleeEnemyFrameCount]->UpdateRespawnTimer(dt);
+				meleeEnemyList[meleeEnemyFrameCount]->UpdateRespawnTimer(dt*3);
 			}
 		}
 	}
