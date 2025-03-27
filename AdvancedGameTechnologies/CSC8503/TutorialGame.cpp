@@ -3,11 +3,6 @@
 #include "TutorialGame.h"
 #include "AudioManager.h"
 
-//#include "json/json11.hpp"
-//#include <iostream>
-//#include <fstream>
-//#include <sstream>
-
 using namespace NCL;
 using namespace CSC8503;
 
@@ -119,6 +114,8 @@ void TutorialGame::UpdateGame(float dt) {
 			timerSecs = 0;
 		}
 		//Debug::Print("Time:" + std::to_string(static_cast<int>(timerMins)) + ":" + std::to_string(static_cast<int>(timerSecs)), Vector2(80, 15));
+
+		NewLevel();
 
 	}
 	else {
@@ -325,6 +322,7 @@ void TutorialGame::InitEnemies() {
 }
 
 void TutorialGame::InitItems() {
+	//todo: random placement of items
 	for (int i = 0; i < 5; i++) {
 		int x = 10;
 		int rand = (std::rand() % 5) + 1;
@@ -346,5 +344,12 @@ void TutorialGame::UpdateEnemies(float dt) {
 				enemyList[e]->UpdateRespawnTimer(dt);
 			}
 		}
+	}
+}
+
+void TutorialGame::NewLevel() {
+	if (timerMins == 1) {
+		InitScene("default");
+		timerMins = 0;
 	}
 }
