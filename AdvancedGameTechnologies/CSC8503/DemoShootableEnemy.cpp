@@ -7,15 +7,6 @@ void DemoShootableEnemy::InitialiseEnemy(float scale, float inverseMass, NCL::Ma
 	
 }
 
-void DemoShootableEnemy::Spawn() {
-	this->spawnPosition = Vector3(rand() % 256 - 128, 0, rand() % 256 - 128);
-	this->currentHealth = this->maxHealth;
-	this->alive = true;
-	this->GetTransform().SetPosition(this->spawnPosition);
-	this->GetPhysicsObject();//need a function to make physics objects active
-	std::cout << "Enemy Spawned";
-}
-
 void DemoShootableEnemy::KillEnemy() {
 	this->GetPhysicsObject();//need a function to make physics objects inactive
 	this->alive = false;
