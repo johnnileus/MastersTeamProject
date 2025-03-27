@@ -40,13 +40,16 @@ namespace NCL {
 				world->OperateOnContents(findPlayers);
 
 				this->InitStateMachine();
+				this->GetRenderObject()->SetColour(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 			}
+			void OnCollisionBegin(GameObject* otherObject) override;
 		protected:
 			StateMachine* stateMachine;
 			Player* currentTarget;
 			float attackCooldown;
 			float chargeForce;
 			std::vector<Player*> players;
+			float hitCooldown;
 		};
 	}
 }

@@ -12,8 +12,8 @@ std::vector<std::vector<NavMeshNode*>> NavMeshGrid::GenerateNavMeshGrid(int leve
 	for (int x = 0; x < levelSize; ++x) {
 		nodeRow.clear();
 		for (int z = 0; z < levelSize; ++z) {
-			NCL::Maths::Vector3 nodePosition = NCL::Maths::Vector3(1* (x - levelSize/2), 10, 1*(z - levelSize/2));//replace 500 with the height of the vertex for the node
-			nodeRow.emplace_back(new NavMeshNode(nodePosition));
+			NCL::Maths::Vector3 nodePosition = NCL::Maths::Vector3((x - levelSize/2), 10, (z - levelSize/2));//replace 500 with the height of the vertex for the node
+			nodeRow.emplace_back(new NavMeshNode(nodePosition, this->world));
 		}
 		nodeGrid.emplace_back(nodeRow);
 	}

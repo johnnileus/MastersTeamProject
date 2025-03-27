@@ -27,7 +27,7 @@ namespace NCL {
 				this->inverseMass = inverseMass;
 				this->spawnPosition = spawnPostion;
 
-				SphereVolume* volume = new SphereVolume(1.0f);
+				SphereVolume* volume = new SphereVolume(scale);
 
 				this->SetBoundingVolume((CollisionVolume*)volume);
 
@@ -51,7 +51,7 @@ namespace NCL {
 			bool CheckRespawn() { return this->timeToRespawn <= 0; }
 			void KillEnemy();
 			void UpdateHealth(float damage) { this->currentHealth -= damage; }
-			void RegisterHit();
+			void RegisterHit(float damage);
 			bool CheckAlive() { return this->alive; }
 			void OnCollisionBegin(GameObject* otherObject) override;
 

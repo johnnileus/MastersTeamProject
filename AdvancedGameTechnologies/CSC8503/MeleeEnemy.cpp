@@ -3,6 +3,7 @@
 #include "PhysicsObject.h"
 #include "State.h"
 #include "StateTransition.h"
+#include "Bullet.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -161,5 +162,23 @@ void MeleeEnemy::RestState(float dt) {
 }
 
 void MeleeEnemy::UpdateEnemy(float dt) {
-    this->stateMachine->Update(dt);
+    if (this->stateMachine) {
+        this->stateMachine->Update(dt);
+    }
+    else {
+        this->stateMachine = new StateMachine();
+        std::cout << "State Machine Reset" << std::endl;
+        InitStateMachine();
+    }
+    this->hitCooldown -= dt;
+}
+
+void MeleeEnemy::OnCollisionBegin(GameObject* otherObject) {
+    if (otherObject->tag == "Player") {
+        Player* player = dynamic_cast<Player*>(otherObject);
+        if (hitCooldown < 0) {
+            player->ApplyDamage(this->damage);
+            hitCooldown = 3;
+        }
+    }
 }
