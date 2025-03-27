@@ -155,7 +155,7 @@ void NavMeshAgent::MoveTowardsNextNode() {
 
     this->GetPhysicsObject()->AddForce(smoothDirection * Vector3(50, 50, 50));
 
-    float maxSpeed = 10.0f;
+    float maxSpeed = 5.0f;
     Vector3 velocity = this->GetPhysicsObject()->GetLinearVelocity();
     float speed = Vector::Length(velocity);
     if (speed > maxSpeed) {
