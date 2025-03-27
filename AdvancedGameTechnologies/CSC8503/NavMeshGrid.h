@@ -17,14 +17,13 @@ namespace NCL {
 				}
 			}
 			~NavMeshGrid() {}
-			std::vector<NavMeshNode>GetAllNodes() { return this->allNodes; }
+			std::vector<NavMeshNode*>GetAllNodes() { return this->allNodes; }
 			int GetLevelSize() { return this->levelSize; }
-			
 		protected:
 			int levelSize;
-			std::vector<std::vector<NavMeshNode>>nodeGrid;
-			std::vector<std::vector<NavMeshNode>>GenerateNavMeshGrid(int levelSize);
-			std::vector<NavMeshNode>allNodes;
+			std::vector<std::vector<NavMeshNode*>>nodeGrid;
+			std::vector<std::vector<NavMeshNode*>>GenerateNavMeshGrid(int levelSize);
+			std::vector<NavMeshNode*>allNodes;
 		};
 	}
 }

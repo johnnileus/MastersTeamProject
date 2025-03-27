@@ -9,7 +9,7 @@ void NavMeshNode::checkObstructed() {
 	this->obstructed = false;
 }
 
-void NavMeshNode::AddEdge(NavMeshNode* neighbour, int cost) {
+void NavMeshNode::AddEdge(NavMeshNode* neighbour, float cost) {
 	Edge e;
 	e.neighbour = neighbour;
 	e.cost = cost;
