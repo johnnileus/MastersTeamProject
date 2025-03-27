@@ -151,7 +151,7 @@ void NavMeshAgent::MoveTowardsNextNode() {
 }
 
 void NavMeshAgent::SetDestination() {
-	this->destination = this->nodeGrid->GetAllNodes()[rand() % this->nodeGrid->GetAllNodes().size()];
+	this->destination = this->nodeGrid->GetAllNodes()[(rand() + rand() + rand()) % this->nodeGrid->GetAllNodes().size()];
     std::cout << this->destination->GetPosition().x << ", " << this->destination->GetPosition().z << std::endl;
 }
 
@@ -160,8 +160,7 @@ void NavMeshAgent::SetDestinationNull() {
 }
 
 void NavMeshAgent::Spawn() {
-    this->spawnPosition = this->nodeGrid->GetAllNodes()[rand() % this->nodeGrid->GetAllNodes().size()]->GetPosition();
-    this->spawnPosition = Vector3(this->spawnPosition.x, 0, this->spawnPosition.z);
+    this->spawnPosition = this->nodeGrid->GetAllNodes()[(rand() + rand() + rand()) % this->nodeGrid->GetAllNodes().size()]->GetPosition();
     this->currentHealth = this->maxHealth;
     this->alive = true;
     this->GetTransform().SetPosition(this->spawnPosition);
