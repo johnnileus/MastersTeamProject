@@ -174,6 +174,7 @@ void GhostEnemy::RetreatState() {
 void GhostEnemy::RestState(float dt) {
     this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
     float healthIncrease = maxHealth * 0.01f * dt;
+    this->currentHealth = std::min(this->currentHealth + healthIncrease, this->maxHealth);
 }
 
 void GhostEnemy::UpdateEnemy(float dt) {
