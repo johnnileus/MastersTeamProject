@@ -162,7 +162,14 @@ void MeleeEnemy::RestState(float dt) {
 }
 
 void MeleeEnemy::UpdateEnemy(float dt) {
-    this->stateMachine->Update(dt);
+    if (this->stateMachine) {
+        this->stateMachine->Update(dt);
+    }
+    else {
+        this->stateMachine = new StateMachine();
+        std::cout << "State Machine Reset" << std::endl;
+        InitStateMachine();
+    }
     this->hitCooldown -= dt;
 }
 
