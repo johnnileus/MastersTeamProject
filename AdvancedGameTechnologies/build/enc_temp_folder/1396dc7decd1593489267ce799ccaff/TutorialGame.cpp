@@ -207,7 +207,7 @@ void TutorialGame::InitCamera() {
 void TutorialGame::InitWorld() {
 
 
-	CreateRopeGroup();
+	//CreateRopeGroup();
 	
 	player = Player::Instantiate(world,thirdPersonCam,Vector3(20,0,30));
 

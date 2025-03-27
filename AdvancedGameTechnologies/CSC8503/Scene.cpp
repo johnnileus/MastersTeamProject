@@ -134,7 +134,7 @@ void Scene::UpdateScene() {
 
 void DefaultScene::InitScene(GameWorld* world) {
 
-    CreateRopeGroup(world);
+    //CreateRopeGroup(world);
 
     //GenerateWall(world);
 

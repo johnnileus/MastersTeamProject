@@ -106,7 +106,7 @@ void TutorialGame::InitScene(string name) {
 }
 
 
-}
+
 
 TutorialGame::~TutorialGame()	{
 
