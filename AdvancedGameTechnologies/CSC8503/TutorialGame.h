@@ -67,6 +67,8 @@ namespace NCL {
 
 			bool GetCursorLocked() { return cursorLocked; }
 
+			Player* getPlayer() { return player; }
+
 		protected:
 
 			void InitCamera();

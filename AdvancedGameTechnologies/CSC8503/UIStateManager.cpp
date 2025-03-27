@@ -2,9 +2,6 @@
 #include "TutorialGame.h"
 #include "AudioManager.h"
 
-extern TutorialGame* g;
-
-
 UIStateManager::UIStateManager() {
 
 }

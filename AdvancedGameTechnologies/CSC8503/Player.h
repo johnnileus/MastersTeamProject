@@ -35,6 +35,10 @@ namespace NCL {
 			void SetTemporaryColour(const Vector4& colour, float duration);
 			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position);
 
+			int GetHealth() {
+				return health;
+			}
+
 			GameWorld* myWorld;
 
 			int score;
