@@ -466,7 +466,7 @@ void Player::HandleJump(float dt) {
 	if (isOnGround && inputController->GetNamedButton("Cross")) {
 		jumpTimeCounter = 0.1f;
 		isOnGround = false;
-		AudioManager::GetInstance().PlaySound("Jump.wav");
+		AudioManager::GetInstance().PlayEvent("event:/Player jump");
 	}
 #else
 	if (isOnGround && Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
@@ -522,7 +522,7 @@ void Player::OnCollisionBegin(GameObject * otherObject)
 		else
 		{
 			health-=damage;
-			AudioManager::GetInstance().PlaySound("GetHurt.wav");
+			//AudioManager::GetInstance().PlaySound("GetHurt.wav"); wheres the bank for this?
 #ifdef USEAGC
 			Enemy* enemy = static_cast<Enemy*>(otherObject);
 #else
