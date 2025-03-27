@@ -401,7 +401,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 	//updates one enemy at a time
 	if(meleeEnemyFrameCountMax > 0) {
 		if (meleeEnemyList[meleeEnemyFrameCount]->CheckAlive()) {
-			meleeEnemyList[meleeEnemyFrameCount]->UpdateEnemy(dt);
+			meleeEnemyList[meleeEnemyFrameCount]->UpdateEnemy(dt * meleeEnemyFrameCountMax);
 		}
 		else {
 			if (meleeEnemyList[meleeEnemyFrameCount]->CheckRespawn()) {
@@ -409,7 +409,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 				meleeEnemyList[meleeEnemyFrameCount]->SetDestinationNull();
 			}
 			else {
-				meleeEnemyList[meleeEnemyFrameCount]->UpdateRespawnTimer(dt*3);
+				meleeEnemyList[meleeEnemyFrameCount]->UpdateRespawnTimer(dt * meleeEnemyFrameCountMax);
 			}
 		}
 	}
@@ -422,7 +422,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 	}
 	if (rangedEnemyFrameCountMax > 0) {
 		if (rangedEnemyList[rangedEnemyFrameCount]->CheckAlive()) {
-			rangedEnemyList[rangedEnemyFrameCount]->UpdateEnemy(dt);
+			rangedEnemyList[rangedEnemyFrameCount]->UpdateEnemy(dt * rangedEnemyFrameCountMax);
 		}
 		else {
 			if (rangedEnemyList[rangedEnemyFrameCount]->CheckRespawn()) {
@@ -430,7 +430,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 				rangedEnemyList[rangedEnemyFrameCount]->SetDestinationNull();
 			}
 			else {
-				rangedEnemyList[rangedEnemyFrameCount]->UpdateRespawnTimer(dt);
+				rangedEnemyList[rangedEnemyFrameCount]->UpdateRespawnTimer(dt * rangedEnemyFrameCountMax);
 			}
 		}
 	}
@@ -443,7 +443,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 	}
 	if (ghostEnemyFrameCountMax > 0) {
 		if (ghostEnemyList[ghostEnemyFrameCount]->CheckAlive()) {
-			ghostEnemyList[ghostEnemyFrameCount]->UpdateEnemy(dt);
+			ghostEnemyList[ghostEnemyFrameCount]->UpdateEnemy(dt * ghostEnemyFrameCountMax);
 		}
 		else {
 			if (ghostEnemyList[ghostEnemyFrameCount]->CheckRespawn()) {
@@ -451,7 +451,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 				ghostEnemyList[ghostEnemyFrameCount]->SetDestinationNull();
 			}
 			else {
-				ghostEnemyList[ghostEnemyFrameCount]->UpdateRespawnTimer(dt);
+				ghostEnemyList[ghostEnemyFrameCount]->UpdateRespawnTimer(dt * ghostEnemyFrameCountMax);
 			}
 		}
 	}
