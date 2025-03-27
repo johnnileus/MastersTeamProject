@@ -403,19 +403,20 @@ void Player::HandleDash(float dt) {
 void Player::HandleJump(float dt) {
 	if (!playerPhysicObject)
 		return;
-	
-	
+
+
 #ifdef USEAGC
-	if ((isOnGround && inputController->GetNamedButton("Cross")) {
+	if (isOnGround && inputController->GetNamedButton("Cross")) {
 		jumpTimeCounter = 0.1f;
 		isOnGround = false;
+	}
 #else
 	if (isOnGround && Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
 		jumpTimeCounter = 0.1f;
 		isOnGround = false;
 	}
 #endif // USEAGC
-	
+
 	if (jumpTimeCounter > 0) {
 		playerPhysicObject->AddForce(Vector3(0, jumpForce * dt, 0));
 		jumpTimeCounter -= dt;
@@ -425,14 +426,15 @@ void Player::HandleJump(float dt) {
 void Player::HandleAim()
 {
 	Ray ray = CollisionDetection::BuildRayFromCamera(myWorld->GetMainCamera(), 100.0f, *myCam);
-	
+
 	RayCollision collisionInfo;
 	bool hasHit = myWorld->Raycast(ray, collisionInfo, true);
 	Vector3 hitPoint;
 	if (hasHit) {
 		hitPoint = collisionInfo.collidedAt;
 		Debug::DrawLine(shootPoint, hitPoint, Debug::RED);
-	} else {
+	}
+	else {
 		hitPoint = ray.GetPosition() + ray.GetDirection() * 100.0f;
 		Debug::DrawLine(shootPoint, hitPoint, Debug::YELLOW);
 	}
@@ -440,7 +442,7 @@ void Player::HandleAim()
 	aimDir = hitPoint - shootPoint;
 }
 
-void Player::OnCollisionBegin(GameObject* otherObject)
+void Player::OnCollisionBegin(GameObject * otherObject)
 {
 	// collides Enemy
 	if (otherObject->tag == "Enemy")
@@ -460,13 +462,13 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		}
 		else
 		{
-			health-=damage;
+			health -= damage;
 #ifdef USEAGC
 			Enemy* enemy = static_cast<Enemy*>(otherObject);
 #else
 			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
 #endif // USEAGC
-			SetTemporaryColour(damageColour,0.25f);
+			SetTemporaryColour(damageColour, 0.25f);
 			enemy->Reset();
 		}
 	}
@@ -481,13 +483,13 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 	}
 }
 
-void Player::OnCollisionEnd(GameObject* otherObject)
+void Player::OnCollisionEnd(GameObject * otherObject)
 {
 	// nothing to do on collision end for now
 }
 
-void Player::SetTemporaryColour(const Vector4& colour, float duration) {
-	colourTimer = duration;                
+void Player::SetTemporaryColour(const Vector4 & colour, float duration) {
+	colourTimer = duration;
 	isTemporaryColourActive = true;        // activate timer
 	this->GetRenderObject()->SetColour(colour);
 }
@@ -501,7 +503,7 @@ void Player::DisplayUI()
 	Debug::Print("Score:" + std::to_string(score), Vector2(80, 10));
 }
 
-void Player::RemoveObject(GameObject* gameObject)
+void Player::RemoveObject(GameObject * gameObject)
 {
 	gameObject->GetTransform().SetPosition(Vector3(-1000, -1000, -1000));
 }
@@ -514,10 +516,12 @@ void Player::UpdateGroundStatus() {
 	RayCollision collisionInfo;
 	bool hit = myWorld->Raycast(groundRay, collisionInfo, true);
 	if (hit && collisionInfo.rayDistance <= rayLength) {
-		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::GREEN);
+		Debug::DrawLine(transform.GetPosition(), origin + direction, Debug::GREEN);
 		isOnGround = true;
-	} else {
-		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::YELLOW);
+	}
+	else {
+		Debug::DrawLine(transform.GetPosition(), origin + direction, Debug::YELLOW);
 		isOnGround = false;
 	}
 }
+
