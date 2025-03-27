@@ -36,19 +36,23 @@ void  MeleeEnemy::InitStateMachine() {
     stateMachine->AddState(restState);
 
     stateMachine->AddTransition(new StateTransition(patrolState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 20.0f;
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 80.0f + this->scale;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, patrolState, [&]() -> bool {
-        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 20.0f;
+        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 80.0f + this->scale;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, attackState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 5.0f;
+        if (currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 15.0f) {
+            this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
+            return true;
+        }
+        return false;
         }));
 
     stateMachine->AddTransition(new StateTransition(attackState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 5.0f;
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 15.0f + this->scale;
         }));
 
     stateMachine->AddTransition(new StateTransition(patrolState, retreatState, [&]() -> bool {
@@ -64,7 +68,7 @@ void  MeleeEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(retreatState, restState, [&]() -> bool {
-        return this->currentHealth < 0.15f * this->maxHealth && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 50.0f;
+        return this->currentHealth < 0.15f * this->maxHealth && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 80.0f + this->scale;
         }));
 
     stateMachine->AddTransition(new StateTransition(restState, patrolState, [&]() -> bool {
@@ -72,7 +76,7 @@ void  MeleeEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(restState, retreatState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 30.0f;
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 50.0f + this->scale;
         }));
 }
 void MeleeEnemy::PatrolState() {
