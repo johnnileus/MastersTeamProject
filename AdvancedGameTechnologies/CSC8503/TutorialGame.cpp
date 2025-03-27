@@ -68,6 +68,8 @@ void TutorialGame::InitScene(string name) {
 	player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
 
 	sceneManager->SwitchScene(name, world);
+
+	InitItems();
 }
 
 
