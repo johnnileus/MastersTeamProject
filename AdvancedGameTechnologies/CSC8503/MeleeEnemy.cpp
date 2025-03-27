@@ -1,4 +1,3 @@
-#include "MeleeEnemy.h"void MeleeEnemy::RestState(float dt) {
 #include "MeleeEnemy.h"
 #include "Vector.h"
 #include "PhysicsObject.h"
