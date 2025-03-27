@@ -157,3 +157,13 @@ void NavMeshAgent::SetDestination() {
 void NavMeshAgent::SetDestinationNull() {
     this->destination = nullptr;
 }
+
+void NavMeshAgent::Spawn() {
+    this->spawnPosition = this->nodeGrid->GetAllNodes()[rand() % this->nodeGrid->GetAllNodes().size()]->GetPosition();
+    this->spawnPosition = Vector3(this->spawnPosition.x, 0, this->spawnPosition.z);
+    this->currentHealth = this->maxHealth;
+    this->alive = true;
+    this->GetTransform().SetPosition(this->spawnPosition);
+    this->GetPhysicsObject();//need a function to make physics objects active
+    std::cout << "Enemy Spawned";
+}

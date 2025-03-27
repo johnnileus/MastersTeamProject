@@ -35,6 +35,7 @@ namespace NCL {
 			void MoveTowardsNextNode();
 			void SetDestination();
 			void SetDestinationNull();
+			void Spawn();
 		protected:
 			float newFScore;
 			float newGScore;
