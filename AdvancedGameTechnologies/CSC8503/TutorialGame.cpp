@@ -180,7 +180,7 @@ void TutorialGame::UpdateGame(float dt) {
 
 		//Timer
 		timerSecs += dt;
-		if (timerSecs >= 5.0f) {
+		if (timerSecs >= 60.0f) {
 			timerMins += 1;
 			timerSecs = 0;
 		}
