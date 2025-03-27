@@ -5,7 +5,7 @@
 
 namespace NCL {
 	namespace CSC8503 {
-		class RangedEnemy : StateMachine, NavMeshAgent {
+		class RangedEnemy : NavMeshAgent {
 		public:
 			RangedEnemy();
 			void InitStateMachine();
