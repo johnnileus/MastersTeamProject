@@ -15,6 +15,9 @@
 #include "Rope.h"
 #include "NavMeshGrid.h"
 #include "NavMeshAgent.h"
+#include "MeleeEnemy.h"
+#include "RangedEnemy.h"
+#include "GhostEnemy.h"
 
 namespace NCL {
     namespace CSC8503 {
@@ -38,7 +41,7 @@ namespace NCL {
             void UpdateBullets(GameWorld*world, float dt);
             void AddBullet(Bullet* bullet);
           
-            NavMeshAgent* AddEnemyToWorld(GameWorld* world,NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
+            MeleeEnemy* AddEnemyToWorld(GameWorld* world,NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
 
             void InitScenes();
             void SwitchScene(string newScene);
