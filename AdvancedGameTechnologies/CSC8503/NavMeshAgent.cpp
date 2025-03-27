@@ -102,24 +102,22 @@ float NavMeshAgent::calculateFScore(float heuristic, float gScore) {
 	return heuristic + gScore;
 }
 
+void NavMeshAgent::setCurrentNode(int x, int z) {
+    for (auto& node : this->nodeGrid->GetAllNodes()) {
+        if (node->GetPosition().x == x && node->GetPosition().z == z) {
+            this->currentNode = node;
+            break;
+        }
+    }
+}
+
 void NavMeshAgent::FollowPath() {
     const auto& currentPosition = GetCurrentPosition();
     int roundedX = std::round(currentPosition.x);
     int roundedZ = std::round(currentPosition.z);
-
+    
     if (this->currentNode == nullptr || this->currentNode->GetPosition().x != roundedX || this->currentNode->GetPosition().z != roundedZ) {
-        for (auto& node : this->nodeGrid->GetAllNodes()) {
-            if (node->GetPosition().x == roundedX && node->GetPosition().z == roundedZ) {
-                this->currentNode = node;
-                break;
-            }
-        }
-    }
-
-    if (this->currentNode == this->destination || this->destination == nullptr || this->path.empty()) {
-        SetDestination();
-        FindPath();
-        return;
+        setCurrentNode(roundedX, roundedZ);
     }
 
     if (this->currentNode == this->nextNode && !this->path.empty()) {
@@ -131,10 +129,11 @@ void NavMeshAgent::FollowPath() {
     }
     else if (!this->path.empty()) {
         this->nextNode = this->path.front();
+        for (int n = 0; n < size(path) - 1; ++n) {
+            Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 0.1f);
+        }
     }
-    for (int n = 0; n < size(path) - 1; ++n) {
-        Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 0.1f);
-    }
+    
     MoveTowardsNextNode();
 }
 
