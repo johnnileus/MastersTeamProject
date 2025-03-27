@@ -44,13 +44,6 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	navGrid = nullptr;
 	navMeshAgent = nullptr;
 
-	controller.MapAxis(0, "Sidestep");
-	controller.MapAxis(1, "UpDown");
-	controller.MapAxis(2, "Forward");
-
-	controller.MapAxis(3, "XLook");
-	controller.MapAxis(4, "YLook");
-#endif // USEAGC
 #ifdef _WIN32
 	std::cout << "Creating ThirdPersonCamera instance" << std::endl;
 	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), controller);
@@ -59,7 +52,7 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 	forceMagnitude	= 1.0f;
 	useGravity		= false;
-	AssetManager::Instance().LoadAssets(renderer);
+	AssetManager::Instance().LoadAssets(&renderer);
 
 	navGrid = nullptr;
 	navMeshAgent = nullptr;
@@ -68,8 +61,8 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 }
 
 void TutorialGame::InitScene() {
-	world->ClearAndErase();
-	physics->Clear();
+	world.ClearAndErase();
+	physics.Clear();
 #ifdef USEAGC
 	NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
 	NCL::PS5::PS5Controller* c = w->GetController();
