@@ -246,8 +246,8 @@ void Player::HealthCheck()
 
 void Player::HandleInput()
 {
-    // each frame clear the input buffer
-    inputDir = Vector2(0, 0);
+	// each frame clear the input buffer
+	inputDir = Vector2(0, 0);
 
 	// Check if any movement key is pressed
 	bool isMoving = false;
@@ -289,28 +289,25 @@ void Player::HandleInput()
 		Debug::Print(std::to_string(inputController->GetNamedAxis("DY")), Vector2(40, 55), Vector4(1, 0, 0, 1));
 	}*/
 #elif _WIN32
-    // detect keyboard input
-    if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
-        inputDir.y += -1.0f;  // front
+	// detect keyboard input
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
+		inputDir.y += -1.0f;  // front
 		isMoving = true;
-    }
-    if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
-        inputDir.y += 1.0f;   // back
+	}
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
+		inputDir.y += 1.0f;   // back
 		isMoving = true;
-    }
-    if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
-        inputDir.x += -1.0f;  // left
+	}
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
+		inputDir.x += -1.0f;  // left
 		isMoving = true;
-    }
-    if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
-        inputDir.x += 1.0f;   // right
+	}
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
+		inputDir.x += 1.0f;   // right
 		isMoving = true;
-    }
+	}
 
 #endif // USEAGC
-	if (isMoving) {
-		if (!footstepChannel) {
-
 	if (isMoving) {
 		bool isPlaying = false;
 		if (footstepEvent) {
