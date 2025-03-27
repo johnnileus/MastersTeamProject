@@ -723,23 +723,34 @@ void GameTechRenderer::PostProcessingInit()
 	fullScreenQuad->UploadToGPU();
 	
 	postProcessShader = new OGLShader("PostProcess.vert", "PostProcess.frag");
-
+	postProcessColorTex = new OGLTexture();
+	postProcessColorTex->texID = postProcessColor;
+	postProcessDepthTex = new OGLTexture();
+	
 }
 
 void GameTechRenderer::DoPostProcessPass() {
-	//bind post process shader
 	UseShader(*postProcessShader);
+	// 1) 绑定场景颜色:
+	BindTextureToShader(*postProcessColorTex, "sceneTex", 0);
 	
-	BindTextureToShader(*(new OGLTexture(postProcessColor)), "sceneTex", 0);
+	BindTextureToShader(*postProcessDepthTex, "depthTex", 1);
+
+	//near/far:
+	int nearLoc = glGetUniformLocation(postProcessShader->GetProgramID(), "cameraNear");
+	glUniform1f(nearLoc, 1);
+	int farLoc  = glGetUniformLocation(postProcessShader->GetProgramID(), "cameraFar");
+	glUniform1f(farLoc, 1000);
+
+	//frog
+	int fogColorLoc = glGetUniformLocation(postProcessShader->GetProgramID(), "fogColor");
+	glUniform3f(fogColorLoc, 1.0f, 1.0f, 1.0f);
+	int densityLoc = glGetUniformLocation(postProcessShader->GetProgramID(), "fogDensity");
+	glUniform1f(densityLoc, 0.0f);
 	
-	Matrix4 viewProj = Matrix4(); 
-	int loc = glGetUniformLocation(postProcessShader->GetProgramID(), "viewProjMatrix");
-	glUniformMatrix4fv(loc, 1, false, (float*)viewProj.array);
-
-
 	BindMesh(*fullScreenQuad);
-
 	DrawBoundMesh();
+
 }
 
 

@@ -100,6 +100,8 @@ namespace NCL {
 			GLuint postProcessDepth = 0;
 			OGLMesh* fullScreenQuad = nullptr;
 			OGLShader* postProcessShader = nullptr;
+			OGLTexture*postProcessColorTex;
+			OGLTexture*postProcessDepthTex;
 
 		};
 	}
