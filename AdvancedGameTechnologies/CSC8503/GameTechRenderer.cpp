@@ -251,7 +251,7 @@ void GameTechRenderer::RenderShadowMap() {
 	for (const auto &obj : activeObjects) {
 		//dynamic shadow
 		if (obj->renderType == Enums::RenderObjectType::Skinned) {
-			 /*UseShader(*skinnedShadowShader);
+			 UseShader(*skinnedShadowShader);
 			
 			int projLocation = glGetUniformLocation(skinnedShadowShader->GetProgramID(), "projMatrix");
 			int viewLocation = glGetUniformLocation(skinnedShadowShader->GetProgramID(), "viewMatrix");
@@ -281,7 +281,7 @@ void GameTechRenderer::RenderShadowMap() {
 			BindMesh((OGLMesh&)*obj-> GetMesh());
 			for (int j = 0; j < obj->GetMesh()->GetSubMeshCount(); ++j) {
 				DrawBoundMesh((uint32_t)j);
-			}*/
+			}
 		}
 		// static shadow
 		else {
