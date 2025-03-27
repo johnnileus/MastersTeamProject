@@ -40,6 +40,8 @@ namespace NCL {
 
             void InitScenes();
             void SwitchScene(string newScene);
+
+            DemoShootableEnemy* AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass);
             
             unordered_map<string, Scene*> scenes;
             Scene* activeScene;

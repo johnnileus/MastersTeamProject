@@ -53,8 +53,8 @@ void SceneManager::SwitchScene(string newScene) {
 }
 
 
-//DemoShootableEnemy* SceneManager::AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass) {
-//    DemoShootableEnemy* e = new DemoShootableEnemy(scale, inverseMass, pos);
-//    world->AddGameObject(e);
-//    return e;
-//}
+DemoShootableEnemy* SceneManager::AddEnemyToWorld(GameWorld* world, const Vector3& pos, const float scale, float inverseMass) {
+    DemoShootableEnemy* e = new DemoShootableEnemy(scale, inverseMass, pos);
+    world->AddGameObject(e);
+    return e;
+}
