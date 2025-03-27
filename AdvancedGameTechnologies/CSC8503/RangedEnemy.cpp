@@ -128,7 +128,7 @@ void RangedEnemy::ChaseState() {
 void RangedEnemy::AttackState(float dt) {
     if (attackCooldown <= 0) {
         currentTarget->ApplyDamage(damage);
-        attackCooldown = 3;
+        attackCooldown = 6;
     }
     else {
         attackCooldown -= dt;
