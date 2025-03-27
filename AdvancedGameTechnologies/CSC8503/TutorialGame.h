@@ -161,8 +161,13 @@ namespace NCL {
 			std::vector<RangedEnemy*> rangedEnemyList;
 			std::vector<GhostEnemy*> ghostEnemyList;
 
-			int EnemyFrameCountMax;
-			int EnemyFrameCount;
+			int enemyFrameCount;
+			int meleeEnemyFrameCountMax;
+			int meleeEnemyFrameCount;
+			int rangedEnemyFrameCountMax;
+			int rangedEnemyFrameCount;
+			int ghostEnemyFrameCountMax;
+			int ghostEnemyFrameCount;
 		};
 	}
 }
