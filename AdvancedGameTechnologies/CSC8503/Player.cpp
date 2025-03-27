@@ -231,7 +231,7 @@ void Player::FaceAimDirection(float dt) {
 	float t = rotateSpeed * dt;
 	Quaternion finalOrientation = Quaternion::Slerp(currentOrientation, desiredOrientation, t);
 	GetTransform().SetOrientation(finalOrientation);
-	animator->Play(AnimationType::Player_Idle,true);
+	//animator->Play(AnimationType::Player_Idle,true);
 }
 
 void Player::HealthCheck()
