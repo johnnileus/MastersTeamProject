@@ -177,6 +177,8 @@ void TutorialGame::UpdateGame(float dt) {
 		}
 		Debug::Print("Time:" + std::to_string(static_cast<int>(timerMins)) + ":" + std::to_string(static_cast<int>(timerSecs)), Vector2(80, 15));
 
+		NewLevel();
+
 	}
 	else {
 		if (player) { player->PausedUpdate(dt); } //HI BOW HERE, THIS WILL NOT WORK IN THIS BUILD AS RENDERER IS NOT UPDATED HERE, NEED TO TRANSFER THIS TO MAIN SOMEHOW, POSSIBLY A FLAG?
@@ -416,6 +418,7 @@ void TutorialGame::Test(int a) {
 }
 
 void TutorialGame::InitItems() {
+	//todo: random placement of items
 	for (int i = 0; i < 5; i++) {
 		int x = 10;
 		int rand = (std::rand() % 5) + 1;
@@ -497,4 +500,11 @@ void TutorialGame::UpdateEnemies(float dt) {
 
 void TutorialGame::InitNavGrid() {
 	this->navGrid = new NavMeshGrid();
+}
+
+void TutorialGame::NewLevel() {
+	if (timerMins == 1) {
+		InitScene("default");
+		timerMins = 0;
+	}
 }

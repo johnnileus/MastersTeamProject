@@ -111,6 +111,9 @@ namespace NCL {
 			//Terrain Generation
 			void InitTerrain();
 
+			//Level Complete
+			void NewLevel();
+
 			//Timer
 			float timerSecs = 0;
 			float timerMins = 0;
