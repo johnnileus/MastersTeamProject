@@ -22,9 +22,10 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 	name = "passive";
 	tag = "Passive";
 
-	health = 120;
-	damage = 50;
-	maxSpeed = 5;//change to json value
+	health = NULL;
+	damage = NULL;
+	maxSpeed = NULL;//change to json value
+	jumpForce = NULL;
 
 	SetComponent(size, mass);
 }
@@ -48,7 +49,7 @@ bool PassiveItem::ReadFile(const std::string& filename) {
 	file.close();
 	std::string err;
 	jsonFile = json11::Json::parse(buffer.str(), err);
-	std::cout << "JSON data: " << jsonFile.dump() << endl;
+	//std::cout << "JSON data: " << jsonFile.dump() << endl;
 
 	return true;
 }
@@ -93,6 +94,10 @@ void PassiveItem::FindItem(Player* player, int myUid) {
 			if (item["maxSpeed"].is_number() && item["maxSpeed"].int_value() != 0) {
 				speedVal = item["maxSpeed"].number_value();
 				UpdateSpeed(player, speedVal);
+			}
+			if (item["jumpForce"].is_number() && item["jumpForce"].int_value() != 0) {
+				jumpVal = item["jumpForce"].number_value();
+				UpdateJump(player, jumpVal);
 			}
 
 			return;
@@ -139,4 +144,9 @@ void PassiveItem::UpdateDamage(Player* player, int damageVal) {
 void PassiveItem::UpdateSpeed(Player* player, int speedVal) {
 	maxSpeed = speedVal + myPlayer->GetSpeed();
 	myPlayer->SetSpeed(maxSpeed);
+}
+
+void PassiveItem::UpdateJump(Player* player, int jumpVal) {
+	jumpForce = jumpVal + myPlayer->GetJump();
+	myPlayer->SetJump(jumpForce);
 }
