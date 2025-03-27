@@ -239,6 +239,14 @@ void Player::HandleInput()
 		// map controller stick input to inputDir
 		inputDir.x += leftStickX;
 		inputDir.y += leftStickY;
+		if (leftStickX > 0 || leftStickX < 0) {
+			AudioManager::GetInstance().PlaySound("Running2.wav");
+			isMoving = true;
+		}
+		if (leftStickY > 0 || leftStickY < 0) {
+			AudioManager::GetInstance().PlaySound("Running2.wav");
+			isMoving = true;
+		}
 	}
 	/*if (inputController->GetNamedButton("L2")) {
 		Debug::Print("L2 pressed", Vector2(40, 40), Vector4(1, 0, 0, 1));
