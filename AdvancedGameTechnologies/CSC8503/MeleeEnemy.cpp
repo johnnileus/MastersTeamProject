@@ -1,4 +1,13 @@
 #include "MeleeEnemy.h"void MeleeEnemy::RestState(float dt) {
+#include "MeleeEnemy.h"
+#include "Vector.h"
+#include "PhysicsObject.h"
+#include "State.h"
+#include "StateTransition.h"
+
+using namespace NCL;
+using namespace CSC8503;
+
 void  MeleeEnemy::InitStateMachine() {
     State* patrolState = new State([&](float dt) -> void {
         this->PatrolState();
