@@ -91,6 +91,9 @@ namespace NCL {
 			int GetTimerMins() const {
 				return timerMins;
 			}
+			int GetLevelCount() const {
+				return levelCount;
+			}
 
 		protected:
 			void InitialiseAssets();
@@ -111,8 +114,9 @@ namespace NCL {
 			//Terrain Generation
 			void InitTerrain();
 
-			//Level Complete
+			//Levels
 			void NewLevel();
+			int levelCount = 1;
 
 			//Timer
 			float timerSecs = 0;

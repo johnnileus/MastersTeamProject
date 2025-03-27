@@ -503,8 +503,9 @@ void TutorialGame::InitNavGrid() {
 }
 
 void TutorialGame::NewLevel() {
-	if (timerMins == 1) {
-		InitScene("default");
+	if (timerMins == 2) {
 		timerMins = 0;
+		levelCount++;
+		InitScene("default");
 	}
 }
