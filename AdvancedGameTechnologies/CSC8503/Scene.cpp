@@ -205,7 +205,8 @@ void DefaultScene2::InitScene(GameWorld* world) {
 
 void EnemyTestScene::InitScene(GameWorld* world) {
     InitDefaultFloor(world);
-    GenerateWall(world);
+    //GenerateWall(world);
+    InitObstacles(world);
     this->navGrid = new NavMeshGrid(world);
     //add 5 of each enemy to the world, can be configured for each scene should we need to
     for (int i = 0; i < 5; ++i) {

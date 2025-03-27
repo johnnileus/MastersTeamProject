@@ -45,6 +45,7 @@ void UIStateManager::States() {
 
             SetCurrentState(UIState::InGame);
             AudioManager::GetInstance().PlayEvent("event:/Game Start");
+            g->ToggleCursor();
         }
 
         //Multiplayer
