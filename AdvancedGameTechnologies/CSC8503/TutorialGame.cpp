@@ -119,6 +119,8 @@ void TutorialGame::InitScene(string name) {
 	sceneManager->scenes[name]->InitScene(&world);
 
 	sceneManager->SwitchScene(name, &world);
+
+	InitItems();
 }
 
 

@@ -145,6 +145,33 @@ GhostEnemy* Scene::AddGhostEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid,
     return e;
 }
 
+//from default pos/cam, +x goes right, -x goes left, +z goes down, -z goes up
+//coord limits are around -40, 80 for x and z
+void Scene::InitObstacles(GameWorld* world) {
+    int level = (std::rand() % 3) + 1;
+    //int level = 3;
+    if (level == 1) {
+        Scene::AddCubeToWorld(world, Vector3(-40, 0, -40), Vector3(5, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(80, 0, -40), Vector3(5, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(-40, 0, 80), Vector3(5, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(80, 0, 80), Vector3(5, 5, 5), 0);
+    }
+    else if (level == 2) {
+        Scene::AddCubeToWorld(world, Vector3(0, 0, 0), Vector3(5, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(40, 0, 0), Vector3(5, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(0, 0, 40), Vector3(5, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(40, 0, 40), Vector3(5, 5, 5), 0);
+    }
+    else if (level == 3) {
+        Scene::AddCubeToWorld(world, Vector3(10, 9, -20), Vector3(5, 10, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(-30, 9, 45), Vector3(5, 10, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(-15, 9, 20), Vector3(5, 10, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(20, 9, -30), Vector3(5, 10, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(50, 9, 75), Vector3(5, 10, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(60, 9, 0), Vector3(5, 10, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(30, 9, 60), Vector3(5, 10, 5), 0);
+    }
+}
 
 void Scene::InitScene(GameWorld* world) {
     std::cout << "empty scene" << std::endl;
@@ -162,6 +189,8 @@ void DefaultScene::InitScene(GameWorld* world) {
     //GenerateWall(world);
 
     InitDefaultFloor(world);
+
+    InitObstacles(world);
 }
 
 void DefaultScene2::InitScene(GameWorld* world) {
