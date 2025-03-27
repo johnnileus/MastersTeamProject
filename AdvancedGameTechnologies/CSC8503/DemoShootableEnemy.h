@@ -51,7 +51,7 @@ namespace NCL {
 			bool CheckRespawn() { return this->timeToRespawn <= 0; }
 			void KillEnemy();
 			void UpdateHealth(float damage) { this->currentHealth -= damage; }
-			void RegisterHit();
+			void RegisterHit(float damage);
 			bool CheckAlive() { return this->alive; }
 			void OnCollisionBegin(GameObject* otherObject) override;
 
