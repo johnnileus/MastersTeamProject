@@ -146,7 +146,7 @@ void NavMeshAgent::MoveTowardsNextNode() {
 
     const auto& currPos = this->GetCurrentPosition();
     const auto& nextPos = this->nextNode->GetPosition();
-    this->GetPhysicsObject()->AddForce(Vector::Normalise(Vector3((nextPos.x - currPos.x), 0, (nextPos.z - currPos.z))));
+    this->GetPhysicsObject()->AddForce(Vector::Normalise(Vector3((nextPos.x - currPos.x), 0, (nextPos.z - currPos.z))) * Vector3(50,50,50));
 }
 
 void NavMeshAgent::SetDestination() {
