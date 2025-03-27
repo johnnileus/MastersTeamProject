@@ -1,5 +1,6 @@
 #include "Scene.h"
 
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -116,11 +117,18 @@ void Scene::GenerateWall(GameWorld* world)
 void Scene::InitDefaultFloor(GameWorld* world) {
     Vector3 offset(20, 0, 20);
 
-    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
-    Scene::AddDefaultFloorToWorld(world, Vector3(70, -3, 0) + offset, Vector3(1, 10, 70));
-    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, -70) + offset, Vector3(70, 10, 1));
-    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 70) + offset, Vector3(70, 10, 1));
-    Scene::AddDefaultFloorToWorld(world, Vector3(-70, -3, 0) + offset, Vector3(1, 10, 70));
+    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 0) + offset, Vector3(129, 2, 129));
+    Scene::AddDefaultFloorToWorld(world, Vector3(130, -3, 0) + offset, Vector3(1, 10, 130));
+    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, -130) + offset, Vector3(130, 10, 1));
+    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 130) + offset, Vector3(130, 10, 1));
+    Scene::AddDefaultFloorToWorld(world, Vector3(-130, -3, 0) + offset, Vector3(1, 10, 130));
+}
+
+MeleeEnemy* Scene::AddEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+    MeleeEnemy* e = new MeleeEnemy(nodeGrid, scale, inverseMass, pos, 100.0f, true, 15.0f, 10.0f, world);
+    e->Spawn();
+    world->AddGameObject(e);
+    return e;
 }
 
 void Scene::InitScene(GameWorld* world) {
@@ -148,4 +156,10 @@ void DefaultScene2::InitScene(GameWorld* world) {
     GenerateWall(world);
 
     InitDefaultFloor(world);
+}
+
+void EnemyTestScene::InitScene(GameWorld* world) {
+    InitDefaultFloor(world);
+    GenerateWall(world);
+    newEvent.Invoke(2);
 }

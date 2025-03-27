@@ -6,6 +6,7 @@
 #include "RenderObject.h"
 #include "TextureLoader.h"
 #include "AudioManager.h"
+#include "Event.h"
 
 #include "Pistol.h"
 #include "PositionConstraint.h"
@@ -56,8 +57,11 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 	sceneManager = new SceneManager();
 	sceneManager->InitScenes();
+	Scene* temp = sceneManager->scenes["EnemyTestScene"];
+	EnemyTestScene* temp2 = dynamic_cast<EnemyTestScene*>(temp);
+	temp2->newEvent.AddListener(std::bind(&TutorialGame::Test, this, std::placeholders::_1));
 
-	InitScene("default");
+	InitScene("EnemyTestScene");
 }
 
 void TutorialGame::InitScene(string name) {
@@ -431,6 +435,10 @@ void TutorialGame::ToggleCursor() {
 
 void TutorialGame::InitEnemies() {
 	meleeEnemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(&world, this->navGrid, Vector3(10,3,10), 1.0f, 1.0f));
+}
+
+void TutorialGame::Test(int a) {
+	std::cout << "aAAAaaAaAAa" << a << std::endl;
 }
 
 void TutorialGame::InitItems() {

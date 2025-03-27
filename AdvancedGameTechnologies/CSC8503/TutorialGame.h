@@ -68,8 +68,9 @@ namespace NCL {
 			GameObject* InitialiseConnectedPlayerObject(int id);
 			GameObject** GetConnectedPlayerObjects();
 			void BroadcastPositions();
-
-			
+			void Test(int a);
+			void ToggleCursor();
+			void TogglePaused() { gamePaused = !gamePaused; }
 			int GetID() { return networkManager->GetID(); }
 			
 
@@ -80,6 +81,9 @@ namespace NCL {
 			
 
 			Player* getPlayer() { return player; }
+			void UpdateMeleeEnemyList(MeleeEnemy* e) { this->meleeEnemyList.emplace_back(e); }
+			void UpdateRangedEnemyList(RangedEnemy* e) { this->rangedEnemyList.emplace_back(e); }
+			void UpdateGhostEnemyList(GhostEnemy* e) { this->ghostEnemyList.emplace_back(e); }
 
 		protected:
 			void InitialiseAssets();
