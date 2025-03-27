@@ -606,7 +606,7 @@ void Player::HandleSwitchWeapon()
 	{
 		Debug::Print("Pistol!", Vector2(50, 40), Debug::RED);
 		currentWeapon = weaponPack[0];
-		renderObject->subTextures[renderObject->subTextures.size()-1] = nullptr;
+		//renderObject->subTextures[renderObject->subTextures.size()-1] = nullptr;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 #ifdef USEAGC
@@ -618,7 +618,7 @@ void Player::HandleSwitchWeapon()
 	{
 		Debug::Print("Rifle!", Vector2(50, 40), Debug::RED);
 		currentWeapon = weaponPack[1];
-		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().woodTex;
+		//renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().woodTex;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 #ifdef USEAGC
@@ -629,7 +629,7 @@ void Player::HandleSwitchWeapon()
 	{
 		Debug::Print("Shotgun!", Vector2(50, 40), Debug::RED);
 		currentWeapon = weaponPack[2];
-		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().tilesTex;
+		//renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().tilesTex;
 		OnSwitchWeaponEvent.Invoke(this);
 	}
 }
