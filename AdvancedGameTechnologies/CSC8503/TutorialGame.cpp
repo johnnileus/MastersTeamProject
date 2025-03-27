@@ -94,8 +94,11 @@ void TutorialGame::InitScene() {
 	}
 	std::cout << "aa " << sceneManager->scenes.size() << std::endl;
 	std::cout << sceneManager << std::endl;
-	
-	player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
+#ifdef USEAGC
+	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30), *c);
+#else
+	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30));
+#endif // USEAGC
 
 	sceneManager->scenes[name]->InitScene(world);
 
@@ -238,7 +241,7 @@ void TutorialGame::UpdateKeys() {
 		TogglePaused();
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
-		sceneManager->SwitchScene("default", world);
+		sceneManager->SwitchScene("default", &world);
 	}
 }
 
