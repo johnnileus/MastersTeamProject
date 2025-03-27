@@ -40,6 +40,7 @@ namespace NCL {
 				world->OperateOnContents(findPlayers);
 
 				this->InitStateMachine();
+				this->GetRenderObject()->SetColour(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 			}
 		protected:
 			StateMachine* stateMachine;
