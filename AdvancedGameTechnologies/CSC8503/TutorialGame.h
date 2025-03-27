@@ -38,9 +38,13 @@
 #include "NavMeshGrid.h"
 #include "NavMeshAgent.h"
 #include "DemoShootableEnemy.h"
+
 #include "MeleeEnemy.h"
 #include "RangedEnemy.h"
 #include "GhostEnemy.h"
+
+#include "PassiveItem.h"
+
 
 namespace NCL {
 	namespace CSC8503 {
@@ -48,6 +52,8 @@ namespace NCL {
 		public:
 			TutorialGame();
 			~TutorialGame();
+
+			void InitScene(string name);
 
 			virtual void UpdateGame(float dt);
 
@@ -67,8 +73,9 @@ namespace NCL {
 
 			bool GetCursorLocked() { return cursorLocked; }
 
+			Player* getPlayer() { return player; }
+
 		protected:
-			void InitialiseAssets();
 
 			void InitCamera();
 			void UpdateKeys();
@@ -87,10 +94,12 @@ namespace NCL {
 			void InitTerrain();
 
 			//Timer
-			float timer = 180;
+			float timerSecs = 0;
+			float timerMins = 0;
 
-			//Transitions
-			void Transition();
+			//Items
+			void InitItems();
+			std::vector<PassiveItem*> itemList;
 
 			//networking
 			NetworkManager* networkManager = new NetworkManager();
@@ -145,7 +154,6 @@ namespace NCL {
 
 
 			GameObject* objClosest = nullptr;
-			void GenerateWall();
 			void SetWallColour();
 
 			void DisplayPathfinding(); // display navigation path
@@ -168,6 +176,9 @@ namespace NCL {
 			int rangedEnemyFrameCount;
 			int ghostEnemyFrameCountMax;
 			int ghostEnemyFrameCount;
+			std::vector<DemoShootableEnemy*> enemyList;
+			float bgmVolume = 0.5f;
+
 		};
 	}
 }

@@ -37,7 +37,7 @@ void Shotgun::Fire() {
     }
     
     myCamera->Shake(0.12f, 0.15f);
-    AudioManager::GetInstance().PlaySound("RifleFire.wav");
+    AudioManager::GetInstance().PlayEvent("event:/Shotgun");
 }
 
 float Shotgun::RandomFloat(float min, float max) {

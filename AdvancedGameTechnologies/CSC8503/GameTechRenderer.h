@@ -27,6 +27,10 @@ namespace NCL {
 			Vector3 CalculateNormal(int x, int y, HeightMap* heightmap);
 			void Draw(Mesh* mesh, bool multilayer);
 
+			//Game UI
+			GameUI* gameUIHandler;
+			
+
 		protected:
 			void NewRenderLines();
 			void NewRenderText();
@@ -84,9 +88,6 @@ namespace NCL {
 			GLuint textColourVBO;
 			GLuint textTexVBO;
 			size_t textCount;
-
-			//UI handler
-			GameUI* gameUIHandler;
 
 			//Terrain Generation
 			OGLMesh* terrainMesh;

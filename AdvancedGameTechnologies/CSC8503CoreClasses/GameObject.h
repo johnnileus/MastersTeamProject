@@ -79,8 +79,6 @@ namespace NCL::CSC8503 {
 			return worldID;
 		}
 
-		void Destory();
-
 		std::string	tag;
 
 		void SetName(std::string myName)

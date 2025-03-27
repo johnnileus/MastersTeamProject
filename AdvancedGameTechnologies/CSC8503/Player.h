@@ -7,7 +7,7 @@
 #include "Quaternion.h"
 #include "ThirdPersonCamera.h"
 #include "Weapon.h"
-#include <fmod.hpp>
+#include <fmod_studio.hpp>
 
 
 namespace NCL {
@@ -35,6 +35,10 @@ namespace NCL {
 			void SetTemporaryColour(const Vector4& colour, float duration);
 			static Player* Instantiate(GameWorld* world, ThirdPersonCamera* cam, const Vector3& position);
 
+			int GetHealth() {
+				return health;
+			}
+
 			GameWorld* myWorld;
 
 			int score;
@@ -48,8 +52,27 @@ namespace NCL {
 			vector<Weapon*> weaponPack;
 			Vector3 shootPoint;
 
+			//getters and setters for stats
+			int GetHealth() const {
+				return health;
+			}
+			void SetHealth(const int h) {
+				health = h;
+			}
+			int GetDamage() const {
+				return damage;
+			}
+			void SetDamage(const int d) {
+				damage = d;
+			}
+			int GetSpeed() const {
+				return maxSpeed;
+			}
+			void SetSpeed(const float s) {
+				maxSpeed = s;
+			}
+
 			Event<Player*> OnSwitchWeaponEvent;
-			
 
 		protected:
 
@@ -77,6 +100,8 @@ namespace NCL {
 			void SetComponent(float meshSize, float mass);
 			void FaceAimDirection(float dt);
 
+			FMOD::Studio::EventInstance* footstepEvent = nullptr;
+
 			//jump
 			float jumpForce;         
 			bool isOnGround;         
@@ -88,8 +113,8 @@ namespace NCL {
 			
 			
 			//health
-			int health;
-			int damage; 
+			float health;
+			float damage; 
 
 			//dash
 			bool isDashing;           // Whether the player is dashing
@@ -118,9 +143,7 @@ namespace NCL {
 			void DisplayUI();
 
 			void HealthCheck();
-			bool isDead;
-			FMOD::Channel* footstepChannel = nullptr;
-			
+			bool isDead;	
 			
 		};
 	}
