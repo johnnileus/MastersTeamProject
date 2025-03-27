@@ -30,7 +30,7 @@ namespace NCL {
 
 				this->stateMachine = new StateMachine();
 				this->currentTarget = nullptr;
-				this->attackCooldown = 3;
+				this->attackCooldown = 8;
 				this->chargeForce = 5;
 
 				auto findPlayers = [this](GameObject* obj) {
@@ -45,7 +45,7 @@ namespace NCL {
 				world->OperateOnContents(findPlayers);
 
 				this->InitStateMachine();
-				this->GetRenderObject()->SetColour(Vector4(0.7f, 0.7f, 0.7f, 0.3f));
+				this->GetRenderObject()->SetColour(Vector4(0.5f, 0.0f, 0.5f, 0.3f));
 			}
 		protected:
 			StateMachine* stateMachine;
