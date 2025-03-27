@@ -52,6 +52,7 @@ namespace NCL {
 
 			void SetDebugStringBufferSizes(size_t newVertCount);
 			void SetDebugLineBufferSizes(size_t newVertCount);
+			void PostProcessingInit();
 
 			vector<const RenderObject*> activeObjects;
 
@@ -91,6 +92,14 @@ namespace NCL {
 
 			//Terrain Generation
 			OGLMesh* terrainMesh;
+
+			//PostProcessing
+			GLuint postProcessFBO   = 0;
+			GLuint postProcessColor = 0;
+			GLuint postProcessDepth = 0;
+			OGLMesh* fullScreenQuad = nullptr;
+			OGLShader* postProcessShader = nullptr;
+
 		};
 	}
 }

@@ -1,4 +1,6 @@
 #include "GameTechRenderer.h"
+
+#include "Assets.h"
 #include "GameObject.h"
 #include "RenderObject.h"
 #include "Camera.h"
@@ -75,6 +77,8 @@ GameTechRenderer::GameTechRenderer(GameWorld& world) : OGLRenderer(*Window::GetW
 
 	//Initializing ImGui
 	gameUIHandler = new GameUI();
+	PostProcessingInit();
+
 }
 
 //Terrain Generation
@@ -659,4 +663,56 @@ void GameTechRenderer::Draw(Mesh* mesh, bool multilayer) {
 		DrawBoundMesh();
 	}
 }
+
+void GameTechRenderer::PostProcessingInit()
+{
+	// 1. 创建一个颜色纹理，和窗口大小一致
+	glGenTextures(1, &postProcessColor);
+	glBindTexture(GL_TEXTURE_2D, postProcessColor);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, windowSize.x, windowSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// 2. 创建深度缓冲
+	glGenRenderbuffers(1, &postProcessDepth);
+	glBindRenderbuffer(GL_RENDERBUFFER, postProcessDepth);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, windowSize.x, windowSize.y);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	// 3. 创建 FBO
+	glGenFramebuffers(1, &postProcessFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, postProcessFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, postProcessColor, 0);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, postProcessDepth);
+
+	// 检查 FBO 是否完整
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		std::cout << "PostProcess FBO creation failed!" << std::endl;
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	// 4. 创建全屏四边形（类似 debugTexMesh ）
+	fullScreenQuad = new OGLMesh();
+	fullScreenQuad->SetVertexPositions({
+		Vector3(-1,  1, 0),
+		Vector3(-1, -1, 0),
+		Vector3( 1, -1, 0),
+		Vector3( 1,  1, 0)
+	});
+	fullScreenQuad->SetVertexTextureCoords({
+		Vector2(0, 1),
+		Vector2(0, 0),
+		Vector2(1, 0),
+		Vector2(1, 1)
+	});
+	fullScreenQuad->SetVertexIndices({0,1,2,2,3,0});
+	fullScreenQuad->UploadToGPU();
+
+	// 5. 加载一个后处理着色器
+	postProcessShader = new OGLShader("PostProcess.vert", "PostProcess.frag");
+
+}
+
 
