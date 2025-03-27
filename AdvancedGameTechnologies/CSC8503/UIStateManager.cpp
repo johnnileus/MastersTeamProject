@@ -6,6 +6,8 @@
 #include "TutorialGame.h"
 #include "AudioManager.h"
 
+extern TutorialGame* g;
+
 UIStateManager::UIStateManager() {
 
 }
@@ -70,8 +72,6 @@ void UIStateManager::States() {
             ImGuiWindowFlags_NoResize);
 
         ImGui::SetWindowFontScale(2.0f);
-
-        //TODO: Set the text position little above of the center of the full screen
         ImGui::SetWindowPos(ImVec2(500, 100));
         ImGui::SetWindowSize(ImVec2(300, 100));
         ImGui::TextColored(ImVec4(255, 0, 0, 1), "Wave 1 Begins !!");
@@ -80,15 +80,13 @@ void UIStateManager::States() {
         break;
     }
 
-                        //  Pause Menu 
+    //  Pause Menu 
     case UIState::Paused: {
 
 
         ImGui::SetWindowPos(ImVec2(500, 100));
         ImGui::SetWindowSize(ImVec2(300, 100));
 
-        /*ImGui::SetWindowSize(ImVec2(843, 488));
-        ImGui::SetWindowPos(ImVec2(185, 100));*/
         ImGuiStyle& style = ImGui::GetStyle();
         style.FrameRounding = 5.0f;
         style.WindowRounding = 5.0f;
@@ -100,14 +98,12 @@ void UIStateManager::States() {
 
         ImGui::SetWindowFontScale(2.0f);
 
-        //ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Resume").x) * 0.5f );
         if (ImGui::Button("Resume", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::InGame);
 
         }
 
-        //ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Quit").x) * 0.5f);
         if (ImGui::Button("Quit", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::MainMenu);
@@ -159,6 +155,7 @@ void UIStateManager::States() {
         ImGui::SetWindowFontScale(2.0f);
         ImGui::SetWindowPos(ImVec2(500, 100));
         ImGui::SetWindowSize(ImVec2(400, 200));
+
         //TODO: Set the text position little above of the center of the full screen
         ImGui::TextColored(ImVec4(0, 0, 255, 1), "YET TO COMPLETE !");
 
@@ -177,16 +174,55 @@ void UIStateManager::States() {
     }
 
 
-                              //  End Game Screen 
+    //  End Game Screen 
     case UIState::EndGame: {
-        ImGui::Begin("Game Over", &isWindowOpen);
+       
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 15.0f);
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.8f));
 
-        //TODO: add win or loose based on enemies and hp. 
-        ImGui::Text("You ---- ?");
-        if (ImGui::Button("Return to Menu")) {
-            SetCurrentState(UIState::MainMenu);
+        const ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImVec2 center = viewport->GetWorkCenter();
+        ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
+        ImGui::SetNextWindowSize(ImVec2(400, 250));
+
+        if (ImGui::Begin("GameOver", nullptr,
+            ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+            ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar))
+        {
+            // Score text
+            ImGui::SetWindowFontScale(2.0f);
+            ImVec2 textSize = ImGui::CalcTextSize("Final Score: 0000");
+            ImGui::SetCursorPosX((400 - textSize.x) * 0.5f);
+            ImGui::Text("Final Score: %d", 0);
+
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
+
+            ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 15.0f); 
+            ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(30, 20));
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.1f, 0.1f, 1.0f)); 
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.2f, 0.2f, 1.0f)); 
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.7f, 0.1f, 0.1f, 1.0f)); 
+
+            ImGui::SetWindowFontScale(1.5f); 
+            textSize = ImGui::CalcTextSize("QUIT GAME");
+            ImGui::SetCursorPosX((400 - (textSize.x + 60)) * 0.5f); 
+
+            if (ImGui::Button("QUIT GAME")) {
+                SetCurrentState(UIState::MainMenu);
+            }
+
+            ImGui::PopStyleColor(3);
+            ImGui::PopStyleVar(2);
+            ImGui::SetWindowFontScale(1.0f); 
+
+            ImGui::End();
         }
-        ImGui::End();
+
+        ImGui::PopStyleColor();
+        ImGui::PopStyleVar();
+
         break;
     }
     }
@@ -216,6 +252,9 @@ void UIStateManager::HandleInput() {
 
 UIState UIStateManager::GetCurrentState() {
     return currentState;
+    if (g->getPlayer()->GetHealth() <= 0) {
+		SetCurrentState(UIState::EndGame);
+    }
 }
 
 void UIStateManager::SetCurrentState(UIState newState) {
