@@ -23,11 +23,11 @@ GameObject* Rope::AddRopeToWorld(GameWorld* world, const Vector3& startPos, cons
     float maxDistance = interval*0.8;
     int numLinks = static_cast<int>(Vector::Length(endPos - startPos) / interval); // Dynamically calculate the number of links
 
-    GameObject* startStick = SceneManager::Instance().AddCubeToWorld(world, startPos,Vector3(0.5,1,0.5),0);
-    GameObject* endStick = SceneManager::Instance().AddCubeToWorld(world, endPos,Vector3(0.5,1,0.5),0);
+    GameObject* startStick = Scene::AddCubeToWorld(world, startPos,Vector3(0.5,1,0.5),0);
+    GameObject* endStick = Scene::AddCubeToWorld(world, endPos,Vector3(0.5,1,0.5),0);
 
-    GameObject* start = SceneManager::Instance().AddCubeToWorld (world, startPos, segmentSize, 0.0f); // Fixed point start
-    GameObject* end = SceneManager::Instance().AddCubeToWorld(world, endPos, segmentSize, 0.0f);     // Fixed point end
+    GameObject* start = Scene::AddCubeToWorld (world, startPos, segmentSize, 0.0f); // Fixed point start
+    GameObject* end = Scene::AddCubeToWorld(world, endPos, segmentSize, 0.0f);     // Fixed point end
 
     startStick->GetRenderObject()->SetColour(Vector4(0.8,0.9,0.9,1));
     endStick->GetRenderObject()->SetColour(Vector4(0.8,0.9,0.9,1));
@@ -37,7 +37,7 @@ GameObject* Rope::AddRopeToWorld(GameWorld* world, const Vector3& startPos, cons
     for (int i = 1; i <= numLinks; ++i) {
         // Calculate the position of each intermediate node
         Vector3 position = startPos + Vector::Normalise(endPos - startPos) * (interval * i);
-        GameObject* block = SceneManager::Instance().AddCubeToWorld(world, position, segmentSize, invSegmentMass);
+        GameObject* block = Scene::AddCubeToWorld(world, position, segmentSize, invSegmentMass);
         block->GetRenderObject()->SetDefaultTexture(AssetManager::Instance().metalTex);
         // Add constraint connection to the previous node
         PositionConstraint* constraint = new PositionConstraint(previous, block, maxDistance);

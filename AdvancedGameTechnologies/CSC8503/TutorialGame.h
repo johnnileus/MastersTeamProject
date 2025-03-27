@@ -37,7 +37,8 @@
 
 #include "NavMeshGrid.h"
 #include "NavMeshAgent.h"
-
+#include "DemoShootableEnemy.h"
+#include "PassiveItem.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -46,8 +47,9 @@ namespace NCL {
 			TutorialGame();
 			~TutorialGame();
 
+			void InitScene(string name);
+
 			virtual void UpdateGame(float dt);
-			GameObject* AddSphereToWorld(const Vector3& position,float radius,float inverseMass,const Vector3& initialVelocity);
 
 			void BroadcastPosition();
 			void SendTransform();
@@ -68,7 +70,6 @@ namespace NCL {
 			Player* getPlayer() { return player; }
 
 		protected:
-			void InitialiseAssets();
 
 			void InitCamera();
 			void UpdateKeys();
@@ -79,20 +80,26 @@ namespace NCL {
 			void CreateRopeGroup();
 
 			void InitNavigationTestLevel();
+			void InitEnemies();
+			void UpdateEnemies(float dt);
 
 			//Terrain Generation
 			void InitTerrain();
 
 			//Timer
-			float timer = 180;
+			float timerSecs = 0;
+			float timerMins = 0;
 
-			//Transitions
-			void Transition();
+			//Items
+			void InitItems();
+			std::vector<PassiveItem*> itemList;
 
 			//networking
 			NetworkManager* networkManager = new NetworkManager();
 			GameObject* connectedPlayers[8];
 
+			//SceneManager
+			SceneManager* sceneManager;
 
 			std::vector<GameObject*> catCoins; // A list used to store all CatCoins.
 			void InitCatCoins();
@@ -103,7 +110,6 @@ namespace NCL {
 
 			ThirdPersonCamera* thirdPersonCam;
 
-			GameObject* AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 10.0f);
 
 #ifdef USEVULKAN
 			GameTechVulkanRenderer*	renderer;
@@ -141,7 +147,6 @@ namespace NCL {
 
 
 			GameObject* objClosest = nullptr;
-			void GenerateWall();
 			void SetWallColour();
 
 			void DisplayPathfinding(); // display navigation path
@@ -153,6 +158,9 @@ namespace NCL {
 
 			NavMeshGrid* navGrid;
 			NavMeshAgent* navMeshAgent;
+			std::vector<DemoShootableEnemy*> enemyList;
+
+			float bgmVolume = 0.5f;
 		};
 	}
 }

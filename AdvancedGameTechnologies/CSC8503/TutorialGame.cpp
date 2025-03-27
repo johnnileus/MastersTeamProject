@@ -1,8 +1,12 @@
 #pragma once
 
 #include "TutorialGame.h"
+#include "AudioManager.h"
 
-
+//#include "json/json11.hpp"
+//#include <iostream>
+//#include <fstream>
+//#include <sstream>
 
 using namespace NCL;
 using namespace CSC8503;
@@ -20,10 +24,8 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 
 	physics		= new PhysicsSystem(*world);
 
-	forceMagnitude	= 1.0f;
-	useGravity		= false;
-
-	world->GetMainCamera().SetController(controller);
+	navGrid = nullptr;
+	navMeshAgent = nullptr;
 
 	controller.MapAxis(0, "Sidestep");
 	controller.MapAxis(1, "UpDown");
@@ -32,29 +34,43 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	controller.MapAxis(3, "XLook");
 	controller.MapAxis(4, "YLook");
 
-
-	thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(),controller);
-
-	navGrid = nullptr;
-	navMeshAgent = nullptr;
-
-	InitialiseAssets();
-}
-
-/*
-
-Each of the little demo scenarios used in the game uses the same 2 meshes, 
-and the same texture and shader. There's no need to ever load in anything else
-for this module, even in the coursework, but you can add it if you like!
-
-*/
-void TutorialGame::InitialiseAssets() {
-
+	forceMagnitude	= 1.0f;
+	useGravity		= false;
 	AssetManager::Instance().LoadAssets(renderer);
-	
-	InitCamera();
-	InitWorld();
+
+	sceneManager = new SceneManager();
+	sceneManager->InitScenes();
+
+	InitScene("default");
 }
+
+void TutorialGame::InitScene(string name) {
+	world->ClearAndErase();
+
+	//delete individual enemies first
+	physics->Clear();
+
+	world->GetMainCamera().SetController(controller);
+	world->GetMainCamera().SetNearPlane(0.1f);
+	world->GetMainCamera().SetFarPlane(500.0f);
+
+
+
+	thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(), controller);
+	if (thirdPersonCam)
+	{
+		thirdPersonCam->SetPitch(0.0f);
+		thirdPersonCam->SetYaw(0.0f);
+	}
+	std::cout << "aa " << sceneManager->scenes.size() << std::endl;
+	std::cout << sceneManager << std::endl;
+	
+	player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
+
+	sceneManager->SwitchScene(name, world);
+}
+
+
 
 TutorialGame::~TutorialGame()	{
 
@@ -95,14 +111,12 @@ void TutorialGame::UpdateGame(float dt) {
 		Debug::UpdateRenderables(dt);
 
 		//Timer
-		while (timer >= 0.0f) {
-			timer -= dt;
+		timerSecs += dt;
+		if (timerSecs >= 60.0f) {
+			timerMins += 1;
+			timerSecs = 0;
 		}
-
-		Debug::Print("Time:" + std::to_string(static_cast<int>(timer)), Vector2(80, 15));
-		if (timer <= 0) {
-			Transition();
-		}
+		Debug::Print("Time:" + std::to_string(static_cast<int>(timerMins)) + ":" + std::to_string(static_cast<int>(timerSecs)), Vector2(80, 15));
 
 	}
 	else {
@@ -111,17 +125,11 @@ void TutorialGame::UpdateGame(float dt) {
 
 		renderer->Render();
 		Debug::UpdateRenderables(dt);
-
-
 	}
 
 	DisplayPathfinding();
-
-
-
-
-
-
+  
+	UpdateEnemies(dt);
 }
 
 void TutorialGame::UpdateKeys() {
@@ -156,6 +164,13 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::P)) {
 		TogglePaused();
 	}
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
+		InitScene("default");
+	}
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::B)) {
+		InitScene("default2");
+	}
+
 }
 
 
@@ -174,26 +189,28 @@ void TutorialGame::InitCamera() {
 }
 
 void TutorialGame::InitWorld() {
-	world->ClearAndErase();
-	physics->Clear();
 
-	CreateRopeGroup();
+
+	Scene::CreateRopeGroup(world);
 	
-	//InitPlayer();
 	player = Player::Instantiate(world,thirdPersonCam,Vector3(20,0,30));
 
-	GenerateWall();
+	Scene::GenerateWall(world);
 
 	InitCatCoins();
 	
-	doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
+	//doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
 	
-	Enemy::Instantiate(world,enemies,player,Vector3(50,0,0));
 
-	InitTerrain();
+	InitEnemies();
 
-	InitDefaultFloor();
+	//InitTerrain();
 
+	Scene::InitDefaultFloor(world);
+
+	InitItems();
+
+  /*
 	// Load the navigation grid
 	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
 
@@ -207,10 +224,8 @@ void TutorialGame::InitWorld() {
 		while (outPath.PopWaypoint(pos)) {
 			testNodes.push_back(pos); // Store path waypoints
 		}
+  */
 
-		enemies[0]->SetMovePath(testNodes);
-	}
-	
 	world->PrintObjects();
 
 }
@@ -218,7 +233,7 @@ void TutorialGame::InitWorld() {
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
-	SceneManager::Instance().AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
+	Scene::AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
 
 
@@ -233,65 +248,18 @@ void TutorialGame::InitCatCoins() {
 
 }
 
-/*
 
-Builds a game object that uses a sphere mesh for its graphics, and a bounding sphere for its
-rigid body representation. This and the cube function will let you build a lot of 'simple' 
-physics worlds. You'll probably need another function for the creation of OBB cubes too.
 
-*/
-GameObject* TutorialGame::AddSphereToWorld(const Vector3& position,float radius,float inverseMass,const Vector3& initialVelocity) {
-	GameObject* sphere = new GameObject();
 
-	SphereVolume* volume = new SphereVolume(radius);
-	sphere->SetBoundingVolume((CollisionVolume*)volume);
-
-	sphere->GetTransform().SetScale(Vector3(radius, radius, radius));
-	sphere->GetTransform().SetPosition(position);
-
-	sphere->SetRenderObject(new RenderObject(&sphere->GetTransform(),AssetManager::Instance().sphereMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
-	sphere->SetPhysicsObject(new PhysicsObject(&sphere->GetTransform(),sphere->GetBoundingVolume()));
-
-	PhysicsObject* physicsObject = sphere->GetPhysicsObject();
-	physicsObject->SetInverseMass(inverseMass);
-	physicsObject->SetLinearVelocity(initialVelocity);
-
-	physicsObject->InitSphereInertia();
-
-	world->AddGameObject(sphere);
-	
-	return sphere;
-}
-
-GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass) {
-	GameObject* cube = new GameObject();
-
-	AABBVolume* volume = new AABBVolume(dimensions);
-	cube->SetBoundingVolume((CollisionVolume*)volume);
-
-	cube->GetTransform()
-		.SetPosition(position)
-		.SetScale(dimensions * 2.0f);
-
-	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), AssetManager::Instance().cubeMesh, AssetManager::Instance().basicTex, AssetManager::Instance().basicShader));
-	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
-
-	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
-	cube->GetPhysicsObject()->InitCubeInertia();
-	
-	world->AddGameObject(cube);
-
-	return cube;
-}
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
 
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
-	SceneManager::Instance().AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
+	Scene::AddDefaultFloorToWorld(world, Vector3(0,-3,0)+offset, Vector3(70,2,70));
+	Scene::AddDefaultFloorToWorld(world, Vector3(70,-3,0)+offset, Vector3(1,10,70));
+	Scene::AddDefaultFloorToWorld(world, Vector3(0,-3,-70)+offset, Vector3(70,10,1));
+	Scene::AddDefaultFloorToWorld(world, Vector3(0,-3,70)+offset, Vector3(70,10,1));
+	Scene::AddDefaultFloorToWorld(world, Vector3(-70,-3,0)+offset, Vector3(1,10,70));
 }
 
 void TutorialGame::CreateRopeGroup()
@@ -314,21 +282,7 @@ void TutorialGame::DisplayPathfinding() {
 	}
 }
 
-void TutorialGame::GenerateWall()
-{
-	// add all walls to the list
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,12),Vector3(6,1,1)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,12),Vector3(6,1,1)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(60,0,30),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(45,0,50),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(70,0,50),Vector3(3,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(35,0,70),Vector3(9,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(65,0,70),Vector3(8,1,3)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(10,0,50),Vector3(4,1,4)));
-	floors.push_back(SceneManager::Instance().AddDefaultFloorToWorld(world,Vector3(25,0,50),Vector3(2,1,4)));
 
-	SetWallColour();
-}
 
 void TutorialGame::SetWallColour()
 {
@@ -346,10 +300,6 @@ void TutorialGame::ReloadLevel() {
 	InitWorld();
 
 	std::cout << "Level reloaded!" << std::endl;
-}
-
-void TutorialGame::Transition() {
-	return;
 }
 
 void TutorialGame::InitNavigationTestLevel() {
@@ -378,3 +328,31 @@ void TutorialGame::ToggleCursor() {
 	Window::GetWindow()->LockMouseToWindow(cursorLocked);
 }
 
+void TutorialGame::InitEnemies() {
+	enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(world, Vector3(10,3,10), 1.0f, 100.0f));
+}
+
+void TutorialGame::InitItems() {
+	for (int i = 0; i < 2; i++) {
+		int x = 10;
+		int rand = (std::rand() % 5) + 1;
+		PassiveItem::Instantiate(world, itemList, player, Vector3(x + (i * 10), 0, 40), rand);
+	}
+}
+
+void TutorialGame::UpdateEnemies(float dt) {
+	for (int e = 0; e < enemies.size(); ++e) {
+		if (enemyList[e]->CheckAlive()) {
+			//alive enemy logic
+			continue;
+		}
+		else {
+			if (enemyList[e]->CheckRespawn()) {
+				enemyList[e]->Spawn();
+			}
+			else {
+				enemyList[e]->UpdateRespawnTimer(dt);
+			}
+		}
+	}
+}

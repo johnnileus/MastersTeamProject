@@ -1,4 +1,5 @@
 ﻿#include "Weapon.h"
+#include "AudioManager.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -11,14 +12,40 @@ void Weapon::Fire() {
     ammo--;
     std::cout << "Weapon fired! Damage: " << damage
               << ", ammo remaining: " << ammo << std::endl;
+    OnFireEvent.Invoke(this);
+
+    AudioManager::GetInstance().PlayEvent("event:/RifleFire");
 }
 
 void Weapon::Reload() {
-    ammo = maxAmmo;
-    std::cout << "Reload complete! Ammo: " << ammo << std::endl;
+    isReloading = true;
+    OnReloadStartEvent.Invoke(this);
 }
 
 void Weapon::Update(float deltaTime, bool isFiring, const Vector3& direction) {
+    static bool hasPlayedReloadSound = false;
+    if (isReloading)
+    {
+        if (!hasPlayedReloadSound) {
+            AudioManager::GetInstance().PlayEvent("event:/Rifle reload");
+            hasPlayedReloadSound = true;
+        }
+        reloadTimer-=deltaTime;
+        if (reloadTimer<=0.0f)
+        {
+            ammo = maxAmmo;
+            isReloading = false;
+            reloadTimer =reloadTime;
+            std::cout << "Reload complete! Ammo: " << ammo << std::endl;
+            OnReloadEndEvent.Invoke(this);
+            hasPlayedReloadSound = false;
+        }
+        else
+        {
+            return;
+        }
+    }
+
     if (shotTimer > 0.0f) {
         shotTimer -= deltaTime;
     }

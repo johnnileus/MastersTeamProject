@@ -1,6 +1,7 @@
 ﻿#include "Bullet.h"
 
 #include "SceneManager.h"
+#include "DemoShootableEnemy.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -8,8 +9,8 @@ using namespace CSC8503;
 Bullet::Bullet(float damage, float speed, float distance)
 {
     this->damage = damage;
-    this->distance = distance;
     this->speed = speed;
+    this->distance = distance;
     this->isDead = false;
 
     SetComponent(0.1,1);
@@ -26,16 +27,18 @@ Bullet::~Bullet()
 /// @param direction travel direction
 /// @param weapon from witch weapon
 /// @return 
-Bullet* Bullet::Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon)
+Bullet* Bullet::Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon,float distance)
 {
-    Bullet* bullet = new Bullet(weapon->getDamage(),200,100);
-    
+
+    Bullet* bullet = new Bullet(weapon->getDamage(),200,distance);
+    bullet->tag = "Bullet";
     bullet->direction = Vector::Normalise(direction);
     bullet->GetTransform().SetPosition(position); // original position
     bullet->myWorld = world;
+    bullet->damage = weapon->getDamage();
     world->AddGameObject(bullet);//add to physic world
     SceneManager::Instance().AddBullet(bullet);//must add to the manager for updating
-    Debug::DrawLine(position,position+direction*100.0f,Debug::CYAN,0.5);
+    Debug::DrawLine(position, position+direction*distance,Debug::CYAN,0.5);
     return bullet;
 }
 

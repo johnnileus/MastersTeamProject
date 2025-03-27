@@ -7,7 +7,14 @@
 #include "Enemy.h"
 #include "PhysicsObject.h"
 #include "Pistol.h"
+#include "Rifle.h"
+#include "Shotgun.h"
 #include "RenderObject.h"
+#include "AudioManager.h"
+
+#include "PassiveItem.h"
+
+#include "Weapon.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -46,7 +53,18 @@ void Player::Init(ThirdPersonCamera* cam)
 	collerctCoinColour = Vector4(0.949f, 1, 0.318f, 1);
 	playerPhysicObject = this->GetPhysicsObject();
 	myCam = cam;
-	myWeapon = new Pistol(this);
+	pistol = new Pistol(this);
+	rifle = new Rifle(this);
+	shotGun = new Shotgun(this);
+	currentWeapon = rifle;
+	weaponPack = {pistol,rifle,shotGun};
+
+	//////For weapon debug//////
+	RegisterWeaponEvents();
+	OnSwitchWeaponEvent.AddListener([](Player* m){
+		m->RegisterWeaponEvents();
+	});
+	///////////////////////////
 }
 
 void Player::SetComponent(float meshSize, float mass)
@@ -128,7 +146,8 @@ void Player::Update(float dt) {
 	FixBounce();
 	
 	HandleDash(dt); 
-	HandleAim();    
+	HandleAim();
+	HandleSwitchWeapon();
 
 	bool firing = Window::GetMouse()->ButtonDown(MouseButtons::Left);
 	if (firing) {
@@ -154,7 +173,7 @@ void Player::Update(float dt) {
 	DisplayUI();
 	HealthCheck();
 	animator->Update(dt);
-	myWeapon->Update(dt, firing, aimDir);
+	currentWeapon->Update(dt, firing, aimDir);
 
 	if (isTemporaryColourActive) {
 		colourTimer -= dt;
@@ -197,28 +216,63 @@ void Player::HealthCheck()
 {
 	if (health <= 0)
 	{
-		Debug::Print("Dead", Vector2(40, 40), Vector4(1, 0, 0, 1));
-		isDead = true;
+		Debug::Print("Dead", Vector2(40,40),Vector4(1,0,0,1));
+
+		if (!isDead) { 
+			isDead = true;
+			AudioManager::GetInstance().PlayEvent("event:/Player Dead");
+		}
+
 	}
+
 }
 
 void Player::HandleInput()
 {
 	// each frame clear the input buffer
 	inputDir = Vector2(0, 0);
-	
+
+	// Check if any movement key is pressed
+	bool isMoving = false;
+
 	// detect keyboard input
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
 		inputDir.y += -1.0f;  // front
+		isMoving = true;
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
 		inputDir.y += 1.0f;   // back
+		isMoving = true;
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
 		inputDir.x += -1.0f;  // left
+		isMoving = true;
 	}
 	if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
 		inputDir.x += 1.0f;   // right
+		isMoving = true;
+	}
+
+	if (isMoving) {
+		bool isPlaying = false;
+		if (footstepEvent) {
+			FMOD_STUDIO_PLAYBACK_STATE state;
+			footstepEvent->getPlaybackState(&state);
+			isPlaying = (state == FMOD_STUDIO_PLAYBACK_PLAYING);
+		}
+
+		if (!isPlaying) {
+			footstepEvent = AudioManager::GetInstance().PlayEvent("event:/Player Running");
+		}
+		else {
+			footstepEvent->setPaused(false);
+		}
+	}
+	else {
+		// stop footstep sound
+		if (footstepEvent) {
+			footstepEvent->setPaused(true);
+		}
 	}
 }
 
@@ -313,7 +367,7 @@ void Player::HandleFire(float dt)
 {
 	if (Window::GetMouse()->ButtonDown(NCL::MouseButtons::Left))
 	{
-		myWeapon->Fire();
+		currentWeapon->Fire();
 	}
 }
 
@@ -339,6 +393,8 @@ void Player::HandleDash(float dt) {
 			playerPhysicObject->AddForce(dashForce);  // Dash direction follows the current velocity
 			isDashing = true;
 			dashTimer = dashCooldown;  // Start cooldown timer
+
+			AudioManager::GetInstance().PlayEvent("event:/Dash");   // Dashsound
 		}
 	}
 }
@@ -350,6 +406,7 @@ void Player::HandleJump(float dt) {
 	if (isOnGround && Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
 		jumpTimeCounter = 0.1f;
 		isOnGround = false;
+		AudioManager::GetInstance().PlayEvent("event:/Player jump");
 	}
 	
 	if (jumpTimeCounter > 0) {
@@ -378,8 +435,15 @@ void Player::HandleAim()
 
 void Player::OnCollisionBegin(GameObject* otherObject)
 {
-	// collides Enemy
-	if (otherObject->tag == "Enemy")
+	//collides ground
+	if (otherObject->tag=="Ground")
+	{
+		isOnGround =true;
+	}
+
+	//collides Enemy
+	/*
+	if (otherObject->tag=="Enemy")
 	{
 		std::cout << otherObject->GetName() << std::endl;
 		Debug::DrawLine(this->GetTransform().GetPosition(), otherObject->GetTransform().GetPosition());
@@ -392,21 +456,33 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		}
 		else
 		{
+
 			health -= damage;
+            AudioManager::GetInstance().PlaySound("GetHurt.wav");
 			Enemy* enemy = dynamic_cast<Enemy*>(otherObject);
 			SetTemporaryColour(damageColour, 0.25f);
 			enemy->Reset();
 
 		}
 	}
+	*/
+	//collides Coin
+	if (otherObject->tag=="Coin")
 
-	// collides Coin
-	if (otherObject->tag == "Coin")
 	{
 		score += 10;
 		otherObject->SetActive(false);
 		RemoveObject(otherObject);
 		SetTemporaryColour(collerctCoinColour, 0.25f);
+	}
+
+	if (otherObject->tag == "Passive") {
+		otherObject->SetActive(false);
+		RemoveObject(otherObject);
+		PassiveItem* passiveItem = dynamic_cast<PassiveItem*>(otherObject);
+		if (passiveItem) {
+			passiveItem->UpdateCall();
+		}
 	}
 }
 
@@ -446,7 +522,6 @@ void Player::UpdateGroundStatus() {
 		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::GREEN);
 		isOnGround = true;
 	} else {
-		animator->Play(AnimationType::Player_Jump,true);
 		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::YELLOW);
 		isOnGround = false;
 	}
@@ -460,5 +535,46 @@ void Player::FixBounce()
 		playerPhysicObject->SetLinearVelocity(Vector3(currentVel.x, 0, currentVel.z));
 	}
 	wasOnGround = isOnGround;
+}
+
+void Player::HandleSwitchWeapon()
+{
+	if(Window::GetKeyboard()->KeyDown(KeyCodes::NUM1)&&weaponPack[0]&&currentWeapon!=weaponPack[0])
+	{
+		currentWeapon = weaponPack[0];
+		renderObject->subTextures[renderObject->subTextures.size()-1] = nullptr;
+		OnSwitchWeaponEvent.Invoke(this);
+		AudioManager::GetInstance().PlayEvent("event:/SwitchWeapon");
+	}
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM2)&&weaponPack[1]&&currentWeapon!=weaponPack[1])
+	{
+		currentWeapon = weaponPack[1];
+		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().woodTex;
+		OnSwitchWeaponEvent.Invoke(this);
+		AudioManager::GetInstance().PlayEvent("event:/SwitchWeapon");
+	}
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM3)&&weaponPack[2]&&currentWeapon!=weaponPack[2])
+	{
+		currentWeapon = weaponPack[2];
+		renderObject->subTextures[renderObject->subTextures.size()-1] = AssetManager::Instance().metalTex;
+		OnSwitchWeaponEvent.Invoke(this);
+		AudioManager::GetInstance().PlayEvent("event:/SwitchWeapon");
+	}
+}
+
+void Player::RegisterWeaponEvents()
+{
+	currentWeapon->OnFireEvent.AddListener([](Weapon* w)
+	{
+		Debug::Print(std::to_string(w->getAmmo()), Vector2(52,50),Debug::RED);
+	});
+	currentWeapon->OnReloadStartEvent.AddListener([](Weapon* w)
+	{
+		Debug::Print("Start Reload", Vector2(52,50),Debug::RED);
+	});
+	currentWeapon->OnReloadEndEvent.AddListener([](Weapon* w)
+	{
+	Debug::Print("Finish Reload", Vector2(52,50),Debug::RED);
+	});
 }
 

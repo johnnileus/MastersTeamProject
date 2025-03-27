@@ -21,9 +21,8 @@
 #include "BehaviourSelector.h"
 #include "BehaviourSequence.h"
 #include "BehaviourAction.h"
+#include "AudioManager.h"
 
-#include<fmod.hpp>
-#include<fmod_errors.h>
 
 
 using namespace NCL;
@@ -64,30 +63,24 @@ int main() {
 
 
 
-	// Initialize FMOD system
-	FMOD::System* system = nullptr;
-	FMOD_RESULT result = FMOD_OK;
-	// Initialize FMOD system
-	result = FMOD::System_Create(&system);
-	if (result != FMOD_OK) {
-		printf("FMOD system creation failed: %s\n", FMOD_ErrorString(result));
+
+	AudioManager& audio = AudioManager::GetInstance();
+	if (!audio.Init()) {
 		return -1;
 	}
-
-	// Initialize FMOD 
-	result = system->init(512, FMOD_INIT_NORMAL, 0);
-	if (result != FMOD_OK) {
-		printf("FMOD system initialization failed: %s\n", FMOD_ErrorString(result));
-		return -1;
-	}
-
-
-
-
-
-
-
 	
+	audio.LoadBank("../../Assets/Sounds/Master.bank");
+	audio.LoadBank("../../Assets/Sounds/Master.strings.bank");
+	audio.LoadBank("../../Assets/Sounds/Background Sound.bank");
+	audio.LoadBank("../../Assets/Sounds/Game Menu.bank");
+	audio.LoadBank("../../Assets/Sounds/Player.bank");
+	audio.LoadBank("../../Assets/Sounds/Enemy AI.bank");
+	audio.LoadBank("../../Assets/Sounds/Weapon.bank");
+	audio.LoadBank("../../Assets/Sounds/Environmental Effect.bank");
+	
+	audio.PlayEvent("event:/Gaming Background Sound");
+
+
 	g = new TutorialGame();
 	w->GetTimer().GetTimeDeltaSeconds(); //Clear the timer so we don't get a large first dt!
 
@@ -121,11 +114,11 @@ int main() {
 		w->SetTitle("Go Marble Ball: " + std::to_string(1000.0f * dt));
 
 		g->UpdateGame(dt);
+
+		audio.Update();
 	}
 
-	// Clean up FMOD
-	system->close();
-	system->release();
+	audio.Shutdown();
 
 
 	Window::DestroyGameWindow();

@@ -1,20 +1,24 @@
 ﻿#pragma once
 #include "GameWorld.h"
-#include "Player.h"
 #include "Weapon.h"
-using namespace NCL;
-using namespace CSC8503;
+#include "Player.h"
+namespace NCL{
+    namespace CSC8503
+    {
+        class  Player;
+        
+        class Pistol : public Weapon
+        {
+        public:
+            Pistol(Player* owner);
+            virtual ~Pistol();
 
-class Pistol : public Weapon
-{
-public:
-    Pistol(Player* owner);
-    virtual ~Pistol();
+            void Fire() override;
 
-    void Fire() override;
-    
-private:
-    ThirdPersonCamera* myCamera;
-    GameWorld* myWorld;
-    Player* owner;
+        private:
+            ThirdPersonCamera* myCamera;
+            GameWorld* myWorld;
+            Player* owner;
+        };
+    };
 };

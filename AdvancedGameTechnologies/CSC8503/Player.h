@@ -7,9 +7,16 @@
 #include "Quaternion.h"
 #include "ThirdPersonCamera.h"
 #include "Weapon.h"
+#include <fmod_studio.hpp>
+
 
 namespace NCL {
 	namespace CSC8503 {
+
+		class Pistol;
+		class Rifle;
+		class  Shotgun;
+		
 		class Player : public GameObject
 		{
 		public:
@@ -37,14 +44,40 @@ namespace NCL {
 			int score;
 
 			ThirdPersonCamera* myCam;
-			Weapon* myWeapon;
+			//Weapon
+			Weapon* currentWeapon;
+			Pistol* pistol;
+			Rifle* rifle;
+			Shotgun* shotGun;
+			vector<Weapon*> weaponPack;
 			Vector3 shootPoint;
+
+			//getters and setters for stats
+			int GetHealth() const {
+				return health;
+			}
+			void SetHealth(const int h) {
+				health = h;
+			}
+			int GetDamage() const {
+				return damage;
+			}
+			void SetDamage(const int d) {
+				damage = d;
+			}
+			int GetSpeed() const {
+				return maxSpeed;
+			}
+			void SetSpeed(const float s) {
+				maxSpeed = s;
+			}
+
+			Event<Player*> OnSwitchWeaponEvent;
 
 		protected:
 
 			//component
 			Mesh* playerMesh;
-			Texture* playerTex;
 			Shader* playerShader;
 			PhysicsObject* playerPhysicObject;
 			Transform* renderOffsetTransform;
@@ -67,6 +100,8 @@ namespace NCL {
 			void SetComponent(float meshSize, float mass);
 			void FaceAimDirection(float dt);
 
+			FMOD::Studio::EventInstance* footstepEvent = nullptr;
+
 			//jump
 			float jumpForce;         
 			bool isOnGround;         
@@ -78,8 +113,8 @@ namespace NCL {
 			
 			
 			//health
-			int health;
-			int damage; 
+			float health;
+			float damage; 
 
 			//dash
 			bool isDashing;           // Whether the player is dashing
@@ -97,6 +132,9 @@ namespace NCL {
 			Vector4 attackColour;
 			Vector4 collerctCoinColour;
 
+			void HandleSwitchWeapon();
+			void RegisterWeaponEvents();
+
 			void RemoveObject(GameObject* gameObject);
 			
 			float colourTimer;              
@@ -105,7 +143,7 @@ namespace NCL {
 			void DisplayUI();
 
 			void HealthCheck();
-			bool isDead;
+			bool isDead;	
 			
 		};
 	}
