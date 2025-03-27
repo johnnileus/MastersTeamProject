@@ -35,19 +35,23 @@ void  GhostEnemy::InitStateMachine() {
     stateMachine->AddState(restState);
 
     stateMachine->AddTransition(new StateTransition(patrolState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 20.0f;
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 60.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, patrolState, [&]() -> bool {
-        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 20.0f;
+        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 60.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, attackState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 5.0f;
+        if (currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 15.0f) {
+            this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
+            return true;
+        }
+        return false;
         }));
 
     stateMachine->AddTransition(new StateTransition(attackState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 5.0f;
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 15.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(patrolState, retreatState, [&]() -> bool {
@@ -63,7 +67,7 @@ void  GhostEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(retreatState, restState, [&]() -> bool {
-        return this->currentHealth < 0.15f * this->maxHealth && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 50.0f;
+        return this->currentHealth < 0.15f * this->maxHealth && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 80.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(restState, patrolState, [&]() -> bool {
@@ -121,12 +125,24 @@ void GhostEnemy::ChaseState() {
 
 void GhostEnemy::AttackState(float dt) {
     if (attackCooldown <= 0) {
-        NCL::Maths::Vector3 direction = Vector::Normalise(currentTarget->GetTransform().GetPosition() - this->GetTransform().GetPosition());
-        this->GetPhysicsObject()->AddForce(direction * chargeForce);
-        attackCooldown = 3;
+        NCL::Maths::Vector3 enemyPosition = this->GetTransform().GetPosition();
+        float maxDistance = 30.0f;
+
+        for (Player* player : players) {
+            NCL::Maths::Vector3 playerPosition = player->GetTransform().GetPosition();
+            float distance = Vector::Length(enemyPosition - playerPosition);
+
+            if (distance <= maxDistance) {
+                float damageFactor = 1.0f - (distance / maxDistance);
+                float damageToApply = this->damage * damageFactor;
+                player->ApplyDamage(damageToApply);
+            }
+        }
+        this->KillEnemy();
+        this->attackCooldown = 8;
     }
     else {
-        attackCooldown -= dt;
+        this->attackCooldown -= dt;
     }
 }
 
@@ -162,4 +178,18 @@ void GhostEnemy::RestState(float dt) {
 
 void GhostEnemy::UpdateEnemy(float dt) {
     this->stateMachine->Update(dt);
+
+    float cooldownPercentage = this->attackCooldown / 8;
+    Vector4 whiteColor = Vector4(0.5f, 0, 0.5f, 0.5f);
+    Vector4 yellowColor = Vector4(1, 1, 0, 0.5f);
+
+    if (cooldownPercentage > 0.9f) {
+        this->GetRenderObject()->SetColour(whiteColor);
+    }
+    else {
+        float flashSpeed = 0.25f + (0.75f * (cooldownPercentage / 0.9f));
+        float t = fmod(attackCooldown, flashSpeed) / flashSpeed;
+        Vector4 currentColor = (t < 0.5f) ? whiteColor : yellowColor;
+        this->GetRenderObject()->SetColour(currentColor);
+    }
 }
