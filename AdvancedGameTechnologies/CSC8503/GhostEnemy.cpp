@@ -7,7 +7,7 @@
 using namespace NCL;
 using namespace CSC8503;
 
-void  GhostEnemy::InitStateMachine() {
+void GhostEnemy::InitStateMachine() {
     State* patrolState = new State([&](float dt) -> void {
         this->PatrolState();
         });
@@ -35,15 +35,15 @@ void  GhostEnemy::InitStateMachine() {
     stateMachine->AddState(restState);
 
     stateMachine->AddTransition(new StateTransition(patrolState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 60.0f;
+        return currentTarget && (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 3600.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, patrolState, [&]() -> bool {
-        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 60.0f;
+        return !currentTarget || (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 3600.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, attackState, [&]() -> bool {
-        if (currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 15.0f) {
+        if (currentTarget && (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 225.0f) {
             this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
             return true;
         }
@@ -51,7 +51,7 @@ void  GhostEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(attackState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 15.0f;
+        return currentTarget && (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 225.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(patrolState, retreatState, [&]() -> bool {
@@ -67,7 +67,7 @@ void  GhostEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(retreatState, restState, [&]() -> bool {
-        return this->currentHealth < 0.15f * this->maxHealth && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 80.0f;
+        return this->currentHealth < 0.15f * this->maxHealth && (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 6400.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(restState, patrolState, [&]() -> bool {
@@ -75,23 +75,23 @@ void  GhostEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(restState, retreatState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 30.0f;
+        return currentTarget && (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 900.0f;
         }));
 }
+
 void GhostEnemy::PatrolState() {
-    float closestDistance = std::numeric_limits<float>::max();
+    float closestDistanceSquared = std::numeric_limits<float>::max();
     NCL::Maths::Vector3 enemyPosition = this->GetTransform().GetPosition();
 
     for (Player* player : players) {
-        float distance = Vector::Length(enemyPosition - player->GetTransform().GetPosition());
-        if (distance < closestDistance) {
-            closestDistance = distance;
+        float distanceSquared = Vector::LengthSquared(enemyPosition - player->GetTransform().GetPosition());
+        if (distanceSquared < closestDistanceSquared) {
+            closestDistanceSquared = distanceSquared;
             this->currentTarget = player;
         }
     }
 
-
-    if (this->currentNode == this->destination || this->destination == nullptr || this->path.size() == 0) {
+    if (this->currentNode == this->destination || this->destination == nullptr || this->path.empty()) {
         SetDestination();
         setCurrentNode(this->GetCurrentPosition().x, this->GetCurrentPosition().z);
         FindPath();
@@ -104,16 +104,16 @@ void GhostEnemy::ChaseState() {
         NCL::Maths::Vector3 playerPosition = currentTarget->GetTransform().GetPosition();
 
         NavMeshNode* closestNode = nullptr;
-        float closestDistance = std::numeric_limits<float>::max();
+        float closestDistanceSquared = std::numeric_limits<float>::max();
         for (NavMeshNode* node : nodeGrid->GetAllNodes()) {
-            float distance = Vector::Length(playerPosition - node->GetPosition());
-            if (distance < closestDistance) {
-                closestDistance = distance;
+            float distanceSquared = Vector::LengthSquared(playerPosition - node->GetPosition());
+            if (distanceSquared < closestDistanceSquared) {
+                closestDistanceSquared = distanceSquared;
                 closestNode = node;
             }
         }
 
-        if (closestNode && closestNode != this->destination || this->path.size() == 0) {
+        if (closestNode && (closestNode != this->destination || this->path.empty())) {
             this->destination = closestNode;
             FindPath();
         }
@@ -130,10 +130,10 @@ void GhostEnemy::AttackState(float dt) {
 
         for (Player* player : players) {
             NCL::Maths::Vector3 playerPosition = player->GetTransform().GetPosition();
-            float distance = Vector::Length(enemyPosition - playerPosition);
+            float distanceSquared = Vector::LengthSquared(enemyPosition - playerPosition);
 
-            if (distance <= maxDistance) {
-                float damageFactor = 1.0f - (distance / maxDistance);
+            if (distanceSquared <= maxDistance * maxDistance) {
+                float damageFactor = 1.0f - (sqrt(distanceSquared) / maxDistance);
                 float damageToApply = this->damage * damageFactor;
                 player->ApplyDamage(damageToApply);
             }
@@ -153,11 +153,11 @@ void GhostEnemy::RetreatState() {
     NCL::Maths::Vector3 retreatPosition = enemyPosition + (direction * 50.0f);
 
     NavMeshNode* retreatNode = nullptr;
-    float closestDistance = std::numeric_limits<float>::max();
+    float closestDistanceSquared = std::numeric_limits<float>::max();
     for (NavMeshNode* node : nodeGrid->GetAllNodes()) {
-        float distance = Vector::Length(node->GetPosition() - retreatPosition);
-        if (distance < closestDistance) {
-            closestDistance = distance;
+        float distanceSquared = Vector::LengthSquared(node->GetPosition() - retreatPosition);
+        if (distanceSquared < closestDistanceSquared) {
+            closestDistanceSquared = distanceSquared;
             retreatNode = node;
         }
     }
@@ -174,6 +174,7 @@ void GhostEnemy::RetreatState() {
 void GhostEnemy::RestState(float dt) {
     this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
     float healthIncrease = maxHealth * 0.01f * dt;
+    this->currentHealth = std::min(this->currentHealth + healthIncrease, this->maxHealth);
 }
 
 void GhostEnemy::UpdateEnemy(float dt) {
