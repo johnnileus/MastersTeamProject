@@ -139,7 +139,7 @@ RangedEnemy* Scene::AddRangedEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGri
 }
 
 GhostEnemy* Scene::AddGhostEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
-   GhostEnemy* e = new GhostEnemy(nodeGrid, scale, inverseMass, pos, 100.0f, true, 15.0f, 10.0f, world);
+   GhostEnemy* e = new GhostEnemy(nodeGrid, scale, inverseMass, pos, 100.0f, true, 15.0f, 50.0f, world);
     e->Spawn();
     world->AddGameObject(e);
     return e;
