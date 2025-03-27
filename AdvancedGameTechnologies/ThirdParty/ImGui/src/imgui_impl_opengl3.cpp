@@ -105,6 +105,10 @@
 //  ES 3.0    300       "#version 300 es"   = WebGL 2.0
 //----------------------------------------
 
+#ifdef _WIN32
+
+
+
 #if defined(_MSC_VER) && !defined(_CRT_SECURE_NO_WARNINGS)
 #define _CRT_SECURE_NO_WARNINGS
 #endif
@@ -954,3 +958,4 @@ void    ImGui_ImplOpenGL3_DestroyDeviceObjects()
 #endif
 
 #endif // #ifndef IMGUI_DISABLE
+#endif // _WIN32
