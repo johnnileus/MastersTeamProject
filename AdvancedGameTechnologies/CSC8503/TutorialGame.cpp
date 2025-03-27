@@ -413,7 +413,6 @@ void TutorialGame::UpdateEnemies(float dt) {
 }
 
 void TutorialGame::InitNavGrid() {
-	this->navGrid = new NavMeshGrid();
 }
 
 void TutorialGame::NewLevel() {
