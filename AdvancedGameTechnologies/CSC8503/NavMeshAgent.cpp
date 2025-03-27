@@ -132,9 +132,10 @@ void NavMeshAgent::FollowPath() {
 
     if (!this->path.empty()) {
         this->nextNode = this->path.front();
-        for (int n = 0; n < size(path) - 1; ++n) {
-            Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 0.1f);
-        }
+        //degbug lines for pathfinding
+        //for (int n = 0; n < size(path) - 1; ++n) {
+        //    Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 0.1f);
+        //}
     }
     
     MoveTowardsNextNode();
