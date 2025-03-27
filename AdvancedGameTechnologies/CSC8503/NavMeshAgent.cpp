@@ -123,7 +123,7 @@ void NavMeshAgent::FollowPath() {
     if (this->currentNode == this->nextNode && !this->path.empty()) {
         this->path.erase(this->path.begin());
         if (!this->path.empty()) {
-            this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
+            //this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
             this->nextNode = this->path.front();
         }
     }
