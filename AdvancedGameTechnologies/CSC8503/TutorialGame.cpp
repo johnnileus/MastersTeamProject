@@ -463,9 +463,6 @@ void TutorialGame::ReloadLevel() {
 	std::cout << "Level reloaded!" << std::endl;
 }
 
-void TutorialGame::Transition() {
-	return;
-}
 
 
 void TutorialGame::InitNavigationTestLevel() {
@@ -502,7 +499,7 @@ void TutorialGame::InitItems() {
 	for (int i = 0; i < 2; i++) {
 		int x = 10;
 		int rand = (std::rand() % 5) + 1;
-		PassiveItem::Instantiate(world, itemList, player, Vector3(x + (i * 10), 0, 20), rand);
+		PassiveItem::Instantiate(&world, itemList, player, Vector3(x + (i * 10), 0, 20), rand);
 	}
 }
 
