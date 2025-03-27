@@ -323,12 +323,23 @@ namespace NCL::Maths {
         }
 
         template <typename T, uint32_t n>
-       constexpr VectorTemplate<T, n>        Clamp(const VectorTemplate<T, n>& input, const VectorTemplate<T, n>& mins, const VectorTemplate<T, n>& maxs) {
+        constexpr VectorTemplate<T, n>        Clamp(const VectorTemplate<T, n>& input, const VectorTemplate<T, n>& mins, const VectorTemplate<T, n>& maxs) {
             VectorTemplate<T, n> output;
             for (int i = 0; i < n; ++i) {
                 output.array[i] = std::clamp(input.array[i], mins.array[i], maxs.array[i]);
             }
             return output;
         }
+
+        template <typename T, uint32_t n>
+        VectorTemplate<T, n> Lerp(const VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b, float t) {
+            VectorTemplate<T, n> result;
+            for (int i = 0; i < n; ++i) {
+                result[i] = a[i] + t * (b[i] - a[i]);
+            }
+            return result;
+       }
     }
+
+
 }
