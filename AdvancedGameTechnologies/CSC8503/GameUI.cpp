@@ -138,10 +138,8 @@ void GameUI::RenderHealthBar() {
 
 void GameUI::RenderScoreAndTimer() {
     // Convert timer to minutes and seconds
-    int timer = 300;
-
-    int minutes = static_cast<int>(timer) / 60;
-    int seconds = static_cast<int>(timer) % 60;
+    int minutes = g->GetTimerMins();
+    int seconds = g->GetTimerSecs();
 
     char scoreText[32];
     snprintf(scoreText, sizeof(scoreText), "Score: %d", g->getPlayer()->score);

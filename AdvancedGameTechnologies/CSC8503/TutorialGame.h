@@ -38,7 +38,13 @@
 #include "NavMeshGrid.h"
 #include "NavMeshAgent.h"
 #include "DemoShootableEnemy.h"
+
+#include "MeleeEnemy.h"
+#include "RangedEnemy.h"
+#include "GhostEnemy.h"
+
 #include "PassiveItem.h"
+
 
 namespace NCL {
 	namespace CSC8503 {
@@ -69,6 +75,16 @@ namespace NCL {
 
 			Player* getPlayer() { return player; }
 
+			int GetTimerSecs() const {
+				return timerSecs;
+			}
+			int GetTimerMins() const {
+				return timerMins;
+			}
+			int GetLevelCount() const {
+				return levelCount;
+			}
+
 		protected:
 
 			void InitCamera();
@@ -80,11 +96,16 @@ namespace NCL {
 			void CreateRopeGroup();
 
 			void InitNavigationTestLevel();
+			void InitNavGrid();
 			void InitEnemies();
 			void UpdateEnemies(float dt);
 
 			//Terrain Generation
 			void InitTerrain();
+
+			//Levels
+			void NewLevel();
+			int levelCount = 1;
 
 			//Timer
 			float timerSecs = 0;
@@ -158,9 +179,20 @@ namespace NCL {
 
 			NavMeshGrid* navGrid;
 			NavMeshAgent* navMeshAgent;
-			std::vector<DemoShootableEnemy*> enemyList;
+			std::vector<MeleeEnemy*> meleeEnemyList;
+			std::vector<RangedEnemy*> rangedEnemyList;
+			std::vector<GhostEnemy*> ghostEnemyList;
 
+			int enemyFrameCount;
+			int meleeEnemyFrameCountMax;
+			int meleeEnemyFrameCount;
+			int rangedEnemyFrameCountMax;
+			int rangedEnemyFrameCount;
+			int ghostEnemyFrameCountMax;
+			int ghostEnemyFrameCount;
+			std::vector<DemoShootableEnemy*> enemyList;
 			float bgmVolume = 0.5f;
+
 		};
 	}
 }
