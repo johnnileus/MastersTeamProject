@@ -13,7 +13,12 @@
 #include "Rope.h"
 #include "Player.h"
 #include "Door.h"
-
+#include "DemoShootableEnemy.h"
+#include "NavMeshAgent.h"
+#include "MeleeEnemy.h"
+#include "RangedEnemy.h"
+#include "GhostEnemy.h"
+#include "Event.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -30,7 +35,7 @@ namespace NCL {
 			static void InitDefaultFloor(GameWorld* world);
 			static void CreateRopeGroup(GameWorld* world);
 			static void GenerateWall(GameWorld* world);
-
+			MeleeEnemy* AddEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
 		protected:
 
 		};
@@ -47,5 +52,10 @@ namespace NCL {
 			void InitScene(GameWorld* world) override;
 		};
 
+		class EnemyTestScene : public Scene {
+		public:
+			Event<int> newEvent;
+			void InitScene(GameWorld* world) override;
+		};
 	}
 }
