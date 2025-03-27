@@ -57,11 +57,23 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 
 	sceneManager = new SceneManager();
 	sceneManager->InitScenes();
-	Scene* temp = sceneManager->scenes["EnemyTestScene"];
-	EnemyTestScene* temp2 = dynamic_cast<EnemyTestScene*>(temp);
-	temp2->newEvent.AddListener(std::bind(&TutorialGame::Test, this, std::placeholders::_1));
+
+	EnemyTestScene* listener = dynamic_cast<EnemyTestScene*>(sceneManager->scenes["EnemyTestScene"]);
+	listener->newMeleeEnemy.AddListener(std::bind(&TutorialGame::UpdateMeleeEnemyList, this, std::placeholders::_1));
+	listener->newRangedEnemy.AddListener(std::bind(&TutorialGame::UpdateRangedEnemyList, this, std::placeholders::_1));
+	listener->newGhostEnemy.AddListener(std::bind(&TutorialGame::UpdateGhostEnemyList, this, std::placeholders::_1));
 
 	InitScene("EnemyTestScene");
+	enemyFrameCount = 1;
+
+	meleeEnemyFrameCount = 0;
+	meleeEnemyFrameCountMax = meleeEnemyList.size();
+
+	rangedEnemyFrameCount = 0;
+	rangedEnemyFrameCountMax = rangedEnemyList.size();
+
+	ghostEnemyFrameCount = 0;
+	ghostEnemyFrameCountMax = ghostEnemyList.size();
 }
 
 void TutorialGame::InitScene(string name) {
@@ -451,7 +463,7 @@ void TutorialGame::InitItems() {
 
 void TutorialGame::UpdateEnemies(float dt) {
 	//frames 1,4,7 ect
-	if (enemyFrameCount % 3 == 1) {
+	if (enemyFrameCount % 3 == 0) {
 		if (meleeEnemyFrameCount >= meleeEnemyFrameCountMax) {
 			meleeEnemyFrameCount = 0;
 		}
@@ -473,7 +485,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 		meleeEnemyFrameCount++;
 	}
 
-	if (enemyFrameCount % 3 == 2) {
+	if (enemyFrameCount % 3 == 1) {
 		if (rangedEnemyFrameCount >= rangedEnemyFrameCountMax) {
 			rangedEnemyFrameCount = 0;
 		}
@@ -494,7 +506,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 		rangedEnemyFrameCount++;
 	}
 
-	if (enemyFrameCount % 3 == 3) {
+	if (enemyFrameCount % 3 == 2) {
 		if (ghostEnemyFrameCount >= ghostEnemyFrameCountMax) {
 			ghostEnemyFrameCount = 0;
 		}
@@ -516,7 +528,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 	}
 
 	enemyFrameCount++;
-	if (enemyFrameCount = 4) {
+	if (enemyFrameCount == 4) {
 		enemyFrameCount = 1;
 	}
 }

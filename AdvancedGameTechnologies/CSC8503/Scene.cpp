@@ -115,7 +115,7 @@ void Scene::GenerateWall(GameWorld* world)
 }
 
 void Scene::InitDefaultFloor(GameWorld* world) {
-    Vector3 offset(20, 0, 20);
+    Vector3 offset(0, 0, 0);
 
     Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 0) + offset, Vector3(129, 2, 129));
     Scene::AddDefaultFloorToWorld(world, Vector3(130, -3, 0) + offset, Vector3(1, 10, 130));
@@ -124,12 +124,27 @@ void Scene::InitDefaultFloor(GameWorld* world) {
     Scene::AddDefaultFloorToWorld(world, Vector3(-130, -3, 0) + offset, Vector3(1, 10, 130));
 }
 
-MeleeEnemy* Scene::AddEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+MeleeEnemy* Scene::AddMeleeEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
     MeleeEnemy* e = new MeleeEnemy(nodeGrid, scale, inverseMass, pos, 100.0f, true, 15.0f, 10.0f, world);
     e->Spawn();
     world->AddGameObject(e);
     return e;
 }
+
+RangedEnemy* Scene::AddRangedEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+   RangedEnemy* e = new RangedEnemy(nodeGrid, scale, inverseMass, pos, 100.0f, true, 15.0f, 10.0f, world);
+    e->Spawn();
+    world->AddGameObject(e);
+    return e;
+}
+
+GhostEnemy* Scene::AddGhostEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+   GhostEnemy* e = new GhostEnemy(nodeGrid, scale, inverseMass, pos, 100.0f, true, 15.0f, 10.0f, world);
+    e->Spawn();
+    world->AddGameObject(e);
+    return e;
+}
+
 
 void Scene::InitScene(GameWorld* world) {
     std::cout << "empty scene" << std::endl;
@@ -161,5 +176,11 @@ void DefaultScene2::InitScene(GameWorld* world) {
 void EnemyTestScene::InitScene(GameWorld* world) {
     InitDefaultFloor(world);
     GenerateWall(world);
-    newEvent.Invoke(2);
+    this->navGrid = new NavMeshGrid;
+    //add 5 of each enemy to the world, can be configured for each scene should we need to
+    for (int i = 0; i < 5; ++i) {
+        newMeleeEnemy.Invoke(AddMeleeEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.0f, 1.0f));
+        newRangedEnemy.Invoke(AddRangedEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.0f, 1.0f));
+        newGhostEnemy.Invoke(AddGhostEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.0f, 1.0f));
+    }
 }
