@@ -37,6 +37,7 @@ namespace NCL {
 			//float bgmVolume = 1.0f;  //100% sound
 			//FMOD::Channel* bgmChannel = nullptr;  //only save BGM channel
 			SceKernelModule fmodLib;
+			SceKernelModule fmodStudioLib;
 			
 		};
 	}

@@ -14,6 +14,7 @@ AudioManager& AudioManager::GetInstance() {
 
 
 bool AudioManager::Init() {
+	fmodStudioLib = sceKernelLoadStartModule("/app0/sce_module/libfmodstudioL.prx", 0, nullptr, 0, nullptr, nullptr);
 	fmodLib = sceKernelLoadStartModule("/app0/sce_module/libfmodL.prx", 0, nullptr, 0, nullptr, nullptr);
 	std::cout << "Attempting to initialize FMOD..." << std::endl;
 
