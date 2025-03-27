@@ -157,10 +157,6 @@ void TutorialGame::UpdateKeys() {
 		InitCamera(); //F2 will reset the camera to a specific default place
 	}
 
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F3)) {
-		InitNavigationTestLevel(); //Loads a blank floor with navigation nodes displayed
-	}
-
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
 		useGravity = !useGravity; //Toggle gravity!
 		physics->UseGravity(useGravity);
@@ -319,25 +315,6 @@ void TutorialGame::ReloadLevel() {
 	InitWorld();
 
 	std::cout << "Level reloaded!" << std::endl;
-}
-
-void TutorialGame::InitNavigationTestLevel() {
-	//set camera to a debug camera
-
-	//draw debug graph of all nodes and edges
-	navMeshAgent = new NavMeshAgent(navGrid, 1.0f, 100.0f, Vector3(0,0,0), 100.0f, true, 15.0f);
-	std::vector<NavMeshNode*> nodes = navGrid->GetAllNodes();
-	for (int n = 0; n < nodes.size(); ++n) {
-		Vector3 nodePos = nodes[n]->GetPosition();
-		Debug::DrawLine(Vector3(nodePos.x, nodePos.y - 2, nodePos.z), Vector3(nodePos.x, nodePos.y + 2, nodePos.z), Vector4(1,1,1,1), 60.0F);
-		for (int e = 0; e < nodes[n]->GetEdges().size(); ++e) {
-			Debug::DrawLine(nodes[n]->GetPosition(), nodes[n]->GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7), 60.0F);
-		}
-	}
-	
-	//run function to pick a start and end node, then highlight them in differnet colour
-	//change the colour of each edge/node in the path to test it is working correctly
-	//add a test function to randomly select some nodes as impassable then test again
 }
 
 void TutorialGame::ToggleCursor() {
