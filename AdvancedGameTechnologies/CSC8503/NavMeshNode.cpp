@@ -1,12 +1,23 @@
 #include "NavMeshNode.h"
+#include "Ray.h"
+#include "CollisionDetection.h"
+#include "GameObject.h"
 
 using namespace NCL;
 using namespace CSC8503;
 
 void NavMeshNode::checkObstructed() {
-	//logic to determine if a node is obstructed by an environment object
+	NCL::Maths::Ray ray(this->position, NCL::Maths::Vector3(0, -1, 0));
+	RayCollision collisionInfo;
 
 	this->obstructed = false;
+	bool hasHit = this->world->Raycast(ray, collisionInfo, true);
+	if (hasHit) {
+		GameObject* hitObject = (GameObject*)collisionInfo.node;
+		if (hitObject && hitObject->tag == "Wall") {
+			this->obstructed = true;
+		}
+	}
 }
 
 void NavMeshNode::AddEdge(NavMeshNode* neighbour, float cost) {
