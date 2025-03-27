@@ -43,21 +43,15 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	listener->newGhostEnemy.AddListener(std::bind(&TutorialGame::UpdateGhostEnemyList, this, std::placeholders::_1));
 
 	InitScene("EnemyTestScene");
-	enemyFrameCount = 1;
-
-	meleeEnemyFrameCount = 0;
-	meleeEnemyFrameCountMax = meleeEnemyList.size();
-
-	rangedEnemyFrameCount = 0;
-	rangedEnemyFrameCountMax = rangedEnemyList.size();
-
-	ghostEnemyFrameCount = 0;
-	ghostEnemyFrameCountMax = ghostEnemyList.size();
 }
 
 void TutorialGame::InitScene(string name) {
+	meleeEnemyList.clear();
+	rangedEnemyList.clear();
+	ghostEnemyList.clear();
 	world->ClearAndErase();
-
+	
+	
 	//delete individual enemies first
 	physics->Clear();
 
@@ -81,6 +75,18 @@ void TutorialGame::InitScene(string name) {
 	sceneManager->SwitchScene(name, world);
 
 	InitItems();
+
+	enemyFrameCount = 1;
+
+	meleeEnemyFrameCount = 0;
+	meleeEnemyFrameCountMax = meleeEnemyList.size();
+
+	rangedEnemyFrameCount = 0;
+	rangedEnemyFrameCountMax = rangedEnemyList.size();
+
+	ghostEnemyFrameCount = 0;
+	ghostEnemyFrameCountMax = ghostEnemyList.size();
+
 }
 
 
@@ -125,7 +131,7 @@ void TutorialGame::UpdateGame(float dt) {
 
 		//Timer
 		timerSecs += dt;
-		if (timerSecs >= 60.0f) {
+		if (timerSecs >= 5.0f) {
 			timerMins += 1;
 			timerSecs = 0;
 		}
@@ -141,8 +147,6 @@ void TutorialGame::UpdateGame(float dt) {
 		renderer->Render();
 		Debug::UpdateRenderables(dt);
 	}
-
-	DisplayPathfinding();
   
 	UpdateEnemies(dt);
 }
@@ -197,55 +201,18 @@ void TutorialGame::InitCamera() {
 
 void TutorialGame::InitWorld() {
 
-	//CreateRopeGroup();
 
 	Scene::CreateRopeGroup(world);
 	
 	player = Player::Instantiate(world,thirdPersonCam,Vector3(20,0,30));
 
-	//GenerateWall();
 	Scene::GenerateWall(world);
 
 	InitCatCoins();
 	
-	//doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
-	
-
-	InitNavGrid();
-
-	InitEnemies();
-
-
-	enemyFrameCount = 1;
-
-	meleeEnemyFrameCount = 0;
-	meleeEnemyFrameCountMax = meleeEnemyList.size();
-
-	rangedEnemyFrameCount = 0;
-	rangedEnemyFrameCountMax =  rangedEnemyList.size();
-
-	ghostEnemyFrameCount = 0;
-	ghostEnemyFrameCountMax = ghostEnemyList.size();
-
 	InitTerrain();
 	Scene::InitDefaultFloor(world);
 	InitItems();
-
-  /*
-	// Load the navigation grid
-	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
-
-	// Generate a test path
-	NavigationPath outPath;
-	Vector3 startPos(80, 0, 10); // Start position
-	Vector3 endPos(80, 0, 80);   // End position
-
-	if (navGrid->FindPath(startPos, endPos, outPath)) {
-		Vector3 pos;
-		while (outPath.PopWaypoint(pos)) {
-			testNodes.push_back(pos); // Store path waypoints
-		}
-  */
 
 	world->PrintObjects();
 

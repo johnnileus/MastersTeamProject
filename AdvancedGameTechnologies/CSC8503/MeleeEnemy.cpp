@@ -162,7 +162,7 @@ void MeleeEnemy::RestState(float dt) {
 }
 
 void MeleeEnemy::UpdateEnemy(float dt) {
-    if (this->stateMachine) {
+    if (this->stateMachine != nullptr) {
         this->stateMachine->Update(dt);
     }
     else {
