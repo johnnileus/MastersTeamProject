@@ -1,4 +1,6 @@
 #include "GameTechRenderer.h"
+
+#include "Assets.h"
 #include "GameObject.h"
 #include "RenderObject.h"
 #include "Camera.h"
@@ -75,6 +77,8 @@ GameTechRenderer::GameTechRenderer(GameWorld& world) : OGLRenderer(*Window::GetW
 
 	//Initializing ImGui
 	gameUIHandler = new GameUI();
+	PostProcessingInit();
+
 }
 
 //Terrain Generation
@@ -194,26 +198,39 @@ void GameTechRenderer::LoadSkybox() {
 }
 
 void GameTechRenderer::RenderFrame() {
-	glEnable(GL_CULL_FACE);
-	glClearColor(0.7, 0.7, 0.7, 1);
-	BuildObjectList();
-	SortObjectList();
-	RenderShadowMap();
-	//RenderSkybox();
-	RenderCamera();
-	glDisable(GL_CULL_FACE); //Todo - text indices are going the wrong way...
-	glDisable(GL_BLEND);
-	glDisable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	NewRenderLines();
-	NewRenderTextures();
-	NewRenderText();
-	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_CULL_FACE);
+		glClearColor(0.7, 0.7, 0.7, 1);
 
-	//UI Rendering
-	gameUIHandler->RenderUI();
+		BuildObjectList();
+		SortObjectList();
+
+		// render shadow
+		RenderShadowMap();
+
+		// bind post process fbo
+		glBindFramebuffer(GL_FRAMEBUFFER, postProcessFBO);
+		glViewport(0, 0, windowSize.x, windowSize.y);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		RenderCamera();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
+		DoPostProcessPass(); 
+
+		//draw debug and ui
+		glDisable(GL_CULL_FACE); 
+		glDisable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		NewRenderLines();
+		NewRenderTextures();
+		NewRenderText();
+
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		gameUIHandler->RenderUI();
+
 }
 
 void GameTechRenderer::BuildObjectList() {
@@ -251,7 +268,7 @@ void GameTechRenderer::RenderShadowMap() {
 	for (const auto &obj : activeObjects) {
 		//dynamic shadow
 		if (obj->renderType == Enums::RenderObjectType::Skinned) {
-			 /*UseShader(*skinnedShadowShader);
+			 UseShader(*skinnedShadowShader);
 			
 			int projLocation = glGetUniformLocation(skinnedShadowShader->GetProgramID(), "projMatrix");
 			int viewLocation = glGetUniformLocation(skinnedShadowShader->GetProgramID(), "viewMatrix");
@@ -281,7 +298,7 @@ void GameTechRenderer::RenderShadowMap() {
 			BindMesh((OGLMesh&)*obj-> GetMesh());
 			for (int j = 0; j < obj->GetMesh()->GetSubMeshCount(); ++j) {
 				DrawBoundMesh((uint32_t)j);
-			}*/
+			}
 		}
 		// static shadow
 		else {
@@ -659,4 +676,71 @@ void GameTechRenderer::Draw(Mesh* mesh, bool multilayer) {
 		DrawBoundMesh();
 	}
 }
+
+void GameTechRenderer::PostProcessingInit()
+{
+
+	glGenTextures(1, &postProcessColor);
+	glBindTexture(GL_TEXTURE_2D, postProcessColor);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, windowSize.x, windowSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+	glGenRenderbuffers(1, &postProcessDepth);
+	glBindRenderbuffer(GL_RENDERBUFFER, postProcessDepth);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, windowSize.x, windowSize.y);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+
+	glGenFramebuffers(1, &postProcessFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, postProcessFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, postProcessColor, 0);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, postProcessDepth);
+
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		std::cout << "PostProcess FBO creation failed!" << std::endl;
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
+	fullScreenQuad = new OGLMesh();
+	fullScreenQuad->SetVertexPositions({
+		Vector3(-1,  1, 0),
+		Vector3(-1, -1, 0),
+		Vector3( 1, -1, 0),
+		Vector3( 1,  1, 0)
+	});
+	fullScreenQuad->SetVertexTextureCoords({
+		Vector2(0, 1),
+		Vector2(0, 0),
+		Vector2(1, 0),
+		Vector2(1, 1)
+	});
+	fullScreenQuad->SetVertexIndices({0,1,2,2,3,0});
+	fullScreenQuad->UploadToGPU();
+	
+	postProcessShader = new OGLShader("PostProcess.vert", "PostProcess.frag");
+
+}
+
+void GameTechRenderer::DoPostProcessPass() {
+	//bind post process shader
+	UseShader(*postProcessShader);
+	
+	BindTextureToShader(*(new OGLTexture(postProcessColor)), "sceneTex", 0);
+	
+	Matrix4 viewProj = Matrix4(); 
+	int loc = glGetUniformLocation(postProcessShader->GetProgramID(), "viewProjMatrix");
+	glUniformMatrix4fv(loc, 1, false, (float*)viewProj.array);
+
+
+	BindMesh(*fullScreenQuad);
+
+	DrawBoundMesh();
+}
+
+
 
