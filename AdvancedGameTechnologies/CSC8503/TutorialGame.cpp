@@ -100,7 +100,7 @@ void TutorialGame::InitScene(string name) {
 	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30));
 #endif // USEAGC
 
-	sceneManager->scenes[name]->InitScene(world);
+	sceneManager->scenes[name]->InitScene(&world);
 
 }
 
