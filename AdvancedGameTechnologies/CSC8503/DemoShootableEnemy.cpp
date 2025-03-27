@@ -15,8 +15,8 @@ void DemoShootableEnemy::KillEnemy() {
 }
 
 //function allows us to add additional logic to hits, e.g critical hit, change in behaviour etc
-void DemoShootableEnemy::RegisterHit() {
-	UpdateHealth(15.0f);
+void DemoShootableEnemy::RegisterHit(float damage) {
+	UpdateHealth(damage);
 	std::cout << this->currentHealth;
 	if (this->currentHealth <= 0) {
 		KillEnemy();
@@ -26,6 +26,5 @@ void DemoShootableEnemy::RegisterHit() {
 
 //this function is not being called for some reason
 void DemoShootableEnemy::OnCollisionBegin(GameObject* otherObject) {
-	std::cout << "collision" << std::endl;
-	if (otherObject->tag == "Bullet") { RegisterHit(); }
+	if (otherObject->tag == "Bullet") { RegisterHit(15.0f); }
 }
