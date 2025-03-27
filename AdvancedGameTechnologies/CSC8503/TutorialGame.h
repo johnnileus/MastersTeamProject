@@ -53,6 +53,7 @@ namespace NCL {
 			void BroadcastPosition();
 			void SendTransform();
 			void UpdateConnectedPlayer(int id, Vector3 pos, Quaternion rot);
+			void ToggleCursor();
 
 #ifdef _WIN32
 			//called by GameServer when player connects
