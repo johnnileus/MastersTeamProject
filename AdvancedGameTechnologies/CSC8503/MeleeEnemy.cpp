@@ -1,4 +1,15 @@
 #include "MeleeEnemy.h"void MeleeEnemy::RestState(float dt) {
+void MeleeEnemy::AttackState(float dt) {
+    if (attackCooldown <= 0) {
+        NCL::Maths::Vector3 direction = Vector::Normalise(currentTarget->GetTransform().GetPosition() - this->GetTransform().GetPosition());
+        this->GetPhysicsObject()->AddForce(direction * chargeForce);
+        attackCooldown = 3;
+    }
+    else {
+        attackCooldown -= dt;
+    }
+}
+
 void MeleeEnemy::RetreatState() {
     NCL::Maths::Vector3 playerPosition = currentTarget->GetTransform().GetPosition();
     NCL::Maths::Vector3 enemyPosition = this->GetTransform().GetPosition();
