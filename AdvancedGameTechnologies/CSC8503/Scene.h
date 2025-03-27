@@ -30,6 +30,7 @@ namespace NCL {
 			static void InitDefaultFloor(GameWorld* world);
 			static void CreateRopeGroup(GameWorld* world);
 			static void GenerateWall(GameWorld* world);
+			static void InitObstacles(GameWorld* world);
 
 		protected:
 

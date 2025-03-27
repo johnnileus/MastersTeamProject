@@ -482,13 +482,14 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		PassiveItem* passiveItem = dynamic_cast<PassiveItem*>(otherObject);
 		if (passiveItem) {
 			passiveItem->UpdateCall();
+			SetTemporaryColour(collerctCoinColour, 0.5f);
 		}
 	}
 }
 
 void Player::OnCollisionEnd(GameObject* otherObject)
 {
-	// nothing to do on collision end for now
+	//nothing for now
 }
 
 void Player::SetTemporaryColour(const Vector4& colour, float duration) {

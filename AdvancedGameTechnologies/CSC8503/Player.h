@@ -71,6 +71,12 @@ namespace NCL {
 			void SetSpeed(const float s) {
 				maxSpeed = s;
 			}
+			int GetJump() const {
+				return jumpForce;
+			}
+			void SetJump(const float j) {
+				jumpForce = j;
+			}
 
 			Event<Player*> OnSwitchWeaponEvent;
 

@@ -3,11 +3,6 @@
 #include "TutorialGame.h"
 #include "AudioManager.h"
 
-//#include "json/json11.hpp"
-//#include <iostream>
-//#include <fstream>
-//#include <sstream>
-
 using namespace NCL;
 using namespace CSC8503;
 
@@ -68,6 +63,8 @@ void TutorialGame::InitScene(string name) {
 	player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
 
 	sceneManager->SwitchScene(name, world);
+
+	InitItems();
 }
 
 
@@ -116,7 +113,9 @@ void TutorialGame::UpdateGame(float dt) {
 			timerMins += 1;
 			timerSecs = 0;
 		}
-		Debug::Print("Time:" + std::to_string(static_cast<int>(timerMins)) + ":" + std::to_string(static_cast<int>(timerSecs)), Vector2(80, 15));
+		//Debug::Print("Time:" + std::to_string(static_cast<int>(timerMins)) + ":" + std::to_string(static_cast<int>(timerSecs)), Vector2(80, 15));
+
+		NewLevel();
 
 	}
 	else {
@@ -151,7 +150,6 @@ void TutorialGame::UpdateKeys() {
 		physics->UseGravity(useGravity);
 	}
 
-	 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::U)) {
 		std::cout << "starting server" << std::endl;
 		networkManager->StartAsServer();
@@ -172,9 +170,6 @@ void TutorialGame::UpdateKeys() {
 	}
 
 }
-
-
-
 
 void TutorialGame::InitCamera() {
 	world->GetMainCamera().SetNearPlane(0.1f);
@@ -244,12 +239,10 @@ void TutorialGame::InitWorld() {
 
 }
 
-
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
 	Scene::AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
-
 
 void TutorialGame::InitCatCoins() {
 	// add CatCoin to the list
@@ -261,10 +254,6 @@ void TutorialGame::InitCatCoins() {
 	catCoins.push_back(CatCoin::Instantiate(world, Vector3(5, 0, 50)));
 
 }
-
-
-
-
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(0,0,0);
@@ -346,7 +335,8 @@ void TutorialGame::InitEnemies() {
 }
 
 void TutorialGame::InitItems() {
-	for (int i = 0; i < 2; i++) {
+	//todo: random placement of items
+	for (int i = 0; i < 5; i++) {
 		int x = 10;
 		int rand = (std::rand() % 5) + 1;
 		PassiveItem::Instantiate(world, itemList, player, Vector3(x + (i * 10), 0, 40), rand);
@@ -427,4 +417,12 @@ void TutorialGame::UpdateEnemies(float dt) {
 
 void TutorialGame::InitNavGrid() {
 	this->navGrid = new NavMeshGrid();
+}
+
+void TutorialGame::NewLevel() {
+	if (timerMins == 2) {
+		timerMins = 0;
+		levelCount++;
+		InitScene("default");
+	}
 }
