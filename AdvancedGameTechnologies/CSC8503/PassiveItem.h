@@ -27,10 +27,11 @@ namespace NCL {
 
 			void SetComponent(float meshSize, float InverseMass);
 			void SetUid(int uid);
-			void UpdateStats(Player* player, int myUid);
+			//void UpdateStats(Player* player, int myUid);
 			void UpdateHealth(Player* player, int healthVal);
 			void UpdateDamage(Player* player, int damageVal);
 			void UpdateSpeed(Player* player, int speedVal);
+			void UpdateJump(Player* player, int jumpVal);
 			float size;
 			float mass;
 			int myUid;
@@ -38,10 +39,12 @@ namespace NCL {
 			int health;
 			int damage;
 			float maxSpeed;
+			float jumpForce;
 
 			int healthVal;
 			int damageVal;
 			float speedVal;
+			float jumpVal;
 		};
 	}
 }

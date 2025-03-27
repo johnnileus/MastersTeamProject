@@ -36,9 +36,14 @@ namespace NCL {
 			static void InitDefaultFloor(GameWorld* world);
 			static void CreateRopeGroup(GameWorld* world);
 			static void GenerateWall(GameWorld* world);
+
 			MeleeEnemy* AddMeleeEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
 			RangedEnemy* AddRangedEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
 			GhostEnemy* AddGhostEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
+
+			static void InitObstacles(GameWorld* world);
+
+
 		protected:
 
 		};

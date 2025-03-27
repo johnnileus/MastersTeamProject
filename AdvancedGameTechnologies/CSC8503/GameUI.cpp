@@ -6,7 +6,6 @@
 #include "ImGui/imgui_impl_win32.h"
 
 extern TutorialGame* g;
-extern AssetManager* a;
 
 GameUI::GameUI() {
     IMGUI_CHECKVERSION();
@@ -91,8 +90,6 @@ void GameUI::RenderCrosshair() {
     float lineThickness = 2.0f;
     ImU32 crosshairColor = IM_COL32(255, 255, 255, 255); // White color
 
-    // Get the foreground draw list so the crosshair appears on top of other UI elements
-    //ImDrawList* drawList = ImGui::GetForegroundDrawList();
     ImDrawList* drawList = ImGui::GetBackgroundDrawList();
 
 
@@ -128,7 +125,6 @@ void GameUI::RenderHealthBar() {
     ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
     ImGui::Text("%s", "Health");
     ImGui::PopStyleColor();
-    //ImGui::Text("Health");
 
     ImGui::PushStyleColor(ImGuiCol_PlotHistogram, healthColor);
 
@@ -142,10 +138,8 @@ void GameUI::RenderHealthBar() {
 
 void GameUI::RenderScoreAndTimer() {
     // Convert timer to minutes and seconds
-    int timer = 300;
-
-    int minutes = static_cast<int>(timer) / 60;
-    int seconds = static_cast<int>(timer) % 60;
+    int minutes = g->GetTimerMins();
+    int seconds = g->GetTimerSecs();
 
     char scoreText[32];
     snprintf(scoreText, sizeof(scoreText), "Score: %d", g->getPlayer()->score);
@@ -163,17 +157,17 @@ void GameUI::RenderScoreAndTimer() {
     // Scale default ImGui font for large text
     ImGuiIO& io = ImGui::GetIO();
     float originalFontScale = io.FontGlobalScale;
-    io.FontGlobalScale = 1.8f;  // Increase font size
+    io.FontGlobalScale = 1.8f;  
 
     // Position for Score Box (Top-Right)
     ImGui::SetNextWindowPos(ImVec2(windowSize.x - boxWidth - padding, padding));
     ImGui::SetNextWindowSize(ImVec2(boxWidth, boxHeight));
-    ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.6f)); // Semi-transparent background
+    ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.6f)); 
     ImGui::Begin("ScoreDisplay", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 
     ImGui::BeginChild("ScoreBackground", ImVec2(boxWidth, boxHeight), true);
     ImGui::SetCursorPosX((boxWidth - ImGui::CalcTextSize(scoreText).x) * 0.5f);
-    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 1.0f, 0.0f, 1.0f)); // Green Score Text
+    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 1.0f, 0.0f, 1.0f)); 
     ImGui::Text("%s", scoreText);
     ImGui::PopStyleColor();
     ImGui::EndChild();
@@ -199,11 +193,10 @@ void GameUI::RenderScoreAndTimer() {
     io.FontGlobalScale = originalFontScale;
 }
 
-void GameUI::RenderWeaponUI()
-{
-    // Set position in bottom-left corner
+void GameUI::RenderWeaponUI() {
+
     ImGuiViewport* viewport = ImGui::GetMainViewport();
-    ImVec2 window_pos = ImVec2(20.0f, viewport->Size.y - 50.0f);
+    ImVec2 window_pos = ImVec2(20.0f, viewport->Size.y - 100.0f); 
     ImVec2 window_pos_pivot = ImVec2(0.0f, 1.0f);
 
     // Window flags
@@ -219,10 +212,10 @@ void GameUI::RenderWeaponUI()
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10, 10));
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, 0.8f));
 
-    // Set window position
+    // Set window position and size(Vertical)
     ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+    ImGui::SetNextWindowSize(ImVec2(120, 200)); 
 
-    // Begin window
     if (ImGui::Begin("Weapon Selector", nullptr, window_flags))
     {
         const float child_height = 50.0f;
@@ -232,7 +225,6 @@ void GameUI::RenderWeaponUI()
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
         ImGui::BeginChild("Weapon1", ImVec2(child_width, child_height), true);
         {
-            // Permanent green text when selected
             ImVec4 text_color = selected_weapon == 1 ?
                 ImVec4(0.0f, 1.0f, 0.0f, 1.0f) :
                 ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
@@ -254,7 +246,6 @@ void GameUI::RenderWeaponUI()
             ImGui::Text("Weapon 1");
             ImGui::PopStyleColor();
 
-            // Border effect
             if (selected_weapon == 1 && fade_alpha > 0.0f)
             {
                 ImVec2 p0 = ImGui::GetWindowPos();
@@ -275,7 +266,6 @@ void GameUI::RenderWeaponUI()
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
         ImGui::BeginChild("Weapon2", ImVec2(child_width, child_height), true);
         {
-            // Permanent red text when selected
             ImVec4 text_color = selected_weapon == 2 ?
                 ImVec4(0.0f, 1.0f, 0.0f, 1.0f) :
                 ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
@@ -297,14 +287,54 @@ void GameUI::RenderWeaponUI()
             ImGui::Text("Weapon 2");
             ImGui::PopStyleColor();
 
-            // Border effect
             if (selected_weapon == 2 && fade_alpha > 0.0f)
             {
                 ImVec2 p0 = ImGui::GetWindowPos();
                 ImVec2 p1 = ImVec2(p0.x + child_width, p0.y + child_height);
                 ImGui::GetWindowDrawList()->AddRect(
                     p0, p1,
-                    ImColor(1.0f, 0.0f, 0.0f, fade_alpha * 0.5f),
+                    ImColor(0.0f, 1.0f, 0.0f, fade_alpha * 0.5f),
+                    5.0f, 0, 2.0f
+                );
+            }
+        }
+        ImGui::EndChild();
+        ImGui::PopStyleColor();
+
+        ImGui::Spacing();
+
+        // Weapon 3
+        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
+        ImGui::BeginChild("Weapon3", ImVec2(child_width, child_height), true);
+        {
+            ImVec4 text_color = selected_weapon == 3 ?
+                ImVec4(0.0f, 1.0f, 0.0f, 1.0f) :
+                ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
+
+            // Flash effect
+            if (selected_weapon == 3 && flash_alpha > 0.0f)
+            {
+                ImVec2 p0 = ImGui::GetWindowPos();
+                ImVec2 p1 = ImVec2(p0.x + child_width, p0.y + child_height);
+                ImGui::GetWindowDrawList()->AddRectFilled(
+                    p0, p1,
+                    ImColor(0.0f, 1.0f, 0.0f, flash_alpha * 0.3f),
+                    5.0f
+                );
+            }
+
+            ImGui::PushStyleColor(ImGuiCol_Text, text_color);
+            ImGui::SetCursorPosX((child_width - ImGui::CalcTextSize("Weapon 3").x) * 0.5f);
+            ImGui::Text("Weapon 3");
+            ImGui::PopStyleColor();
+
+            if (selected_weapon == 3 && fade_alpha > 0.0f)
+            {
+                ImVec2 p0 = ImGui::GetWindowPos();
+                ImVec2 p1 = ImVec2(p0.x + child_width, p0.y + child_height);
+                ImGui::GetWindowDrawList()->AddRect(
+                    p0, p1,
+                    ImColor(0.0f, 1.0f, 0.0f, fade_alpha * 0.5f),
                     5.0f, 0, 2.0f
                 );
             }
@@ -318,31 +348,34 @@ void GameUI::RenderWeaponUI()
     ImGui::PopStyleColor();
     ImGui::PopStyleVar(2);
 
-    // Handle input and effects
-    if (ImGui::IsKeyPressed(ImGuiKey_1))
-    {
+    if (ImGui::IsKeyPressed(ImGuiKey_1)) {
         selected_weapon = 1;
         fade_alpha = 1.0f;
-        flash_alpha = 1.0f; // Reset flash effect
+        flash_alpha = 1.0f;
     }
-    else if (ImGui::IsKeyPressed(ImGuiKey_2))
-    {
+    else if (ImGui::IsKeyPressed(ImGuiKey_2)) {
         selected_weapon = 2;
         fade_alpha = 1.0f;
-        flash_alpha = 1.0f; // Reset flash effect
+        flash_alpha = 1.0f;
+    }
+    else if (ImGui::IsKeyPressed(ImGuiKey_3)) { 
+        selected_weapon = 3;
+        fade_alpha = 1.0f;
+        flash_alpha = 1.0f;
     }
 
     // Update fade alphas
     const float delta = ImGui::GetIO().DeltaTime;
     if (fade_alpha > 0.0f) {
-        fade_alpha -= delta * 2.0f; // Slower fade for border
+        fade_alpha -= delta * 2.0f;
         fade_alpha = std::max(0.0f, fade_alpha);
     }
     if (flash_alpha > 0.0f) {
-        flash_alpha -= delta * 5.0f; // Faster fade for flash
+        flash_alpha -= delta * 5.0f;
         flash_alpha = std::max(0.0f, flash_alpha);
     }
 }
+
 void GameUI::RenderUI() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplWin32_NewFrame();
