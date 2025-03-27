@@ -69,6 +69,13 @@ namespace NCL {
 
 			Player* getPlayer() { return player; }
 
+			int GetTimerSecs() const {
+				return timerSecs;
+			}
+			int GetTimerMins() const {
+				return timerMins;
+			}
+
 		protected:
 
 			void InitCamera();

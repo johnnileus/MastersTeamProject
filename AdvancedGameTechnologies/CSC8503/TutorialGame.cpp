@@ -118,7 +118,7 @@ void TutorialGame::UpdateGame(float dt) {
 			timerMins += 1;
 			timerSecs = 0;
 		}
-		Debug::Print("Time:" + std::to_string(static_cast<int>(timerMins)) + ":" + std::to_string(static_cast<int>(timerSecs)), Vector2(80, 15));
+		//Debug::Print("Time:" + std::to_string(static_cast<int>(timerMins)) + ":" + std::to_string(static_cast<int>(timerSecs)), Vector2(80, 15));
 
 	}
 	else {
@@ -153,7 +153,6 @@ void TutorialGame::UpdateKeys() {
 		physics->UseGravity(useGravity);
 	}
 
-	 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::U)) {
 		std::cout << "starting server" << std::endl;
 		networkManager->StartAsServer();
@@ -174,9 +173,6 @@ void TutorialGame::UpdateKeys() {
 	}
 
 }
-
-
-
 
 void TutorialGame::InitCamera() {
 	world->GetMainCamera().SetNearPlane(0.1f);
@@ -232,12 +228,10 @@ void TutorialGame::InitWorld() {
 
 }
 
-
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
 	Scene::AddTerrain(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
-
 
 void TutorialGame::InitCatCoins() {
 	// add CatCoin to the list
@@ -249,10 +243,6 @@ void TutorialGame::InitCatCoins() {
 	catCoins.push_back(CatCoin::Instantiate(world, Vector3(5, 0, 50)));
 
 }
-
-
-
-
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(20,0,20);
