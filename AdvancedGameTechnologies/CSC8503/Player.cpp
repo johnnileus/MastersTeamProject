@@ -545,7 +545,11 @@ void Player::OnCollisionBegin(GameObject * otherObject)
 	if (otherObject->tag == "Passive") {
 		otherObject->SetActive(false);
 		RemoveObject(otherObject);
+#ifdef USEAGC
+		PassiveItem* passiveItem = static_cast<PassiveItem*>(otherObject);
+#else
 		PassiveItem* passiveItem = dynamic_cast<PassiveItem*>(otherObject);
+#endif // USEAGC	
 		if (passiveItem) {
 			passiveItem->UpdateCall();
 		}
