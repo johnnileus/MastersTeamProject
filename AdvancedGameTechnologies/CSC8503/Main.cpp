@@ -102,8 +102,8 @@ int main() {
 	c->MapAxis(2, "RightX");
 	c->MapAxis(3, "RightY");
 
-	c->MapAxis(4, "DX");
-	c->MapAxis(5, "DY");
+	c->MapAxis(4, "DX"); //Left and Right on DPAD, left is -1, right is 1
+	c->MapAxis(5, "DY"); //Up and Down on DPAD, up is 1, down is -1
 
 	c->MapButton(0, "Triangle");
 	c->MapButton(1, "Circle");

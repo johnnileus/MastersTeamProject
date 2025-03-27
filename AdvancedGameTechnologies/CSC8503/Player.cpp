@@ -278,6 +278,14 @@ void Player::HandleInput()
 	if (inputController->GetNamedButton("R1")) {
 		Debug::Print("R1 pressed", Vector2(40, 40), Vector4(1, 0, 0, 1));
 	}*/
+	/*if (inputController->GetNamedAxis("DX")) {
+		Debug::Print("DX pressed", Vector2(40, 40), Vector4(1, 0, 0, 1));
+		Debug::Print(std::to_string(inputController->GetNamedAxis("DX")), Vector2(40, 45), Vector4(1, 0, 0, 1));
+	}
+	if (inputController->GetNamedAxis("DY")) {
+		Debug::Print("DY pressed", Vector2(40, 50), Vector4(1, 0, 0, 1));
+		Debug::Print(std::to_string(inputController->GetNamedAxis("DY")), Vector2(40, 55), Vector4(1, 0, 0, 1));
+	}*/
 #elif _WIN32
     // detect keyboard input
     if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
@@ -588,18 +596,36 @@ void Player::FixBounce()
 
 void Player::HandleSwitchWeapon()
 {
-	if(Window::GetKeyboard()->KeyDown(KeyCodes::NUM1)&&weaponPack[0]&&currentWeapon!=weaponPack[0])
+#ifdef USEAGC
+	if (inputController->GetNamedAxis("DX") == -1 && weaponPack[0] && currentWeapon != weaponPack[0])
+#else
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM1) && weaponPack[0] && currentWeapon != weaponPack[0])
+#endif // USEAGC
+
+	
 	{
+		Debug::Print("Pistol!", Vector2(50, 40), Debug::RED);
 		currentWeapon = weaponPack[0];
 		OnSwitchWeaponEvent.Invoke(this);
 	}
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM2)&&weaponPack[1]&&currentWeapon!=weaponPack[1])
+#ifdef USEAGC
+	if (inputController->GetNamedAxis("DY") == -1 && weaponPack[1] && currentWeapon != weaponPack[1])
+#else
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM2) && weaponPack[1] && currentWeapon != weaponPack[1])
+#endif // USEAGC
+	
 	{
+		Debug::Print("Rifle!", Vector2(50, 40), Debug::RED);
 		currentWeapon = weaponPack[1];
 		OnSwitchWeaponEvent.Invoke(this);
 	}
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM3)&&weaponPack[2]&&currentWeapon!=weaponPack[2])
+#ifdef USEAGC
+	if (inputController->GetNamedAxis("DX") == 1 && weaponPack[2] && currentWeapon != weaponPack[2])
+#else
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::NUM3) && weaponPack[2] && currentWeapon != weaponPack[2])
+#endif // USEAGC	
 	{
+		Debug::Print("Shotgun!", Vector2(50, 40), Debug::RED);
 		currentWeapon = weaponPack[2];
 		OnSwitchWeaponEvent.Invoke(this);
 	}
