@@ -106,16 +106,16 @@ void RangedEnemy::ChaseState() {
         NCL::Maths::Vector3 playerPosition = currentTarget->GetTransform().GetPosition();
 
         NavMeshNode* closestNode = nullptr;
-        float closestDistance = std::numeric_limits<float>::max();
+        float closestDistanceSquared = std::numeric_limits<float>::max();
         for (NavMeshNode* node : nodeGrid->GetAllNodes()) {
-            float distance = Vector::Length(playerPosition - node->GetPosition());
-            if (distance < closestDistance) {
-                closestDistance = distance;
+            float distanceSquared = Vector::LengthSquared(playerPosition - node->GetPosition());
+            if (distanceSquared < closestDistanceSquared) {
+                closestDistanceSquared = distanceSquared;
                 closestNode = node;
             }
         }
 
-        if (closestNode && closestNode != this->destination || this->path.size() == 0) {
+        if (closestNode && (closestNode != this->destination || this->path.empty())) {
             this->destination = closestNode;
             FindPath();
         }
@@ -142,11 +142,11 @@ void RangedEnemy::RetreatState() {
     NCL::Maths::Vector3 retreatPosition = enemyPosition + (direction * 50.0f);
 
     NavMeshNode* retreatNode = nullptr;
-    float closestDistance = std::numeric_limits<float>::max();
+    float closestDistanceSquared = std::numeric_limits<float>::max();
     for (NavMeshNode* node : nodeGrid->GetAllNodes()) {
-        float distance = Vector::Length(node->GetPosition() - retreatPosition);
-        if (distance < closestDistance) {
-            closestDistance = distance;
+        float distanceSquared = Vector::LengthSquared(node->GetPosition() - retreatPosition);
+        if (distanceSquared < closestDistanceSquared) {
+            closestDistanceSquared = distanceSquared;
             retreatNode = node;
         }
     }
