@@ -70,7 +70,6 @@ void UIStateManager::States() {
         ImGui::SetWindowFontScale(2.0f);
         ImGui::SetWindowPos(ImVec2(500, 100));
         ImGui::SetWindowSize(ImVec2(300, 100));
-        ImGui::TextColored(ImVec4(255, 0, 0, 1), "Wave 1 Begins !!");
 
         ImGui::End();
         break;
