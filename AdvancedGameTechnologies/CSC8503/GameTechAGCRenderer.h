@@ -14,6 +14,7 @@
 #include "./Shaders/PSSL/Interop.h"				//Always include this before any PSSL headers
 #include "./Shaders/PSSL/ShaderConstants.psslh"
 #include "./Shaders/PSSL/TechObject.psslh"
+#include <HeightMap.h>
 
 namespace NCL {
 	namespace Rendering {
@@ -46,6 +47,9 @@ namespace NCL {
 			void UpdateObjectList();
 
 			NCL::PS5::AGCTexture* CreateFrameBufferTextureSlot(const std::string& name);
+
+			Mesh* GenerateTerrainMesh(HeightMap* heightmap);
+			Vector3 CalculateNormal(int x, int y, HeightMap* heightmap);
 
 			vector<const RenderObject*> activeObjects;
 
@@ -173,6 +177,7 @@ namespace NCL {
 			NCL::PS5::AGCTexture* screenTex; //ptr into bindless array
 
 			std::vector<SkinningJob> frameJobs;
+			NCL::PS5::AGCMesh* terrainMesh;
 		};
 	}
 }

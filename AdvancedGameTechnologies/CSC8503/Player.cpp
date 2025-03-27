@@ -90,8 +90,6 @@ void Player::SetComponent(float meshSize,float mass)
 		AssetManager::Instance().basicTex,
 		AssetManager::Instance().basicShader)
 	);
-	
-	
 	animator = new Animator();
 	std::cout << "Doing the player animator thingy in Set Component" << std::endl;
 	animator->LoadAnimation("Idle");

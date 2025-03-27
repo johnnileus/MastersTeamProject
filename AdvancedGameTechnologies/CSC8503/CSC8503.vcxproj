@@ -213,6 +213,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\CatCoin.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Door.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enemy.h" />
+    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enums.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameNet.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechAGCRenderer.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameTechRenderer.h" />
@@ -222,6 +223,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Inventory.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\InventoryUI.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Item.h" />
+    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NavMeshAgent.h" />
+    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NavMeshGrid.h" />
+    <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NavMeshNode.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkPlayer.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NetworkedGame.h" />
     <ClInclude Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Pistol.h" />
@@ -263,6 +267,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Enums.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\GameNet.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -300,6 +308,18 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\Main.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NavMeshAgent.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NavMeshGrid.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="C:\Users\c1030300\source\repos\johnnileus\MastersTeamProject\MastersTeamProject\AdvancedGameTechnologies\CSC8503\NavMeshNode.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Prospero'">C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/CSC8503/CMakeFiles/CSC8503.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
