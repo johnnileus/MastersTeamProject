@@ -8,6 +8,7 @@ namespace NCL {
 		class GhostEnemy : NavMeshAgent {
 		public:
 			GhostEnemy();
+			void InitStateMachine();
 			void PatrolState();
 			void ChaseState();
 			void AttackState();
