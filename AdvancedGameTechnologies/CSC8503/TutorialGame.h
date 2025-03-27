@@ -54,6 +54,9 @@ namespace NCL {
 			void SendTransform();
 			void UpdateConnectedPlayer(int id, Vector3 pos, Quaternion rot);
 			void ToggleCursor();
+			void TogglePaused() { gamePaused = !gamePaused; }
+			bool IsGamePaused() { return gamePaused; }
+			bool GetCursorLocked() { return cursorLocked; }
 
 #ifdef _WIN32
 			//called by GameServer when player connects
@@ -61,16 +64,15 @@ namespace NCL {
 			GameObject** GetConnectedPlayerObjects();
 			void BroadcastPositions();
 
-			void ToggleCursor();
-			void TogglePaused() { gamePaused = !gamePaused; }
+			
 			int GetID() { return networkManager->GetID(); }
-			bool IsGamePaused() { return gamePaused; }
+			
 
 			void UpdateTransformFromServer(Vector3 pos, Quaternion rot);
 #endif // _WIN32
 
 		
-			bool GetCursorLocked() { return cursorLocked; }
+			
 
 		protected:
 			void InitialiseAssets();
