@@ -2,6 +2,7 @@
 
 #include "TutorialGame.h"
 #include "AudioManager.h"
+#include "Event.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -30,18 +31,27 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	controller.MapAxis(4, "YLook");
 
 	forceMagnitude	= 1.0f;
-	useGravity		= false;
+	useGravity		=  true;
 	AssetManager::Instance().LoadAssets(renderer);
 
 	sceneManager = new SceneManager();
 	sceneManager->InitScenes();
 
-	InitScene("default");
+	EnemyTestScene* listener = dynamic_cast<EnemyTestScene*>(sceneManager->scenes["EnemyTestScene"]);
+	listener->newMeleeEnemy.AddListener(std::bind(&TutorialGame::UpdateMeleeEnemyList, this, std::placeholders::_1));
+	listener->newRangedEnemy.AddListener(std::bind(&TutorialGame::UpdateRangedEnemyList, this, std::placeholders::_1));
+	listener->newGhostEnemy.AddListener(std::bind(&TutorialGame::UpdateGhostEnemyList, this, std::placeholders::_1));
+
+	InitScene("EnemyTestScene");
 }
 
 void TutorialGame::InitScene(string name) {
+	meleeEnemyList.clear();
+	rangedEnemyList.clear();
+	ghostEnemyList.clear();
 	world->ClearAndErase();
-
+	
+	
 	//delete individual enemies first
 	physics->Clear();
 
@@ -65,6 +75,18 @@ void TutorialGame::InitScene(string name) {
 	sceneManager->SwitchScene(name, world);
 
 	InitItems();
+
+	enemyFrameCount = 1;
+
+	meleeEnemyFrameCount = 0;
+	meleeEnemyFrameCountMax = meleeEnemyList.size();
+
+	rangedEnemyFrameCount = 0;
+	rangedEnemyFrameCountMax = rangedEnemyList.size();
+
+	ghostEnemyFrameCount = 0;
+	ghostEnemyFrameCountMax = ghostEnemyList.size();
+
 }
 
 
@@ -125,8 +147,6 @@ void TutorialGame::UpdateGame(float dt) {
 		renderer->Render();
 		Debug::UpdateRenderables(dt);
 	}
-
-	DisplayPathfinding();
   
 	UpdateEnemies(dt);
 }
@@ -139,10 +159,6 @@ void TutorialGame::UpdateKeys() {
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F2)) {
 		InitCamera(); //F2 will reset the camera to a specific default place
-	}
-
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F3)) {
-		InitNavigationTestLevel(); //Loads a blank floor with navigation nodes displayed
 	}
 
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
@@ -185,55 +201,18 @@ void TutorialGame::InitCamera() {
 
 void TutorialGame::InitWorld() {
 
-	//CreateRopeGroup();
 
 	Scene::CreateRopeGroup(world);
 	
 	player = Player::Instantiate(world,thirdPersonCam,Vector3(20,0,30));
 
-	//GenerateWall();
 	Scene::GenerateWall(world);
 
 	InitCatCoins();
 	
-	//doorTrigger = Door::Instantiate(world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
-	
-
-	InitNavGrid();
-
-	InitEnemies();
-
-
-	enemyFrameCount = 1;
-
-	meleeEnemyFrameCount = 0;
-	meleeEnemyFrameCountMax = meleeEnemyList.size();
-
-	rangedEnemyFrameCount = 0;
-	rangedEnemyFrameCountMax =  rangedEnemyList.size();
-
-	ghostEnemyFrameCount = 0;
-	ghostEnemyFrameCountMax = ghostEnemyList.size();
-
 	InitTerrain();
 	Scene::InitDefaultFloor(world);
 	InitItems();
-
-  /*
-	// Load the navigation grid
-	NavigationGrid* navGrid = new NavigationGrid("TestGrid1.txt");
-
-	// Generate a test path
-	NavigationPath outPath;
-	Vector3 startPos(80, 0, 10); // Start position
-	Vector3 endPos(80, 0, 80);   // End position
-
-	if (navGrid->FindPath(startPos, endPos, outPath)) {
-		Vector3 pos;
-		while (outPath.PopWaypoint(pos)) {
-			testNodes.push_back(pos); // Store path waypoints
-		}
-  */
 
 	world->PrintObjects();
 
@@ -305,25 +284,6 @@ void TutorialGame::ReloadLevel() {
 	std::cout << "Level reloaded!" << std::endl;
 }
 
-void TutorialGame::InitNavigationTestLevel() {
-	//set camera to a debug camera
-
-	//draw debug graph of all nodes and edges
-	navMeshAgent = new NavMeshAgent(navGrid, 1.0f, 100.0f, Vector3(0,0,0), 100.0f, true, 15.0f);
-	std::vector<NavMeshNode*> nodes = navGrid->GetAllNodes();
-	for (int n = 0; n < nodes.size(); ++n) {
-		Vector3 nodePos = nodes[n]->GetPosition();
-		Debug::DrawLine(Vector3(nodePos.x, nodePos.y - 2, nodePos.z), Vector3(nodePos.x, nodePos.y + 2, nodePos.z), Vector4(1,1,1,1), 60.0F);
-		for (int e = 0; e < nodes[n]->GetEdges().size(); ++e) {
-			Debug::DrawLine(nodes[n]->GetPosition(), nodes[n]->GetEdges()[e].neighbour->GetPosition(), Vector4(0, 0, 1, 0.7), 60.0F);
-		}
-	}
-	
-	//run function to pick a start and end node, then highlight them in differnet colour
-	//change the colour of each edge/node in the path to test it is working correctly
-	//add a test function to randomly select some nodes as impassable then test again
-}
-
 void TutorialGame::ToggleCursor() {
 	cursorLocked = !cursorLocked;
 	Window::GetWindow()->ShowOSPointer(!cursorLocked);
@@ -332,6 +292,10 @@ void TutorialGame::ToggleCursor() {
 
 void TutorialGame::InitEnemies() {
 	meleeEnemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(world, this->navGrid, Vector3(10,3,10), 1.0f, 1.0f));
+}
+
+void TutorialGame::Test(int a) {
+	std::cout << "aAAAaaAaAAa" << a << std::endl;
 }
 
 void TutorialGame::InitItems() {
@@ -345,78 +309,77 @@ void TutorialGame::InitItems() {
 
 void TutorialGame::UpdateEnemies(float dt) {
 	//frames 1,4,7 ect
-	if (enemyFrameCount % 3 == 1) {
-		if (meleeEnemyFrameCount >= meleeEnemyFrameCountMax) {
-			meleeEnemyFrameCount = 0;
+	//if (enemyFrameCount % 3 == 0) {
+	if (meleeEnemyFrameCount >= meleeEnemyFrameCountMax) {
+		meleeEnemyFrameCount = 0;
+	}
+	//updates one enemy at a time
+	if(meleeEnemyFrameCountMax > 0) {
+		if (meleeEnemyList[meleeEnemyFrameCount]->CheckAlive()) {
+			meleeEnemyList[meleeEnemyFrameCount]->UpdateEnemy(dt * meleeEnemyFrameCountMax);
 		}
-		//updates one enemy at a time
-		if(meleeEnemyFrameCountMax > 0) {
-			if (meleeEnemyList[meleeEnemyFrameCount]->CheckAlive()) {
-				meleeEnemyList[meleeEnemyFrameCount]->UpdateEnemy(dt);
+		else {
+			if (meleeEnemyList[meleeEnemyFrameCount]->CheckRespawn()) {
+				meleeEnemyList[meleeEnemyFrameCount]->Spawn();
+				meleeEnemyList[meleeEnemyFrameCount]->SetDestinationNull();
 			}
 			else {
-				if (meleeEnemyList[meleeEnemyFrameCount]->CheckRespawn()) {
-					meleeEnemyList[meleeEnemyFrameCount]->Spawn();
-					meleeEnemyList[meleeEnemyFrameCount]->SetDestinationNull();
-				}
-				else {
-					meleeEnemyList[meleeEnemyFrameCount]->UpdateRespawnTimer(dt);
-				}
+				meleeEnemyList[meleeEnemyFrameCount]->UpdateRespawnTimer(dt * meleeEnemyFrameCountMax);
 			}
 		}
-		meleeEnemyFrameCount++;
 	}
+	meleeEnemyFrameCount++;
+	//}
 
-	if (enemyFrameCount % 3 == 2) {
-		if (rangedEnemyFrameCount >= rangedEnemyFrameCountMax) {
-			rangedEnemyFrameCount = 0;
+	//if (enemyFrameCount % 3 == 1) {
+	if (rangedEnemyFrameCount >= rangedEnemyFrameCountMax) {
+		rangedEnemyFrameCount = 0;
+	}
+	if (rangedEnemyFrameCountMax > 0) {
+		if (rangedEnemyList[rangedEnemyFrameCount]->CheckAlive()) {
+			rangedEnemyList[rangedEnemyFrameCount]->UpdateEnemy(dt * rangedEnemyFrameCountMax);
 		}
-		if (rangedEnemyFrameCountMax > 0) {
-			if (rangedEnemyList[rangedEnemyFrameCount]->CheckAlive()) {
-				rangedEnemyList[rangedEnemyFrameCount]->UpdateEnemy(dt);
+		else {
+			if (rangedEnemyList[rangedEnemyFrameCount]->CheckRespawn()) {
+				rangedEnemyList[rangedEnemyFrameCount]->Spawn();
+				rangedEnemyList[rangedEnemyFrameCount]->SetDestinationNull();
 			}
 			else {
-				if (rangedEnemyList[rangedEnemyFrameCount]->CheckRespawn()) {
-					rangedEnemyList[rangedEnemyFrameCount]->Spawn();
-					rangedEnemyList[rangedEnemyFrameCount]->SetDestinationNull();
-				}
-				else {
-					rangedEnemyList[rangedEnemyFrameCount]->UpdateRespawnTimer(dt);
-				}
+				rangedEnemyList[rangedEnemyFrameCount]->UpdateRespawnTimer(dt * rangedEnemyFrameCountMax);
 			}
 		}
-		rangedEnemyFrameCount++;
 	}
+	rangedEnemyFrameCount++;
+	//}
 
-	if (enemyFrameCount % 3 == 3) {
-		if (ghostEnemyFrameCount >= ghostEnemyFrameCountMax) {
-			ghostEnemyFrameCount = 0;
+	//if (enemyFrameCount % 3 == 2) {
+	if (ghostEnemyFrameCount >= ghostEnemyFrameCountMax) {
+		ghostEnemyFrameCount = 0;
+	}
+	if (ghostEnemyFrameCountMax > 0) {
+		if (ghostEnemyList[ghostEnemyFrameCount]->CheckAlive()) {
+			ghostEnemyList[ghostEnemyFrameCount]->UpdateEnemy(dt * ghostEnemyFrameCountMax);
 		}
-		if (ghostEnemyFrameCountMax > 0) {
-			if (ghostEnemyList[ghostEnemyFrameCount]->CheckAlive()) {
-				ghostEnemyList[ghostEnemyFrameCount]->UpdateEnemy(dt);
+		else {
+			if (ghostEnemyList[ghostEnemyFrameCount]->CheckRespawn()) {
+				ghostEnemyList[ghostEnemyFrameCount]->Spawn();
+				ghostEnemyList[ghostEnemyFrameCount]->SetDestinationNull();
 			}
 			else {
-				if (ghostEnemyList[ghostEnemyFrameCount]->CheckRespawn()) {
-					ghostEnemyList[ghostEnemyFrameCount]->Spawn();
-					ghostEnemyList[ghostEnemyFrameCount]->SetDestinationNull();
-				}
-				else {
-					ghostEnemyList[ghostEnemyFrameCount]->UpdateRespawnTimer(dt);
-				}
+				ghostEnemyList[ghostEnemyFrameCount]->UpdateRespawnTimer(dt * ghostEnemyFrameCountMax);
 			}
 		}
-		ghostEnemyFrameCount++;
 	}
+	ghostEnemyFrameCount++;
+	//}
 
 	enemyFrameCount++;
-	if (enemyFrameCount = 4) {
+	if (enemyFrameCount == 4) {
 		enemyFrameCount = 1;
 	}
 }
 
 void TutorialGame::InitNavGrid() {
-	this->navGrid = new NavMeshGrid();
 }
 
 void TutorialGame::NewLevel() {

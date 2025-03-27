@@ -3,6 +3,8 @@
 #include "PhysicsObject.h"
 #include "State.h"
 #include "StateTransition.h"
+#include "Ray.h"
+#include "CollisionDetection.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -35,19 +37,23 @@ void  RangedEnemy::InitStateMachine() {
     stateMachine->AddState(restState);
 
     stateMachine->AddTransition(new StateTransition(patrolState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 20.0f;
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 100.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, patrolState, [&]() -> bool {
-        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 20.0f;
+        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 100.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, attackState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 5.0f;
+        if (currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 20.0f && canSeePlayer()) {
+            this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
+            return true;
+        }
+        return false;
         }));
 
     stateMachine->AddTransition(new StateTransition(attackState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 5.0f;
+        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 20.0f || !canSeePlayer();
         }));
 
     stateMachine->AddTransition(new StateTransition(patrolState, retreatState, [&]() -> bool {
@@ -63,7 +69,7 @@ void  RangedEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(retreatState, restState, [&]() -> bool {
-        return this->currentHealth < 0.15f * this->maxHealth && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 50.0f;
+        return this->currentHealth < 0.15f * this->maxHealth && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 100.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(restState, patrolState, [&]() -> bool {
@@ -71,7 +77,7 @@ void  RangedEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(restState, retreatState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 30.0f;
+        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 50.0f;
         }));
 }
 void RangedEnemy::PatrolState() {
@@ -121,8 +127,7 @@ void RangedEnemy::ChaseState() {
 
 void RangedEnemy::AttackState(float dt) {
     if (attackCooldown <= 0) {
-        NCL::Maths::Vector3 direction = Vector::Normalise(currentTarget->GetTransform().GetPosition() - this->GetTransform().GetPosition());
-        this->GetPhysicsObject()->AddForce(direction * chargeForce);
+        currentTarget->ApplyDamage(damage);
         attackCooldown = 3;
     }
     else {
@@ -162,4 +167,30 @@ void RangedEnemy::RestState(float dt) {
 
 void RangedEnemy::UpdateEnemy(float dt) {
     this->stateMachine->Update(dt);
+
+    Vector4 startColor = Vector4(0, 0, 1, 1);
+    Vector4 endColor = Vector4(0, 1, 1, 1);
+    float t = 1.0f - (attackCooldown / 3.0f);
+    Vector4 currentColor = startColor * (1.0f - t) + endColor * t;
+    this->GetRenderObject()->SetColour(currentColor);
+}
+
+bool RangedEnemy::canSeePlayer() {
+    if (currentTarget == nullptr) {
+        return false;
+    }
+
+    NCL::Maths::Vector3 enemyPosition = this->GetTransform().GetPosition();
+    NCL::Maths::Vector3 playerPosition = currentTarget->GetTransform().GetPosition();
+    NCL::Maths::Vector3 direction = Vector::Normalise(playerPosition - enemyPosition);
+
+    Ray ray(enemyPosition, direction);
+    RayCollision collision;
+
+    if (this->world->Raycast(ray, collision, true, this)) {
+        GameObject* hitObject = static_cast<GameObject*>(collision.node);
+        return hitObject && hitObject->tag == "Player";
+    }
+
+    return false;
 }

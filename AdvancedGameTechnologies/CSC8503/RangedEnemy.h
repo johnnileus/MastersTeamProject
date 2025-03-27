@@ -14,6 +14,11 @@ namespace NCL {
 				this->InitialiseNavMeshAgent(nodeGrid);
 				InitialiseRangedEnemy(world);
 			}
+
+			~RangedEnemy() {
+				delete this->stateMachine;
+			}
+
 			void InitStateMachine();
 			void PatrolState();
 			void ChaseState();
@@ -25,8 +30,10 @@ namespace NCL {
 
 				this->stateMachine = new StateMachine();
 				this->currentTarget = nullptr;
-				this->attackCooldown = 3;
+				this->attackCooldown = 6;
 				this->chargeForce = 5;
+
+				this->world = world;
 
 				auto findPlayers = [this](GameObject* obj) {
 					if (obj->tag == "Player") {
@@ -35,18 +42,21 @@ namespace NCL {
 							this->players.push_back(player);
 						}
 					}
-					};
+				};
 
 				world->OperateOnContents(findPlayers);
 
 				this->InitStateMachine();
+				this->GetRenderObject()->SetColour(Vector4(0.0f, 0.0f, 1.0f, 1.0f));
 			}
+			bool canSeePlayer();
 		protected:
 			StateMachine* stateMachine;
 			Player* currentTarget;
 			float attackCooldown;
 			float chargeForce;
 			std::vector<Player*> players;
+			GameWorld* world;
 		};
 	}
 }

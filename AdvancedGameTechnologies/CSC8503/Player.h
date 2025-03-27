@@ -80,6 +80,7 @@ namespace NCL {
 
 			Event<Player*> OnSwitchWeaponEvent;
 
+			void ApplyDamage(float damage) { this->health -= damage; }
 		protected:
 
 			//component

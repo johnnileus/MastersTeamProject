@@ -42,7 +42,6 @@ void NavMeshAgent::FindPath() {
                 node = node->GetParent();
             }
             std::reverse(this->path.begin(), this->path.end());
-            std::cout << "Destination: " << destination->GetPosition().x << " " << destination->GetPosition().z << std::endl;
             return;
         }
 
@@ -120,25 +119,27 @@ void NavMeshAgent::FollowPath() {
         setCurrentNode(roundedX, roundedZ);
     }
 
-    if (this->currentNode == this->nextNode && !this->path.empty()) {
-        this->path.erase(this->path.begin());
-        if (!this->path.empty()) {
-            this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
-            this->nextNode = this->path.front();
+    if (this->currentNode && this->nextNode && !this->path.empty()) {
+        float distance = Vector::Length(this->currentNode->GetPosition() - this->nextNode->GetPosition());
+        if (distance <= this->scale) {
+            this->path.erase(this->path.begin());
+            if (!this->path.empty()) {
+                this->nextNode = this->path.front();
+            }
         }
     }
-    else if (!this->path.empty()) {
+
+    if (!this->path.empty()) {
         this->nextNode = this->path.front();
-        for (int n = 0; n < size(path) - 1; ++n) {
-            Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 0.1f);
-        }
+        //degbug lines for pathfinding
+        //for (int n = 0; n < size(path) - 1; ++n) {
+        //    Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 0.1f);
+        //}
     }
     
     MoveTowardsNextNode();
 }
 
-//agent slides around and misses nodes?
-//could also be due to the errors in the pathfinding route
 void NavMeshAgent::MoveTowardsNextNode() {
     if (this->nextNode == nullptr) {
         return;
@@ -146,11 +147,24 @@ void NavMeshAgent::MoveTowardsNextNode() {
 
     const auto& currPos = this->GetCurrentPosition();
     const auto& nextPos = this->nextNode->GetPosition();
-    this->GetPhysicsObject()->AddForce(Vector::Normalise(Vector3((nextPos.x - currPos.x), 0, (nextPos.z - currPos.z))) * Vector3(50,50,50));
+    Vector3 direction = Vector::Normalise(Vector3((nextPos.x - currPos.x), 0, (nextPos.z - currPos.z)));
+    float lerpFactor = 2.5f;
+    Vector3 currentDirection = Vector::Normalise(this->GetPhysicsObject()->GetLinearVelocity());
+    Vector3 smoothDirection = Vector::Lerp(currentDirection, direction, lerpFactor);
+
+    this->GetPhysicsObject()->AddForce(smoothDirection * Vector3(50, 50, 50));
+
+    float maxSpeed = 10.0f;
+    Vector3 velocity = this->GetPhysicsObject()->GetLinearVelocity();
+    float speed = Vector::Length(velocity);
+    if (speed > maxSpeed) {
+        Vector3 clampedVelocity = Vector::Normalise(velocity) * maxSpeed;
+        this->GetPhysicsObject()->SetLinearVelocity(clampedVelocity);
+    }
 }
 
 void NavMeshAgent::SetDestination() {
-	this->destination = this->nodeGrid->GetAllNodes()[rand() % this->nodeGrid->GetAllNodes().size()];
+	this->destination = this->nodeGrid->GetAllNodes()[(rand() + rand() + rand()) % this->nodeGrid->GetAllNodes().size()];
     std::cout << this->destination->GetPosition().x << ", " << this->destination->GetPosition().z << std::endl;
 }
 
@@ -159,11 +173,10 @@ void NavMeshAgent::SetDestinationNull() {
 }
 
 void NavMeshAgent::Spawn() {
-    this->spawnPosition = this->nodeGrid->GetAllNodes()[rand() % this->nodeGrid->GetAllNodes().size()]->GetPosition();
-    this->spawnPosition = Vector3(this->spawnPosition.x, 0, this->spawnPosition.z);
+    this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
+    this->spawnPosition = this->nodeGrid->GetAllNodes()[(rand() + rand() + rand()) % this->nodeGrid->GetAllNodes().size()]->GetPosition();
     this->currentHealth = this->maxHealth;
     this->alive = true;
     this->GetTransform().SetPosition(this->spawnPosition);
     this->GetPhysicsObject();//need a function to make physics objects active
-    std::cout << "Enemy Spawned";
 }

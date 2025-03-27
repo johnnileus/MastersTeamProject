@@ -39,7 +39,7 @@ void SceneManager::AddBullet(Bullet* bullet)
 }
 
 
-MeleeEnemy* SceneManager::AddEnemyToWorld(GameWorld* world,NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+MeleeEnemy* SceneManager::AddEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
     MeleeEnemy* e = new MeleeEnemy(nodeGrid, scale, inverseMass, pos, 100.0f, true, 15.0f, 10.0f, world);
     e->Spawn();
     world->AddGameObject(e);
@@ -52,6 +52,7 @@ void SceneManager::InitScenes() {
     scenes["default"] = defaultScene;
     DefaultScene2* defaultScene2 = new DefaultScene2();
     scenes["default2"] = defaultScene2;
+    scenes["EnemyTestScene"] = new EnemyTestScene();
 
 }
 

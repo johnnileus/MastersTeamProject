@@ -87,7 +87,8 @@ void Bullet::OnCollisionBegin(GameObject* otherObject)
 {
     if (otherObject->tag=="Enemy")
     {
-        std::cout<<"HIT"<<std::endl;
+        DemoShootableEnemy* e = dynamic_cast<DemoShootableEnemy*>(otherObject);
+        e->RegisterHit(this->damage);
         myWorld->RemoveGameObject(this);
     }
 }

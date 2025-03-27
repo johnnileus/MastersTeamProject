@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "GameWorld.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -12,13 +13,14 @@ namespace NCL {
 
 		class NavMeshNode {
 		public:
-			NavMeshNode(NCL::Maths::Vector3 position) {
+			NavMeshNode(NCL::Maths::Vector3 position, GameWorld* world) {
 				this->position = position;
 				this->obstructed = false;
 				this->gScore = 0;
 				this->fScore = 0;
 				this->heuristic = 0;
 				this->parent = nullptr;
+				this->world = world;
 			}
 			void checkObstructed();
 			bool isObstructed() {
@@ -46,6 +48,7 @@ namespace NCL {
 			float gScore;
 			float fScore;
 			float heuristic;
+			GameWorld* world;
 		};
 	}
 }
