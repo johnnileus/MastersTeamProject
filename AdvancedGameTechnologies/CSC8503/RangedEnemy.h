@@ -30,7 +30,11 @@ namespace NCL {
 
 				auto findPlayers = [this](GameObject* obj) {
 					if (obj->tag == "Player") {
+#ifdef USEAGC
+						Player* player = static_cast<Player*>(obj);
+#else
 						Player* player = dynamic_cast<Player*>(obj);
+#endif // USEAGC
 						if (player) {
 							this->players.push_back(player);
 						}
