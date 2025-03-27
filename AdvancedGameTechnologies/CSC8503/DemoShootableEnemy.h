@@ -45,7 +45,6 @@ namespace NCL {
 				this->timeToRespawn = 0.0f;
 				this->maxHealth = health;
 				this->damage = damage;
-				this->Spawn();
 			}
 			void InitialiseEnemy(float scale, float inverseMass, NCL::Maths::Vector3 postion);
 			void UpdateRespawnTimer(float dt) { this->timeToRespawn -= dt; }
