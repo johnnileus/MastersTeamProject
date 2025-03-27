@@ -43,7 +43,6 @@ void NavMeshAgent::FindPath() {
                 node = node->GetParent();
             }
             std::reverse(this->path.begin(), this->path.end());
-            std::cout << "Destination: " << destination->GetPosition().x << " " << destination->GetPosition().z << std::endl;
             return;
         }
 
@@ -180,5 +179,4 @@ void NavMeshAgent::Spawn() {
     this->alive = true;
     this->GetTransform().SetPosition(this->spawnPosition);
     this->GetPhysicsObject();//need a function to make physics objects active
-    std::cout << "Enemy Spawned";
 }

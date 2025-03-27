@@ -14,6 +14,11 @@ namespace NCL {
 				this->InitialiseNavMeshAgent(nodeGrid);
 				InitialiseGhostEnemy(world);
 			}
+
+			~GhostEnemy() {
+				delete this->stateMachine;
+			}
+
 			void InitStateMachine();
 			void PatrolState();
 			void ChaseState();

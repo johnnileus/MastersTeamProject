@@ -68,19 +68,12 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	listener->newGhostEnemy.AddListener(std::bind(&TutorialGame::UpdateGhostEnemyList, this, std::placeholders::_1));
 
 	InitScene("EnemyTestScene");
-	enemyFrameCount = 1;
-
-	meleeEnemyFrameCount = 0;
-	meleeEnemyFrameCountMax = meleeEnemyList.size();
-
-	rangedEnemyFrameCount = 0;
-	rangedEnemyFrameCountMax = rangedEnemyList.size();
-
-	ghostEnemyFrameCount = 0;
-	ghostEnemyFrameCountMax = ghostEnemyList.size();
 }
 
 void TutorialGame::InitScene(string name) {
+	meleeEnemyList.clear();
+	rangedEnemyList.clear();
+	ghostEnemyList.clear();
 	world.ClearAndErase();
 	physics.Clear();
 #ifdef USEAGC
@@ -125,6 +118,18 @@ void TutorialGame::InitScene(string name) {
 	sceneManager->SwitchScene(name, &world);
 
 	InitItems();
+
+	enemyFrameCount = 1;
+
+	meleeEnemyFrameCount = 0;
+	meleeEnemyFrameCountMax = meleeEnemyList.size();
+
+	rangedEnemyFrameCount = 0;
+	rangedEnemyFrameCountMax = rangedEnemyList.size();
+
+	ghostEnemyFrameCount = 0;
+	ghostEnemyFrameCountMax = ghostEnemyList.size();
+
 }
 
 
@@ -175,7 +180,7 @@ void TutorialGame::UpdateGame(float dt) {
 
 		//Timer
 		timerSecs += dt;
-		if (timerSecs >= 60.0f) {
+		if (timerSecs >= 5.0f) {
 			timerMins += 1;
 			timerSecs = 0;
 		}
@@ -193,8 +198,6 @@ void TutorialGame::UpdateGame(float dt) {
 
 
 	}
-
-	DisplayPathfinding();
   
 	UpdateEnemies(dt);
 }
@@ -264,37 +267,24 @@ void TutorialGame::InitWorld() {
 	NCL::PS5::PS5Controller* c = w->GetController();
 #endif // USEAGC
 
-	
 
-	//CreateRopeGroup();
+	Scene::CreateRopeGroup(&world);
 	
-	//InitPlayer();
 #ifdef USEAGC
 	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30), *c);
 #else
 	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30));
 #endif // USEAGC
-	//GenerateWall();
+
+	Scene::GenerateWall(&world);
 
 	InitCatCoins();
 	
-	doorTrigger = Door::Instantiate(&world,Vector3(15,0,25),Vector3(20,0,0),Quaternion(),Quaternion());
-	
-
-	InitNavGrid();
-
-	InitEnemies();
-
-	//InitTerrain();
-
+	InitTerrain();
 	Scene::InitDefaultFloor(&world);
-
+	InitItems();
 
 	world.PrintObjects();
-
-}
-
-
 
 
 void TutorialGame::InitTerrain() {
