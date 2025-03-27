@@ -19,7 +19,6 @@ namespace NCL {
 			~NavMeshGrid() {}
 			std::vector<NavMeshNode*>GetAllNodes() { return this->allNodes; }
 			int GetLevelSize() { return this->levelSize; }
-			float  CalculateDistance(const NCL::Maths::Vector3& pos1, const NCL::Maths::Vector3& pos2);
 		protected:
 			int levelSize;
 			std::vector<std::vector<NavMeshNode*>>nodeGrid;
