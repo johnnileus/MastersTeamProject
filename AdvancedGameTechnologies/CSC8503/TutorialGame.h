@@ -39,6 +39,9 @@
 #include "NavMeshGrid.h"
 #include "NavMeshAgent.h"
 #include "DemoShootableEnemy.h"
+#include "MeleeEnemy.h"
+#include "RangedEnemy.h"
+#include "GhostEnemy.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -176,7 +179,9 @@ namespace NCL {
 
 			NavMeshGrid* navGrid;
 			NavMeshAgent* navMeshAgent;
-			std::vector<NavMeshAgent*> enemyList;
+			std::vector<MeleeEnemy*> meleeEnemyList;
+			std::vector<RangedEnemy*> rangedEnemyList;
+			std::vector<GhostEnemy*> ghostEnemyList;
 
 			int EnemyFrameCountMax;
 			int EnemyFrameCount;

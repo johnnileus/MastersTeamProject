@@ -301,7 +301,7 @@ void TutorialGame::InitWorld() {
 
 	InitEnemies();
 	EnemyFrameCount = 0;
-	EnemyFrameCountMax = enemyList.size();
+	EnemyFrameCountMax = meleeEnemyList.size();
 	InitTerrain();
 
 	InitDefaultFloor();
@@ -485,23 +485,23 @@ void TutorialGame::ToggleCursor() {
 }
 
 void TutorialGame::InitEnemies() {
-	enemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(&world, this->navGrid, Vector3(10,3,10), 1.0f, 0.01f));
+	meleeEnemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(&world, this->navGrid, Vector3(10,3,10), 1.0f, 1.0f));
 }
 
 void TutorialGame::UpdateEnemies(float dt) {
 	for (int e = 0; e < enemies.size(); ++e) {
-		if (enemyList[e]->CheckAlive()) {
-			enemyList[e]->FollowPath();
+		if (meleeEnemyList[e]->CheckAlive()) {
+			meleeEnemyList[e]->UpdateEnemy(dt);
 			continue;
 		}
 		else {
-			if (enemyList[e]->CheckRespawn()) {
-				enemyList[e]->Spawn();
-				enemyList[e]->SetDestinationNull();
+			if (meleeEnemyList[e]->CheckRespawn()) {
+				meleeEnemyList[e]->Spawn();
+				meleeEnemyList[e]->SetDestinationNull();
 				
 			}
 			else {
-				enemyList[e]->UpdateRespawnTimer(dt);
+				meleeEnemyList[e]->UpdateRespawnTimer(dt);
 			}
 		}
 	}
