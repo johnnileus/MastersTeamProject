@@ -48,7 +48,6 @@ size_t sceLibcHeapSize = 256 * 1024 * 1024;
 #include <chrono>
 #include <thread>
 #include <sstream>
-#include "NetworkedGame.h"
 #ifdef USEAGC
 #include <GameTechAGCRenderer.h>
 #endif // USEAGC
