@@ -445,6 +445,7 @@ void Player::HandleJump(float dt) {
 	if (isOnGround && inputController->GetNamedButton("Cross")) {
 		jumpTimeCounter = 0.1f;
 		isOnGround = false;
+		AudioManager::GetInstance().PlaySound("Jump.wav");
 	}
 #else
 	if (isOnGround && Window::GetKeyboard()->KeyPressed(KeyCodes::SPACE)) {
