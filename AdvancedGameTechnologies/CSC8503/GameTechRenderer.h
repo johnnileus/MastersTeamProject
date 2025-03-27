@@ -103,6 +103,8 @@ namespace NCL {
 			OGLTexture*postProcessColorTex;
 			OGLTexture*postProcessDepthTex;
 
+			GLuint postProcessDepthTexID;
+
 		};
 	}
 }
