@@ -15,6 +15,9 @@ namespace NCL {
 				this->InitialiseDemoShootableEnemy(scale, inverseMass, spawnPosition, health, alive, respawnTimer, damage);
 				this->InitialiseNavMeshAgent(nodeGrid);
 			}
+
+			~NavMeshAgent() {}
+
 			void InitialiseNavMeshAgent(NavMeshGrid* nodeGrid = nullptr) {
 				
 				this->nodeGrid = nodeGrid;
