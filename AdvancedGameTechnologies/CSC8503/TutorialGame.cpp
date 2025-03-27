@@ -300,8 +300,18 @@ void TutorialGame::InitWorld() {
 	InitNavGrid();
 
 	InitEnemies();
-	EnemyFrameCount = 0;
-	EnemyFrameCountMax = meleeEnemyList.size();
+
+	enemyFrameCount = 1;
+
+	meleeEnemyFrameCount = 0;
+	meleeEnemyFrameCountMax = meleeEnemyList.size();
+
+	rangedEnemyFrameCount = 0;
+	rangedEnemyFrameCountMax =  rangedEnemyList.size();
+
+	ghostEnemyFrameCount = 0;
+	ghostEnemyFrameCountMax = ghostEnemyList.size();
+
 	InitTerrain();
 
 	InitDefaultFloor();
@@ -489,21 +499,74 @@ void TutorialGame::InitEnemies() {
 }
 
 void TutorialGame::UpdateEnemies(float dt) {
-	for (int e = 0; e < enemies.size(); ++e) {
-		if (meleeEnemyList[e]->CheckAlive()) {
-			meleeEnemyList[e]->UpdateEnemy(dt);
-			continue;
+	//frames 1,4,7 ect
+	if (enemyFrameCount % 3 == 1) {
+		if (meleeEnemyFrameCount >= meleeEnemyFrameCountMax) {
+			meleeEnemyFrameCount = 0;
 		}
-		else {
-			if (meleeEnemyList[e]->CheckRespawn()) {
-				meleeEnemyList[e]->Spawn();
-				meleeEnemyList[e]->SetDestinationNull();
-				
+		//updates one enemy at a time
+		if(meleeEnemyFrameCountMax > 0) {
+			if (meleeEnemyList[meleeEnemyFrameCount]->CheckAlive()) {
+				meleeEnemyList[meleeEnemyFrameCount]->UpdateEnemy(dt);
 			}
 			else {
-				meleeEnemyList[e]->UpdateRespawnTimer(dt);
+				if (meleeEnemyList[meleeEnemyFrameCount]->CheckRespawn()) {
+					meleeEnemyList[meleeEnemyFrameCount]->Spawn();
+					meleeEnemyList[meleeEnemyFrameCount]->SetDestinationNull();
+				}
+				else {
+					meleeEnemyList[meleeEnemyFrameCount]->UpdateRespawnTimer(dt);
+				}
 			}
 		}
+		meleeEnemyFrameCount++;
+	}
+
+	if (enemyFrameCount % 3 == 2) {
+		if (rangedEnemyFrameCount >= rangedEnemyFrameCountMax) {
+			rangedEnemyFrameCount = 0;
+		}
+		if (rangedEnemyFrameCountMax > 0) {
+			if (rangedEnemyList[rangedEnemyFrameCount]->CheckAlive()) {
+				rangedEnemyList[rangedEnemyFrameCount]->UpdateEnemy(dt);
+			}
+			else {
+				if (rangedEnemyList[rangedEnemyFrameCount]->CheckRespawn()) {
+					rangedEnemyList[rangedEnemyFrameCount]->Spawn();
+					rangedEnemyList[rangedEnemyFrameCount]->SetDestinationNull();
+				}
+				else {
+					rangedEnemyList[rangedEnemyFrameCount]->UpdateRespawnTimer(dt);
+				}
+			}
+		}
+		rangedEnemyFrameCount++;
+	}
+
+	if (enemyFrameCount % 3 == 3) {
+		if (ghostEnemyFrameCount >= ghostEnemyFrameCountMax) {
+			ghostEnemyFrameCount = 0;
+		}
+		if (ghostEnemyFrameCountMax > 0) {
+			if (ghostEnemyList[ghostEnemyFrameCount]->CheckAlive()) {
+				ghostEnemyList[ghostEnemyFrameCount]->UpdateEnemy(dt);
+			}
+			else {
+				if (ghostEnemyList[ghostEnemyFrameCount]->CheckRespawn()) {
+					ghostEnemyList[ghostEnemyFrameCount]->Spawn();
+					ghostEnemyList[ghostEnemyFrameCount]->SetDestinationNull();
+				}
+				else {
+					ghostEnemyList[ghostEnemyFrameCount]->UpdateRespawnTimer(dt);
+				}
+			}
+		}
+		ghostEnemyFrameCount++;
+	}
+
+	enemyFrameCount++;
+	if (enemyFrameCount = 4) {
+		enemyFrameCount = 1;
 	}
 }
 
