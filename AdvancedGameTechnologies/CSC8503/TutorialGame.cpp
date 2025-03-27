@@ -51,15 +51,12 @@ void TutorialGame::InitScene(string name) {
 	ghostEnemyList.clear();
 	world->ClearAndErase();
 	
-	
 	//delete individual enemies first
 	physics->Clear();
 
 	world->GetMainCamera().SetController(controller);
 	world->GetMainCamera().SetNearPlane(0.1f);
 	world->GetMainCamera().SetFarPlane(500.0f);
-
-
 
 	thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(), controller);
 	if (thirdPersonCam)
@@ -304,7 +301,7 @@ void TutorialGame::InitItems() {
 		int xRand = (std::rand() % 80) + 1;
 		int zRand = (std::rand() % 80) + 1;
 		int uidRand = (std::rand() % 5) + 1;
-		PassiveItem::Instantiate(world, itemList, player, Vector3(xRand, 0, zRand), uidRand);
+		PassiveItem::Instantiate(world, player, Vector3(xRand, 0, zRand), uidRand);
 	}
 }
 

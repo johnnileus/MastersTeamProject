@@ -11,6 +11,8 @@
 using namespace NCL;
 using namespace CSC8503;
 
+std::vector<PassiveItem*>PassiveItem::itemList = {};
+
 PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 	ReadFile("items.json");
 
@@ -24,7 +26,7 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 
 	health = NULL;
 	damage = NULL;
-	maxSpeed = NULL;//change to json value
+	maxSpeed = NULL;
 	jumpForce = NULL;
 
 	SetComponent(size, mass);
@@ -75,14 +77,12 @@ void PassiveItem::SetUid(int uid) {
 }
 
 void PassiveItem::UpdateCall() {
-	//UpdateStats(myPlayer, myUid);
 	FindItem(myPlayer, myUid);
 }
 
 void PassiveItem::FindItem(Player* player, int myUid) {
 	for (const auto& item : jsonFile["items"].array_items()) {
 		if (item["uid"].is_number() && item["uid"].int_value() == myUid) {
-			//std::cout << "match" << endl;
 			if (item["health"].is_number() && item["health"].int_value() != 0) {
 				healthVal = item["health"].int_value();
 				UpdateHealth(player, healthVal);
@@ -105,7 +105,7 @@ void PassiveItem::FindItem(Player* player, int myUid) {
 	}
 }
 
-PassiveItem* PassiveItem::Instantiate(GameWorld* world, std::vector<PassiveItem*> itemList, Player* player, const Vector3& position, int uid) {
+PassiveItem* PassiveItem::Instantiate(GameWorld* world, Player* player, const Vector3& position, int uid) {
 	PassiveItem* passive = new PassiveItem(player, world);
 
 	passive->GetTransform().SetPosition(position);
@@ -117,19 +117,13 @@ PassiveItem* PassiveItem::Instantiate(GameWorld* world, std::vector<PassiveItem*
 	return passive;
 }
 
-//update stats deprecated
-/*
-void PassiveItem::UpdateStats(Player* player, int myUid) {
-	//change to json data
-	if (myUid == 2) {
-		maxSpeed += myPlayer->GetSpeed();
-		myPlayer->SetSpeed(maxSpeed);
-	}
-	else {
-		return;
+void PassiveItem::OnCollisionBegin(GameObject* otherObject) {
+	if (otherObject->tag == "Cube") {
+		Vector3 currentPos = this->GetTransform().GetPosition();
+		this->GetTransform().SetPosition(Vector3(currentPos.x + 20, currentPos.y, currentPos.z));
+		this->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
 	}
 }
-*/
 
 void PassiveItem::UpdateHealth(Player* player, int healthVal) {
 	health = healthVal + myPlayer->GetHealth();

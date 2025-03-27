@@ -482,6 +482,7 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		PassiveItem* passiveItem = dynamic_cast<PassiveItem*>(otherObject);
 		if (passiveItem) {
 			passiveItem->UpdateCall();
+			score += 100;
 			SetTemporaryColour(collerctCoinColour, 0.5f);
 		}
 	}

@@ -80,6 +80,8 @@ void UIStateManager::States() {
     //  Pause Menu 
     case UIState::Paused: {
 
+        g->ToggleCursor();
+
 
         ImGui::SetWindowPos(ImVec2(500, 100));
         ImGui::SetWindowSize(ImVec2(300, 100));

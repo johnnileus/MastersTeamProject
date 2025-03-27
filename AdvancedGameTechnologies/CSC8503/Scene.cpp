@@ -9,6 +9,9 @@ GameObject* Scene::AddCubeToWorld(GameWorld* world, const Vector3& pos, const Ve
 {
     GameObject* cube = new GameObject();
 
+    cube->tag = "Cube";
+    cube->SetName("cube");
+
     AABBVolume* volume = new AABBVolume(size);
     cube->SetBoundingVolume((CollisionVolume*)volume);
 
