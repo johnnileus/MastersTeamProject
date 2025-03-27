@@ -85,6 +85,13 @@ namespace NCL {
 			void UpdateRangedEnemyList(RangedEnemy* e) { this->rangedEnemyList.emplace_back(e); }
 			void UpdateGhostEnemyList(GhostEnemy* e) { this->ghostEnemyList.emplace_back(e); }
 
+			int GetTimerSecs() const {
+				return timerSecs;
+			}
+			int GetTimerMins() const {
+				return timerMins;
+			}
+
 		protected:
 			void InitialiseAssets();
 

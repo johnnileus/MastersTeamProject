@@ -242,9 +242,6 @@ void TutorialGame::UpdateKeys() {
 	}
 }
 
-
-
-
 void TutorialGame::InitCamera() {
 	world.GetMainCamera().SetNearPlane(0.1f);
 	world.GetMainCamera().SetFarPlane(500.0f);
@@ -293,46 +290,13 @@ void TutorialGame::InitWorld() {
 
 }
 
-// if modifying the shape, please change InitialiseConnectedPlayer as well
-//void TutorialGame::InitPlayer()
-//{
-//	player = new Player();
-//
-//	float meshSize		= 1.0f;
-//	float inverseMass	= 10.0f;
-//	
-//	SphereVolume* volume  = new SphereVolume(1.0f);
-//
-//	player->SetBoundingVolume((CollisionVolume*)volume);
-//
-//	player->GetTransform()
-//		.SetScale(Vector3(meshSize, meshSize, meshSize))
-//		.SetPosition(Vector3(20,0,30));
-//
-//	player->SetRenderObject(new RenderObject(&player->GetTransform(), AssetManager::Instance().sphereMesh, AssetManager::Instance().metalTex, AssetManager::Instance().basicShader));
-//	player->SetPhysicsObject(new PhysicsObject(&player->GetTransform(), player->GetBoundingVolume()));
-//
-//	player->GetPhysicsObject()->SetInverseMass(inverseMass);
-//	player->GetPhysicsObject()->InitSphereInertia();
-//	player->playerObject=player;
-//	player->myWorld=world;
-//	player->Init(thirdPersonCam);
-//
-//	world->AddGameObject(player);
-//
-//	if (thirdPersonCam)
-//	{
-//		thirdPersonCam->SetFollowObject(player);
-//	}
-//	
-//}
+
+
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
 	Scene::AddTerrain(&world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
 }
-
-
 
 void TutorialGame::InitCatCoins() {
 	// add CatCoin to the list
@@ -344,10 +308,6 @@ void TutorialGame::InitCatCoins() {
 	catCoins.push_back(CatCoin::Instantiate(&world, Vector3(5, 0, 50)));
 
 }
-
-
-
-
 
 void TutorialGame::InitDefaultFloor() {
 	Vector3 offset(0,0,0);
