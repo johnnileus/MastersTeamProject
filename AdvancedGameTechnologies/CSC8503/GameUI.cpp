@@ -35,8 +35,9 @@ GameUI::~GameUI() {
 void GameUI::RenderAmmoCounter() {
 
     if (g->getPlayer() != nullptr) {
-        currentAmmo = g->getPlayer()->myWeapon->getAmmo();
-        totalAmmo = g->getPlayer()->myWeapon->getMaxAmmo();
+        currentAmmo = g->getPlayer()->currentWeapon->getAmmo();
+        
+        totalAmmo = g->getPlayer()->currentWeapon->getMaxAmmo();
     }
     static bool isReloading = false;
 
@@ -225,8 +226,8 @@ void GameUI::RenderWeaponUI()
     // Begin window
     if (ImGui::Begin("Weapon Selector", nullptr, window_flags))
     {
-        const float child_height = 30.0f;
-        const float child_width = 80.0f;
+        const float child_height = 50.0f;
+        const float child_width = 100.0f;
 
         // Weapon 1
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
