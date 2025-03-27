@@ -3,6 +3,8 @@
 
 
 #include "GameTechRenderer.h"
+
+#include "Assets.h"
 #include "GameObject.h"
 #include "RenderObject.h"
 #include "Camera.h"
@@ -79,6 +81,8 @@ GameTechRenderer::GameTechRenderer(GameWorld& world) : OGLRenderer(*Window::GetW
 
 	//Initializing ImGui
 	gameUIHandler = new GameUI();
+	PostProcessingInit();
+
 }
 
 //Terrain Generation
