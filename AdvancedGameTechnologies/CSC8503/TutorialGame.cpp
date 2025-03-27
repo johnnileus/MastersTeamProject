@@ -58,7 +58,11 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	sceneManager = new SceneManager();
 	sceneManager->InitScenes();
 
+#ifdef USEAGC
+	EnemyTestScene* listener = static_cast<EnemyTestScene*>(sceneManager->scenes["EnemyTestScene"]);
+#else
 	EnemyTestScene* listener = dynamic_cast<EnemyTestScene*>(sceneManager->scenes["EnemyTestScene"]);
+#endif // USEAGC
 	listener->newMeleeEnemy.AddListener(std::bind(&TutorialGame::UpdateMeleeEnemyList, this, std::placeholders::_1));
 	listener->newRangedEnemy.AddListener(std::bind(&TutorialGame::UpdateRangedEnemyList, this, std::placeholders::_1));
 	listener->newGhostEnemy.AddListener(std::bind(&TutorialGame::UpdateGhostEnemyList, this, std::placeholders::_1));
@@ -411,10 +415,6 @@ void TutorialGame::ToggleCursor() {
 
 void TutorialGame::InitEnemies() {
 	meleeEnemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(&world, this->navGrid, Vector3(10,3,10), 1.0f, 1.0f));
-}
-
-void TutorialGame::Test(int a) {
-	std::cout << "aAAAaaAaAAa" << a << std::endl;
 }
 
 void TutorialGame::InitItems() {

@@ -522,7 +522,7 @@ void Player::OnCollisionBegin(GameObject * otherObject)
 		else
 		{
 			health-=damage;
-			//AudioManager::GetInstance().PlaySound("GetHurt.wav"); wheres the bank for this?
+			//AudioManager::GetInstance().PlaySound("GetHurt.wav");
 #ifdef USEAGC
 			Enemy* enemy = static_cast<Enemy*>(otherObject);
 #else
