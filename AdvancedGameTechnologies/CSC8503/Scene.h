@@ -19,6 +19,7 @@
 #include "RangedEnemy.h"
 #include "GhostEnemy.h"
 #include "Event.h"
+#include "NavMeshGrid.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -35,7 +36,9 @@ namespace NCL {
 			static void InitDefaultFloor(GameWorld* world);
 			static void CreateRopeGroup(GameWorld* world);
 			static void GenerateWall(GameWorld* world);
-			MeleeEnemy* AddEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
+			MeleeEnemy* AddMeleeEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
+			RangedEnemy* AddRangedEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
+			GhostEnemy* AddGhostEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass);
 		protected:
 
 		};
@@ -54,7 +57,10 @@ namespace NCL {
 
 		class EnemyTestScene : public Scene {
 		public:
-			Event<int> newEvent;
+			NavMeshGrid* navGrid;
+			Event<MeleeEnemy*> newMeleeEnemy;
+			Event<RangedEnemy*> newRangedEnemy;
+			Event<GhostEnemy*> newGhostEnemy;
 			void InitScene(GameWorld* world) override;
 		};
 	}
