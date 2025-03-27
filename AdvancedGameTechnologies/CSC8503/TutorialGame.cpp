@@ -31,7 +31,7 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	controller.MapAxis(4, "YLook");
 
 	forceMagnitude	= 1.0f;
-	useGravity		= false;
+	useGravity		=  true;
 	AssetManager::Instance().LoadAssets(renderer);
 
 	sceneManager = new SceneManager();
