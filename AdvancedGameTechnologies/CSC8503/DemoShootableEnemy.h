@@ -27,7 +27,7 @@ namespace NCL {
 				this->inverseMass = inverseMass;
 				this->spawnPosition = spawnPostion;
 
-				SphereVolume* volume = new SphereVolume(1.0f);
+				SphereVolume* volume = new SphereVolume(scale);
 
 				this->SetBoundingVolume((CollisionVolume*)volume);
 
