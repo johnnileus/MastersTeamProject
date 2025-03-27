@@ -53,6 +53,7 @@ namespace NCL {
 			void SetDebugStringBufferSizes(size_t newVertCount);
 			void SetDebugLineBufferSizes(size_t newVertCount);
 			void PostProcessingInit();
+			void DoPostProcessPass();
 
 			vector<const RenderObject*> activeObjects;
 

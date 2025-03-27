@@ -198,26 +198,39 @@ void GameTechRenderer::LoadSkybox() {
 }
 
 void GameTechRenderer::RenderFrame() {
-	glEnable(GL_CULL_FACE);
-	glClearColor(0.7, 0.7, 0.7, 1);
-	BuildObjectList();
-	SortObjectList();
-	RenderShadowMap();
-	//RenderSkybox();
-	RenderCamera();
-	glDisable(GL_CULL_FACE); //Todo - text indices are going the wrong way...
-	glDisable(GL_BLEND);
-	glDisable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	NewRenderLines();
-	NewRenderTextures();
-	NewRenderText();
-	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_CULL_FACE);
+		glClearColor(0.7, 0.7, 0.7, 1);
 
-	//UI Rendering
-	gameUIHandler->RenderUI();
+		BuildObjectList();
+		SortObjectList();
+
+		// render shadow
+		RenderShadowMap();
+
+		// bind post process fbo
+		glBindFramebuffer(GL_FRAMEBUFFER, postProcessFBO);
+		glViewport(0, 0, windowSize.x, windowSize.y);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		RenderCamera();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
+		DoPostProcessPass(); 
+
+		//draw debug and ui
+		glDisable(GL_CULL_FACE); 
+		glDisable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		NewRenderLines();
+		NewRenderTextures();
+		NewRenderText();
+
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		gameUIHandler->RenderUI();
+
 }
 
 void GameTechRenderer::BuildObjectList() {
@@ -666,7 +679,7 @@ void GameTechRenderer::Draw(Mesh* mesh, bool multilayer) {
 
 void GameTechRenderer::PostProcessingInit()
 {
-	// 1. 创建一个颜色纹理，和窗口大小一致
+
 	glGenTextures(1, &postProcessColor);
 	glBindTexture(GL_TEXTURE_2D, postProcessColor);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, windowSize.x, windowSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
@@ -674,26 +687,25 @@ void GameTechRenderer::PostProcessingInit()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	// 2. 创建深度缓冲
+
 	glGenRenderbuffers(1, &postProcessDepth);
 	glBindRenderbuffer(GL_RENDERBUFFER, postProcessDepth);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, windowSize.x, windowSize.y);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
-	// 3. 创建 FBO
+
 	glGenFramebuffers(1, &postProcessFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, postProcessFBO);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, postProcessColor, 0);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, postProcessDepth);
 
-	// 检查 FBO 是否完整
+
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
 		std::cout << "PostProcess FBO creation failed!" << std::endl;
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	// 4. 创建全屏四边形（类似 debugTexMesh ）
+	
 	fullScreenQuad = new OGLMesh();
 	fullScreenQuad->SetVertexPositions({
 		Vector3(-1,  1, 0),
@@ -709,10 +721,26 @@ void GameTechRenderer::PostProcessingInit()
 	});
 	fullScreenQuad->SetVertexIndices({0,1,2,2,3,0});
 	fullScreenQuad->UploadToGPU();
-
-	// 5. 加载一个后处理着色器
+	
 	postProcessShader = new OGLShader("PostProcess.vert", "PostProcess.frag");
 
 }
+
+void GameTechRenderer::DoPostProcessPass() {
+	//bind post process shader
+	UseShader(*postProcessShader);
+	
+	BindTextureToShader(*(new OGLTexture(postProcessColor)), "sceneTex", 0);
+	
+	Matrix4 viewProj = Matrix4(); 
+	int loc = glGetUniformLocation(postProcessShader->GetProgramID(), "viewProjMatrix");
+	glUniformMatrix4fv(loc, 1, false, (float*)viewProj.array);
+
+
+	BindMesh(*fullScreenQuad);
+
+	DrawBoundMesh();
+}
+
 
 
