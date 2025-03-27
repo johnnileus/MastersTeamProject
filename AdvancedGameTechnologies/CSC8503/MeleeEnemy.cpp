@@ -1,4 +1,24 @@
 #include "MeleeEnemy.h"void MeleeEnemy::RestState(float dt) {
+void MeleeEnemy::PatrolState() {
+    float closestDistance = std::numeric_limits<float>::max();
+    NCL::Maths::Vector3 enemyPosition = this->GetTransform().GetPosition();
+
+    for (Player* player : players) {
+        float distance = Vector::Length(enemyPosition - player->GetTransform().GetPosition());
+        if (distance < closestDistance) {
+            closestDistance = distance;
+            this->currentTarget = player;
+        }
+    }
+
+
+    if (this->currentNode == this->destination || this->destination == nullptr || this->path.size() == 0) {
+        SetDestination();
+        FindPath();
+    }
+    FollowPath();
+}
+
 void MeleeEnemy::ChaseState() {
     if (currentTarget) {
         NCL::Maths::Vector3 playerPosition = currentTarget->GetTransform().GetPosition();
