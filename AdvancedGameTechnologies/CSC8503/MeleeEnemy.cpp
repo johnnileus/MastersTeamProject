@@ -180,7 +180,13 @@ void MeleeEnemy::UpdateEnemy(float dt) {
 
 void MeleeEnemy::OnCollisionBegin(GameObject* otherObject) {
     if (otherObject->tag == "Player") {
+#ifdef USEAGC
+        Player* player = static_cast<Player*>(otherObject);
+#else
         Player* player = dynamic_cast<Player*>(otherObject);
+#endif // USEAGC
+
+        
         if (hitCooldown < 0) {
             player->ApplyDamage(this->damage);
             hitCooldown = 3;

@@ -269,7 +269,7 @@ void TutorialGame::InitWorld() {
 
 
 	Scene::CreateRopeGroup(&world);
-	
+
 #ifdef USEAGC
 	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30), *c);
 #else
@@ -279,13 +279,13 @@ void TutorialGame::InitWorld() {
 	Scene::GenerateWall(&world);
 
 	InitCatCoins();
-	
+
 	InitTerrain();
 	Scene::InitDefaultFloor(&world);
 	InitItems();
 
 	world.PrintObjects();
-
+}
 
 void TutorialGame::InitTerrain() {
 	Vector3 offset(20, 0, 20);
@@ -304,13 +304,13 @@ void TutorialGame::InitCatCoins() {
 }
 
 void TutorialGame::InitDefaultFloor() {
-	Vector3 offset(0,0,0);
+	Vector3 offset(0, 0, 0);
 
-	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,0)+offset, Vector3(129,2, 129));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(130,-3,0)+offset, Vector3(1,10, 130));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3,-130)+offset, Vector3(130,10,1));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(0,-3, 130)+offset, Vector3(130,10,1));
-	Scene::AddDefaultFloorToWorld(&world, Vector3(-130,-3,0)+offset, Vector3(1,10, 130));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0, -3, 0) + offset, Vector3(129, 2, 129));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(130, -3, 0) + offset, Vector3(1, 10, 130));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0, -3, -130) + offset, Vector3(130, 10, 1));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(0, -3, 130) + offset, Vector3(130, 10, 1));
+	Scene::AddDefaultFloorToWorld(&world, Vector3(-130, -3, 0) + offset, Vector3(1, 10, 130));
 }
 
 
@@ -318,12 +318,12 @@ void TutorialGame::InitDefaultFloor() {
 
 void TutorialGame::CreateRopeGroup()
 {
-	Rope::AddRopeToWorld(&world, Vector3(0,0,-5),Vector3(15,0,-5),0.7f);
-	Rope::AddRopeToWorld(&world, Vector3(0,0,10),Vector3(15,0,10),0.7f);
-	Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-10,0,40),0.7f);
-	Rope::AddRopeToWorld(&world, Vector3(-10,0,30),Vector3(-5,0,20),0.8f);
-	Rope::AddRopeToWorld(&world, Vector3(-5,0,50),Vector3(-10,0,40),0.8f);
-	
+	Rope::AddRopeToWorld(&world, Vector3(0, 0, -5), Vector3(15, 0, -5), 0.7f);
+	Rope::AddRopeToWorld(&world, Vector3(0, 0, 10), Vector3(15, 0, 10), 0.7f);
+	Rope::AddRopeToWorld(&world, Vector3(-10, 0, 30), Vector3(-10, 0, 40), 0.7f);
+	Rope::AddRopeToWorld(&world, Vector3(-10, 0, 30), Vector3(-5, 0, 20), 0.8f);
+	Rope::AddRopeToWorld(&world, Vector3(-5, 0, 50), Vector3(-10, 0, 40), 0.8f);
+
 }
 
 
@@ -357,7 +357,7 @@ void TutorialGame::GenerateWall()
 void TutorialGame::SetWallColour()
 {
 	for (size_t i = 0; i < floors.size(); ++i) {
-		floors[i]->GetRenderObject()->SetColour(Vector4(0.7,0.7,0.7,1));
+		floors[i]->GetRenderObject()->SetColour(Vector4(0.7, 0.7, 0.7, 1));
 	}
 }
 
@@ -380,7 +380,7 @@ void TutorialGame::ToggleCursor() {
 }
 
 void TutorialGame::InitEnemies() {
-	meleeEnemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(&world, this->navGrid, Vector3(10,3,10), 1.0f, 1.0f));
+	meleeEnemyList.emplace_back(SceneManager::Instance().AddEnemyToWorld(&world, this->navGrid, Vector3(10, 3, 10), 1.0f, 1.0f));
 }
 
 void TutorialGame::InitItems() {
@@ -399,7 +399,7 @@ void TutorialGame::UpdateEnemies(float dt) {
 		meleeEnemyFrameCount = 0;
 	}
 	//updates one enemy at a time
-	if(meleeEnemyFrameCountMax > 0) {
+	if (meleeEnemyFrameCountMax > 0) {
 		if (meleeEnemyList[meleeEnemyFrameCount]->CheckAlive()) {
 			meleeEnemyList[meleeEnemyFrameCount]->UpdateEnemy(dt * meleeEnemyFrameCountMax);
 		}

@@ -87,7 +87,11 @@ void Bullet::OnCollisionBegin(GameObject* otherObject)
 {
     if (otherObject->tag=="Enemy")
     {
+#ifdef USEAGC
+        DemoShootableEnemy* e = static_cast<DemoShootableEnemy*>(otherObject);
+#else
         DemoShootableEnemy* e = dynamic_cast<DemoShootableEnemy*>(otherObject);
+#endif // USEAGC
         e->RegisterHit(this->damage);
         myWorld->RemoveGameObject(this);
     }
