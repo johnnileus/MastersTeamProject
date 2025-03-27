@@ -42,7 +42,6 @@ void NavMeshAgent::FindPath() {
                 node = node->GetParent();
             }
             std::reverse(this->path.begin(), this->path.end());
-            std::cout << "Destination: " << destination->GetPosition().x << " " << destination->GetPosition().z << std::endl;
             return;
         }
 
@@ -132,9 +131,10 @@ void NavMeshAgent::FollowPath() {
 
     if (!this->path.empty()) {
         this->nextNode = this->path.front();
-        for (int n = 0; n < size(path) - 1; ++n) {
-            Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 0.1f);
-        }
+        //degbug lines for pathfinding
+        //for (int n = 0; n < size(path) - 1; ++n) {
+        //    Debug::DrawLine(path[n]->GetPosition(), path[n + 1]->GetPosition(), Vector4(1, 0, 0, 0), 0.1f);
+        //}
     }
     
     MoveTowardsNextNode();
@@ -154,7 +154,7 @@ void NavMeshAgent::MoveTowardsNextNode() {
 
     this->GetPhysicsObject()->AddForce(smoothDirection * Vector3(50, 50, 50));
 
-    float maxSpeed = 10.0f;
+    float maxSpeed = 5.0f;
     Vector3 velocity = this->GetPhysicsObject()->GetLinearVelocity();
     float speed = Vector::Length(velocity);
     if (speed > maxSpeed) {
@@ -179,5 +179,4 @@ void NavMeshAgent::Spawn() {
     this->alive = true;
     this->GetTransform().SetPosition(this->spawnPosition);
     this->GetPhysicsObject();//need a function to make physics objects active
-    std::cout << "Enemy Spawned";
 }

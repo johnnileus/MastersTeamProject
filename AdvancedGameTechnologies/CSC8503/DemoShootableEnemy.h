@@ -14,9 +14,9 @@ namespace NCL {
 				InitialiseDemoShootableEnemy();
 			}
 			~DemoShootableEnemy() {
-				this->currentHealth = NULL;
-				this->respawnTimer = NULL;
-				this->alive = NULL;
+				delete this->GetRenderObject();
+				delete this->GetPhysicsObject();
+				delete this->GetBoundingVolume();
 			}
 
 			void InitialiseDemoShootableEnemy(float scale = 1.0f, float inverseMass = 100.0f, 
