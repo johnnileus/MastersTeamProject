@@ -89,6 +89,7 @@ void MeleeEnemy::PatrolState() {
 
     if (this->currentNode == this->destination || this->destination == nullptr || this->path.size() == 0) {
         SetDestination();
+        setCurrentNode(this->GetCurrentPosition().x, this->GetCurrentPosition().z);
         FindPath();
     }
     FollowPath();
