@@ -8,7 +8,7 @@ Shotgun::Shotgun(Player* owner)
     myCamera = owner->myCam;
     myWorld  = owner->myWorld;
     this->owner = owner;
-    weaponType=WeaponType::Shotgun;
+    weaponType= Enums::WeaponType::Shotgun;
 }
 
 Shotgun::~Shotgun() {

@@ -8,7 +8,7 @@ Rifle::Rifle(Player* owner):Weapon(30,9,0.1f,true,3)
     myCamera = owner->myCam;
     myWorld = owner->myWorld;
     this->owner = owner;
-    weaponType = WeaponType::Rifle;
+    weaponType = Enums::WeaponType::Rifle;
 }
 
 Rifle::~Rifle()

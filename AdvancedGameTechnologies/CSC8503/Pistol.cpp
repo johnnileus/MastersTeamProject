@@ -9,7 +9,7 @@ Pistol::Pistol(Player* owner):Weapon(10,15,0.4,false,2)
     myCamera = owner->myCam;
     myWorld = owner->myWorld;
     this->owner = owner;
-    weaponType = WeaponType::Pistol;
+    weaponType = Enums::WeaponType::Pistol;
 }
 
 Pistol::~Pistol()
