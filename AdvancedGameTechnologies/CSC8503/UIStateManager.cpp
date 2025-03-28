@@ -48,6 +48,7 @@ void UIStateManager::States() {
 
             SetCurrentState(UIState::InGame);
             AudioManager::GetInstance().PlayEvent("event:/Game Start");
+            g->ToggleCursor();
         }
 
         //Multiplayer
@@ -80,6 +81,8 @@ void UIStateManager::States() {
 
     //  Pause Menu 
     case UIState::Paused: {
+
+        g->ToggleCursor();
 
 
         ImGui::SetWindowPos(ImVec2(500, 100));

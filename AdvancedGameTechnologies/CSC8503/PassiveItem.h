@@ -3,7 +3,9 @@
 #include "GameWorld.h"
 #include "json11.hpp"
 
-//Getters and Setters for Player stats needed
+#include "Pistol.h"
+#include "Rifle.h"
+#include "Shotgun.h"
 
 namespace NCL {
 	namespace CSC8503 {
@@ -14,11 +16,22 @@ namespace NCL {
 
 			void UpdateCall();
 
-			static PassiveItem* Instantiate(GameWorld* world, std::vector<PassiveItem*> itemList, Player* player, const Vector3& position, int uid);
+			static PassiveItem* Instantiate(GameWorld* world, Player* player, const Vector3& position, int uid);
+
+			std::string ShowItem();
+			std::string itemName;
+
+			void OnCollisionBegin(GameObject* otherObject) override;
+
+			static std::vector<PassiveItem*> itemList;
 
 			GameWorld* myWorld;
 
 			Player* myPlayer;
+
+			Pistol* myPistol;
+			Rifle* myRifle;
+			Shotgun* myShotgun;
 		protected:
 			json11::Json jsonFile;
 
@@ -27,7 +40,6 @@ namespace NCL {
 
 			void SetComponent(float meshSize, float InverseMass);
 			void SetUid(int uid);
-			//void UpdateStats(Player* player, int myUid);
 			void UpdateHealth(Player* player, int healthVal);
 			void UpdateDamage(Player* player, int damageVal);
 			void UpdateSpeed(Player* player, int speedVal);
@@ -37,9 +49,13 @@ namespace NCL {
 			int myUid;
 
 			int health;
-			int damage;
+			int playerDamage;//for player (player.cpp)
 			float maxSpeed;
 			float jumpForce;
+
+			int pistolDamage;
+			int rifleDamage;
+			int shotgunDamage;
 
 			int healthVal;
 			int damageVal;

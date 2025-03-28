@@ -4,10 +4,11 @@
 #include "Bullet.h"
 
 Shotgun::Shotgun(Player* owner) 
-    : Weapon(8, 9, 0.5f, true, 3) {
+    : Weapon(8, 5, 0.5f, true, 3) {
     myCamera = owner->myCam;
     myWorld  = owner->myWorld;
     this->owner = owner;
+    damage = owner->GetDamage() + Weapon::getDamage();
     weaponType=WeaponType::Shotgun;
 }
 
