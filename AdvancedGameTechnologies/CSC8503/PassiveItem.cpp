@@ -29,11 +29,6 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 	name = "passive";
 	tag = "Passive";
 
-	health = NULL;
-	playerDamage = NULL;
-	maxSpeed = NULL;
-	jumpForce = NULL;
-
 	SetComponent(size, mass);
 }
 
