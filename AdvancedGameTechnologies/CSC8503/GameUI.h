@@ -13,6 +13,9 @@ public:
 	void RenderHealthBar();
 	void RenderScoreAndTimer();
 	void RenderWeaponUI();
+	void LoadingScreen(float progress);
+	void RenderTexture(string fileName);	
+	GLuint LoadTexture(const char* fileName);
 
 protected:
 	//state manager obj
@@ -26,5 +29,17 @@ protected:
 	int selected_weapon = 0;
 	float fade_alpha = 0.0f;
 	float flash_alpha = 0.0f;
-
+	float loadingProgress = 0.0f;
+	int textVar = 0;
+	std::vector<std::string> loadScreenText = {"Loading Textures...",
+												"Loading Assets...",							
+												"Initializing Engine",
+												"Compiling Shaders", 
+												"Generating World",
+												"Spawning Entities",
+												"Syncing Data",
+												"Rendering Scene", 
+												"Updating systems",
+												"Loading Post Processing...",
+												"Loading Complete"};
 };
