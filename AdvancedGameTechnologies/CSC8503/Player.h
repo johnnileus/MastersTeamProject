@@ -39,6 +39,8 @@ namespace NCL {
 				return health;
 			}
 
+			bool debugMode = false;
+			
 			GameWorld* myWorld;
 
 			int score;
@@ -156,6 +158,9 @@ namespace NCL {
 			float msgTimer;
 			bool isTempTimerActive;
 			std::string showItem;
+			
+			
+
 		};
 	}
 }

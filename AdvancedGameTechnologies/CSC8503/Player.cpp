@@ -142,6 +142,9 @@ void Player::PausedUpdate(float dt) {
 
 void Player::Update(float dt) {
 
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::F8)) {
+		debugMode = !debugMode;
+	}
 	UpdateGroundStatus();
 	FixBounce();
 	
@@ -291,19 +294,18 @@ void Player::HandleMovement(float dt, Vector2 inputDir) {
 	Vector3 levelCamRight = Vector3(myCam->right.x, 0, myCam->right.z);
 	
 	moveDir = Vector::Normalise(-levelCamFront * inputDir.y + levelCamRight * inputDir.x);
-	Debug::DrawLine(transform.GetPosition(), transform.GetPosition() + moveDir);
 	
-	// if there has input value, add force
+	if (debugMode) { //仅在Debug模式打开时绘制
+		Debug::DrawLine(transform.GetPosition(), transform.GetPosition() + moveDir);
+	}
+	
 	if (Vector::Length(moveDir) > 0) {
 		Vector3 force = Vector::Normalise(moveDir) * acceleratForce;
-		playerPhysicObject->AddForce(force);  // add force to object
+		playerPhysicObject->AddForce(force);
 		animator->Play(AnimationType::Player_Walk, true);
-	}
-	else
-	{
+	} else {
 		animator->Play(AnimationType::Player_Idle, true);
 	}
-	ClampSpeed(dt);
 }
 
 // limit speed 
@@ -422,8 +424,7 @@ void Player::HandleJump(float dt) {
 	}
 }
 
-void Player::HandleAim()
-{
+void Player::HandleAim() {
 	Ray ray = CollisionDetection::BuildRayFromCamera(myWorld->GetMainCamera(), 100.0f, *myCam);
 	
 	RayCollision collisionInfo;
@@ -431,14 +432,19 @@ void Player::HandleAim()
 	Vector3 hitPoint;
 	if (hasHit) {
 		hitPoint = collisionInfo.collidedAt;
-		Debug::DrawLine(shootPoint, hitPoint, Debug::RED);
+		if (debugMode) {
+			Debug::DrawLine(shootPoint, hitPoint, Debug::RED);
+		}
 	} else {
 		hitPoint = ray.GetPosition() + ray.GetDirection() * 100.0f;
-		Debug::DrawLine(shootPoint, hitPoint, Debug::YELLOW);
+		if (debugMode) {
+			Debug::DrawLine(shootPoint, hitPoint, Debug::YELLOW);
+		}
 	}
-	shootPoint = this->GetTransform().GetPosition() + Vector3(0, 1.5, 0); // bullet instantiate offset
+	shootPoint = this->GetTransform().GetPosition() + Vector3(0, 1.5, 0);
 	aimDir = hitPoint - shootPoint;
 }
+
 
 void Player::OnCollisionBegin(GameObject* otherObject)
 {
@@ -527,20 +533,20 @@ void Player::RemoveObject(GameObject* gameObject)
 }
 
 void Player::UpdateGroundStatus() {
-	
 	Vector3 origin = GetTransform().GetPosition() + Vector3(0, -0.5f, 0);
 	Vector3 direction(0, -1, 0);
 	float rayLength = 0.51f;
 	Ray groundRay(origin, direction);
 	RayCollision collisionInfo;
 	bool hit = myWorld->Raycast(groundRay, collisionInfo, true);
-	if (hit && collisionInfo.rayDistance <= rayLength) {
-		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::GREEN);
-		isOnGround = true;
-	} else {
-		Debug::DrawLine(transform.GetPosition(),origin+direction,Debug::YELLOW);
-		isOnGround = false;
+	if (debugMode) {
+		if (hit && collisionInfo.rayDistance <= rayLength) {
+			Debug::DrawLine(transform.GetPosition(), origin + direction, Debug::GREEN);
+		} else {
+			Debug::DrawLine(transform.GetPosition(), origin + direction, Debug::YELLOW);
+		}
 	}
+	isOnGround = hit && collisionInfo.rayDistance <= rayLength;
 }
 
 void Player::FixBounce()
