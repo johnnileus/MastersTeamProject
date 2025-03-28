@@ -54,7 +54,7 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 #endif // _WIN32
 
 	forceMagnitude	= 1.0f;
-	useGravity		= true;
+	useGravity		=  false;
 	AssetManager::Instance().LoadAssets(&renderer);
 
 	sceneManager = new SceneManager();
