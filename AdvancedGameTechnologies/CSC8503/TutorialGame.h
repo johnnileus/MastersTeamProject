@@ -62,6 +62,7 @@ namespace NCL {
 			void TogglePaused() { gamePaused = !gamePaused; }
 			bool IsGamePaused() { return gamePaused; }
 			bool GetCursorLocked() { return cursorLocked; }
+			void setGamePaused(bool val) { gamePaused = val; }
 
 #ifdef _WIN32
 			//called by GameServer when player connects
@@ -161,7 +162,8 @@ namespace NCL {
 			KeyboardMouseController controller;
 #endif // _WIN32
 			bool cursorLocked;
-			bool gamePaused = false;
+			bool gamePaused = true;
+			bool isStartScreen = false;
 			bool useGravity;
 
 			float		forceMagnitude;
