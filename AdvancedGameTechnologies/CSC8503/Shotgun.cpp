@@ -34,7 +34,7 @@ void Shotgun::Fire() {
     
     for (int i = 0; i < 8; ++i) {
         Vector3 bulletDir = RandomDirectionInCone(dir, halfAngle);
-        Bullet::Instantiate(myWorld, owner->shootPoint, bulletDir, this, 20.0f);
+        Bullet::Instantiate(myWorld, owner->shootPoint, bulletDir, this, 20.0f,owner);
     }
     
     myCamera->Shake(0.12f, 0.15f);

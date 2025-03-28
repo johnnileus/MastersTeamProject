@@ -44,6 +44,8 @@ namespace NCL {
 				return health;
 			}
 
+			bool debugMode = false;
+			
 			GameWorld* myWorld;
 
 			int score;

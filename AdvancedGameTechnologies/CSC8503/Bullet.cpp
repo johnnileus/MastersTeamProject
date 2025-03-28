@@ -27,7 +27,7 @@ Bullet::~Bullet()
 /// @param direction travel direction
 /// @param weapon from witch weapon
 /// @return 
-Bullet* Bullet::Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon,float distance)
+Bullet* Bullet::Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon,float distance,Player* player)
 {
 
     Bullet* bullet = new Bullet(weapon->getDamage(),200,distance);
@@ -38,7 +38,10 @@ Bullet* Bullet::Instantiate(GameWorld* world, const Vector3& position, const Vec
     bullet->damage = weapon->getDamage();
     world->AddGameObject(bullet);//add to physic world
     SceneManager::Instance().AddBullet(bullet);//must add to the manager for updating
-    Debug::DrawLine(position, position+direction*distance,Debug::CYAN,0.5);
+    if (player->debugMode)
+    {
+        Debug::DrawLine(position, position+direction*distance,Debug::CYAN,0.5);
+    }
     return bullet;
 }
 
