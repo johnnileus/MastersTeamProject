@@ -27,9 +27,12 @@ void Weapon::Update(float deltaTime, bool isFiring, const Vector3& direction) {
     if (isReloading)
     {
         if (!hasPlayedReloadSound) {
-            AudioManager::GetInstance().PlayEvent("event:/Rifle reload");
+            if (!reloadSoundEvent.empty()) {
+                AudioManager::GetInstance().PlayEvent(reloadSoundEvent);
+            }
             hasPlayedReloadSound = true;
         }
+
         reloadTimer-=deltaTime;
         if (reloadTimer<=0.0f)
         {

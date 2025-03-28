@@ -52,7 +52,7 @@ int main() {
 	initInfo.width		= 1280;
 	initInfo.height		= 720;
 	initInfo.windowTitle = "GO MARBLE BALL";
-	initInfo.fullScreen =true;
+	/*initInfo.fullScreen =true;*/
 
 	Window*w = Window::CreateGameWindow(initInfo);
 
@@ -77,7 +77,6 @@ int main() {
 	audio.LoadBank("../../Assets/Sounds/Weapon.bank");
 	audio.LoadBank("../../Assets/Sounds/Environmental Effect.bank");
 	
-	audio.PlayEvent("event:/Gaming Background Sound");
 
 
 	g = new TutorialGame();

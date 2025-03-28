@@ -11,6 +11,8 @@ Pistol::Pistol(Player* owner):Weapon(10,10,0.4,false,2)
     this->owner = owner;
     damage = owner->GetDamage() + Weapon::getDamage();
     weaponType = WeaponType::Pistol;
+
+    reloadSoundEvent = "event:/Pistol reload";
 }
 
 Pistol::~Pistol()
