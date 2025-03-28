@@ -52,7 +52,7 @@ int main() {
 	initInfo.width		= 1280;
 	initInfo.height		= 720;
 	initInfo.windowTitle = "GO MARBLE BALL";
-	/*initInfo.fullScreen =true;*/
+	initInfo.fullScreen =true;
 
 	Window*w = Window::CreateGameWindow(initInfo);
 
