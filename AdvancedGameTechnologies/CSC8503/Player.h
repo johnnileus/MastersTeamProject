@@ -161,7 +161,10 @@ namespace NCL {
 #ifdef USEAGC
 			NCL::PS5::PS5Controller* inputController;
 #endif // USEAGC
-			
+			void ShowTimer(std::string item, float duration);
+			float msgTimer;
+			bool isTempTimerActive;
+			std::string showItem;
 		};
 	}
 }
