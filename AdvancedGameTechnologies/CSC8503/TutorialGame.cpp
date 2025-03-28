@@ -90,7 +90,7 @@ void TutorialGame::InitScene(string name) {
 	this->useGravity = true;
 	physics->UseGravity(useGravity);
 
-	AudioManager::GetInstance().PlayEvent("event:/Gaming Background Sound");
+	AudioManager::GetInstance().PlayBGM("event:/Gaming Background Sound");
 }
 
 
@@ -107,6 +107,8 @@ TutorialGame::~TutorialGame()	{
 
 
 void TutorialGame::UpdateGame(float dt) {
+	AudioManager::GetInstance().PauseBGM(gamePaused);
+
 	if (!gamePaused) { // if game is not paused :)
 		if (player) { player->Update(dt); }
 		if (doorTrigger) { doorTrigger->Update(dt); }
