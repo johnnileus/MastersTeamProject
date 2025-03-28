@@ -10,6 +10,8 @@ Shotgun::Shotgun(Player* owner)
     this->owner = owner;
     damage = owner->GetDamage() + Weapon::getDamage();
     weaponType= Enums::WeaponType::Shotgun;
+
+    reloadSoundEvent = "event:/Shotgun reload";
 }
 
 Shotgun::~Shotgun() {

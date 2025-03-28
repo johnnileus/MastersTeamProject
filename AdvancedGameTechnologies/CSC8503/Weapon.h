@@ -24,6 +24,10 @@ namespace NCL {
             float reloadTime;
             bool isReloading;
 
+        protected:
+            std::string reloadSoundEvent;
+
+
         public:
             Weapon(int maxAmmo, int damage, float interval, bool autoFire, float reloadTime)
                 : ammo(maxAmmo)
@@ -32,7 +36,7 @@ namespace NCL {
                 , shotInterval(interval)
                 , canAutoFire(autoFire)
                 , shotTimer(0.0f)
-                ,reloadTime(reloadTime)
+                , reloadTime(reloadTime)
                 , wasFiringLastFrame(false)
             {
                 reloadTimer = reloadTime;
@@ -54,7 +58,7 @@ namespace NCL {
             int  getDamage()  const { return damage; }
             void setDamage(const int d) { damage = d; }
             bool IsAutoFire() const { return canAutoFire; }
-            
+
             Enums::WeaponType GetWeaponType()
             {
                 return weaponType;

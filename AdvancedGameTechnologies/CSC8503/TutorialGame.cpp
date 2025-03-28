@@ -129,7 +129,7 @@ void TutorialGame::InitScene(string name) {
 	ghostEnemyFrameCountMax = ghostEnemyList.size();
 	this->useGravity = true;
 	physics.UseGravity(useGravity);
-
+	AudioManager::GetInstance().PlayEvent("event:/Gaming Background Sound");
 }
 
 
