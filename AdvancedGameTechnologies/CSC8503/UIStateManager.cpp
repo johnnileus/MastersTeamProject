@@ -38,7 +38,7 @@ void UIStateManager::States() {
 
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Hight Score : 00").x) * 0.5f);
 
-        ImGui::TextColored(ImVec4(0, 255, 150, 1), "High Score : 0");
+        ImGui::TextColored(ImVec4(0, 255, 150, 1), "High Score : %d", highScore);
 
         ImGui::Spacing();
         ImGuiStyle& style = ImGui::GetStyle();
@@ -220,9 +220,14 @@ void UIStateManager::States() {
             ImGui::SetCursorPosX((400 - (textSize.x + 60)) * 0.5f); 
 
             if (ImGui::Button("QUIT GAME")) {
+                if (highScore < g->getPlayer()->GetFinalScore()) {
+                    highScore = g->getPlayer()->GetFinalScore();
+                }
                 SetCurrentState(UIState::MainMenu);
                 endScreenFlag = true;
                 g->InitScene("EnemyTestScene");
+                g->SetFinalScore(0);
+                g->getPlayer()->SetFinalScore(0);
                 g->setGamePaused(true);
             }
 

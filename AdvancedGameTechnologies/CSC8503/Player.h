@@ -91,6 +91,9 @@ namespace NCL {
 			int GetFinalScore() const {
 				return finalScore;
 			}
+			void SetFinalScore(const int f) {
+				finalScore = f;
+			}
 
 			Event<Player*> OnSwitchWeaponEvent;
 
