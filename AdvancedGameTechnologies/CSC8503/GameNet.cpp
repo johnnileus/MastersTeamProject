@@ -7,7 +7,8 @@
 #include "GameNet.h"
 #include "TutorialGame.h"
 
-extern TutorialGame* g;
+//extern TutorialGame* g;
+extern std::unique_ptr<TutorialGame> g;
 
 
 
@@ -188,7 +189,7 @@ GameObject* TutorialGame::InitialiseConnectedPlayerObject(int id) {
 	newPlayer->GetPhysicsObject()->SetInverseMass(inverseMass);
 	newPlayer->GetPhysicsObject()->InitSphereInertia();
 
-	world->AddGameObject(newPlayer);
+	world.AddGameObject(newPlayer);
 	connectedPlayers[id] = newPlayer;
 
 	return newPlayer;

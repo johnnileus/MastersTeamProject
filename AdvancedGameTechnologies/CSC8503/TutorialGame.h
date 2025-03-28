@@ -69,8 +69,6 @@ namespace NCL {
 			GameObject** GetConnectedPlayerObjects();
 			void BroadcastPositions();
 			void Test(int a);
-			void ToggleCursor();
-			void TogglePaused() { gamePaused = !gamePaused; }
 			int GetID() { return networkManager->GetID(); }
 			
 
@@ -78,8 +76,7 @@ namespace NCL {
 #endif // _WIN32
 
 		
-			
-
+			TutorialGame* getGame();
 			Player* getPlayer() { return player; }
 			void UpdateMeleeEnemyList(MeleeEnemy* e) { this->meleeEnemyList.emplace_back(e); }
 			void UpdateRangedEnemyList(RangedEnemy* e) { this->rangedEnemyList.emplace_back(e); }
@@ -142,9 +139,6 @@ namespace NCL {
 			StateGameObject* testStateObject;
 
 			GameObject* debugSphere;
-#ifdef _WIN32
-			NetworkManager* networkManager = new NetworkManager();
-#endif // WIN32
 
 			ThirdPersonCamera* thirdPersonCam;
 
@@ -217,6 +211,7 @@ namespace NCL {
 			int ghostEnemyFrameCount;
 
 			float bgmVolume = 0.5f;
+			TutorialGame* gRaw;
 		};
 	}
 }

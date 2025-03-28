@@ -36,6 +36,8 @@ if(MSVC)
     add_compile_definitions("WIN32_LEAN_AND_MEAN") 
 endif()
 
+option(USE_AGC "Enable AGC support" OFF)  # Default is OFF
+
 if(USE_AGC)
 add_compile_definitions("USEAGC") 
 endif()

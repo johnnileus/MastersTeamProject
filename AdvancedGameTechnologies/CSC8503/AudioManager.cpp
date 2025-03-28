@@ -14,8 +14,10 @@ AudioManager& AudioManager::GetInstance() {
 
 
 bool AudioManager::Init() {
+#ifdef USEAGC
 	fmodStudioLib = sceKernelLoadStartModule("/app0/sce_module/libfmodstudioL.prx", 0, nullptr, 0, nullptr, nullptr);
 	fmodLib = sceKernelLoadStartModule("/app0/sce_module/libfmodL.prx", 0, nullptr, 0, nullptr, nullptr);
+#endif // USEAGC
 	std::cout << "Attempting to initialize FMOD..." << std::endl;
 
 	FMOD_RESULT result = FMOD::Studio::System::create(&studioSystem);
@@ -116,22 +118,22 @@ FMOD::Studio::EventInstance* AudioManager::PlayEvent(const std::string& eventNam
 	return eventInstance;
 }
 
-//void AudioManager::SetMasterVolume(int volume) {
-//	float fVolume = std::clamp(volume / 100.0f, 0.0f, 1.0f);
-//
-//	if (studioSystem) {
-//		FMOD::Studio::Bus* masterBus = nullptr;
-//
-//		FMOD_RESULT result = studioSystem->getBus("bus:/", &masterBus);
-//		if (result == FMOD_OK && masterBus) {
-//			masterBus->setVolume(fVolume); // Set the volume of the master bus
-//			std::cout << "[AudioManager] Set master volume to " << fVolume << std::endl;
-//		}
-//		else {
-//			std::cout << "[AudioManager] Failed to get master bus: " << FMOD_ErrorString(result) << std::endl;
-//		}
-//	}
-//}
+void AudioManager::SetMasterVolume(int volume) {
+	float fVolume = std::clamp(volume / 100.0f, 0.0f, 1.0f);
+
+	if (studioSystem) {
+		FMOD::Studio::Bus* masterBus = nullptr;
+
+		FMOD_RESULT result = studioSystem->getBus("bus:/", &masterBus);
+		if (result == FMOD_OK && masterBus) {
+			masterBus->setVolume(fVolume); // Set the volume of the master bus
+			std::cout << "[AudioManager] Set master volume to " << fVolume << std::endl;
+		}
+		else {
+			std::cout << "[AudioManager] Failed to get master bus: " << FMOD_ErrorString(result) << std::endl;
+		}
+	}
+}
 
 
 void AudioManager::Update()

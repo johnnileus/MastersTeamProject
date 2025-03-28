@@ -6,7 +6,9 @@
 #include "TutorialGame.h"
 #include "AudioManager.h"
 
-extern TutorialGame* g;
+//extern TutorialGame* g;
+//extern std::unique_ptr<TutorialGame> g;
+extern TutorialGame* gRaw;
 
 UIStateManager::UIStateManager() {
 
@@ -24,14 +26,16 @@ void UIStateManager::States() {
 
         // --- Main Menu ---
     case UIState::MainMenu: {
+#ifdef USEAGC
 
+#else
         ImGui::Begin("Main Menu", NULL,
             ImGuiWindowFlags_NoResize |
             ImGuiWindowFlags_NoMove);
 
         ImGui::SetWindowFontScale(2.0f);
-        ImGui::SetWindowSize(ImVec2(843,488));
-        ImGui::SetWindowPos(ImVec2(185,100));
+        ImGui::SetWindowSize(ImVec2(843, 488));
+        ImGui::SetWindowPos(ImVec2(185, 100));
 
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Hight Score : 00").x) * 0.5f);
 
@@ -60,6 +64,9 @@ void UIStateManager::States() {
         }
 
         ImGui::End();
+#endif // USEAGC
+
+        
         break;
     }
 
@@ -252,7 +259,7 @@ void UIStateManager::HandleInput() {
 
 UIState UIStateManager::GetCurrentState() {
     return currentState;
-    if (g->getPlayer()->GetHealth() <= 0) {
+    if (gRaw->getPlayer()->GetHealth() <= 0) {
 		SetCurrentState(UIState::EndGame);
     }
 }

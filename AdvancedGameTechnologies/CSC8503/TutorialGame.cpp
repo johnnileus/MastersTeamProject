@@ -19,7 +19,6 @@
 
 #include "../PS5Core/PS5Window.h"
 
-
 using namespace NCL;
 using namespace CSC8503;
 
@@ -46,9 +45,12 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	navMeshAgent = nullptr;
 
 #ifdef _WIN32
-	std::cout << "Creating ThirdPersonCamera instance" << std::endl;
-	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), controller);
-	std::cout << "ThirdPersonCamera instance created" << std::endl;
+	controller.MapAxis(0, "Sidestep");
+	controller.MapAxis(1, "UpDown");
+	controller.MapAxis(2, "Forward");
+
+	controller.MapAxis(3, "XLook");
+	controller.MapAxis(4, "YLook");
 #endif // _WIN32
 
 	forceMagnitude	= 1.0f;
@@ -71,6 +73,7 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 }
 
 void TutorialGame::InitScene(string name) {
+	this->useGravity = false;
 	meleeEnemyList.clear();
 	rangedEnemyList.clear();
 	ghostEnemyList.clear();
@@ -89,17 +92,8 @@ void TutorialGame::InitScene(string name) {
 	world.GetMainCamera().SetNearPlane(0.1f);
 	world.GetMainCamera().SetFarPlane(500.0f);
 
-	/*controller.MapAxis(0, "Sidestep");
-	controller.MapAxis(1, "UpDown");
-	controller.MapAxis(2, "Forward");
-
-	controller.MapAxis(3, "XLook");
-	controller.MapAxis(4, "YLook");*/
-#endif // USEAGC
-#ifdef _WIN32
 	thirdPersonCam = new ThirdPersonCamera(&world.GetMainCamera(), controller);
-#endif // _WIN32
-
+#endif // USEAGC
 	if (thirdPersonCam)
 	{
 		thirdPersonCam->SetPitch(0.0f);
@@ -113,7 +107,7 @@ void TutorialGame::InitScene(string name) {
 	player = Player::Instantiate(&world, thirdPersonCam, Vector3(20, 0, 30));
 #endif // USEAGC
 
-	sceneManager->scenes[name]->InitScene(&world);
+	/*sceneManager->scenes[name]->InitScene(&world);*/
 
 	sceneManager->SwitchScene(name, &world);
 
@@ -129,6 +123,8 @@ void TutorialGame::InitScene(string name) {
 
 	ghostEnemyFrameCount = 0;
 	ghostEnemyFrameCountMax = ghostEnemyList.size();
+	this->useGravity = true;
+	physics.UseGravity(useGravity);
 
 }
 
@@ -151,9 +147,9 @@ void TutorialGame::UpdateGame(float dt) {
 		if (player) { player->Update(dt); }
 		if (doorTrigger) { doorTrigger->Update(dt); }
 
-		//for (Enemy* enemy : enemies) {
-		//	if (enemy) { enemy->Update(dt); }
-		//}
+		for (Enemy* enemy : enemies) {
+			if (enemy) { enemy->Update(dt); }
+		}
 		UpdateKeys();
 		world.UpdateWorld(dt);
 
@@ -238,7 +234,11 @@ void TutorialGame::UpdateKeys() {
 
 	}
 #endif // WIN32
+#ifdef USEAGC
+	if (c->GetNamedButton("L1")) {
+#else
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::P)) {
+#endif // USEAGC
 		TogglePaused();
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
@@ -474,3 +474,4 @@ void TutorialGame::NewLevel() {
 		InitScene("default");
 	}
 }
+

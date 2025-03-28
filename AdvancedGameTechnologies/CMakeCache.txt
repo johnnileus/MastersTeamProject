@@ -354,6 +354,7 @@ FMT_WERROR:BOOL=OFF
 
 RELEASE_ASSET_ROOT:STRING=C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/
 
+//Enable AGC support
 USE_AGC:BOOL=ON
 
 //FORCE

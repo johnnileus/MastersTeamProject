@@ -50,10 +50,15 @@ size_t sceLibcHeapSize = 256 * 1024 * 1024;
 #ifdef USEAGC
 #include <GameTechAGCRenderer.h>
 #endif // USEAGC
-#include <AudioManager.h>
 
 
-TutorialGame* g;
+//TutorialGame* g;
+std::unique_ptr<TutorialGame> g;
+TutorialGame* gRaw = nullptr;
+
+//TutorialGame* GetGameInstance() {
+//	return g.get();
+//}
 
 
 
@@ -92,9 +97,9 @@ int main() {
 		return -1;
 	}*/	
 
-#ifdef _WIN32
-	std::unique_ptr<NetworkedGame> networkedGame = std::make_unique<NetworkedGame>(*world, *renderer, *physics);
-#endif // WIN32
+//#ifdef _WIN32
+//	std::unique_ptr<NetworkedGame> networkedGame = std::make_unique<NetworkedGame>(*world, *renderer, *physics);
+//#endif // WIN32
 #ifdef USEAGC
 	c->MapAxis(0, "LeftX");
 	c->MapAxis(1, "LeftY");
@@ -146,6 +151,7 @@ int main() {
 
 
 	std::unique_ptr<TutorialGame> g = std::make_unique<TutorialGame>(*world, *renderer, *physics);
+	gRaw = g.get();
 	w->GetTimer().GetTimeDeltaSeconds(); //Clear the timer so we don't get a large first dt!
 
 #ifdef USEAGC

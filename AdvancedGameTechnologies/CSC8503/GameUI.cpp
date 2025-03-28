@@ -6,7 +6,9 @@
 #include "ImGui/imgui_impl_opengl3.h"
 #include "ImGui/imgui_impl_win32.h"
 
-extern TutorialGame* g;
+//extern TutorialGame* g;
+//extern std::unique_ptr<TutorialGame> g;
+extern TutorialGame* gRaw;
 
 GameUI::GameUI() {
     IMGUI_CHECKVERSION();
@@ -33,10 +35,10 @@ GameUI::~GameUI() {
 
 void GameUI::RenderAmmoCounter() {
 
-    if (g->getPlayer() != nullptr) {
-        currentAmmo = g->getPlayer()->currentWeapon->getAmmo();
+    if (gRaw != nullptr && gRaw->getPlayer() != nullptr) {
+        currentAmmo = gRaw->getPlayer()->currentWeapon->getAmmo();
         
-        totalAmmo = g->getPlayer()->currentWeapon->getMaxAmmo();
+        totalAmmo = gRaw->getPlayer()->currentWeapon->getMaxAmmo();
     }
     static bool isReloading = false;
 
@@ -107,8 +109,8 @@ void GameUI::RenderCrosshair() {
 }
 
 void GameUI::RenderHealthBar() {
-    if (g->getPlayer() != nullptr){
-        currentHealth = g->getPlayer()->GetHealth();
+    if (gRaw->getPlayer() != nullptr){
+        currentHealth = gRaw->getPlayer()->GetHealth();
     }
     
     float healthPercentage = float(currentHealth) / float(maxHealth); 
@@ -139,11 +141,11 @@ void GameUI::RenderHealthBar() {
 
 void GameUI::RenderScoreAndTimer() {
     // Convert timer to minutes and seconds
-    int minutes = g->GetTimerMins();
-    int seconds = g->GetTimerSecs();
+    int minutes = gRaw->GetTimerMins();
+    int seconds = gRaw->GetTimerSecs();
 
     char scoreText[32];
-    snprintf(scoreText, sizeof(scoreText), "Score: %d", g->getPlayer()->score);
+    snprintf(scoreText, sizeof(scoreText), "Score: %d", gRaw->getPlayer()->score);
 
     char timerText[32];
     snprintf(timerText, sizeof(timerText), "Time: %02d:%02d", minutes, seconds);

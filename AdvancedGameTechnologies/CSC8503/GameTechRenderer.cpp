@@ -81,7 +81,7 @@ GameTechRenderer::GameTechRenderer(GameWorld& world) : OGLRenderer(*Window::GetW
 
 	//Initializing ImGui
 	gameUIHandler = new GameUI();
-	PostProcessingInit();
+	/*PostProcessingInit();*/
 
 }
 
