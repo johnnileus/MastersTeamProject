@@ -23,13 +23,26 @@ GameUI::GameUI() {
     ImGui_ImplWin32_InitForOpenGL(windowHandle);
     ImGui_ImplOpenGL3_Init();
     ImGui::GetIO().WantCaptureMouse = true;
-
+    InitTexture();
 }
 
 GameUI::~GameUI() {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
+}
+
+void GameUI::InitTexture() {
+    std::string tp1 = NCL::Assets::TEXTUREDIR + "ak47.png";
+    std::string tp2 = NCL::Assets::TEXTUREDIR + "burst.png";
+    std::string tp3 = NCL::Assets::TEXTUREDIR + "shotgun.png";
+    std::string tp4 = NCL::Assets::TEXTUREDIR + "bg.png";
+
+    ak      = LoadTexture(tp1.c_str());
+    burst   = LoadTexture(tp2.c_str());
+    shotgun = LoadTexture(tp3.c_str());
+	bg      = LoadTexture(tp4.c_str());
+
 }
 
 GLuint GameUI::LoadTexture(const char* filename) {
@@ -258,14 +271,6 @@ void GameUI::RenderScoreAndTimer() {
 
 
 void GameUI::RenderWeaponUI() {
-
-    std::string tp1 = NCL::Assets::TEXTUREDIR + "ak47.png";
-    std::string tp2 = NCL::Assets::TEXTUREDIR + "burst.png";
-    std::string tp3 = NCL::Assets::TEXTUREDIR + "shotgun.png";
-
-    GLuint ak = LoadTexture(tp1.c_str());
-    GLuint burst = LoadTexture(tp2.c_str());
-    GLuint shotgun = LoadTexture(tp3.c_str());
 
     ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImVec2 window_pos = ImVec2(20.0f, viewport->Size.y - 100.0f); 

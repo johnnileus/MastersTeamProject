@@ -16,6 +16,7 @@ public:
 	void LoadingScreen(float progress);
 	void RenderTexture(string fileName);	
 	GLuint LoadTexture(const char* fileName);
+	void InitTexture();
 
 protected:
 	//state manager obj
@@ -31,6 +32,11 @@ protected:
 	float flash_alpha = 0.0f;
 	float loadingProgress = 0.0f;
 	int textVar = 0;
+	//texture ids
+	GLuint ak;
+	GLuint burst;
+	GLuint shotgun;
+	GLuint bg;
 	std::vector<std::string> loadScreenText = {"Loading Textures...",
 												"Loading Assets...",							
 												"Initializing Engine",
