@@ -20,6 +20,7 @@ private:
 	bool isWindowOpen = true;
 	bool isPaused = false;
 	int audio = 100;
+	bool endScreenFlag = false;
 
 public:
 	UIStateManager();

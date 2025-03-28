@@ -148,12 +148,12 @@ TutorialGame::~TutorialGame()	{
 
 void TutorialGame::UpdateGame(float dt) {
 	//ammo counter should be running on all frames 
-	if (mainMenu) {
 #ifdef USEAGC
+	if (mainMenu) {
 		NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
 		NCL::PS5::PS5Controller* c = w->GetController();
 		world.GetMainCamera().SetController(*c);
-#endif // USEAGC
+
 		gamePaused = true;
 		if (c->GetNamedButton("L2")) {
 			//dummy function, this is required for some reason????
@@ -166,11 +166,11 @@ void TutorialGame::UpdateGame(float dt) {
 		Debug::Print("Press Triangle to Quit Game", Vector2(40, 70), Vector4(0, 0, 1, 1));
 	}
 	if (pauseGame && !mainMenu) {
-#ifdef USEAGC
+
 		NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
 		NCL::PS5::PS5Controller* c = w->GetController();
 		world.GetMainCamera().SetController(*c);
-#endif // USEAGC
+
 		Debug::Print("Press Cross to Resume", Vector2(40, 40), Vector4(0, 0, 0, 1));
 		if (c->GetNamedButton("Cross")) {
 			gamePaused = false;
@@ -185,14 +185,14 @@ void TutorialGame::UpdateGame(float dt) {
 		//}
 	}
 	if (endGame) {
-#ifdef USEAGC
 		NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
 		NCL::PS5::PS5Controller* c = w->GetController();
 		world.GetMainCamera().SetController(*c);
-#endif // USEAGC
+
 		//Debug::Print("Audio:" + to_string(score), Vector2(50, 50), Vector4(0, 1, 1, 1));
 		Debug::Print("Press Triangle to Quit", Vector2(50, 60), Vector4(1, 0, 0, 1));
 	}
+#endif // USEAGC
 	if (!gamePaused) { // if game is not paused :)
 		if (player) { player->Update(dt); }
 		if (doorTrigger) { doorTrigger->Update(dt); }
@@ -291,7 +291,9 @@ void TutorialGame::UpdateKeys() {
 #endif // USEAGC
 		//TogglePaused();
 		gamePaused = true;
+#ifdef USEAGC
 		pauseGame = true;
+#endif // USEAGC
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
 		InitScene("default");
@@ -521,12 +523,12 @@ void TutorialGame::InitNavGrid() {
 }
 
 void TutorialGame::NewLevel() {
-	if (timerMins == 2 && (!mainMenu || !pauseGame)) {
+	if (timerMins == 2) {
 		timerMins = 0;
 		levelCount++;
 		InitScene("EnemyTestScene");
 	}
-	else if (player->GetScore() == player->GetScoreGoal() && (!mainMenu || !pauseGame)) {
+	else if (player->GetScore() == player->GetScoreGoal()) {
 		timerMins = 0;
 		timerSecs = 0;
 		levelCount++;

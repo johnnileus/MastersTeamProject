@@ -5,6 +5,7 @@
 #include "Win32Window.h"
 #include "ImGui/imgui_impl_opengl3.h"
 #include "ImGui/imgui_impl_win32.h"
+#include <stb\stb_image.h>
 
 //extern TutorialGame* g;
 //extern std::unique_ptr<TutorialGame> g;
@@ -34,10 +35,10 @@ GameUI::~GameUI() {
 }
 
 void GameUI::InitTexture() {
-    std::string tp1 = NCL::Assets::TEXTUREDIR + "ak47.png";
-    std::string tp2 = NCL::Assets::TEXTUREDIR + "burst.png";
-    std::string tp3 = NCL::Assets::TEXTUREDIR + "shotgun.png";
-    std::string tp4 = NCL::Assets::TEXTUREDIR + "bg.png";
+    std::string tp1 = "../Assets/Textures/ak47.png";
+    std::string tp2 = "../Assets/Textures/burst.png";
+    std::string tp3 = "../Assets/Textures/shotgun.png";
+    std::string tp4 = "../Assets/Textures/bg.png";
 
     ak      = LoadTexture(tp1.c_str());
     burst   = LoadTexture(tp2.c_str());
@@ -75,7 +76,7 @@ GLuint GameUI::LoadTexture(const char* filename) {
 }
 
 void GameUI::RenderTexture(string fileName) {
-    std::string texturePath = NCL::Assets::TEXTUREDIR + fileName;
+    std::string texturePath = "../Assets/Textures/ " + fileName;
     
     GLuint myTexture = LoadTexture(texturePath.c_str());
 	

@@ -66,7 +66,11 @@ set(OLD_GLOB
   "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/Textures/PressStart2P.png"
   "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/Textures/Tiles.png"
   "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/Textures/WoodFloor.png"
+  "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/Textures/ak47.png"
+  "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/Textures/bg.png"
+  "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/Textures/burst.png"
   "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/Textures/checkerboard.png"
+  "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/Textures/shotgun.png"
   "C:/Users/c1030300/source/repos/johnnileus/MastersTeamProject/MastersTeamProject/AdvancedGameTechnologies/Assets/Textures/wood.png"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

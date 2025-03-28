@@ -43,8 +43,8 @@ void UIStateManager::States() {
         ImGui::SetWindowSize(ImVec2(843, 488));
         ImGui::SetWindowPos(ImVec2(185, 100));
 
-        if (g->GetCursorLocked() == true) {
-            g->ToggleCursor();
+        if (gRaw->GetCursorLocked() == true) {
+            gRaw->ToggleCursor();
         }
 
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Hight Score : 00").x) * 0.5f);
@@ -62,9 +62,9 @@ void UIStateManager::States() {
         if (ImGui::Button("Start Game", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::InGame);
-            g->setGamePaused(false);
+            gRaw->setGamePaused(false);
             AudioManager::GetInstance().PlayEvent("event:/Game Start");
-            g->ToggleCursor();
+            gRaw->ToggleCursor();
         }
         if (ImGui::IsItemHovered()) {
             if (!hoverStartGame) {
@@ -120,7 +120,7 @@ void UIStateManager::States() {
     //  Pause Menu 
     case UIState::Paused: {
 
-        g->ToggleCursor();
+        gRaw->ToggleCursor();
 
 
         ImGui::SetWindowPos(ImVec2(500, 100));
@@ -140,7 +140,7 @@ void UIStateManager::States() {
         if (ImGui::Button("Resume", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::InGame);
-            g->setGamePaused(false);
+            gRaw->setGamePaused(false);
 
         }
         if (ImGui::IsItemHovered()) {
@@ -156,7 +156,7 @@ void UIStateManager::States() {
         if (ImGui::Button("Quit", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::MainMenu);
-            g->setGamePaused(true);
+            gRaw->setGamePaused(true);
         }
         if (ImGui::IsItemHovered()) {
             if (!hoverQuit) {
@@ -245,7 +245,7 @@ void UIStateManager::States() {
     //  End Game Screen 
     case UIState::EndGame: {
 
-        g->ToggleCursor();
+        gRaw->ToggleCursor();
        
         ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 15.0f);
         ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.8f));
@@ -263,7 +263,7 @@ void UIStateManager::States() {
             ImGui::SetWindowFontScale(2.0f);
             ImVec2 textSize = ImGui::CalcTextSize("Final Score: 0000");
             ImGui::SetCursorPosX((400 - textSize.x) * 0.5f);
-            ImGui::Text("Final Score: %d", g->getPlayer()->GetFinalScore());
+            ImGui::Text("Final Score: %d", gRaw->getPlayer()->GetFinalScore());
 
             ImGui::Spacing();
             ImGui::Separator();
@@ -305,11 +305,11 @@ void UIStateManager::States() {
 void UIStateManager::HandleInput() {
     if (ImGui::IsKeyPressed(ImGuiKey_P)) {
         if (GetCurrentState() == UIState::InGame) {
-            g->setGamePaused(true);
+            gRaw->setGamePaused(true);
             SetCurrentState(UIState::Paused);
         }
         else {
-			g->setGamePaused(false);
+			gRaw->setGamePaused(false);
             SetCurrentState(UIState::InGame);
         }
     }
