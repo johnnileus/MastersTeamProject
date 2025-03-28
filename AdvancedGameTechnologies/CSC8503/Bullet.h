@@ -4,6 +4,7 @@
 #include "AssetManager.h"
 #include "GameObject.h"
 #include "PhysicsObject.h"
+#include "Player.h"
 
 namespace NCL
 {
@@ -19,7 +20,7 @@ namespace NCL
 
             bool IsDead() const { return isDead; }
             
-            static Bullet* Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon, float distance = 100);
+            static Bullet* Instantiate(GameWorld* world, const Vector3& position, const Vector3& direction, Weapon* weapon, float distance = 100,Player* player = nullptr);
             GameWorld* myWorld;
         private:
             Vector3 direction; //move direction
