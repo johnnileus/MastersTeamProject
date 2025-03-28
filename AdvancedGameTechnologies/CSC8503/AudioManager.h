@@ -25,6 +25,8 @@ namespace NCL {
 
 			void SetMasterVolume(int volume); 
 
+			void PlayBGM(const std::string& eventName);
+			void PauseBGM(bool paused);
 
 		private:
 			AudioManager() = default;
@@ -33,6 +35,8 @@ namespace NCL {
 			FMOD::Studio::System* studioSystem = nullptr;
 			std::unordered_map<std::string, FMOD::Studio::Bank*>banks;
 			std::unordered_map<std::string, FMOD::Studio::EventInstance*>events;
+			FMOD::Studio::EventInstance* bgmInstance = nullptr;
+			bool bgmPlaying = false;
 
 			std::string GetMediaPath(const std::string& filename);
 		};

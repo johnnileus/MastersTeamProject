@@ -131,6 +131,31 @@ void AudioManager::SetMasterVolume(int volume) {
 	}
 }
 
+void AudioManager::PlayBGM(const std::string& eventName) {
+	if (bgmPlaying) return;
+
+	FMOD::Studio::EventDescription* eventDesc = nullptr;
+	FMOD_RESULT result = studioSystem->getEvent(eventName.c_str(), &eventDesc);
+	if (result != FMOD_OK) {
+		std::cout << "Failed to find BGM event: " << eventName << std::endl;
+		return;
+	}
+
+	result = eventDesc->createInstance(&bgmInstance);
+	if (result != FMOD_OK) {
+		std::cout << "Failed to create BGM instance!" << std::endl;
+		return;
+	}
+
+	bgmInstance->start();
+	bgmPlaying = true;
+}
+
+void AudioManager::PauseBGM(bool paused) {
+	if (bgmInstance) {
+		bgmInstance->setPaused(paused);
+	}
+}
 
 void AudioManager::Update()
 {
