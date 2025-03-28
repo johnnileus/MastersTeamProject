@@ -1,5 +1,6 @@
 ﻿#include "Weapon.h"
 #include "AudioManager.h"
+#include "Debug.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -23,9 +24,11 @@ void Weapon::Reload() {
 }
 
 void Weapon::Update(float deltaTime, bool isFiring, const Vector3& direction) {
+    Debug::Print("Ammo : " + std::to_string(ammo), Vector2(10, 90), Vector4(1, 1, 1, 1));
     static bool hasPlayedReloadSound = false;
     if (isReloading)
     {
+        Debug::Print("Reloading... ", Vector2(10, 85), Vector4(1, 0, 0, 1));
         if (!hasPlayedReloadSound) {
             AudioManager::GetInstance().PlayEvent("event:/Rifle reload");
             hasPlayedReloadSound = true;

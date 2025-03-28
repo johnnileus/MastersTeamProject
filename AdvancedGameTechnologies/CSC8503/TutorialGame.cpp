@@ -165,7 +165,7 @@ void TutorialGame::UpdateGame(float dt) {
 		}
 		Debug::Print("Press Triangle to Quit Game", Vector2(40, 70), Vector4(0, 0, 1, 1));
 	}
-	if (pauseGame) {
+	if (pauseGame && !mainMenu) {
 #ifdef USEAGC
 		NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
 		NCL::PS5::PS5Controller* c = w->GetController();
@@ -176,13 +176,13 @@ void TutorialGame::UpdateGame(float dt) {
 			gamePaused = false;
 			pauseGame = false;
 		}
-		Debug::Print("Press Circle to return to Main Menu", Vector2(40, 80), Vector4(0, 0, 0, 1));
-		if (c->GetNamedButton("Circle")) {
-			InitScene("EnemyTestScene");
-			//ReloadLevel();
-			pauseGame = false;
-			mainMenu = true;
-		}
+		Debug::Print("Press Triangle to quit", Vector2(40, 80), Vector4(0, 0, 0, 1));
+		//if (c->GetNamedButton("Circle")) {
+		//	InitScene("EnemyTestScene");
+		//	//ReloadLevel();
+		//	pauseGame = false;
+		//	mainMenu = true;
+		//}
 	}
 	if (endGame) {
 #ifdef USEAGC
@@ -191,7 +191,7 @@ void TutorialGame::UpdateGame(float dt) {
 		world.GetMainCamera().SetController(*c);
 #endif // USEAGC
 		//Debug::Print("Audio:" + to_string(score), Vector2(50, 50), Vector4(0, 1, 1, 1));
-		Debug::Print("Quit", Vector2(50, 60), Vector4(1, 0, 0, 1));
+		Debug::Print("Press Triangle to Quit", Vector2(50, 60), Vector4(1, 0, 0, 1));
 	}
 	if (!gamePaused) { // if game is not paused :)
 		if (player) { player->Update(dt); }
@@ -200,7 +200,6 @@ void TutorialGame::UpdateGame(float dt) {
 		for (Enemy* enemy : enemies) {
 			if (enemy) { enemy->Update(dt); }
 		}
-		Debug::Print("Ammo : " + to_string(ammo), Vector2(10, 90), Vector4(1, 1, 1, 1));
 		UpdateKeys();
 		world.UpdateWorld(dt);
 
