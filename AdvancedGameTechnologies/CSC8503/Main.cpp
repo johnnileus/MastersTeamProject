@@ -125,6 +125,7 @@ int main() {
 	c->MapButton(7, "R1");
 	c->MapButton(8, "L3");
 	c->MapButton(9, "R3");
+	c->MapButton(10, "Options");
 #endif // USEAGC
 
 

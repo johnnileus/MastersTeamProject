@@ -19,6 +19,8 @@
 
 #include "../PS5Core/PS5Window.h"
 
+
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -145,6 +147,52 @@ TutorialGame::~TutorialGame()	{
 
 
 void TutorialGame::UpdateGame(float dt) {
+	//ammo counter should be running on all frames 
+	if (mainMenu) {
+#ifdef USEAGC
+		NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+		NCL::PS5::PS5Controller* c = w->GetController();
+		world.GetMainCamera().SetController(*c);
+#endif // USEAGC
+		gamePaused = true;
+		if (c->GetNamedButton("L2")) {
+			//dummy function, this is required for some reason????
+		}
+		Debug::Print("Press Cross to Start Game", Vector2(40, 40), Vector4(0, 0, 1, 1));
+		if (c->GetNamedButton("Cross")) {
+			mainMenu = false;
+			gamePaused = false;
+		}
+		Debug::Print("Press Triangle to Quit Game", Vector2(40, 70), Vector4(0, 0, 1, 1));
+	}
+	if (pauseGame) {
+#ifdef USEAGC
+		NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+		NCL::PS5::PS5Controller* c = w->GetController();
+		world.GetMainCamera().SetController(*c);
+#endif // USEAGC
+		Debug::Print("Press Cross to Resume", Vector2(40, 40), Vector4(0, 0, 0, 1));
+		if (c->GetNamedButton("Cross")) {
+			gamePaused = false;
+			pauseGame = false;
+		}
+		Debug::Print("Press Circle to return to Main Menu", Vector2(40, 80), Vector4(0, 0, 0, 1));
+		if (c->GetNamedButton("Circle")) {
+			InitScene("EnemyTestScene");
+			//ReloadLevel();
+			pauseGame = false;
+			mainMenu = true;
+		}
+	}
+	if (endGame) {
+#ifdef USEAGC
+		NCL::PS5::PS5Window* w = (NCL::PS5::PS5Window*)Window::GetWindow();
+		NCL::PS5::PS5Controller* c = w->GetController();
+		world.GetMainCamera().SetController(*c);
+#endif // USEAGC
+		//Debug::Print("Audio:" + to_string(score), Vector2(50, 50), Vector4(0, 1, 1, 1));
+		Debug::Print("Quit", Vector2(50, 60), Vector4(1, 0, 0, 1));
+	}
 	if (!gamePaused) { // if game is not paused :)
 		if (player) { player->Update(dt); }
 		if (doorTrigger) { doorTrigger->Update(dt); }
@@ -152,6 +200,7 @@ void TutorialGame::UpdateGame(float dt) {
 		for (Enemy* enemy : enemies) {
 			if (enemy) { enemy->Update(dt); }
 		}
+		Debug::Print("Ammo : " + to_string(ammo), Vector2(10, 90), Vector4(1, 1, 1, 1));
 		UpdateKeys();
 		world.UpdateWorld(dt);
 
@@ -188,7 +237,7 @@ void TutorialGame::UpdateGame(float dt) {
 
 	}
 	else {
-		if (player) { player->PausedUpdate(dt); } //HI BOW HERE, THIS WILL NOT WORK IN THIS BUILD AS RENDERER IS NOT UPDATED HERE, NEED TO TRANSFER THIS TO MAIN SOMEHOW, POSSIBLY A FLAG?
+		if (player) { player->PausedUpdate(dt); }
 		UpdateKeys();
 
 		//renderer->Render();
@@ -215,15 +264,15 @@ void TutorialGame::UpdateKeys() {
 		InitCamera(); //F2 will reset the camera to a specific default place
 	}
 	
-#ifdef USEAGC
-	if (c->GetNamedButton("Square")) {
-#else
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
-#endif // USEAGC
-
-		useGravity = !useGravity; //Toggle gravity!
-		physics.UseGravity(useGravity);
-	}
+//#ifdef USEAGC
+//	if (c->GetNamedButton("Square")) {
+//#else
+//	if (Window::GetKeyboard()->KeyPressed(KeyCodes::G)) {
+//#endif // USEAGC
+//
+//		useGravity = !useGravity; //Toggle gravity!
+//		physics.UseGravity(useGravity);
+//	}
 
 #ifdef _WIN32
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::U)) {
@@ -237,11 +286,13 @@ void TutorialGame::UpdateKeys() {
 	}
 #endif // WIN32
 #ifdef USEAGC
-	if (c->GetNamedButton("L1")) {
+	if (c->GetNamedButton("Options")) {
 #else
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::P)) {
 #endif // USEAGC
-		TogglePaused();
+		//TogglePaused();
+		gamePaused = true;
+		pauseGame = true;
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
 		InitScene("default");
@@ -471,12 +522,12 @@ void TutorialGame::InitNavGrid() {
 }
 
 void TutorialGame::NewLevel() {
-	if (timerMins == 2) {
+	if (timerMins == 2 && (!mainMenu || !pauseGame)) {
 		timerMins = 0;
 		levelCount++;
 		InitScene("EnemyTestScene");
 	}
-	else if (player->GetScore() == player->GetScoreGoal()) {
+	else if (player->GetScore() == player->GetScoreGoal() && (!mainMenu || !pauseGame)) {
 		timerMins = 0;
 		timerSecs = 0;
 		levelCount++;

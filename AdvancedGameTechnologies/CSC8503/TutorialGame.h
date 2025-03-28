@@ -63,7 +63,9 @@ namespace NCL {
 			bool IsGamePaused() { return gamePaused; }
 			bool GetCursorLocked() { return cursorLocked; }
 			void setGamePaused(bool val) { gamePaused = val; }
-
+#ifdef USEAGC
+			bool mainMenu = true;
+#endif
 #ifdef _WIN32
 			//called by GameServer when player connects
 			GameObject* InitialiseConnectedPlayerObject(int id);
@@ -217,6 +219,15 @@ namespace NCL {
 			int upScoreGoal;
 			int finalScore;
 			TutorialGame* gRaw;
+#ifdef USEAGC
+			bool endGame = false;
+			bool pauseGame = false;
+			bool settings = false;
+			bool inGame = false;
+
+			int ammo = 0;
+			int audio = 100;
+#endif // USEAGC
 		};
 	}
 }
