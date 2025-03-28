@@ -185,7 +185,7 @@ void EnemyTestScene::InitScene(GameWorld* world) {
     this->navGrid = new NavMeshGrid(world);
     //add 5 of each enemy to the world, can be configured for each scene should we need to
     //player init before for loop, anything with wall tag before navgrid
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 2; ++i) {
         newMeleeEnemy.Invoke(AddMeleeEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.5f, 0.25f));
         newRangedEnemy.Invoke(AddRangedEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.0f, 0.75f));
         newGhostEnemy.Invoke(AddGhostEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 0.5f, 1.0f));
