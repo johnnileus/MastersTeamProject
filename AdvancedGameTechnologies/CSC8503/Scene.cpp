@@ -185,7 +185,7 @@ void EnemyTestScene::InitScene(GameWorld* world) {
     this->navGrid = new NavMeshGrid(world);
     //add 5 of each enemy to the world, can be configured for each scene should we need to
     //player init before for loop, anything with wall tag before navgrid
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 2; ++i) {
         newMeleeEnemy.Invoke(AddMeleeEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.5f, 0.25f));
         newRangedEnemy.Invoke(AddRangedEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.0f, 0.75f));
         newGhostEnemy.Invoke(AddGhostEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 0.5f, 1.0f));
@@ -234,10 +234,20 @@ void Scene::InitObstacles(GameWorld* world) {
         Scene::AddCubeToWorld(world, Vector3(20, 0, 20), Vector3(5, 5, 5), 0);
     }
     else if (level == 2) {
-        Scene::AddCubeToWorld(world, Vector3(70, 0, 0), Vector3(60, 5, 5), 0);
-        Scene::AddCubeToWorld(world, Vector3(-70, 0, 0), Vector3(60, 5, 5), 0);
-        Scene::AddCubeToWorld(world, Vector3(0, 0, 70), Vector3(5, 5, 60), 0);
-        Scene::AddCubeToWorld(world, Vector3(0, 0, -70), Vector3(5, 5, 60), 0);
+        Scene::AddCubeToWorld(world, Vector3(70, 0, 0), Vector3(30, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(-70, 0, 0), Vector3(30, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(0, 0, 70), Vector3(5, 5, 30), 0);
+        Scene::AddCubeToWorld(world, Vector3(0, 0, -70), Vector3(5, 5, 30), 0);
+
+        Scene::AddCubeToWorld(world, Vector3(70, 0, -70), Vector3(5, 5, 30), 0);
+        Scene::AddCubeToWorld(world, Vector3(-70, 0, -70), Vector3(5, 5, 30), 0);
+        Scene::AddCubeToWorld(world, Vector3(-70, 0, 70), Vector3(30, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(70, 0, 70), Vector3(30, 5, 5), 0);
+
+        Scene::AddCubeToWorld(world, Vector3(70, 0, -70), Vector3(30, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(-70, 0, -70), Vector3(30, 5, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(-70, 0, 70), Vector3(5, 5, 30), 0);
+        Scene::AddCubeToWorld(world, Vector3(70, 0, 70), Vector3(5, 5, 30), 0);
     }
     else if (level == 3) {
         Scene::AddCubeToWorld(world, Vector3(40, 9, -20), Vector3(5, 10, 5), 0);
@@ -247,6 +257,9 @@ void Scene::InitObstacles(GameWorld* world) {
         Scene::AddCubeToWorld(world, Vector3(120, 9, 75), Vector3(5, 10, 5), 0);
         Scene::AddCubeToWorld(world, Vector3(60, 9, -90), Vector3(5, 10, 5), 0);
         Scene::AddCubeToWorld(world, Vector3(30, 9, 60), Vector3(5, 10, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(-110, 9, -80), Vector3(5, 10, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(-60, 9, -110), Vector3(5, 10, 5), 0);
+        Scene::AddCubeToWorld(world, Vector3(-80, 9, 0), Vector3(5, 10, 5), 0);
     }
     else if (level == 4) {
         for (int i = 0; i < 50; i++) {

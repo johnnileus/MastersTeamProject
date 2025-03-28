@@ -82,11 +82,26 @@ namespace NCL {
 			int GetTimerSecs() const {
 				return timerSecs;
 			}
+			void SetTimerSecs(const float t) {
+				timerSecs = t;
+			}
 			int GetTimerMins() const {
 				return timerMins;
 			}
+			void SetTimerMins(const float t) {
+				timerMins = t;
+			}
 			int GetLevelCount() const {
 				return levelCount;
+			}
+			int GetFinalScore() const {
+				return finalScore;
+			}
+			void SetFinalScore(const int f) {
+				finalScore = f;
+			}
+			void SetUpScoreGoal(const int u) {
+				upScoreGoal = u;
 			}
 
 		protected:

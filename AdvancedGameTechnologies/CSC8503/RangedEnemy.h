@@ -9,7 +9,7 @@ namespace NCL {
 	namespace CSC8503 {
 		class RangedEnemy : public NavMeshAgent {
 		public:
-			RangedEnemy(NavMeshGrid* nodeGrid = nullptr, float scale = 1.0f, float inverseMass = 1.0f, NCL::Maths::Vector3 spawnPostion = NCL::Maths::Vector3(0, 0, 0), float health = 100, bool alive = true, float respawnTimer = 15.0f, float damage = 10.0f, GameWorld* world = nullptr) {
+			RangedEnemy(NavMeshGrid* nodeGrid = nullptr, float scale = 1.0f, float inverseMass = 1.0f, NCL::Maths::Vector3 spawnPostion = NCL::Maths::Vector3(0, 0, 0), float health = 50, bool alive = true, float respawnTimer = 15.0f, float damage = 5.0f, GameWorld* world = nullptr) {
 				this->InitialiseDemoShootableEnemy(scale, inverseMass, spawnPosition, health, alive, respawnTimer, damage);
 				this->InitialiseNavMeshAgent(nodeGrid);
 				InitialiseRangedEnemy(world);
