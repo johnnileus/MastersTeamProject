@@ -9,7 +9,7 @@ namespace NCL {
 	namespace CSC8503 {
 		class GhostEnemy : public NavMeshAgent {
 		public:
-			GhostEnemy(NavMeshGrid* nodeGrid = nullptr, float scale = 1.0f, float inverseMass = 1.0f, NCL::Maths::Vector3 spawnPostion = NCL::Maths::Vector3(0, 0, 0), float health = 100, bool alive = true, float respawnTimer = 15.0f, float damage = 10.0f, GameWorld* world = nullptr) {
+			GhostEnemy(NavMeshGrid* nodeGrid = nullptr, float scale = 1.0f, float inverseMass = 1.0f, NCL::Maths::Vector3 spawnPostion = NCL::Maths::Vector3(0, 0, 0), float health = 50, bool alive = true, float respawnTimer = 15.0f, float damage = 3.0f, GameWorld* world = nullptr) {
 				this->InitialiseDemoShootableEnemy(scale, inverseMass, spawnPosition, health, alive, respawnTimer, damage);
 				this->InitialiseNavMeshAgent(nodeGrid);
 				InitialiseGhostEnemy(world);
