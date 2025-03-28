@@ -81,13 +81,16 @@ void Bullet::SetComponent(float meshSize,float inverseMass)
     SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
     GetPhysicsObject()->SetInverseMass(inverseMass);
     GetPhysicsObject()->InitSphereInertia();
+
+    renderObject->SetColour(Vector4(1,1,1,5));
 }
 
 void Bullet::OnCollisionBegin(GameObject* otherObject)
 {
     if (otherObject->tag=="Enemy")
     {
-        std::cout<<"HIT"<<std::endl;
+        DemoShootableEnemy* e = dynamic_cast<DemoShootableEnemy*>(otherObject);
+        e->RegisterHit(this->damage);
         myWorld->RemoveGameObject(this);
     }
 }

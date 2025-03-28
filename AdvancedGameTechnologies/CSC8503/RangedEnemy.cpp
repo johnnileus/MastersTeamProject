@@ -3,11 +3,13 @@
 #include "PhysicsObject.h"
 #include "State.h"
 #include "StateTransition.h"
+#include "Ray.h"
+#include "CollisionDetection.h"
 
 using namespace NCL;
 using namespace CSC8503;
 
-void  RangedEnemy::InitStateMachine() {
+void RangedEnemy::InitStateMachine() {
     State* patrolState = new State([&](float dt) -> void {
         this->PatrolState();
         });
@@ -35,19 +37,23 @@ void  RangedEnemy::InitStateMachine() {
     stateMachine->AddState(restState);
 
     stateMachine->AddTransition(new StateTransition(patrolState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 20.0f;
+        return currentTarget && (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 10000.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, patrolState, [&]() -> bool {
-        return !currentTarget || (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 20.0f;
+        return !currentTarget || (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 10000.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(chaseState, attackState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 5.0f;
+        if (currentTarget && (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 400.0f && canSeePlayer()) {
+            this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
+            return true;
+        }
+        return false;
         }));
 
     stateMachine->AddTransition(new StateTransition(attackState, chaseState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 5.0f;
+        return !currentTarget || (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) >= 400.0f || !canSeePlayer();
         }));
 
     stateMachine->AddTransition(new StateTransition(patrolState, retreatState, [&]() -> bool {
@@ -63,7 +69,7 @@ void  RangedEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(retreatState, restState, [&]() -> bool {
-        return this->currentHealth < 0.15f * this->maxHealth && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 50.0f;
+        return this->currentHealth < 0.15f * this->maxHealth && (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) > 10000.0f;
         }));
 
     stateMachine->AddTransition(new StateTransition(restState, patrolState, [&]() -> bool {
@@ -71,23 +77,23 @@ void  RangedEnemy::InitStateMachine() {
         }));
 
     stateMachine->AddTransition(new StateTransition(restState, retreatState, [&]() -> bool {
-        return currentTarget && (Vector::Length(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 30.0f;
+        return currentTarget && (Vector::LengthSquared(this->GetTransform().GetPosition() - currentTarget->GetTransform().GetPosition())) < 2500.0f;
         }));
 }
+
 void RangedEnemy::PatrolState() {
-    float closestDistance = std::numeric_limits<float>::max();
+    float closestDistanceSquared = std::numeric_limits<float>::max();
     NCL::Maths::Vector3 enemyPosition = this->GetTransform().GetPosition();
 
     for (Player* player : players) {
-        float distance = Vector::Length(enemyPosition - player->GetTransform().GetPosition());
-        if (distance < closestDistance) {
-            closestDistance = distance;
+        float distanceSquared = Vector::LengthSquared(enemyPosition - player->GetTransform().GetPosition());
+        if (distanceSquared < closestDistanceSquared) {
+            closestDistanceSquared = distanceSquared;
             this->currentTarget = player;
         }
     }
 
-
-    if (this->currentNode == this->destination || this->destination == nullptr || this->path.size() == 0) {
+    if (this->currentNode == this->destination || this->destination == nullptr || this->path.empty()) {
         SetDestination();
         setCurrentNode(this->GetCurrentPosition().x, this->GetCurrentPosition().z);
         FindPath();
@@ -100,16 +106,16 @@ void RangedEnemy::ChaseState() {
         NCL::Maths::Vector3 playerPosition = currentTarget->GetTransform().GetPosition();
 
         NavMeshNode* closestNode = nullptr;
-        float closestDistance = std::numeric_limits<float>::max();
+        float closestDistanceSquared = std::numeric_limits<float>::max();
         for (NavMeshNode* node : nodeGrid->GetAllNodes()) {
-            float distance = Vector::Length(playerPosition - node->GetPosition());
-            if (distance < closestDistance) {
-                closestDistance = distance;
+            float distanceSquared = Vector::LengthSquared(playerPosition - node->GetPosition());
+            if (distanceSquared < closestDistanceSquared) {
+                closestDistanceSquared = distanceSquared;
                 closestNode = node;
             }
         }
 
-        if (closestNode && closestNode != this->destination || this->path.size() == 0) {
+        if (closestNode && (closestNode != this->destination || this->path.empty())) {
             this->destination = closestNode;
             FindPath();
         }
@@ -121,9 +127,8 @@ void RangedEnemy::ChaseState() {
 
 void RangedEnemy::AttackState(float dt) {
     if (attackCooldown <= 0) {
-        NCL::Maths::Vector3 direction = Vector::Normalise(currentTarget->GetTransform().GetPosition() - this->GetTransform().GetPosition());
-        this->GetPhysicsObject()->AddForce(direction * chargeForce);
-        attackCooldown = 3;
+        currentTarget->ApplyDamage(damage);
+        attackCooldown = 6;
     }
     else {
         attackCooldown -= dt;
@@ -137,11 +142,11 @@ void RangedEnemy::RetreatState() {
     NCL::Maths::Vector3 retreatPosition = enemyPosition + (direction * 50.0f);
 
     NavMeshNode* retreatNode = nullptr;
-    float closestDistance = std::numeric_limits<float>::max();
+    float closestDistanceSquared = std::numeric_limits<float>::max();
     for (NavMeshNode* node : nodeGrid->GetAllNodes()) {
-        float distance = Vector::Length(node->GetPosition() - retreatPosition);
-        if (distance < closestDistance) {
-            closestDistance = distance;
+        float distanceSquared = Vector::LengthSquared(node->GetPosition() - retreatPosition);
+        if (distanceSquared < closestDistanceSquared) {
+            closestDistanceSquared = distanceSquared;
             retreatNode = node;
         }
     }
@@ -158,8 +163,35 @@ void RangedEnemy::RetreatState() {
 void RangedEnemy::RestState(float dt) {
     this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
     float healthIncrease = maxHealth * 0.01f * dt;
+    this->currentHealth = std::min(this->currentHealth + healthIncrease, this->maxHealth);
 }
 
 void RangedEnemy::UpdateEnemy(float dt) {
     this->stateMachine->Update(dt);
+
+    Vector4 startColor = Vector4(0, 0, 1, 1);
+    Vector4 endColor = Vector4(0, 1, 1, 1);
+    float t = 1.0f - (attackCooldown / 3.0f);
+    Vector4 currentColor = startColor * (1.0f - t) + endColor * t;
+    this->GetRenderObject()->SetColour(currentColor);
+}
+
+bool RangedEnemy::canSeePlayer() {
+    if (currentTarget == nullptr) {
+        return false;
+    }
+
+    NCL::Maths::Vector3 enemyPosition = this->GetTransform().GetPosition();
+    NCL::Maths::Vector3 playerPosition = currentTarget->GetTransform().GetPosition();
+    NCL::Maths::Vector3 direction = Vector::Normalise(playerPosition - enemyPosition);
+
+    Ray ray(enemyPosition, direction);
+    RayCollision collision;
+
+    if (this->world->Raycast(ray, collision, true, this)) {
+        GameObject* hitObject = static_cast<GameObject*>(collision.node);
+        return hitObject && hitObject->tag == "Player";
+    }
+
+    return false;
 }

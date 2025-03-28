@@ -1,5 +1,6 @@
 #include "Scene.h"
 
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -115,13 +116,34 @@ void Scene::GenerateWall(GameWorld* world)
 }
 
 void Scene::InitDefaultFloor(GameWorld* world) {
-    Vector3 offset(20, 0, 20);
+    Vector3 offset(0, 0, 0);
 
-    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 0) + offset, Vector3(70, 2, 70));
-    Scene::AddDefaultFloorToWorld(world, Vector3(70, -3, 0) + offset, Vector3(1, 10, 70));
-    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, -70) + offset, Vector3(70, 10, 1));
-    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 70) + offset, Vector3(70, 10, 1));
-    Scene::AddDefaultFloorToWorld(world, Vector3(-70, -3, 0) + offset, Vector3(1, 10, 70));
+    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 0) + offset, Vector3(129, 2, 129));
+    Scene::AddDefaultFloorToWorld(world, Vector3(130, -3, 0) + offset, Vector3(1, 10, 130));
+    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, -130) + offset, Vector3(130, 10, 1));
+    Scene::AddDefaultFloorToWorld(world, Vector3(0, -3, 130) + offset, Vector3(130, 10, 1));
+    Scene::AddDefaultFloorToWorld(world, Vector3(-130, -3, 0) + offset, Vector3(1, 10, 130));
+}
+
+MeleeEnemy* Scene::AddMeleeEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+    MeleeEnemy* e = new MeleeEnemy(nodeGrid, scale, inverseMass, pos, 500.0f, true, 30.0f, 10.0f, world);
+    e->Spawn();
+    world->AddGameObject(e);
+    return e;
+}
+
+RangedEnemy* Scene::AddRangedEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+   RangedEnemy* e = new RangedEnemy(nodeGrid, scale, inverseMass, pos, 100.0f, true, 15.0f, 10.0f, world);
+    e->Spawn();
+    world->AddGameObject(e);
+    return e;
+}
+
+GhostEnemy* Scene::AddGhostEnemyToWorld(GameWorld* world, NavMeshGrid* nodeGrid, const Vector3& pos, const float scale, float inverseMass) {
+   GhostEnemy* e = new GhostEnemy(nodeGrid, scale, inverseMass, pos, 50.0f, true, 15.0f, 150.0f, world);
+    e->Spawn();
+    world->AddGameObject(e);
+    return e;
 }
 
 //from default pos/cam, +x goes right, -x goes left, +z goes down, -z goes up
@@ -179,4 +201,16 @@ void DefaultScene2::InitScene(GameWorld* world) {
     GenerateWall(world);
 
     InitDefaultFloor(world);
+}
+
+void EnemyTestScene::InitScene(GameWorld* world) {
+    InitDefaultFloor(world);
+    GenerateWall(world);
+    this->navGrid = new NavMeshGrid(world);
+    //add 5 of each enemy to the world, can be configured for each scene should we need to
+    for (int i = 0; i < 5; ++i) {
+        newMeleeEnemy.Invoke(AddMeleeEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.5f, 1.0f));
+        newRangedEnemy.Invoke(AddRangedEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.0f, 2.5f));
+        newGhostEnemy.Invoke(AddGhostEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 0.5f, 5.0f));
+    }
 }
