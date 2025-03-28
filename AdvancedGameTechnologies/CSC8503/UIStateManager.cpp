@@ -16,8 +16,11 @@ void UIStateManager::States() {
 
     bool test = false;
 
-    switch (GetCurrentState()) {
+    if (g->getPlayer()->GetHealth() <= 0 && endScreenFlag != true) {
+        SetCurrentState(UIState::EndGame);
+    }
 
+    switch (GetCurrentState()) {
         // --- Main Menu ---
     case UIState::MainMenu: {
 
@@ -207,6 +210,7 @@ void UIStateManager::States() {
 
             if (ImGui::Button("QUIT GAME")) {
                 SetCurrentState(UIState::MainMenu);
+                endScreenFlag = true;
             }
 
             ImGui::PopStyleColor(3);
@@ -248,9 +252,6 @@ void UIStateManager::HandleInput() {
 
 UIState UIStateManager::GetCurrentState() {
     return currentState;
-    if (g->getPlayer()->GetHealth() <= 0) {
-		SetCurrentState(UIState::EndGame);
-    }
 }
 
 void UIStateManager::SetCurrentState(UIState newState) {
