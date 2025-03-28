@@ -89,6 +89,8 @@ void TutorialGame::InitScene(string name) {
 	ghostEnemyFrameCountMax = ghostEnemyList.size();
 	this->useGravity = true;
 	physics->UseGravity(useGravity);
+
+	AudioManager::GetInstance().PlayEvent("event:/Gaming Background Sound");
 }
 
 
@@ -180,7 +182,7 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::P)) {
 		TogglePaused();
 	}
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::H)) {
 		InitScene("default");
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::B)) {
@@ -397,6 +399,9 @@ void TutorialGame::NewLevel() {
 		levelCount++;
 		upScoreGoal = player->GetScoreGoal() + 200;
 		player->SetScoreGoal(upScoreGoal);
+		InitScene("EnemyTestScene");
+	}
+	else if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
 		InitScene("EnemyTestScene");
 	}
 }

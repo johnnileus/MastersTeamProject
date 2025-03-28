@@ -10,6 +10,8 @@ Rifle::Rifle(Player* owner):Weapon(30,2,0.1f,true,3)
     this->owner = owner;
     damage = owner->GetDamage() + Weapon::getDamage();
     weaponType = WeaponType::Rifle;
+
+    reloadSoundEvent = "event:/Rifle reload";
 }
 
 Rifle::~Rifle()

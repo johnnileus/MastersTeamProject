@@ -15,6 +15,12 @@ UIStateManager::~UIStateManager() {
 void UIStateManager::States() {
 
     bool test = false;
+    
+    static bool hoverStartGame = false;
+    static bool hoverMultiplayer = false;
+	static bool hoverResume = false;
+    static bool hoverSettings = false;
+    static bool hoverQuit = false;
 
     if (g->getPlayer()->GetHealth() <= 0 && endScreenFlag != true) {
         SetCurrentState(UIState::EndGame);
@@ -31,6 +37,10 @@ void UIStateManager::States() {
         ImGui::SetWindowFontScale(2.0f);
         ImGui::SetWindowSize(ImVec2(843,488));
         ImGui::SetWindowPos(ImVec2(185,100));
+
+        if (g->GetCursorLocked() == true) {
+            g->ToggleCursor();
+        }
 
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Hight Score : 00").x) * 0.5f);
 
@@ -51,6 +61,15 @@ void UIStateManager::States() {
             AudioManager::GetInstance().PlayEvent("event:/Game Start");
             g->ToggleCursor();
         }
+        if (ImGui::IsItemHovered()) {
+            if (!hoverStartGame) {
+                AudioManager::GetInstance().PlayEvent("event:/Menu Option Slide");
+                hoverStartGame = true;
+            }
+        }
+        else {
+            hoverStartGame = false;
+        }
 
         //Multiplayer
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Hight Score : 00").x) * 0.5f - 25.0f);
@@ -58,6 +77,15 @@ void UIStateManager::States() {
 
             SetCurrentState(UIState::Multiplayer);
             AudioManager::GetInstance().PlayEvent("event:/Game Start");
+        }
+        if (ImGui::IsItemHovered()) {
+            if (!hoverMultiplayer) {
+                AudioManager::GetInstance().PlayEvent("event:/Menu Option Slide");
+                hoverMultiplayer = true;
+            }
+        }
+        else {
+            hoverMultiplayer = false;
         }
 
         ImGui::End();
@@ -106,16 +134,43 @@ void UIStateManager::States() {
             g->setGamePaused(false);
 
         }
+        if (ImGui::IsItemHovered()) {
+            if (!hoverResume) {
+                AudioManager::GetInstance().PlayEvent("event:/Menu Option Slide");
+                hoverResume = true;
+            }
+        }
+        else {
+            hoverResume = false;
+        }
 
         if (ImGui::Button("Quit", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::MainMenu);
             g->setGamePaused(true);
         }
+        if (ImGui::IsItemHovered()) {
+            if (!hoverQuit) {
+                AudioManager::GetInstance().PlayEvent("event:/Menu Option Slide");
+                hoverQuit = true;
+            }
+        }
+        else {
+            hoverQuit = false;
+        }
 
         if (ImGui::Button("Settings", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::Settings);
+        }
+        if (ImGui::IsItemHovered()) {
+            if (!hoverSettings) {
+                AudioManager::GetInstance().PlayEvent("event:/Menu Option Slide");
+                hoverSettings = true;
+            }
+        }
+        else {
+            hoverSettings = false;
         }
         ImGui::End();
         break;
@@ -218,6 +273,7 @@ void UIStateManager::States() {
             if (ImGui::Button("QUIT GAME")) {
                 SetCurrentState(UIState::MainMenu);
                 endScreenFlag = true;
+                g->InitScene("EnemyTestScene");
                 g->setGamePaused(true);
             }
 

@@ -77,7 +77,6 @@ int main() {
 	audio.LoadBank("../../Assets/Sounds/Weapon.bank");
 	audio.LoadBank("../../Assets/Sounds/Environmental Effect.bank");
 	
-	audio.PlayEvent("event:/Gaming Background Sound");
 
 
 	g = new TutorialGame();
