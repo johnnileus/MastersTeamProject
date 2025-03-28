@@ -389,17 +389,17 @@ void TutorialGame::InitNavGrid() {
 
 //on reload, temp store finalscore here, then set it again on player instantiate
 void TutorialGame::NewLevel() {
+	int tmpScore = player->GetFinalScore();
 	if (timerMins == 2) {
 		timerMins = 0;
 		levelCount++;
 		InitScene("EnemyTestScene");
+		player->SetFinalScore(tmpScore);
 	}
 	else if (player->GetScore() == player->GetScoreGoal()) {
 		timerMins = 0;
 		timerSecs = 0;
 		levelCount++;
-		int tmpScore = player->GetFinalScore();
-		//finalScore = finalScore + player->GetFinalScore();
 		upScoreGoal = player->GetScoreGoal() + 200;
 		player->SetScoreGoal(upScoreGoal);
 		InitScene("EnemyTestScene");
@@ -407,5 +407,6 @@ void TutorialGame::NewLevel() {
 	}
 	else if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
 		InitScene("EnemyTestScene");
+		player->SetFinalScore(tmpScore);
 	}
 }

@@ -279,6 +279,10 @@ void UIStateManager::States() {
                 g->InitScene("EnemyTestScene");
                 g->SetFinalScore(0);
                 g->getPlayer()->SetFinalScore(0);
+                g->getPlayer()->SetScoreGoal(300);
+                g->SetUpScoreGoal(300);
+                g->SetTimerSecs(0);
+                g->SetTimerMins(0);
                 g->setGamePaused(true);
             }
 
