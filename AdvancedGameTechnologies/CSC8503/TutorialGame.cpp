@@ -42,6 +42,8 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	listener->newRangedEnemy.AddListener(std::bind(&TutorialGame::UpdateRangedEnemyList, this, std::placeholders::_1));
 	listener->newGhostEnemy.AddListener(std::bind(&TutorialGame::UpdateGhostEnemyList, this, std::placeholders::_1));
 
+	upScoreGoal = 300;
+
 	InitScene("EnemyTestScene");
 }
 
@@ -69,6 +71,7 @@ void TutorialGame::InitScene(string name) {
 	std::cout << sceneManager << std::endl;
 	
 	player = Player::Instantiate(world, thirdPersonCam, Vector3(0, 0, 0));
+	player->SetScoreGoal(upScoreGoal);
 
 	sceneManager->SwitchScene(name, world);
 
@@ -86,6 +89,8 @@ void TutorialGame::InitScene(string name) {
 	ghostEnemyFrameCountMax = ghostEnemyList.size();
 	this->useGravity = true;
 	physics->UseGravity(useGravity);
+
+	AudioManager::GetInstance().PlayEvent("event:/Gaming Background Sound");
 }
 
 
@@ -177,7 +182,7 @@ void TutorialGame::UpdateKeys() {
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::P)) {
 		TogglePaused();
 	}
-	if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
+	if (Window::GetKeyboard()->KeyPressed(KeyCodes::H)) {
 		InitScene("default");
 	}
 	if (Window::GetKeyboard()->KeyPressed(KeyCodes::B)) {
@@ -386,6 +391,17 @@ void TutorialGame::NewLevel() {
 	if (timerMins == 2) {
 		timerMins = 0;
 		levelCount++;
+		InitScene("EnemyTestScene");
+	}
+	else if (player->GetScore() == player->GetScoreGoal()) {
+		timerMins = 0;
+		timerSecs = 0;
+		levelCount++;
+		upScoreGoal = player->GetScoreGoal() + 200;
+		player->SetScoreGoal(upScoreGoal);
+		InitScene("EnemyTestScene");
+	}
+	else if (Window::GetKeyboard()->KeyPressed(KeyCodes::V)) {
 		InitScene("EnemyTestScene");
 	}
 }

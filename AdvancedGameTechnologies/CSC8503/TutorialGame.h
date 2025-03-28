@@ -198,6 +198,8 @@ namespace NCL {
 			std::vector<DemoShootableEnemy*> enemyList;
 			float bgmVolume = 0.5f;
 
+			int upScoreGoal;
+			int finalScore;
 		};
 	}
 }
