@@ -114,9 +114,13 @@ add_library(ReactPhysics3D STATIC ${RP3D_SRC})
 #FMT
 #################################################################################
 include(FetchContent)
-FetchContent_Declare(fmt URL https://github.com/fmtlib/fmt/releases/download/10.1.0/fmt-10.1.0.zip)
+set(FMT_LOCAL_PATH "${CMAKE_SOURCE_DIR}/_deps/fmt-src")
+FetchContent_Declare(
+    fmt
+    SOURCE_DIR ${FMT_LOCAL_PATH}  # Use local path instead of URL
+)
+#FetchContent_Declare(fmt URL https://github.com/fmtlib/fmt/releases/download/10.1.0/fmt-10.1.0.zip)
 FetchContent_MakeAvailable(fmt)
-
 
 #IMGUI 
 include_directories("${CMAKE_SOURCE_DIR}/ThirdParty/ImGui/include")
