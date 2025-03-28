@@ -21,6 +21,7 @@ private:
 	bool isPaused = false;
 	int audio = 100;
 	bool endScreenFlag = false;
+	int highScore = 0;
 
 public:
 	UIStateManager();

@@ -88,6 +88,12 @@ namespace NCL {
 			int GetLevelCount() const {
 				return levelCount;
 			}
+			int GetFinalScore() const {
+				return finalScore;
+			}
+			void SetFinalScore(const int f) {
+				finalScore = f;
+			}
 
 		protected:
 

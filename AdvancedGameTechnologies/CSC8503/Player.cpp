@@ -497,7 +497,7 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 			passiveItem->UpdateCall();
 			showItem = passiveItem->ShowItem();
 			score += 100;
-			finalScore = finalScore + GetScore();
+			finalScore = finalScore + 100;
 			SetTemporaryColour(collerctCoinColour, 0.5f);
 			ShowTimer(showItem, 1.0f);
 		}
