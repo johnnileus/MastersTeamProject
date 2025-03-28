@@ -47,6 +47,7 @@ void UIStateManager::States() {
         if (ImGui::Button("Start Game", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::InGame);
+            g->setGamePaused(false);
             AudioManager::GetInstance().PlayEvent("event:/Game Start");
         }
 
@@ -99,12 +100,14 @@ void UIStateManager::States() {
         if (ImGui::Button("Resume", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::InGame);
+            g->setGamePaused(false);
 
         }
 
         if (ImGui::Button("Quit", ImVec2(300, 60))) {
 
             SetCurrentState(UIState::MainMenu);
+            g->setGamePaused(true);
         }
 
         if (ImGui::Button("Settings", ImVec2(300, 60))) {
@@ -210,6 +213,7 @@ void UIStateManager::States() {
             if (ImGui::Button("QUIT GAME")) {
                 SetCurrentState(UIState::MainMenu);
                 endScreenFlag = true;
+                g->setGamePaused(true);
             }
 
             ImGui::PopStyleColor(3);
@@ -231,9 +235,11 @@ void UIStateManager::States() {
 void UIStateManager::HandleInput() {
     if (ImGui::IsKeyPressed(ImGuiKey_P)) {
         if (GetCurrentState() == UIState::InGame) {
+            g->setGamePaused(true);
             SetCurrentState(UIState::Paused);
         }
         else {
+			g->setGamePaused(false);
             SetCurrentState(UIState::InGame);
         }
     }
