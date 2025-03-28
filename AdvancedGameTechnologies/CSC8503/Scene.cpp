@@ -21,7 +21,7 @@ GameObject* Scene::AddCubeToWorld(GameWorld* world, const Vector3& pos, const Ve
 
     cube->SetRenderObject(new RenderObject(&cube->GetTransform(),
         AssetManager::Instance().cubeMesh,
-        AssetManager::Instance().basicTex,
+        AssetManager::Instance().metalTex,
         AssetManager::Instance().basicShader));
     cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
 
@@ -184,6 +184,7 @@ void EnemyTestScene::InitScene(GameWorld* world) {
     InitObstacles(world);
     this->navGrid = new NavMeshGrid(world);
     //add 5 of each enemy to the world, can be configured for each scene should we need to
+    //player init before for loop, anything with wall tag before navgrid
     for (int i = 0; i < 5; ++i) {
         newMeleeEnemy.Invoke(AddMeleeEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.5f, 0.25f));
         newRangedEnemy.Invoke(AddRangedEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.0f, 0.75f));

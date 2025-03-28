@@ -218,7 +218,7 @@ void GameUI::RenderScoreAndTimer() {
     int seconds = g->GetTimerSecs();
 
     char scoreText[32];
-    snprintf(scoreText, sizeof(scoreText), "Score: %d", g->getPlayer()->score);
+    snprintf(scoreText, sizeof(scoreText), "Score: %d/%d", g->getPlayer()->score, g->getPlayer()->GetScoreGoal());
 
     char timerText[32];
     snprintf(timerText, sizeof(timerText), "Time: %02d:%02d", minutes, seconds);

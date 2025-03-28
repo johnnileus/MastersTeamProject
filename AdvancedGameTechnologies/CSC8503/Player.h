@@ -79,6 +79,18 @@ namespace NCL {
 			void SetJump(const float j) {
 				jumpForce = j;
 			}
+			int GetScore() const {
+				return score;
+			}
+			int GetScoreGoal() const {
+				return scoreGoal;
+			}
+			void SetScoreGoal(const int s) {
+				scoreGoal = s;
+			}
+			int GetFinalScore() const {
+				return finalScore;
+			}
 
 			Event<Player*> OnSwitchWeaponEvent;
 
@@ -158,9 +170,9 @@ namespace NCL {
 			float msgTimer;
 			bool isTempTimerActive;
 			std::string showItem;
-			
-			
 
+			int scoreGoal;
+			int finalScore;
 		};
 	}
 }

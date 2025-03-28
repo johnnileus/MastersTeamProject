@@ -226,7 +226,7 @@ void Player::HealthCheck()
 {
 	if (health <= 0)
 	{
-		Debug::Print("Dead", Vector2(40,40),Vector4(1,0,0,1));
+		//Debug::Print("Dead", Vector2(40,40),Vector4(1,0,0,1));
 
 		if (!isDead) { 
 			isDead = true;
@@ -497,6 +497,7 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 			passiveItem->UpdateCall();
 			showItem = passiveItem->ShowItem();
 			score += 100;
+			finalScore = finalScore + GetScore();
 			SetTemporaryColour(collerctCoinColour, 0.5f);
 			ShowTimer(showItem, 1.0f);
 		}

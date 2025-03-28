@@ -135,7 +135,7 @@ void PassiveItem::OnCollisionBegin(GameObject* otherObject) {
 	if (otherObject->tag == "Cube") {
 		Vector3 currentPos = this->GetTransform().GetPosition();
 		this->GetTransform().SetPosition(Vector3((std::rand() % 221) - 110, currentPos.y, (std::rand() % 221) - 110));
-		this->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
+		//this->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
 	}
 }
 
