@@ -9,6 +9,7 @@ GameObject* Scene::AddCubeToWorld(GameWorld* world, const Vector3& pos, const Ve
 {
     GameObject* cube = new GameObject();
 
+
     AABBVolume* volume = new AABBVolume(size);
     cube->SetBoundingVolume((CollisionVolume*)volume);
 
@@ -209,8 +210,8 @@ void EnemyTestScene::InitScene(GameWorld* world) {
     this->navGrid = new NavMeshGrid(world);
     //add 5 of each enemy to the world, can be configured for each scene should we need to
     for (int i = 0; i < 5; ++i) {
-        newMeleeEnemy.Invoke(AddMeleeEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.5f, 1.0f));
-        newRangedEnemy.Invoke(AddRangedEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.0f, 2.5f));
-        newGhostEnemy.Invoke(AddGhostEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 0.5f, 5.0f));
+        newMeleeEnemy.Invoke(AddMeleeEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.5f, 0.25f));
+        newRangedEnemy.Invoke(AddRangedEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 1.0f, 0.75f));
+        newGhostEnemy.Invoke(AddGhostEnemyToWorld(world, this->navGrid, Vector3(10, 3, 10), 0.5f, 1.0f));
     }
 }

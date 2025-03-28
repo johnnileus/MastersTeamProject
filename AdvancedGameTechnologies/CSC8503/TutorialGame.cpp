@@ -31,7 +31,7 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 	controller.MapAxis(4, "YLook");
 
 	forceMagnitude	= 1.0f;
-	useGravity		=  true;
+	useGravity		=  false;
 	AssetManager::Instance().LoadAssets(renderer);
 
 	sceneManager = new SceneManager();
@@ -46,6 +46,7 @@ TutorialGame::TutorialGame() : controller(*Window::GetWindow()->GetKeyboard(), *
 }
 
 void TutorialGame::InitScene(string name) {
+	this->useGravity = false;
 	meleeEnemyList.clear();
 	rangedEnemyList.clear();
 	ghostEnemyList.clear();
@@ -86,7 +87,8 @@ void TutorialGame::InitScene(string name) {
 
 	ghostEnemyFrameCount = 0;
 	ghostEnemyFrameCountMax = ghostEnemyList.size();
-
+	this->useGravity = true;
+	physics->UseGravity(useGravity);
 }
 
 
