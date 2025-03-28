@@ -24,13 +24,87 @@ GameUI::GameUI() {
     ImGui_ImplWin32_InitForOpenGL(windowHandle);
     ImGui_ImplOpenGL3_Init();
     ImGui::GetIO().WantCaptureMouse = true;
-
+    InitTexture();
 }
 
 GameUI::~GameUI() {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
+}
+
+void GameUI::InitTexture() {
+    std::string tp1 = NCL::Assets::TEXTUREDIR + "ak47.png";
+    std::string tp2 = NCL::Assets::TEXTUREDIR + "burst.png";
+    std::string tp3 = NCL::Assets::TEXTUREDIR + "shotgun.png";
+    std::string tp4 = NCL::Assets::TEXTUREDIR + "bg.png";
+
+    ak      = LoadTexture(tp1.c_str());
+    burst   = LoadTexture(tp2.c_str());
+    shotgun = LoadTexture(tp3.c_str());
+	bg      = LoadTexture(tp4.c_str());
+
+}
+
+GLuint GameUI::LoadTexture(const char* filename) {
+    int width, height, nrChannels;
+    unsigned char* data = stbi_load(filename, &width, &height, &nrChannels, 0);
+
+    if (!data) {
+        std::cout << "Failed to load texture: " << filename << std::endl;
+        return 0;
+    }
+
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    // Set texture parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // Upload texture data to GPU
+    GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB;
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    stbi_image_free(data);
+    return textureID;
+}
+
+void GameUI::RenderTexture(string fileName) {
+    std::string texturePath = NCL::Assets::TEXTUREDIR + fileName;
+    
+    GLuint myTexture = LoadTexture(texturePath.c_str());
+	
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+
+    ImGui::Begin("Background", nullptr,
+        ImGuiWindowFlags_NoTitleBar |
+        ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoScrollbar |
+        ImGuiWindowFlags_NoInputs |
+        ImGuiWindowFlags_NoBackground);
+    //Image
+    ImGui::Image(
+        (void*)(intptr_t)myTexture,
+        ImGui::GetWindowSize(),
+        ImVec2(0, 0), 
+        ImVec2(1, 1),  
+        ImVec4(1, 1, 1, 1), // Tint color
+        ImVec4(0, 0, 0, 0)  // Border color
+    );
+
+    ImGui::End();
+    ImGui::PopStyleVar(2);
 }
 
 void GameUI::RenderAmmoCounter() {
