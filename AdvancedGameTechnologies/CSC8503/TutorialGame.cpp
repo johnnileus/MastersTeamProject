@@ -384,6 +384,6 @@ void TutorialGame::NewLevel() {
 	if (timerMins == 2) {
 		timerMins = 0;
 		levelCount++;
-		InitScene("default");
+		InitScene("EnemyTestScene");
 	}
 }

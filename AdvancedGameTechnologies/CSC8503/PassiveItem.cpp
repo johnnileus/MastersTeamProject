@@ -18,6 +18,11 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 
 	myWorld = world;
 	myPlayer = player;
+
+	myPistol = player->pistol;
+	myRifle = player->rifle;
+	myShotgun = player->shotGun;
+
 	size = 1;
 	mass = 10.0f;
 
@@ -25,7 +30,7 @@ PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 	tag = "Passive";
 
 	health = NULL;
-	damage = NULL;
+	playerDamage = NULL;
 	maxSpeed = NULL;
 	jumpForce = NULL;
 
@@ -145,8 +150,18 @@ void PassiveItem::UpdateHealth(Player* player, int healthVal) {
 }
 
 void PassiveItem::UpdateDamage(Player* player, int damageVal) {
-	damage = damageVal + myPlayer->GetDamage();
-	myPlayer->SetDamage(damage);
+	playerDamage = damageVal + myPlayer->GetDamage();
+	myPlayer->SetDamage(playerDamage);
+
+	pistolDamage = damageVal + myPistol->getDamage();
+	myPistol->setDamage(pistolDamage);
+
+	rifleDamage = (damageVal * 0.2) + myRifle->getDamage();
+	myRifle->setDamage(rifleDamage);
+
+	shotgunDamage = (damageVal * 0.5) + myShotgun->getDamage();
+	myShotgun->setDamage(shotgunDamage);
+
 }
 
 void PassiveItem::UpdateSpeed(Player* player, int speedVal) {

@@ -3,6 +3,10 @@
 #include "GameWorld.h"
 #include "json11.hpp"
 
+#include "Pistol.h"
+#include "Rifle.h"
+#include "Shotgun.h"
+
 namespace NCL {
 	namespace CSC8503 {
 		class PassiveItem : public GameObject {
@@ -24,6 +28,10 @@ namespace NCL {
 			GameWorld* myWorld;
 
 			Player* myPlayer;
+
+			Pistol* myPistol;
+			Rifle* myRifle;
+			Shotgun* myShotgun;
 		protected:
 			json11::Json jsonFile;
 
@@ -41,9 +49,13 @@ namespace NCL {
 			int myUid;
 
 			int health;
-			int damage;
+			int playerDamage;//for player (player.cpp)
 			float maxSpeed;
 			float jumpForce;
+
+			int pistolDamage;
+			int rifleDamage;
+			int shotgunDamage;
 
 			int healthVal;
 			int damageVal;

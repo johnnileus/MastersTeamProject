@@ -199,8 +199,8 @@ void EnemyTestScene::InitScene(GameWorld* world) {
 //from default pos/cam, +x goes right, -x goes left, +z goes down, -z goes up
 //coord limits are around -120, 120 for x and z
 void Scene::InitObstacles(GameWorld* world) {
-    //int level = (std::rand() % 4) + 1;
-    int level = 4;
+    int level = (std::rand() % 4) + 1;
+    //int level = 4;
     if (level == 1) {
         Scene::AddCubeToWorld(world, Vector3(-120, 0, -120), Vector3(5, 5, 5), 0);
         Scene::AddCubeToWorld(world, Vector3(120, 0, -120), Vector3(5, 5, 5), 0);

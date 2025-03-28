@@ -32,7 +32,7 @@
 			"type": 1,
 			"name": "Damage Up!",
 			"health": 0,
-			"damage": 10,
+			"damage": 5,
 			"maxSpeed": 0,
 			"jumpForce": 0
 		},
@@ -41,7 +41,7 @@
 			"type": 1,
 			"name": "Damage + Speed Up!",
 			"health": 0,
-			"damage": 5,
+			"damage": 2,
 			"maxSpeed": 3,
 			"jumpForce": 0
 		}
