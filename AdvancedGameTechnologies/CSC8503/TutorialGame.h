@@ -213,6 +213,7 @@ namespace NCL {
 			float bgmVolume = 0.5f;
 
 			int upScoreGoal;
+			int finalScore;
 			TutorialGame* gRaw;
 		};
 	}

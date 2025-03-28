@@ -21,7 +21,7 @@ GameObject* Scene::AddCubeToWorld(GameWorld* world, const Vector3& pos, const Ve
 
     cube->SetRenderObject(new RenderObject(&cube->GetTransform(),
         AssetManager::Instance().cubeMesh,
-        AssetManager::Instance().basicTex,
+        AssetManager::Instance().metalTex,
         AssetManager::Instance().basicShader));
     cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
 
