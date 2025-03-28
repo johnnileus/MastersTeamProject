@@ -1,6 +1,19 @@
 # Generating a PS5 Build
 For Generating a PS5 build, run the batch file and *THEN* open CMake GUI. Select the USE_AGC Option and set it to true and then generate. 
 
+#SCE_MODULE
+sce_module needs to be placed in \AdvancedGameTechnologies\CSC8503
+
+#FMOD PS5
+FMOD Studio API PS5 needs to be added to \AdvancedGameTechnologies\SDK and the files:
+-**libfmod.prx**
+-**libfmodL.prx**
+in FMOD Studio API PS5\api\core\lib and the files:
+-**libfmodstudio.prx**
+-**libfmodstudioL.prx**
+in FMOD Studio API PS5\api\studio\lib
+need to be moved into **sce_module** fmod **WILL NOT** function without it
+
 If there are any issues where it tells you about invalid platforms, make sure you have opened CMake GUI *after* running the batch file and generating the CMake Cache.
 
 # Generating a PC Build
