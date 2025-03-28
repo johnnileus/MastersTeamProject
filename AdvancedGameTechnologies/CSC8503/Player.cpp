@@ -116,7 +116,7 @@ Player* Player::Instantiate(GameWorld* world, ThirdPersonCamera* camera, const V
 	// Set its location and rotation
 	player->GetTransform().SetPosition(position);
 	player->GetTransform().SetOrientation(Quaternion());
-	player->SetComponent(2, 0.001);
+	player->SetComponent(2, 5);
 	player->playerObject = player;
 	player->myWorld = world;
 	player->Init(camera);
