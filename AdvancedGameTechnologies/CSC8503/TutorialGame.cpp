@@ -52,15 +52,12 @@ void TutorialGame::InitScene(string name) {
 	ghostEnemyList.clear();
 	world->ClearAndErase();
 	
-	
 	//delete individual enemies first
 	physics->Clear();
 
 	world->GetMainCamera().SetController(controller);
 	world->GetMainCamera().SetNearPlane(0.1f);
 	world->GetMainCamera().SetFarPlane(500.0f);
-
-
 
 	thirdPersonCam = new ThirdPersonCamera(&world->GetMainCamera(), controller);
 	if (thirdPersonCam)
@@ -71,7 +68,7 @@ void TutorialGame::InitScene(string name) {
 	std::cout << "aa " << sceneManager->scenes.size() << std::endl;
 	std::cout << sceneManager << std::endl;
 	
-	player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
+	player = Player::Instantiate(world, thirdPersonCam, Vector3(0, 0, 0));
 
 	sceneManager->SwitchScene(name, world);
 
@@ -301,11 +298,12 @@ void TutorialGame::Test(int a) {
 }
 
 void TutorialGame::InitItems() {
-	//todo: random placement of items
-	for (int i = 0; i < 5; i++) {
-		int x = 10;
-		int rand = (std::rand() % 5) + 1;
-		PassiveItem::Instantiate(world, itemList, player, Vector3(x + (i * 10), 0, 40), rand);
+	for (int i = 0; i < 20; i++) {
+		//int x = 10;
+		int xRand = (std::rand() % 221) - 110;
+		int zRand = (std::rand() % 221) - 110;
+		int uidRand = (std::rand() % 5) + 1;
+		PassiveItem::Instantiate(world, player, Vector3(xRand, 0, zRand), uidRand);
 	}
 }
 
@@ -388,6 +386,6 @@ void TutorialGame::NewLevel() {
 	if (timerMins == 2) {
 		timerMins = 0;
 		levelCount++;
-		InitScene("default");
+		InitScene("EnemyTestScene");
 	}
 }

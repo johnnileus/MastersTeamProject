@@ -4,11 +4,12 @@
 
 #include "AudioManager.h"
 
-Pistol::Pistol(Player* owner):Weapon(10,15,0.4,false,2)
+Pistol::Pistol(Player* owner):Weapon(10,10,0.4,false,2)
 {
     myCamera = owner->myCam;
     myWorld = owner->myWorld;
     this->owner = owner;
+    damage = owner->GetDamage() + Weapon::getDamage();
     weaponType = WeaponType::Pistol;
 }
 

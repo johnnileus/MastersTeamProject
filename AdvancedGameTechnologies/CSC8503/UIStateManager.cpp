@@ -16,8 +16,11 @@ void UIStateManager::States() {
 
     bool test = false;
 
-    switch (GetCurrentState()) {
+    if (g->getPlayer()->GetHealth() <= 0 && endScreenFlag != true) {
+        SetCurrentState(UIState::EndGame);
+    }
 
+    switch (GetCurrentState()) {
         // --- Main Menu ---
     case UIState::MainMenu: {
 
@@ -45,6 +48,7 @@ void UIStateManager::States() {
 
             SetCurrentState(UIState::InGame);
             AudioManager::GetInstance().PlayEvent("event:/Game Start");
+            g->ToggleCursor();
         }
 
         //Multiplayer
@@ -70,7 +74,6 @@ void UIStateManager::States() {
         ImGui::SetWindowFontScale(2.0f);
         ImGui::SetWindowPos(ImVec2(500, 100));
         ImGui::SetWindowSize(ImVec2(300, 100));
-        ImGui::TextColored(ImVec4(255, 0, 0, 1), "Wave 1 Begins !!");
 
         ImGui::End();
         break;
@@ -78,6 +81,8 @@ void UIStateManager::States() {
 
     //  Pause Menu 
     case UIState::Paused: {
+
+        g->ToggleCursor();
 
 
         ImGui::SetWindowPos(ImVec2(500, 100));
@@ -207,6 +212,7 @@ void UIStateManager::States() {
 
             if (ImGui::Button("QUIT GAME")) {
                 SetCurrentState(UIState::MainMenu);
+                endScreenFlag = true;
             }
 
             ImGui::PopStyleColor(3);
@@ -248,9 +254,6 @@ void UIStateManager::HandleInput() {
 
 UIState UIStateManager::GetCurrentState() {
     return currentState;
-    if (g->getPlayer()->GetHealth() <= 0) {
-		SetCurrentState(UIState::EndGame);
-    }
 }
 
 void UIStateManager::SetCurrentState(UIState newState) {

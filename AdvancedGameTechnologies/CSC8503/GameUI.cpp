@@ -4,6 +4,8 @@
 #include "Win32Window.h"
 #include "ImGui/imgui_impl_opengl3.h"
 #include "ImGui/imgui_impl_win32.h"
+#include "stb/stb_image.h"
+#include "Assets.h"
 
 extern TutorialGame* g;
 
@@ -21,13 +23,87 @@ GameUI::GameUI() {
     ImGui_ImplWin32_InitForOpenGL(windowHandle);
     ImGui_ImplOpenGL3_Init();
     ImGui::GetIO().WantCaptureMouse = true;
-
+    InitTexture();
 }
 
 GameUI::~GameUI() {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
+}
+
+void GameUI::InitTexture() {
+    std::string tp1 = NCL::Assets::TEXTUREDIR + "ak47.png";
+    std::string tp2 = NCL::Assets::TEXTUREDIR + "burst.png";
+    std::string tp3 = NCL::Assets::TEXTUREDIR + "shotgun.png";
+    std::string tp4 = NCL::Assets::TEXTUREDIR + "bg.png";
+
+    ak      = LoadTexture(tp1.c_str());
+    burst   = LoadTexture(tp2.c_str());
+    shotgun = LoadTexture(tp3.c_str());
+	bg      = LoadTexture(tp4.c_str());
+
+}
+
+GLuint GameUI::LoadTexture(const char* filename) {
+    int width, height, nrChannels;
+    unsigned char* data = stbi_load(filename, &width, &height, &nrChannels, 0);
+
+    if (!data) {
+        std::cout << "Failed to load texture: " << filename << std::endl;
+        return 0;
+    }
+
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    // Set texture parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // Upload texture data to GPU
+    GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB;
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    stbi_image_free(data);
+    return textureID;
+}
+
+void GameUI::RenderTexture(string fileName) {
+    std::string texturePath = NCL::Assets::TEXTUREDIR + fileName;
+    
+    GLuint myTexture = LoadTexture(texturePath.c_str());
+	
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+
+    ImGui::Begin("Background", nullptr,
+        ImGuiWindowFlags_NoTitleBar |
+        ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoScrollbar |
+        ImGuiWindowFlags_NoInputs |
+        ImGuiWindowFlags_NoBackground);
+    //Image
+    ImGui::Image(
+        (void*)(intptr_t)myTexture,
+        ImGui::GetWindowSize(),
+        ImVec2(0, 0), 
+        ImVec2(1, 1),  
+        ImVec4(1, 1, 1, 1), // Tint color
+        ImVec4(0, 0, 0, 0)  // Border color
+    );
+
+    ImGui::End();
+    ImGui::PopStyleVar(2);
 }
 
 void GameUI::RenderAmmoCounter() {
@@ -193,6 +269,7 @@ void GameUI::RenderScoreAndTimer() {
     io.FontGlobalScale = originalFontScale;
 }
 
+
 void GameUI::RenderWeaponUI() {
 
     ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -225,9 +302,18 @@ void GameUI::RenderWeaponUI() {
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
         ImGui::BeginChild("Weapon1", ImVec2(child_width, child_height), true);
         {
+            // Add background image
+            ImVec2 p0 = ImGui::GetWindowPos();
+            ImVec2 p1 = ImVec2(ImGui::GetWindowSize().x + p0.x, ImGui::GetWindowSize().y + p0.y);
+            ImGui::GetWindowDrawList()->AddImage(
+                (void*)(intptr_t)ak,
+                p0, p1,
+                ImVec2(0, 0), ImVec2(1, 1), 
+                IM_COL32(255, 255, 255, 255) 
+            );
             ImVec4 text_color = selected_weapon == 1 ?
-                ImVec4(0.0f, 1.0f, 0.0f, 1.0f) :
-                ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
+                ImVec4(0.0f, 0.5f, 0.0f, 1.0f) :
+                ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Flash effect
             if (selected_weapon == 1 && flash_alpha > 0.0f)
@@ -266,9 +352,20 @@ void GameUI::RenderWeaponUI() {
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
         ImGui::BeginChild("Weapon2", ImVec2(child_width, child_height), true);
         {
+
+            // Add background image
+            ImVec2 p0 = ImGui::GetWindowPos();
+            ImVec2 p1 = ImVec2(ImGui::GetWindowSize().x + p0.x, ImGui::GetWindowSize().y + p0.y);
+            ImGui::GetWindowDrawList()->AddImage(
+                (void*)(intptr_t)burst,
+                p0, p1,
+                ImVec2(0, 0), ImVec2(1, 1),
+                IM_COL32(255, 255, 255, 255)
+            );
+
             ImVec4 text_color = selected_weapon == 2 ?
-                ImVec4(0.0f, 1.0f, 0.0f, 1.0f) :
-                ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
+                ImVec4(0.0f, 0.5f, 0.0f, 1.0f) :
+                ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Flash effect
             if (selected_weapon == 2 && flash_alpha > 0.0f)
@@ -307,9 +404,19 @@ void GameUI::RenderWeaponUI() {
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
         ImGui::BeginChild("Weapon3", ImVec2(child_width, child_height), true);
         {
+            // Add background image
+            ImVec2 p0 = ImGui::GetWindowPos();
+            ImVec2 p1 = ImVec2(ImGui::GetWindowSize().x + p0.x, ImGui::GetWindowSize().y + p0.y);
+            ImGui::GetWindowDrawList()->AddImage(
+                (void*)(intptr_t)shotgun,
+                p0, p1,
+                ImVec2(0, 0), ImVec2(1, 1),
+                IM_COL32(255, 255, 255, 255)
+            );
+
             ImVec4 text_color = selected_weapon == 3 ?
-                ImVec4(0.0f, 1.0f, 0.0f, 1.0f) :
-                ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
+                ImVec4(0.0f, 0.5f, 0.0f, 1.0f) :
+                ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Flash effect
             if (selected_weapon == 3 && flash_alpha > 0.0f)
@@ -376,22 +483,87 @@ void GameUI::RenderWeaponUI() {
     }
 }
 
+void GameUI::LoadingScreen(float progress) {
+
+    RenderTexture("bg.png");
+    ImGuiIO& io = ImGui::GetIO();
+    ImVec2 screenSize = io.DisplaySize;
+
+    // Step 3: Start full-screen ImGui window
+    ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(screenSize);
+
+    ImGui::Begin("LoadingScreen", NULL,
+        ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings |
+        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBackground);
+
+    ImDrawList* drawList = ImGui::GetWindowDrawList();
+
+    const char* loadingText = loadScreenText[textVar].c_str();
+    ImVec2 textSize = ImGui::CalcTextSize(loadingText);
+    ImVec2 textPos = ImVec2((screenSize.x - textSize.x) * 0.5f, screenSize.y * 0.4f);
+    drawList->AddText(textPos, IM_COL32(0, 0, 0, 255), loadingText); 
+
+    float barWidth = 300.0f;
+    float barHeight = 25.0f;
+    ImVec2 barPos = ImVec2((screenSize.x - barWidth) * 0.5f, screenSize.y * 0.5f);
+
+
+    drawList->AddRectFilled(
+        barPos,
+        ImVec2(barPos.x + barWidth, barPos.y + barHeight),
+        IM_COL32(50, 50, 50, 255), 
+        barHeight * 0.5f
+    );
+
+    drawList->AddRectFilled(
+        barPos,
+        ImVec2(barPos.x + barWidth * progress, barPos.y + barHeight),
+        IM_COL32(0, 150, 255, 255), // Blue
+        barHeight * 0.5f 
+    );
+
+    //border
+    drawList->AddRect(
+        barPos,
+        ImVec2(barPos.x + barWidth, barPos.y + barHeight),
+        IM_COL32(255, 255, 255, 255), 
+        barHeight * 0.5f 
+    );
+
+    ImGui::End();
+}
+
+
 void GameUI::RenderUI() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	//TODO: Make it dynamic based on window size (if needed)
+    if (loadingProgress < 1.0f) {
+        std::cout << "text var : " << textVar << std::endl;
+        if (floor(loadingProgress * 10) == textVar) {
+            textVar++;
+        }
+        else {
+            std::cout << floor(loadingProgress * 10) << std::endl;
+        }
 
-	uiState.States();
-	uiState.HandleInput();
+        LoadingScreen(loadingProgress);
+        loadingProgress += 0.01f; 
+    }
+    else {
 
-    //Ammo counter 
-    RenderAmmoCounter();
-    RenderCrosshair();
-    RenderHealthBar();
-    RenderScoreAndTimer();
-    RenderWeaponUI();
+        uiState.States();
+        uiState.HandleInput();
+
+        RenderAmmoCounter();
+        RenderCrosshair();
+        RenderHealthBar();
+        RenderScoreAndTimer();
+        RenderWeaponUI();
+    }
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

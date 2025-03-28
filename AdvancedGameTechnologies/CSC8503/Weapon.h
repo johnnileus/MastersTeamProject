@@ -52,6 +52,7 @@ namespace NCL {
             int  getAmmo()    const { return ammo; }
             int  getMaxAmmo() const { return maxAmmo; }
             int  getDamage()  const { return damage; }
+            void setDamage(const int d) { damage = d; }
             bool IsAutoFire() const { return canAutoFire; }
             
             Enums::WeaponType GetWeaponType()

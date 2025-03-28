@@ -3,11 +3,12 @@
 #include "AudioManager.h"
 #include "Bullet.h"
 
-Rifle::Rifle(Player* owner):Weapon(30,9,0.1f,true,3)
+Rifle::Rifle(Player* owner):Weapon(30,2,0.1f,true,3)
 {
     myCamera = owner->myCam;
     myWorld = owner->myWorld;
     this->owner = owner;
+    damage = owner->GetDamage() + Weapon::getDamage();
     weaponType = WeaponType::Rifle;
 }
 

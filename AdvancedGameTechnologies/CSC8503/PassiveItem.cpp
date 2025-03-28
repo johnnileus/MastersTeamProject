@@ -11,21 +11,23 @@
 using namespace NCL;
 using namespace CSC8503;
 
+std::vector<PassiveItem*>PassiveItem::itemList = {};
+
 PassiveItem::PassiveItem(Player* player, GameWorld* world) {
 	ReadFile("items.json");
 
 	myWorld = world;
 	myPlayer = player;
+
+	myPistol = player->pistol;
+	myRifle = player->rifle;
+	myShotgun = player->shotGun;
+
 	size = 1;
 	mass = 10.0f;
 
 	name = "passive";
 	tag = "Passive";
-
-	health = NULL;
-	damage = NULL;
-	maxSpeed = NULL;//change to json value
-	jumpForce = NULL;
 
 	SetComponent(size, mass);
 }
@@ -65,6 +67,8 @@ void PassiveItem::SetComponent(float meshSize, float inverseMass) {
 		AssetManager::Instance().basicTex,
 		AssetManager::Instance().basicShader));
 
+	GetRenderObject()->SetColour(Vector4(1, 1, 0, 1));
+
 	SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
 	GetPhysicsObject()->SetInverseMass(inverseMass);
 	GetPhysicsObject()->InitSphereInertia();
@@ -75,14 +79,12 @@ void PassiveItem::SetUid(int uid) {
 }
 
 void PassiveItem::UpdateCall() {
-	//UpdateStats(myPlayer, myUid);
-	FindItem(myPlayer, myUid);
+	//FindItem(myPlayer, myUid);
 }
 
 void PassiveItem::FindItem(Player* player, int myUid) {
 	for (const auto& item : jsonFile["items"].array_items()) {
 		if (item["uid"].is_number() && item["uid"].int_value() == myUid) {
-			//std::cout << "match" << endl;
 			if (item["health"].is_number() && item["health"].int_value() != 0) {
 				healthVal = item["health"].int_value();
 				UpdateHealth(player, healthVal);
@@ -105,7 +107,19 @@ void PassiveItem::FindItem(Player* player, int myUid) {
 	}
 }
 
-PassiveItem* PassiveItem::Instantiate(GameWorld* world, std::vector<PassiveItem*> itemList, Player* player, const Vector3& position, int uid) {
+std::string PassiveItem::ShowItem() {
+	FindItem(myPlayer, myUid);
+	for (const auto& item : jsonFile["items"].array_items()) {
+		if (item["uid"].is_number() && item["uid"].int_value() == myUid) {
+			if (item["name"].is_string()) {
+				itemName = item["name"].string_value();
+			}
+		}
+	}
+	return itemName;
+}
+
+PassiveItem* PassiveItem::Instantiate(GameWorld* world, Player* player, const Vector3& position, int uid) {
 	PassiveItem* passive = new PassiveItem(player, world);
 
 	passive->GetTransform().SetPosition(position);
@@ -117,19 +131,13 @@ PassiveItem* PassiveItem::Instantiate(GameWorld* world, std::vector<PassiveItem*
 	return passive;
 }
 
-//update stats deprecated
-/*
-void PassiveItem::UpdateStats(Player* player, int myUid) {
-	//change to json data
-	if (myUid == 2) {
-		maxSpeed += myPlayer->GetSpeed();
-		myPlayer->SetSpeed(maxSpeed);
-	}
-	else {
-		return;
+void PassiveItem::OnCollisionBegin(GameObject* otherObject) {
+	if (otherObject->tag == "Cube") {
+		Vector3 currentPos = this->GetTransform().GetPosition();
+		this->GetTransform().SetPosition(Vector3((std::rand() % 221) - 110, currentPos.y, (std::rand() % 221) - 110));
+		this->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
 	}
 }
-*/
 
 void PassiveItem::UpdateHealth(Player* player, int healthVal) {
 	health = healthVal + myPlayer->GetHealth();
@@ -137,8 +145,18 @@ void PassiveItem::UpdateHealth(Player* player, int healthVal) {
 }
 
 void PassiveItem::UpdateDamage(Player* player, int damageVal) {
-	damage = damageVal + myPlayer->GetDamage();
-	myPlayer->SetDamage(damage);
+	playerDamage = damageVal + myPlayer->GetDamage();
+	myPlayer->SetDamage(playerDamage);
+
+	pistolDamage = damageVal + myPistol->getDamage();
+	myPistol->setDamage(pistolDamage);
+
+	rifleDamage = (damageVal * 0.2) + myRifle->getDamage();
+	myRifle->setDamage(rifleDamage);
+
+	shotgunDamage = (damageVal * 0.5) + myShotgun->getDamage();
+	myShotgun->setDamage(shotgunDamage);
+
 }
 
 void PassiveItem::UpdateSpeed(Player* player, int speedVal) {

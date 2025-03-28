@@ -151,7 +151,11 @@ namespace NCL {
 
 			void HealthCheck();
 			bool isDead;	
-			
+
+			void ShowTimer(std::string item, float duration);
+			float msgTimer;
+			bool isTempTimerActive;
+			std::string showItem;
 		};
 	}
 }
