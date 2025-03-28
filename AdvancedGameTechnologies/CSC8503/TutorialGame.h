@@ -211,6 +211,8 @@ namespace NCL {
 			int ghostEnemyFrameCount;
 
 			float bgmVolume = 0.5f;
+
+			int upScoreGoal;
 			TutorialGame* gRaw;
 		};
 	}

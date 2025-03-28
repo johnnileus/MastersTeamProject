@@ -69,6 +69,8 @@ TutorialGame::TutorialGame(GameWorld& inWorld, GameTechRendererInterface& inRend
 	listener->newRangedEnemy.AddListener(std::bind(&TutorialGame::UpdateRangedEnemyList, this, std::placeholders::_1));
 	listener->newGhostEnemy.AddListener(std::bind(&TutorialGame::UpdateGhostEnemyList, this, std::placeholders::_1));
 
+	upScoreGoal = 300;
+
 	InitScene("EnemyTestScene");
 }
 
@@ -106,7 +108,7 @@ void TutorialGame::InitScene(string name) {
 #else
 	player = Player::Instantiate(&world, thirdPersonCam, Vector3(0, 0, 0));
 #endif // USEAGC
-
+	player->SetScoreGoal(upScoreGoal);
 	/*sceneManager->scenes[name]->InitScene(&world);*/
 
 	sceneManager->SwitchScene(name, &world);
@@ -474,5 +476,12 @@ void TutorialGame::NewLevel() {
 		levelCount++;
 		InitScene("EnemyTestScene");
 	}
+	else if (player->GetScore() == player->GetScoreGoal()) {
+		timerMins = 0;
+		timerSecs = 0;
+		levelCount++;
+		upScoreGoal = player->GetScoreGoal() + 200;
+		player->SetScoreGoal(upScoreGoal);
+		InitScene("EnemyTestScene");
+	}
 }
-

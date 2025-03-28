@@ -219,7 +219,7 @@ void GameUI::RenderScoreAndTimer() {
     int seconds = gRaw->GetTimerSecs();
 
     char scoreText[32];
-    snprintf(scoreText, sizeof(scoreText), "Score: %d", gRaw->getPlayer()->score);
+    snprintf(scoreText, sizeof(scoreText), "Score: %d/%d", gRaw->getPlayer()->score, gRaw->getPlayer()->GetScoreGoal());
 
     char timerText[32];
     snprintf(timerText, sizeof(timerText), "Time: %02d:%02d", minutes, seconds);
