@@ -56,12 +56,6 @@ size_t sceLibcHeapSize = 256 * 1024 * 1024;
 std::unique_ptr<TutorialGame> g;
 TutorialGame* gRaw = nullptr;
 
-//TutorialGame* GetGameInstance() {
-//	return g.get();
-//}
-
-
-
 /*
 
 The main function should look pretty familar to you!
@@ -88,6 +82,7 @@ int main() {
 	initInfo.width = 1280;
 	initInfo.height = 720;
 	initInfo.windowTitle = "GO MARBLE BALL";
+	initInfo.fullScreen = true;
 	Window* w = Window::CreateGameWindow(initInfo);
 	GameTechRenderer* renderer = new GameTechRenderer(*world);
 #endif 
