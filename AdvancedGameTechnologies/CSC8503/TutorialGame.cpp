@@ -67,7 +67,7 @@ void TutorialGame::InitScene(string name) {
 	std::cout << "aa " << sceneManager->scenes.size() << std::endl;
 	std::cout << sceneManager << std::endl;
 	
-	player = Player::Instantiate(world, thirdPersonCam, Vector3(20, 0, 30));
+	player = Player::Instantiate(world, thirdPersonCam, Vector3(0, 0, 0));
 
 	sceneManager->SwitchScene(name, world);
 
@@ -296,10 +296,10 @@ void TutorialGame::Test(int a) {
 }
 
 void TutorialGame::InitItems() {
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 20; i++) {
 		//int x = 10;
-		int xRand = (std::rand() % 80) + 1;
-		int zRand = (std::rand() % 80) + 1;
+		int xRand = (std::rand() % 221) - 110;
+		int zRand = (std::rand() % 221) - 110;
 		int uidRand = (std::rand() % 5) + 1;
 		PassiveItem::Instantiate(world, player, Vector3(xRand, 0, zRand), uidRand);
 	}

@@ -67,6 +67,8 @@ void PassiveItem::SetComponent(float meshSize, float inverseMass) {
 		AssetManager::Instance().basicTex,
 		AssetManager::Instance().basicShader));
 
+	GetRenderObject()->SetColour(Vector4(1, 1, 0, 1));
+
 	SetPhysicsObject(new PhysicsObject(&GetTransform(), GetBoundingVolume()));
 	GetPhysicsObject()->SetInverseMass(inverseMass);
 	GetPhysicsObject()->InitSphereInertia();
@@ -77,7 +79,7 @@ void PassiveItem::SetUid(int uid) {
 }
 
 void PassiveItem::UpdateCall() {
-	FindItem(myPlayer, myUid);
+	//FindItem(myPlayer, myUid);
 }
 
 void PassiveItem::FindItem(Player* player, int myUid) {
@@ -105,6 +107,18 @@ void PassiveItem::FindItem(Player* player, int myUid) {
 	}
 }
 
+std::string PassiveItem::ShowItem() {
+	FindItem(myPlayer, myUid);
+	for (const auto& item : jsonFile["items"].array_items()) {
+		if (item["uid"].is_number() && item["uid"].int_value() == myUid) {
+			if (item["name"].is_string()) {
+				itemName = item["name"].string_value();
+			}
+		}
+	}
+	return itemName;
+}
+
 PassiveItem* PassiveItem::Instantiate(GameWorld* world, Player* player, const Vector3& position, int uid) {
 	PassiveItem* passive = new PassiveItem(player, world);
 
@@ -120,7 +134,7 @@ PassiveItem* PassiveItem::Instantiate(GameWorld* world, Player* player, const Ve
 void PassiveItem::OnCollisionBegin(GameObject* otherObject) {
 	if (otherObject->tag == "Cube") {
 		Vector3 currentPos = this->GetTransform().GetPosition();
-		this->GetTransform().SetPosition(Vector3(currentPos.x + 20, currentPos.y, currentPos.z));
+		this->GetTransform().SetPosition(Vector3((std::rand() % 221) - 110, currentPos.y, (std::rand() % 221) - 110));
 		this->GetRenderObject()->SetColour(Vector4(1, 0, 1, 1));
 	}
 }

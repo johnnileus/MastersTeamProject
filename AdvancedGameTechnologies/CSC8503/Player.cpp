@@ -182,6 +182,13 @@ void Player::Update(float dt) {
 			isTemporaryColourActive = false;
 		}
 	}
+	if (isTempTimerActive) {
+		Debug::Print(showItem, Vector2(40, 40));
+		msgTimer -= dt;
+		if (msgTimer <= 0.0f) {
+			isTempTimerActive = false;
+		}
+	}
 }
 
 
@@ -482,10 +489,17 @@ void Player::OnCollisionBegin(GameObject* otherObject)
 		PassiveItem* passiveItem = dynamic_cast<PassiveItem*>(otherObject);
 		if (passiveItem) {
 			passiveItem->UpdateCall();
+			showItem = passiveItem->ShowItem();
 			score += 100;
 			SetTemporaryColour(collerctCoinColour, 0.5f);
+			ShowTimer(showItem, 1.0f);
 		}
 	}
+}
+
+void Player::ShowTimer(std::string item, float duration) {
+	msgTimer = duration;
+	isTempTimerActive = true;
 }
 
 void Player::OnCollisionEnd(GameObject* otherObject)

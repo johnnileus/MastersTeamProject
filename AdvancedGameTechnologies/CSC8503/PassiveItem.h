@@ -14,6 +14,9 @@ namespace NCL {
 
 			static PassiveItem* Instantiate(GameWorld* world, Player* player, const Vector3& position, int uid);
 
+			std::string ShowItem();
+			std::string itemName;
+
 			void OnCollisionBegin(GameObject* otherObject) override;
 
 			static std::vector<PassiveItem*> itemList;

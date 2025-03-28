@@ -3,16 +3,16 @@
 		{
 			"uid": 1,
 			"type": 1,
-			"name": "speedTest",
+			"name": "Speed Up!",
 			"health": 0,
 			"damage": 0,
-			"maxSpeed": 10,
+			"maxSpeed": 5,
 			"jumpForce": 0
 		},
 		{
 			"uid": 2,
 			"type": 1,
-			"name": "healthTest",
+			"name": "Health Up!",
 			"health": 50,
 			"damage": 0,
 			"maxSpeed": 0,
@@ -21,7 +21,7 @@
 		{
 			"uid": 3,
 			"type": 1,
-			"name": "jumpTest",
+			"name": "Jumping Up!",
 			"health": 0,
 			"damage": 0,
 			"maxSpeed": 0,
@@ -30,7 +30,7 @@
 		{
 			"uid": 4,
 			"type": 1,
-			"name": "damageTest",
+			"name": "Damage Up!",
 			"health": 0,
 			"damage": 10,
 			"maxSpeed": 0,
@@ -39,10 +39,10 @@
 		{
 			"uid": 5,
 			"type": 1,
-			"name": "Damage + Speed",
+			"name": "Damage + Speed Up!",
 			"health": 0,
 			"damage": 5,
-			"maxSpeed": 5,
+			"maxSpeed": 3,
 			"jumpForce": 0
 		}
 	]
