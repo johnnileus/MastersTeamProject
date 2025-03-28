@@ -177,6 +177,8 @@ void UIStateManager::States() {
 
     //  End Game Screen 
     case UIState::EndGame: {
+
+        g->ToggleCursor();
        
         ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 15.0f);
         ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.8f));
@@ -194,7 +196,7 @@ void UIStateManager::States() {
             ImGui::SetWindowFontScale(2.0f);
             ImVec2 textSize = ImGui::CalcTextSize("Final Score: 0000");
             ImGui::SetCursorPosX((400 - textSize.x) * 0.5f);
-            ImGui::Text("Final Score: %d", 0);
+            ImGui::Text("Final Score: %d", g->getPlayer()->GetFinalScore());
 
             ImGui::Spacing();
             ImGui::Separator();

@@ -86,6 +86,9 @@ namespace NCL {
 			void SetScoreGoal(const int s) {
 				scoreGoal = s;
 			}
+			int GetFinalScore() const {
+				return finalScore;
+			}
 
 			Event<Player*> OnSwitchWeaponEvent;
 
@@ -167,6 +170,7 @@ namespace NCL {
 			std::string showItem;
 
 			int scoreGoal;
+			int finalScore;
 		};
 	}
 }
